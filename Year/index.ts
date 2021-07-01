@@ -7,5 +7,6 @@ export const YearFns = {
   isLeap,
   length,
   isThisYear,
-  toString
+  toString,
+  format
 }

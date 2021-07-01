@@ -29,4 +29,3 @@ export interface Instant extends String {}
 
 // PnYnMnDTnHnMnSn
 export interface Duration extends String {}
-
