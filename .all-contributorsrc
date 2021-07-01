@@ -1,0 +1,24 @@
+{
+  "projectName": "iso-fns",
+  "projectOwner": "rubber-duck-software",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "rubber-duck-software",
+      "name": "Grant Colestock",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25811049?v=4",
+      "profile": "https://github.com/rubber-duck-software",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
