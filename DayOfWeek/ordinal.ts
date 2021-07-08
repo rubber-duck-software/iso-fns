@@ -1,6 +1,12 @@
 import { DayOfWeek } from '../iso-types'
 import { Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday } from './values'
 
+/**
+ * Recieves a day-of-week value and returns the corresponding ordinal value of that day.
+ * @param dayOfWeek
+ * @returns
+ */
+
 export function ordinal(dayOfWeek: DayOfWeek): number {
   switch (dayOfWeek) {
     case Sunday:
