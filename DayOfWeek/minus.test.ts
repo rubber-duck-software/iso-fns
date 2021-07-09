@@ -1,11 +1,11 @@
+import { Friday } from './values'
 import { minus } from './minus'
 import describe from 'beartest-js'
-import { Friday, Sunday, Tuesday } from './values'
 import expect from 'expect'
 
-describe('DayOfWeek minus', ({ it }) => {
-  it('should subtract the correct amount of days from a day-of-week value', () => {
-    expect(minus(Friday, 3)).toBe(Tuesday)
-    expect(minus(Friday, 5)).toBe(Sunday)
+describe('DayOfWeek: minus', ({ it }) => {
+  it('should subtract an amount of days from a day-of-week value', () => {
+    expect(minus(Friday, 3)).toStrictEqual('Tuesday')
+    expect(minus(Friday, 5)).toStrictEqual('Sunday')
   })
 })
