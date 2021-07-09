@@ -1,3 +1,4 @@
+/* c8 ignore next 50 */
 enum YearEnum {}
 
 // Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday

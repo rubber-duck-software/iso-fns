@@ -9,7 +9,7 @@
     "test": "yarn lint && beartest 'dist/**/*.test.js'",
     "format": "prettier --write .",
     "lint": "prettier --check .",
-    "code-coverage": "c8 --check-coverage --lines 95 --all yarn test"
+    "cc": "yarn format; yarn build; c8 --clean --check-coverage --functions 95 --branches 95 --all yarn test; rm -r coverage/"
   },
   "dependencies": {
     "@types/dateformat": "^3.0.1",
