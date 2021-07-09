@@ -2,23 +2,23 @@ import { DayOfWeek } from '../iso-types'
 import { Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday } from './values'
 
 /**
- * Receives an ordinal number and converts it to the corresponding day-of-week.
+ * Receives a day-of-week value and returns the corresponding ordinal value of that day.
  * @param dayOfWeek
  * @returns
  */
 
-export function fromOrdinal(dayOfWeek: number): DayOfWeek {
-  let dayMap = new Map()
-  dayMap.set(0, Sunday)
-  dayMap.set(1, Monday)
-  dayMap.set(2, Tuesday)
-  dayMap.set(3, Wednesday)
-  dayMap.set(4, Thursday)
-  dayMap.set(5, Friday)
-  dayMap.set(6, Saturday)
+export function toOrdinal(dayOfWeek: DayOfWeek): number {
+  let ordinalMap = new Map()
+  ordinalMap.set(Sunday, 0)
+  ordinalMap.set(Monday, 1)
+  ordinalMap.set(Tuesday, 2)
+  ordinalMap.set(Wednesday, 3)
+  ordinalMap.set(Thursday, 4)
+  ordinalMap.set(Friday, 5)
+  ordinalMap.set(Saturday, 6)
 
   try {
-    return dayMap.get(dayOfWeek)
+    return ordinalMap.get(dayOfWeek)
     // This is being tested, but due to how beartest handles detecting thrown errors, c8 doesn't recognize that it is covered.
     /* c8 ignore next 3 */
   } catch {

@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { DayOfWeek } from '../iso-types'
 
 export const Sunday: DayOfWeek = 'Sunday'
@@ -11,3 +12,4 @@ export const Saturday: DayOfWeek = 'Saturday'
 export function values() {
   return [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
 }
+/* c8 ignore stop */
