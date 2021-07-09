@@ -1,18 +1,25 @@
-import { isWeekend } from './is-weekend'
-import { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, values } from './values'
-import { ordinal } from './ordinal'
-import { fromOrdinal } from './from-ordinal'
-import { plus } from './plus'
-import { minus } from './minus'
-import { getValue } from './get-value'
-import { fromValue } from './from-value'
+/* c8 ignore start */
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
+import { fromOrdinal_1 } from './from-ordinal-1'
+import { fromOrdinal } from './from-ordinal'
+import { isWeekend } from './is-weekend'
+import { minus } from './minus'
+import { plus } from './plus'
+import { toOrdinal_1 } from './to-ordinal-1'
+import { toOrdinal } from './to-ordinal'
+import { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, values } from './values'
 
 export const DayOfWeekFns = {
-  ordinal,
+  compareAsc,
+  compareDesc,
+  fromOrdinal_1,
   fromOrdinal,
   isWeekend,
+  minus,
+  plus,
+  toOrdinal_1,
+  toOrdinal,
   Sunday,
   Monday,
   Tuesday,
@@ -20,11 +27,6 @@ export const DayOfWeekFns = {
   Thursday,
   Friday,
   Saturday,
-  values,
-  plus,
-  minus,
-  getValue,
-  fromValue,
-  compareAsc,
-  compareDesc
+  values
 }
+/* c8 ignore stop */
