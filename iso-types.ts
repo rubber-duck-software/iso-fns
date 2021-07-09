@@ -1,4 +1,4 @@
-/* c8 ignore next 50 */
+/* c8 ignore start */
 enum YearEnum {}
 
 // Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
@@ -30,3 +30,5 @@ export interface Instant extends String {}
 
 // PnYnMnDTnHnMnSn
 export interface Duration extends String {}
+
+/* c8 ignore stop */
