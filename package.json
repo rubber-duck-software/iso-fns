@@ -6,10 +6,10 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "yarn lint && beartest 'dist/**/*.test.js'",
+    "test": "yarn lint && c8 -r none beartest 'dist/**/*.test.js'",
+    "cc": "c8 report --all -r html -r text",
     "format": "prettier --write .",
-    "lint": "prettier --check .",
-    "cc": "yarn format; yarn build; c8 --clean --check-coverage --functions 95 --branches 95 --all yarn test; rm -r coverage/"
+    "lint": "prettier --check ."
   },
   "dependencies": {
     "@types/dateformat": "^3.0.1",
