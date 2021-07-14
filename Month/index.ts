@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
 import { firstDayOfYear } from './first-day-of-year'
@@ -57,3 +59,5 @@ export const MonthFns = {
   values,
   format
 }
+
+/* c8 ignore stop */

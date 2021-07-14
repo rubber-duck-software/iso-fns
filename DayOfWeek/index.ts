@@ -1,4 +1,5 @@
 /* c8 ignore start */
+
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
 import { fromOrdinal_1 } from './from-ordinal-1'
