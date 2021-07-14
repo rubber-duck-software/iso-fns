@@ -41,7 +41,7 @@ import { withMonth } from './with-month'
 import { withSecond } from './with-second'
 import { withYear } from './with-year'
 
-export const LocalDateFns = {
+export const LocalDateTimeFns = {
   check,
   compareAsc,
   compareDesc,
