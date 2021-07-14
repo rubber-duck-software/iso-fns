@@ -1,5 +1,8 @@
+/* c8 ignore start */
+
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
+import { getEpochMilliseconds } from './get-epoch-milliseconds'
 import { getEpochSecond } from './get-epoch-second'
 import { minusMilliseconds } from './minus-milliseconds'
 import { minusSeconds } from './minus-seconds'
@@ -12,6 +15,7 @@ import { plusSeconds } from './plus-seconds'
 export const InstantFns = {
   compareAsc,
   compareDesc,
+  getEpochMilliseconds,
   getEpochSecond,
   minusMilliseconds,
   minusSeconds,
@@ -21,3 +25,5 @@ export const InstantFns = {
   plusMilliseconds,
   plusSeconds
 }
+
+/* c8 ignore stop */
