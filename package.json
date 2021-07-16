@@ -1,6 +1,6 @@
 {
   "name": "iso-fns",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -11,21 +11,21 @@
     "test": "yarn lint && c8 -r none beartest 'dist/**/*.test.js'",
     "cc": "c8 report --all -r lcovonly",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "docs": "jsdoc -c jsdoc.json -r -d ./docs",
+    "docs": "jsdoc -c jsdoc.json -r -d ./docs && echo \"iso-fns.org\" > ./docs/CNAME",
     "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
   },
   "dependencies": {
+    "dateformat": "^4.5.1"
+  },
+  "devDependencies": {
     "@types/dateformat": "^3.0.1",
+    "all-contributors-cli": "^6.20.0",
+    "beartest-js": "^3.1.1",
     "better-docs": "^2.3.2",
     "c8": "^7.7.3",
     "coveralls": "^3.1.1",
-    "dateformat": "^4.5.1",
-    "jsdoc": "^3.6.7"
-  },
-  "devDependencies": {
-    "all-contributors-cli": "^6.20.0",
-    "beartest-js": "^3.1.1",
     "expect": "^27.0.6",
+    "jsdoc": "^3.6.7",
     "prettier": "^2.3.2",
     "typescript": "^4.3.2"
   }
