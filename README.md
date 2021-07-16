@@ -1,8 +1,12 @@
 # iso-fns
 
+[![Coverage Status](https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release)](https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release)
+
 A string-based date-time library for Javascript.
 
 ## Contributors ✨
+
+---
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
