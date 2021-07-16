@@ -1,8 +1,13 @@
-# iso-fns
-
-[![Coverage Status](https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release)](https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release)
-
-A string-based date-time library for Javascript.
+<p align="center">
+  <h1 align="center">iso-fns</h1>
+  <p align="center">A string-based date-time library for Javascript.</p>
+</p>
+<p align="center">
+<a href="https://github.com/rubber-duck-software/iso-fns/blob/release/LICENSE"><img src="https://img.shields.io/npm/l/iso-fns.svg?" alt="NPM License"></a>
+<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/v/iso-fns.svg?style=flat" alt="NPM Version"></a>
+<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/dw/iso-fns.svg?style=flat" alt="NPM Downloads"></a>
+<a href="https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release"><img src="https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release" alt="Coverage Status"></a>
+</p>
 
 ## Contributors ✨
 
