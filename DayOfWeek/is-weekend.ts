@@ -3,8 +3,8 @@ import { Saturday, Sunday } from './values'
 
 /**
  * Receives a day-of-week variable and returns a boolean value indicating if it is a weekend or not
- * @param dayOfWeek
- * @returns
+ * @param {DayOfWeek} dayOfWeek
+ * @returns {Boolean}
  */
 
 export function isWeekend(dayOfWeek: DayOfWeek): boolean {

@@ -5,9 +5,9 @@ import { toOrdinal } from './to-ordinal'
 /**
  * Removes a given number of days from a day of the week.
  * (e.g. Friday - 5 = Sunday)
- * @param dayOfWeek
- * @param days
- * @returns
+ * @param {DayOfWeek} dayOfWeek
+ * @param {Number} days
+ * @returns {DayOfWeek}
  */
 
 export function minus(dayOfWeek: DayOfWeek, days: number): DayOfWeek {

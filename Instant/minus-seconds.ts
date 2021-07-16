@@ -2,9 +2,9 @@ import { Instant } from '../iso-types'
 
 /**
  * Removes some number of seconds from an instant in time
- * @param instant
- * @param secondsToSubtract
- * @returns
+ * @param {Instant} instant
+ * @param {Number} secondsToSubtract
+ * @returns {Instant}
  */
 
 export function minusSeconds(instant: Instant, secondsToSubtract: number): Instant {

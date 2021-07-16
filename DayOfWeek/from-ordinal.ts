@@ -3,8 +3,8 @@ import { Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday } from '
 
 /**
  * Receives an ordinal number and converts it to the corresponding day-of-week.
- * @param dayOfWeek
- * @returns
+ * @param {Number} dayOfWeek
+ * @returns {DayOfWeek}
  */
 
 export function fromOrdinal(dayOfWeek: number): DayOfWeek {
