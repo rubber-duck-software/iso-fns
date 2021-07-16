@@ -15,12 +15,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Build
-          run: yarn install
-          run: yarn build
+        run: yarn install
+        run: yarn build
 
       - name: Test
-          run: yarn test
-          run: yarn cc
+        run: yarn test
+        run: yarn cc
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
