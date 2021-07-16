@@ -14,12 +14,16 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Build
+      - name: Install Deps
         run: yarn install
+
+      - name: Build
         run: yarn build
 
       - name: Test
         run: yarn test
+
+      - name: Generate Coverage
         run: yarn cc
 
       - name: Coveralls
