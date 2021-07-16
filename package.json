@@ -1,19 +1,21 @@
 {
   "name": "iso-fns",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
     "build": "tsc",
     "test": "yarn lint && c8 -r none beartest 'dist/**/*.test.js'",
-    "cc": "c8 report --all -r html -r text",
-    "format": "prettier --write .",
-    "lint": "prettier --check ."
+    "cc": "c8 report --all -r lcovonly",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "dependencies": {
     "@types/dateformat": "^3.0.1",
     "c8": "^7.7.3",
+    "coveralls": "^3.1.1",
     "dateformat": "^4.5.1"
   },
   "devDependencies": {

@@ -2,10 +2,10 @@ import { DayOfWeek } from '../iso-types'
 import { toOrdinal } from './to-ordinal'
 
 /**
- * Compares two days of the week and returns -1 if they days are in descending order, 1 if they are in ascending order, and 0 if they are the same day
+ * Compares two days of the week
  * @param leftMonth
  * @param rightMonth
- * @returns
+ * @returns -1 if they days are in descending order, 1 if they are in ascending order, and 0 if they are the same day.
  */
 
 export function compareDesc(leftMonth: DayOfWeek, rightMonth: DayOfWeek): number {

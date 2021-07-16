@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
 import { getDayOfMonth } from './get-day-of-month'
@@ -51,3 +53,5 @@ export const LocalDateFns = {
   withMonth,
   withYear
 }
+
+/* c8 ignore stop */

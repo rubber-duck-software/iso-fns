@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 import { length } from './length'
 import { isLeap } from './is-leap'
 import { isThisYear } from './is-this-year'
@@ -10,3 +12,5 @@ export const YearFns = {
   toString,
   format
 }
+
+/* c8 ignore stop */

@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
 import { getMonth } from './get-month'
@@ -31,3 +33,5 @@ export const YearMonthFns = {
   withYear,
   isLeap
 }
+
+/* c8 ignore stop */

@@ -1,10 +1,10 @@
 import { Instant } from '../iso-types'
 
 /**
- * Receives two instants in time and returns 1 if the first instant is before the second
+ * Compares two instances of time
  * @param leftInstant
  * @param rightInstant
- * @returns
+ * @returns -1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same instant.
  */
 
 export function compareAsc(leftInstant: Instant, rightInstant: Instant): number {
