@@ -3,9 +3,9 @@ import { toOrdinal } from './to-ordinal'
 
 /**
  * Compares two days of the week
- * @param leftDay
- * @param rightDay
- * @returns -1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same day
+ * @param {DayOfWeek} leftDay
+ * @param {DayOfWeek} rightDay
+ * @returns {Number} -1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same day
  */
 
 export function compareAsc(leftDay: DayOfWeek, rightDay: DayOfWeek): number {
