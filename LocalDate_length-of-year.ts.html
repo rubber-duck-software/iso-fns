@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> LocalDate/length-of-year.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>LocalDate/length-of-year.ts</h1>
                 </header>
                 
 
@@ -85,19 +85,19 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { LocalDate } from '../iso-types'
+import { getYear } from './get-year'
+import { length as yearLength } from '../Year/length'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Receives a local date and returns the number of days in the year that date occurred
+ * @param {LocalDate} localDate
+ * @returns {number}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
-  } else {
-    return false
-  }
+
+export function lengthOfYear(localDate: LocalDate): number {
+  const year = getYear(localDate)
+  return yearLength(year)
 }
 </code></pre>
         </article>

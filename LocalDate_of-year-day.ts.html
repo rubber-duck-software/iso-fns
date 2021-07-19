@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> LocalDate/of-year-day.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>LocalDate/of-year-day.ts</h1>
                 </header>
                 
 
@@ -85,19 +85,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { Year } from '../iso-types'
+import { fromOrdinal as fromMonthOrdinal } from '../Month/from-ordinal'
+import { isLeap } from '../Year/is-leap'
+import { length } from '../Month/length'
+import { firstDayOfYear } from '../Month/first-day-of-year'
+import { plus } from '../Month/plus'
+import { ofYearMonthDay } from './of-year-month-day'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Receives a year and returns the date corresponding to the n-th day of the year
+ * @param {Year} year
+ * @param {number} dayOfYear
+ * @returns {LocalDate}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
-  } else {
-    return false
+
+export function ofYearDay(year: Year, dayOfYear: number) {
+  const leap = isLeap(year)
+  if (dayOfYear === 366 &amp;&amp; leap === false) {
+    throw new Error("Invalid date 'DayOfYear 366' as '" + year + "' is not a leap year")
   }
+  let moy = fromMonthOrdinal(Math.floor((dayOfYear - 1) / 31 + 1))
+  const monthEnd = firstDayOfYear(moy, leap) + length(moy, leap) - 1
+  if (dayOfYear > monthEnd) {
+    moy = plus(moy, 1)
+  }
+  const dom = dayOfYear - firstDayOfYear(moy, leap) + 1
+  return ofYearMonthDay(year, moy, dom)
 }
 </code></pre>
         </article>

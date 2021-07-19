@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> Month/get-value.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>Month/get-value.ts</h1>
                 </header>
                 
 
@@ -85,18 +85,36 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { Month } from '../iso-types'
+import { January, February, March, April, May, June, July, August, September, October, November, December } from './values'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Receives a month and returns the corresponding ordinal value
+ * @param {Month} month
+ * @returns {number}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
+
+export function getValue(month: Month): number {
+  let ordinalMap = new Map&lt;Month, number>([
+    [January, 1],
+    [February, 2],
+    [March, 3],
+    [April, 4],
+    [May, 5],
+    [June, 6],
+    [July, 7],
+    [August, 8],
+    [September, 9],
+    [October, 10],
+    [November, 11],
+    [December, 12]
+  ])
+
+  if (!ordinalMap.has(month)) {
+    throw new RangeError(`Invalid Month: ${month} is not a valid Month`)
   } else {
-    return false
+    //@ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
+    return ordinalMap.get(month)
   }
 }
 </code></pre>

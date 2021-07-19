@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> LocalDate/get-day-of-year.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>LocalDate/get-day-of-year.ts</h1>
                 </header>
                 
 
@@ -85,19 +85,25 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { LocalDate, Year } from '../iso-types'
+import { getMonth } from './get-month'
+import { getYear } from './get-year'
+import { isLeap as isYearLeap } from '../Year/is-leap'
+import { firstDayOfYear } from '../Month/first-day-of-year'
+import { getDayOfMonth } from './get-day-of-month'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Receive a local date and return the corresponding day-of-year
+ * @param {LocalDate} localDate
+ * @returns {Year}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
-  } else {
-    return false
-  }
+
+export function getDayOfYear(localDate: LocalDate): Year {
+  const month = getMonth(localDate)
+  const year = getYear(localDate)
+  const leap = isYearLeap(year)
+  const dayOfMonth = getDayOfMonth(localDate)
+  return firstDayOfYear(month, leap) + dayOfMonth - 1
 }
 </code></pre>
         </article>

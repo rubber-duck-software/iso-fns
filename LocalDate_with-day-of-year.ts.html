@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> LocalDate/with-day-of-year.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>LocalDate/with-day-of-year.ts</h1>
                 </header>
                 
 
@@ -85,19 +85,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { LocalDate } from '../iso-types'
+import { getYear } from './get-year'
+import { ofYearDay } from './of-year-day'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Uses a date and a number of a day in the year (out of 365) and returns the date corresponding to the given day of the year.
+ * @param {LocalDate} localDate
+ * @param {number} dayOfYear
+ * @returns {LocalDate}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
-  } else {
-    return false
-  }
+
+export function withDayOfYear(localDate: LocalDate, dayOfYear: number): LocalDate {
+  const year = getYear(localDate)
+  return ofYearDay(year, dayOfYear)
 }
 </code></pre>
         </article>

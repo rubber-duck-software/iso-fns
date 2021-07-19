@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDateTime/check.ts</title>
+  <title> LocalDate/minus-weeks.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDateTime/check.ts</h1>
+                    <h1>LocalDate/minus-weeks.ts</h1>
                 </header>
                 
 
@@ -85,19 +85,22 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>import { LocalDate } from '../iso-types'
+import dateFormat from 'dateformat'
+import { getDayOfMonth } from './get-day-of-month'
 
 /**
- * This is a type guard for the LocalDateTime type.
- * @param {unknown} localDateTime
- * @returns {LocalDateTime}
+ * Removes a number of weeks from a LocalDate
+ * @param {LocalDate} localDate
+ * @param {number} weeksToSubtract
+ * @returns {LocalDate}
  */
-export function check(localDateTime: unknown): localDateTime is LocalDateTime {
-  if (localDateTime instanceof String || typeof localDateTime === 'string') {
-    return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
-  } else {
-    return false
-  }
+
+export function minusWeeks(localDate: LocalDate, weeksToSubtract: number): LocalDate {
+  const date = new Date(localDate.toString())
+  const day = getDayOfMonth(localDate)
+  const newDate = date.setUTCDate(day - weeksToSubtract * 7)
+  return dateFormat(newDate, 'yyyy-mm-dd')
 }
 </code></pre>
         </article>
