@@ -1,12 +1,17 @@
 import { LocalDate } from '../iso-types'
 
 /**
- * Receives a local date and returns the corresponding day of month
+ * Determines the numerical month of a date assuming 0-indexing.
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
+ *
  * @returns {number} Ordinal Month
  */
 
-export function getDayOfMonth(localDate: LocalDate): number {
+function getDayOfMonth(localDate: LocalDate): number {
   const dayOfMonth = new Date(localDate.toString()).getUTCDate()
   return dayOfMonth
 }
+
+export { getDayOfMonth }

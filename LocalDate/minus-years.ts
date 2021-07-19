@@ -3,15 +3,20 @@ import dateFormat from 'dateformat'
 import { getYear } from './get-year'
 
 /**
- * Removes a number of years from a LocalDate
+ * Removes a number of years from a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
  * @param {number} yearsToSubtract
- * @returns {LocalDate}
+ *
+ * @returns {LocalDate} date with years removed
  */
 
-export function minusYears(localDate: LocalDate, yearsToSubtract: number): LocalDate {
+function minusYears(localDate: LocalDate, yearsToSubtract: number): LocalDate {
   const date = new Date(localDate.toString())
   const year = getYear(localDate)
   const newDate = date.setUTCFullYear(year - yearsToSubtract)
-  return dateFormat(newDate, 'yyyy-mm-dd')
+  return dateFormat(newDate, 'yyyy-mm-dd', true)
 }
+
+export { minusYears }

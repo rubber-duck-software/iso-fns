@@ -1,13 +1,16 @@
 import { LocalDate } from '../iso-types'
 
 /**
- * Receives two dates and returns -1 if they are in descending order, 1 if they are not in descending order, and 0 if they are they same day.
+ * Compares two local dates to determine if they are in descending order.
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} leftLocalDate
  * @param {LocalDate} rightLocalDate
- * @returns {number}
+ *
+ * @returns {number} -1 if they are in descending order, 1 if they are in ascending order, and 0 if they are they same date
  */
 
-export function compareDesc(leftLocalDate: LocalDate, rightLocalDate: LocalDate): number {
+function compareDesc(leftLocalDate: LocalDate, rightLocalDate: LocalDate): number {
   if (leftLocalDate > rightLocalDate) {
     return -1
   } else if (leftLocalDate < rightLocalDate) {
@@ -16,3 +19,5 @@ export function compareDesc(leftLocalDate: LocalDate, rightLocalDate: LocalDate)
     return 0
   }
 }
+
+export { compareDesc }

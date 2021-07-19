@@ -3,13 +3,18 @@ import { getYear } from './get-year'
 import { ofYearDay } from './of-year-day'
 
 /**
- * Uses a date and a number of a day in the year (out of 365) and returns the date corresponding to the given day of the year.
+ * Uses a localDate and day-of-year to create a new localDate
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
  * @param {number} dayOfYear
+ *
  * @returns {LocalDate}
  */
 
-export function withDayOfYear(localDate: LocalDate, dayOfYear: number): LocalDate {
+function withDayOfYear(localDate: LocalDate, dayOfYear: number): LocalDate {
   const year = getYear(localDate)
   return ofYearDay(year, dayOfYear)
 }
+
+export { withDayOfYear }

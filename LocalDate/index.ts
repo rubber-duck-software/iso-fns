@@ -26,6 +26,10 @@ import { withDayOfYear } from './with-day-of-year'
 import { withMonth } from './with-month'
 import { withYear } from './with-year'
 
+/**
+ * @namespace LocalDateFns
+ */
+
 export const LocalDateFns = {
   compareAsc,
   compareDesc,

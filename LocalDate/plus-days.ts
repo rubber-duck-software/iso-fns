@@ -3,15 +3,20 @@ import { getDayOfMonth } from './get-day-of-month'
 import dateFormat from 'dateformat'
 
 /**
- * Receives a LocalDate and adds a given number of days to the date
+ * Adds a number of days to a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
  * @param {number} daysToAdd
- * @returns {LocalDate}
+ *
+ * @returns {LocalDate} date with days added
  */
 
-export function plusDays(localDate: LocalDate, daysToAdd: number): LocalDate {
+function plusDays(localDate: LocalDate, daysToAdd: number): LocalDate {
   const date = new Date(localDate.toString())
   const currentDayOfMonth = getDayOfMonth(localDate)
   const newDate = date.setUTCDate(currentDayOfMonth + daysToAdd)
-  return dateFormat(newDate, 'yyyy-mm-dd')
+  return dateFormat(newDate, 'yyyy-mm-dd', true)
 }
+
+export { plusDays }

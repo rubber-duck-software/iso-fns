@@ -7,13 +7,16 @@ import { plus } from '../Month/plus'
 import { ofYearMonthDay } from './of-year-month-day'
 
 /**
- * Receives a year and returns the date corresponding to the n-th day of the year
+ * Determines the nth day of a year
+ * @memberof LocalDateFns
+ *
  * @param {Year} year
  * @param {number} dayOfYear
+ *
  * @returns {LocalDate}
  */
 
-export function ofYearDay(year: Year, dayOfYear: number) {
+function ofYearDay(year: Year, dayOfYear: number) {
   const leap = isLeap(year)
   if (dayOfYear === 366 && leap === false) {
     throw new Error("Invalid date 'DayOfYear 366' as '" + year + "' is not a leap year")
@@ -26,3 +29,5 @@ export function ofYearDay(year: Year, dayOfYear: number) {
   const dom = dayOfYear - firstDayOfYear(moy, leap) + 1
   return ofYearMonthDay(year, moy, dom)
 }
+
+export { ofYearDay }

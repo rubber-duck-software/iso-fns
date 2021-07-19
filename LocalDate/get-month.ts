@@ -2,12 +2,17 @@ import { LocalDate, Month } from '../iso-types'
 import { fromOrdinal } from '../Month/from-ordinal'
 
 /**
- * Receive a local date and returns a string month
+ * Determines the month string of a given date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {Month}
+ *
+ * @returns {Month} string month
  */
 
-export function getMonth(localDate: LocalDate): Month {
+function getMonth(localDate: LocalDate): Month {
   const month = new Date(localDate.toString()).getUTCMonth()
   return fromOrdinal(month)
 }
+
+export { getMonth }

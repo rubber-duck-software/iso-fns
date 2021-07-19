@@ -1,12 +1,17 @@
 import { LocalDate, Year } from '../iso-types'
 
 /**
- * Receives a local date and returns the corresponding year
+ * Determines the year of a given date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {Year}
+ *
+ * @returns {Year} Year from date
  */
 
-export function getYear(localDate: LocalDate): Year {
+function getYear(localDate: LocalDate): Year {
   const year = new Date(localDate.toString()).getUTCFullYear()
   return year
 }
+
+export { getYear }

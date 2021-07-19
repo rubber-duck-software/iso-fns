@@ -4,15 +4,20 @@ import { getMonth } from './get-month'
 import { ordinal as monthOrdinal } from '../Month/ordinal'
 
 /**
- * Receives a date and adds a number of months to it
+ * Adds a number of months to a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
  * @param {number} monthsToAdd
- * @returns {LocalDate}
+ *
+ * @returns {LocalDate} date with months added
  */
 
-export function plusMonths(localDate: LocalDate, monthsToAdd: number): LocalDate {
+function plusMonths(localDate: LocalDate, monthsToAdd: number): LocalDate {
   const date = new Date(localDate.toString())
   const month = monthOrdinal(getMonth(localDate))
   const newDate = date.setUTCDate(month + monthsToAdd)
-  return dateFormat(newDate, 'yyyy-mm-dd')
+  return dateFormat(newDate, 'yyyy-mm-dd', true)
 }
+
+export { plusMonths }
