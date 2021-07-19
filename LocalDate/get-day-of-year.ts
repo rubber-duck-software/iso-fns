@@ -5,6 +5,12 @@ import { isLeap as isYearLeap } from '../Year/is-leap'
 import { firstDayOfYear } from '../Month/first-day-of-year'
 import { getDayOfMonth } from './get-day-of-month'
 
+/**
+ * Receive a local date and return the corresponding day-of-year
+ * @param {LocalDate} localDate
+ * @returns {Year}
+ */
+
 export function getDayOfYear(localDate: LocalDate): Year {
   const month = getMonth(localDate)
   const year = getYear(localDate)
