@@ -1,11 +1,16 @@
 import { Instant } from '../iso-types'
 
 /**
- * Receives an instant in time and returns the corresponding number of epoch seconds.
+ * Converts and instant in time to epoch seconds
+ * @memberof InstantFns
+ *
  * @param {Instant} instant
- * @returns {Number}
+ *
+ * @returns {Number} epoch seconds
  */
 
-export function getEpochSecond(instant: Instant): number {
+function getEpochSecond(instant: Instant): number {
   return Math.floor(new Date(instant.toString()).getTime() / 1000)
 }
+
+export { getEpochSecond }

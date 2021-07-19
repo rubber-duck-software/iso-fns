@@ -2,10 +2,15 @@ import { Instant } from '../iso-types'
 
 /**
  * Converts form epoch milliseconds to human-readable datetime
- * @param epochMilli epoch seconds
+ * @memberof InstantFns
+ *
+ * @param epochMilli epoch milliseconds
+ *
  * @returns human-readable datetime
  */
 
-export function ofEpochMilli(epochMilli: number): Instant {
+function ofEpochMilli(epochMilli: number): Instant {
   return new Date(epochMilli).toISOString()
 }
+
+export { ofEpochMilli }
