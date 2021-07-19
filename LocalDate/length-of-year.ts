@@ -3,12 +3,17 @@ import { getYear } from './get-year'
 import { length as yearLength } from '../Year/length'
 
 /**
- * Receives a local date and returns the number of days in the year that date occurred
+ * determines the length of a year in days
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {number}
+ *
+ * @returns {number} length of year
  */
 
-export function lengthOfYear(localDate: LocalDate): number {
+function lengthOfYear(localDate: LocalDate): number {
   const year = getYear(localDate)
   return yearLength(year)
 }
+
+export { lengthOfYear }

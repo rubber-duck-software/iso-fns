@@ -5,14 +5,19 @@ import { getMonth } from './get-month'
 import { length as monthLength } from '../Month/length'
 
 /**
- * Receives a local date and returns
+ * Determines the length of the month, in days, of a given date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {number}
+ *
+ * @returns {number} length of month
  */
 
-export function lengthOfMonth(localDate: LocalDate): number {
+function lengthOfMonth(localDate: LocalDate): number {
   const month = getMonth(localDate)
   const year = getYear(localDate)
   const leap = isYearLeap(year)
   return monthLength(month, leap)
 }
+
+export { lengthOfMonth }

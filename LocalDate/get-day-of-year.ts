@@ -6,15 +6,20 @@ import { firstDayOfYear } from '../Month/first-day-of-year'
 import { getDayOfMonth } from './get-day-of-month'
 
 /**
- * Receive a local date and return the corresponding day-of-year
+ * Determines the day-of-year of a given date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {Year}
+ *
+ * @returns {Year} day-of-year
  */
 
-export function getDayOfYear(localDate: LocalDate): Year {
+function getDayOfYear(localDate: LocalDate): Year {
   const month = getMonth(localDate)
   const year = getYear(localDate)
   const leap = isYearLeap(year)
   const dayOfMonth = getDayOfMonth(localDate)
   return firstDayOfYear(month, leap) + dayOfMonth - 1
 }
+
+export { getDayOfYear }

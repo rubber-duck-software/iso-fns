@@ -2,18 +2,21 @@ import { LocalDate } from '../iso-types'
 import { getDayOfMonth } from './get-day-of-month'
 import dateFormat from 'dateformat'
 
-// This function should use mod when subtracting daysToSubtract from the currentDayOfMonth.
-
 /**
- * Receives a local date, removes a given number of days from the date, and returns the new date.
+ * Removed a number of days from a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @param {number} daysToSubtract
- * @returns {LocalDate}
+ * @param {Number} daysToSubtract
+ *
+ * @returns {LocalDate} date with days removed
  */
 
-export function minusDays(localDate: LocalDate, daysToSubtract: number): LocalDate {
+function minusDays(localDate: LocalDate, daysToSubtract: number): LocalDate {
   const date = new Date(localDate.toString())
   const currentDayOfMonth = getDayOfMonth(localDate)
   const newDate = date.setUTCDate(currentDayOfMonth - daysToSubtract)
-  return dateFormat(newDate, 'yyyy-mm-dd')
+  return dateFormat(newDate, 'yyyy-mm-dd', true)
 }
+
+export { minusDays }

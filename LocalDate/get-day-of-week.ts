@@ -2,12 +2,17 @@ import { DayOfWeek, LocalDate } from '../iso-types'
 import { fromOrdinal } from '../DayOfWeek/from-ordinal'
 
 /**
- * receives a local date and returns the corresponding day-of-week
+ * Determines the string day-of-week from a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {DayOfWeek}
+ *
+ * @returns {DayOfWeek} string day-of-week
  */
 
-export function getDayOfWeek(localDate: LocalDate): DayOfWeek {
+function getDayOfWeek(localDate: LocalDate): DayOfWeek {
   const dayOfWeek = new Date(localDate.toString()).getUTCDay()
   return fromOrdinal(dayOfWeek)
 }
+
+export { getDayOfWeek }

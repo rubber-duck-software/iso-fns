@@ -1,18 +1,22 @@
 import { LocalDate } from '../iso-types'
 import dateFormat from 'dateformat'
 import { getYear } from './get-year'
-import { plusDays } from './plus-days'
 
 /**
- * Receives a LocalDate and adds a given number of years to the date
+ * Adds a number of years to a date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
  * @param {number} yearsToAdd
- * @returns {LocalDate}
+ *
+ * @returns {LocalDate} date with years added
  */
 
-export function plusYears(localDate: LocalDate, yearsToAdd: number): LocalDate {
+function plusYears(localDate: LocalDate, yearsToAdd: number): LocalDate {
   const date = new Date(localDate.toString())
-  const year = getYear(localDate)
-  const newDate = date.setUTCFullYear(year + yearsToAdd)
-  return dateFormat(newDate, 'yyyy-mm-dd')
+  const currentYear = getYear(localDate)
+  const newDate = date.setUTCFullYear(currentYear + yearsToAdd)
+  return dateFormat(newDate, 'yyyy-mm-dd', true)
 }
+
+export { plusYears }
