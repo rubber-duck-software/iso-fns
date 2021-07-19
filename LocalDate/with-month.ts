@@ -14,6 +14,5 @@ export function withMonth(localDate: LocalDate, month: Month): LocalDate {
   const date = new Date(localDate.toString())
   const monthOrd = monthOrdinal(month)
   const newDate = date.setUTCMonth(monthOrd)
-  const formattedDate = dateFormat(newDate, 'yyyy-mm-dd')
-  return plusDays(formattedDate, 1)
+  return dateFormat(newDate, 'yyyy-mm-dd')
 }

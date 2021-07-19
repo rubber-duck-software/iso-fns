@@ -12,6 +12,5 @@ import { plusDays } from './plus-days'
 export function withYear(localDate: LocalDate, year: Year): LocalDate {
   const date = new Date(localDate.toString())
   const newDate = date.setUTCFullYear(year)
-  const formattedDate = dateFormat(newDate, 'yyyy-mm-dd')
-  return plusDays(formattedDate, 1)
+  return dateFormat(newDate, 'yyyy-mm-dd')
 }
