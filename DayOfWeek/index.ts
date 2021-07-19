@@ -11,6 +11,10 @@ import { toOrdinal_1 } from './to-ordinal-1'
 import { toOrdinal } from './to-ordinal'
 import { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, values } from './values'
 
+/**
+ * @namespace DayOfWeekFns
+ */
+
 export const DayOfWeekFns = {
   compareAsc,
   compareDesc,
