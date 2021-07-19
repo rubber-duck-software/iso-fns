@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Instant/minus-seconds.ts</title>
+  <title> LocalDate/index.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>Instant/minus-seconds.ts</h1>
+                    <h1>LocalDate/index.ts</h1>
                 </header>
                 
 
@@ -85,21 +85,67 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Instant } from '../iso-types'
+            <pre class="prettyprint source linenums"><code>/* c8 ignore start */
+
+import { compareAsc } from './compare-asc'
+import { compareDesc } from './compare-desc'
+import { getDayOfMonth } from './get-day-of-month'
+import { getDayOfWeek } from './get-day-of-week'
+import { getDayOfYear } from './get-day-of-year'
+import { getMonthOrdinal } from './get-month-ordinal'
+import { getMonth } from './get-month'
+import { getYear } from './get-year'
+import { isLeap } from './is-leap'
+import { lengthOfMonth } from './length-of-month'
+import { lengthOfYear } from './length-of-year'
+import { minusDays } from './minus-days'
+import { minusMonths } from './minus-months'
+import { minusWeeks } from './minus-weeks'
+import { minusYears } from './minus-years'
+import { ofYearDay } from './of-year-day'
+import { ofYearMonthDay } from './of-year-month-day'
+import { plusDays } from './plus-days'
+import { plusMonths } from './plus-months'
+import { plusWeeks } from './plus-weeks'
+import { plusYears } from './plus-years'
+import { withDayOfMonth } from './with-day-of-month'
+import { withDayOfYear } from './with-day-of-year'
+import { withMonth } from './with-month'
+import { withYear } from './with-year'
 
 /**
- * Removes some number of seconds from an instant in time
- * @param {Instant} instant
- * @param {Number} secondsToSubtract
- * @returns {Instant}
+ * @namespace LocalDateFns
  */
 
-export function minusSeconds(instant: Instant, secondsToSubtract: number): Instant {
-  const date = new Date(instant.toString())
-  const current = date.getUTCSeconds()
-  const newDate = new Date(date.setUTCSeconds(current - secondsToSubtract))
-  return newDate.toISOString()
+export const LocalDateFns = {
+  compareAsc,
+  compareDesc,
+  getDayOfMonth,
+  getDayOfWeek,
+  getDayOfYear,
+  getMonthOrdinal,
+  getMonth,
+  getYear,
+  isLeap,
+  lengthOfMonth,
+  lengthOfYear,
+  minusDays,
+  minusMonths,
+  minusWeeks,
+  minusYears,
+  ofYearDay,
+  ofYearMonthDay,
+  plusDays,
+  plusMonths,
+  plusWeeks,
+  plusYears,
+  withDayOfMonth,
+  withDayOfYear,
+  withMonth,
+  withYear
 }
+
+/* c8 ignore stop */
 </code></pre>
         </article>
     </section>

@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Global</title>
+  <title> LocalDateFns</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -73,8 +73,8 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Title</p>
-                    <h1>Global</h1>
+                    <p>Namespace</p>
+                    <h1>LocalDateFns</h1>
                 </header>
                 
 
@@ -85,7 +85,7 @@
 
 <header>
     
-        <h2></h2>
+        <h2>LocalDateFns</h2>
         
     
 </header>
@@ -130,6 +130,13 @@
     
 
     
+        <p class="tag-source">
+            <a href="LocalDate_index.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_index.ts.html">LocalDate/index.ts</a>, <a href="LocalDate_index.ts.html#line28">line 28</a>
+            </span>
+        </p>
+    
 </dl>
 
 
@@ -160,12 +167,16 @@
 
 
     
-    <h4 class="name" id="check">
-        <a class="href-link" href="#check">#</a>
+    <h4 class="name" id=".compareAsc">
+        <a class="href-link" href="#.compareAsc">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                check<span class="signature">(localDateTime)</span><span class="type-signature"> &rarr; {LocalDateTime}</span>
+                compareAsc<span class="signature">(leftLocalDate, rightLocalDate)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -174,7 +185,7 @@
     
     
     <div class="description">
-        This is a type guard for the LocalDateTime type.
+        Compares two local dates to determine if they are in ascending order.
     </div>
     
 
@@ -212,13 +223,38 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>localDateTime</code></td>
+      <td class="name"><code>leftLocalDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">unknown</span>
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>rightLocalDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
 
 
   
@@ -274,9 +310,9 @@
 
     
         <p class="tag-source">
-            <a href="LocalDateTime_check.ts.html" class="button">View Source</a>
+            <a href="LocalDate_compare-asc.ts.html" class="button">View Source</a>
             <span>
-                <a href="LocalDateTime_check.ts.html">LocalDateTime/check.ts</a>, <a href="LocalDateTime_check.ts.html#line7">line 7</a>
+                <a href="LocalDate_compare-asc.ts.html">LocalDate/compare-asc.ts</a>, <a href="LocalDate_compare-asc.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -307,1652 +343,7 @@
 
 <div class="columns">
     
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">LocalDateTime</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="compareAsc">
-        <a class="href-link" href="#compareAsc">#</a>
-        
-        <span class="code-name">
-            
-                compareAsc<span class="signature">(leftDay, rightDay)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Compares two days of the week
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>leftDay</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>rightDay</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_compare-asc.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_compare-asc.ts.html">DayOfWeek/compare-asc.ts</a>, <a href="DayOfWeek_compare-asc.ts.html#line9">line 9</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>-1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same day</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="compareAsc">
-        <a class="href-link" href="#compareAsc">#</a>
-        
-        <span class="code-name">
-            
-                compareAsc<span class="signature">(leftInstant, rightInstant)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Compares two instances of time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>leftInstant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>rightInstant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_compare-asc.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_compare-asc.ts.html">Instant/compare-asc.ts</a>, <a href="Instant_compare-asc.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>-1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same instant.</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="compareDesc">
-        <a class="href-link" href="#compareDesc">#</a>
-        
-        <span class="code-name">
-            
-                compareDesc<span class="signature">(leftMonth, rightMonth)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Compares two days of the week
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>leftMonth</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>rightMonth</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_compare-desc.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_compare-desc.ts.html">DayOfWeek/compare-desc.ts</a>, <a href="DayOfWeek_compare-desc.ts.html#line9">line 9</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>-1 if they days are in descending order, 1 if they are in ascending order, and 0 if they are the same day.</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="compareDesc">
-        <a class="href-link" href="#compareDesc">#</a>
-        
-        <span class="code-name">
-            
-                compareDesc<span class="signature">(leftInstant, rightInstant)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Compares two instances in time and returns -1 if they are in descending order, 1 if they are in ascending order, and 0 if they are the dame day.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>leftInstant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>rightInstant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_compare-desc.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_compare-desc.ts.html">Instant/compare-desc.ts</a>, <a href="Instant_compare-desc.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="fromOrdinal">
-        <a class="href-link" href="#fromOrdinal">#</a>
-        
-        <span class="code-name">
-            
-                fromOrdinal<span class="signature">(dayOfWeek)</span><span class="type-signature"> &rarr; {DayOfWeek}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives an ordinal number and converts it to the corresponding day-of-week.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>dayOfWeek</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_from-ordinal.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_from-ordinal.ts.html">DayOfWeek/from-ordinal.ts</a>, <a href="DayOfWeek_from-ordinal.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">DayOfWeek</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="fromOrdinal_1">
-        <a class="href-link" href="#fromOrdinal_1">#</a>
-        
-        <span class="code-name">
-            
-                fromOrdinal_1<span class="signature">(dayOfWeek)</span><span class="type-signature"> &rarr; {DayOfWeek}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives an ordinal value and converts it to a day-of-the-week value assuming 1-indexing.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>dayOfWeek</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_from-ordinal-1.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_from-ordinal-1.ts.html">DayOfWeek/from-ordinal-1.ts</a>, <a href="DayOfWeek_from-ordinal-1.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>day-of-the-week value assuming 1-indexing</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">DayOfWeek</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="getEpochMilliseconds">
-        <a class="href-link" href="#getEpochMilliseconds">#</a>
-        
-        <span class="code-name">
-            
-                getEpochMilliseconds<span class="signature">(instant)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives an instant in time and returns the corresponding number of epoch seconds
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_get-epoch-milliseconds.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_get-epoch-milliseconds.ts.html">Instant/get-epoch-milliseconds.ts</a>, <a href="Instant_get-epoch-milliseconds.ts.html#line7">line 7</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="getEpochSecond">
-        <a class="href-link" href="#getEpochSecond">#</a>
-        
-        <span class="code-name">
-            
-                getEpochSecond<span class="signature">(instant)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives an instant in time and returns the corresponding number of epoch seconds.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_get-epoch-second.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_get-epoch-second.ts.html">Instant/get-epoch-second.ts</a>, <a href="Instant_get-epoch-second.ts.html#line7">line 7</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="getValue">
-        <a class="href-link" href="#getValue">#</a>
-        
-        <span class="code-name">
-            
-                getValue<span class="signature">(month)</span><span class="type-signature"> &rarr; {number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives a month and returns the corresponding ordinal value
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>month</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Month</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Month_get-value.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Month_get-value.ts.html">Month/get-value.ts</a>, <a href="Month_get-value.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
+    <div class='param-desc column is-7'>-1 if they are in ascending order, 1 if they are in descending order, and 0 if they are the same date</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1978,12 +369,16 @@
 
 
     
-    <h4 class="name" id="isWeekend">
-        <a class="href-link" href="#isWeekend">#</a>
+    <h4 class="name" id=".compareDesc">
+        <a class="href-link" href="#.compareDesc">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                isWeekend<span class="signature">(dayOfWeek)</span><span class="type-signature"> &rarr; {Boolean}</span>
+                compareDesc<span class="signature">(leftLocalDate, rightLocalDate)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -1992,7 +387,7 @@
     
     
     <div class="description">
-        Receives a day-of-week variable and returns a boolean value indicating if it is a weekend or not
+        Compares two local dates to determine if they are in descending order.
     </div>
     
 
@@ -2030,13 +425,38 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>dayOfWeek</code></td>
+      <td class="name"><code>leftLocalDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">DayOfWeek</span>
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>rightLocalDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
 
 
   
@@ -2092,9 +512,1248 @@
 
     
         <p class="tag-source">
-            <a href="DayOfWeek_is-weekend.ts.html" class="button">View Source</a>
+            <a href="LocalDate_compare-desc.ts.html" class="button">View Source</a>
             <span>
-                <a href="DayOfWeek_is-weekend.ts.html">DayOfWeek/is-weekend.ts</a>, <a href="DayOfWeek_is-weekend.ts.html#line8">line 8</a>
+                <a href="LocalDate_compare-desc.ts.html">LocalDate/compare-desc.ts</a>, <a href="LocalDate_compare-desc.ts.html#line11">line 11</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>-1 if they are in descending order, 1 if they are in ascending order, and 0 if they are they same date</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getDayOfMonth">
+        <a class="href-link" href="#.getDayOfMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getDayOfMonth<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {number}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the numerical month of a date assuming 0-indexing.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-day-of-month.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-day-of-month.ts.html">LocalDate/get-day-of-month.ts</a>, <a href="LocalDate_get-day-of-month.ts.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Ordinal Month</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getDayOfWeek">
+        <a class="href-link" href="#.getDayOfWeek">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getDayOfWeek<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {DayOfWeek}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the string day-of-week from a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-day-of-week.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-day-of-week.ts.html">LocalDate/get-day-of-week.ts</a>, <a href="LocalDate_get-day-of-week.ts.html#line11">line 11</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>string day-of-week</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">DayOfWeek</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getDayOfYear">
+        <a class="href-link" href="#.getDayOfYear">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getDayOfYear<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {Year}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the day-of-year of a given date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-day-of-year.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-day-of-year.ts.html">LocalDate/get-day-of-year.ts</a>, <a href="LocalDate_get-day-of-year.ts.html#line15">line 15</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>day-of-year</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Year</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getMonth">
+        <a class="href-link" href="#.getMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getMonth<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {Month}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the month string of a given date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-month.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-month.ts.html">LocalDate/get-month.ts</a>, <a href="LocalDate_get-month.ts.html#line11">line 11</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>string month</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Month</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getMonthOrdinal">
+        <a class="href-link" href="#.getMonthOrdinal">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getMonthOrdinal<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {number}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the month of a given date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-month-ordinal.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-month-ordinal.ts.html">LocalDate/get-month-ordinal.ts</a>, <a href="LocalDate_get-month-ordinal.ts.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Ordinal Month</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getYear">
+        <a class="href-link" href="#.getYear">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getYear<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {Year}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the year of a given date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_get-year.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_get-year.ts.html">LocalDate/get-year.ts</a>, <a href="LocalDate_get-year.ts.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Year from date</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Year</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".isLeap">
+        <a class="href-link" href="#.isLeap">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                isLeap<span class="signature">(yearMonth)</span><span class="type-signature"> &rarr; {Boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Receives a local date and returns if it is a leap year
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>yearMonth</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_is-leap.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_is-leap.ts.html">LocalDate/is-leap.ts</a>, <a href="LocalDate_is-leap.ts.html#line12">line 12</a>
             </span>
         </p>
     
@@ -2149,12 +1808,16 @@
 
 
     
-    <h4 class="name" id="minus">
-        <a class="href-link" href="#minus">#</a>
+    <h4 class="name" id=".lengthOfMonth">
+        <a class="href-link" href="#.lengthOfMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                minus<span class="signature">(dayOfWeek, days)</span><span class="type-signature"> &rarr; {DayOfWeek}</span>
+                lengthOfMonth<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -2163,8 +1826,7 @@
     
     
     <div class="description">
-        Removes a given number of days from a day of the week.
-(e.g. Friday - 5 = Sunday)
+        Determines the length of the month, in days, of a given date
     </div>
     
 
@@ -2202,13 +1864,367 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>dayOfWeek</code></td>
+      <td class="name"><code>localDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">DayOfWeek</span>
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_length-of-month.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_length-of-month.ts.html">LocalDate/length-of-month.ts</a>, <a href="LocalDate_length-of-month.ts.html#line14">line 14</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>length of month</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".lengthOfYear">
+        <a class="href-link" href="#.lengthOfYear">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                lengthOfYear<span class="signature">(localDate)</span><span class="type-signature"> &rarr; {number}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        determines the length of a year in days
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_length-of-year.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_length-of-year.ts.html">LocalDate/length-of-year.ts</a>, <a href="LocalDate_length-of-year.ts.html#line12">line 12</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>length of year</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".minusDays">
+        <a class="href-link" href="#.minusDays">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                minusDays<span class="signature">(localDate, daysToSubtract)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Removed a number of days from a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
 
 
   
@@ -2227,7 +2243,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>days</code></td>
+      <td class="name"><code>daysToSubtract</code></td>
   
 
   <td class="type">
@@ -2289,9 +2305,9 @@
 
     
         <p class="tag-source">
-            <a href="DayOfWeek_minus.ts.html" class="button">View Source</a>
+            <a href="LocalDate_minus-days.ts.html" class="button">View Source</a>
             <span>
-                <a href="DayOfWeek_minus.ts.html">DayOfWeek/minus.ts</a>, <a href="DayOfWeek_minus.ts.html#line11">line 11</a>
+                <a href="LocalDate_minus-days.ts.html">LocalDate/minus-days.ts</a>, <a href="LocalDate_minus-days.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -2322,11 +2338,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>date with days removed</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">DayOfWeek</span>
+<span class="param-type">LocalDate</span>
 
 
     </div>
@@ -2346,12 +2364,16 @@
 
 
     
-    <h4 class="name" id="minusMilliseconds">
-        <a class="href-link" href="#minusMilliseconds">#</a>
+    <h4 class="name" id=".minusMonths">
+        <a class="href-link" href="#.minusMonths">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                minusMilliseconds<span class="signature">(instant, millisecondsToSubtract)</span><span class="type-signature"> &rarr; {Instant}</span>
+                minusMonths<span class="signature">(localDate, monthsToSubtract)</span><span class="type-signature"> &rarr; {LocalDate}</span>
             
         </span>
     </h4>
@@ -2360,7 +2382,7 @@
     
     
     <div class="description">
-        Subtracts some amount of milliseconds from an instant in time
+        Removes a number of months from a date
     </div>
     
 
@@ -2398,13 +2420,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>localDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">LocalDate</span>
 
 
   
@@ -2423,13 +2445,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>millisecondsToSubtract</code></td>
+      <td class="name"><code>monthsToSubtract</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
   
@@ -2485,9 +2507,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_minus-milliseconds.ts.html" class="button">View Source</a>
+            <a href="LocalDate_minus-months.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_minus-milliseconds.ts.html">Instant/minus-milliseconds.ts</a>, <a href="Instant_minus-milliseconds.ts.html#line8">line 8</a>
+                <a href="LocalDate_minus-months.ts.html">LocalDate/minus-months.ts</a>, <a href="LocalDate_minus-months.ts.html#line14">line 14</a>
             </span>
         </p>
     
@@ -2518,11 +2540,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>date with months removed</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Instant</span>
+<span class="param-type">LocalDate</span>
 
 
     </div>
@@ -2542,12 +2566,16 @@
 
 
     
-    <h4 class="name" id="minusSeconds">
-        <a class="href-link" href="#minusSeconds">#</a>
+    <h4 class="name" id=".minusWeeks">
+        <a class="href-link" href="#.minusWeeks">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                minusSeconds<span class="signature">(instant, secondsToSubtract)</span><span class="type-signature"> &rarr; {Instant}</span>
+                minusWeeks<span class="signature">(localDate, weeksToSubtract)</span><span class="type-signature"> &rarr; {LocalDate}</span>
             
         </span>
     </h4>
@@ -2556,7 +2584,7 @@
     
     
     <div class="description">
-        Removes some number of seconds from an instant in time
+        Removes a number of weeks from a date
     </div>
     
 
@@ -2594,13 +2622,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>localDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">LocalDate</span>
 
 
   
@@ -2619,13 +2647,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>secondsToSubtract</code></td>
+      <td class="name"><code>weeksToSubtract</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
   
@@ -2681,9 +2709,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_minus-seconds.ts.html" class="button">View Source</a>
+            <a href="LocalDate_minus-weeks.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_minus-seconds.ts.html">Instant/minus-seconds.ts</a>, <a href="Instant_minus-seconds.ts.html#line8">line 8</a>
+                <a href="LocalDate_minus-weeks.ts.html">LocalDate/minus-weeks.ts</a>, <a href="LocalDate_minus-weeks.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -2714,11 +2742,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>date with weeks removed</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Instant</span>
+<span class="param-type">LocalDate</span>
 
 
     </div>
@@ -2738,12 +2768,16 @@
 
 
     
-    <h4 class="name" id="now">
-        <a class="href-link" href="#now">#</a>
+    <h4 class="name" id=".minusYears">
+        <a class="href-link" href="#.minusYears">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                now<span class="signature">()</span><span class="type-signature"> &rarr; {Instant}</span>
+                minusYears<span class="signature">(localDate, yearsToSubtract)</span><span class="type-signature"> &rarr; {LocalDate}</span>
             
         </span>
     </h4>
@@ -2752,129 +2786,7 @@
     
     
     <div class="description">
-        Returns the current time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_now.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_now.ts.html">Instant/now.ts</a>, <a href="Instant_now.ts.html#line6">line 6</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>current time in yyyy-mm-ddTHH:MM:ss.lZ format</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Instant</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="ofEpochMilli">
-        <a class="href-link" href="#ofEpochMilli">#</a>
-        
-        <span class="code-name">
-            
-                ofEpochMilli<span class="signature">(epochMilli)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Converts form epoch milliseconds to human-readable datetime
+        Removes a number of years from a date
     </div>
     
 
@@ -2912,10 +2824,15 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>epochMilli</code></td>
+      <td class="name"><code>localDate</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
   
   </td>
 
@@ -2923,159 +2840,24 @@
 
   
 
-  <td class="description last">epoch seconds</td>
+  <td class="description last"></td>
 </tr>
 
 
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_of-epoch-milli.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_of-epoch-milli.ts.html">Instant/of-epoch-milli.ts</a>, <a href="Instant_of-epoch-milli.ts.html#line7">line 7</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>human-readable datetime</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="ofEpochSecond">
-        <a class="href-link" href="#ofEpochSecond">#</a>
-        
-        <span class="code-name">
-            
-                ofEpochSecond<span class="signature">(epochSecond)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Converts epoch seconds to a human-readable datetime
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
         
 
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>epochSecond</code></td>
+      <td class="name"><code>yearsToSubtract</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
   
   </td>
 
@@ -3129,9 +2911,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_of-epoch-second.ts.html" class="button">View Source</a>
+            <a href="LocalDate_minus-years.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_of-epoch-second.ts.html">Instant/of-epoch-second.ts</a>, <a href="Instant_of-epoch-second.ts.html#line7">line 7</a>
+                <a href="LocalDate_minus-years.ts.html">LocalDate/minus-years.ts</a>, <a href="LocalDate_minus-years.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -3162,8 +2944,16 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>human-readable datetime</div>
+    <div class='param-desc column is-7'>date with years removed</div>
     
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
     
 </div>
 
@@ -3180,12 +2970,16 @@
 
 
     
-    <h4 class="name" id="ordinal">
-        <a class="href-link" href="#ordinal">#</a>
+    <h4 class="name" id=".ofYearDay">
+        <a class="href-link" href="#.ofYearDay">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                ordinal<span class="signature">(month)</span><span class="type-signature"> &rarr; {number}</span>
+                ofYearDay<span class="signature">(year, dayOfYear)</span><span class="type-signature"> &rarr; {LocalDate}</span>
             
         </span>
     </h4>
@@ -3194,7 +2988,7 @@
     
     
     <div class="description">
-        Receives a month and returns the corresponding month ordinal assuming 0-indexings
+        Determines the nth day of a year
     </div>
     
 
@@ -3227,6 +3021,1664 @@
         </thead>
 
         <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>year</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Year</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dayOfYear</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_of-year-day.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_of-year-day.ts.html">LocalDate/of-year-day.ts</a>, <a href="LocalDate_of-year-day.ts.html#line17">line 17</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".ofYearMonthDay">
+        <a class="href-link" href="#.ofYearMonthDay">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                ofYearMonthDay<span class="signature">(year, month, dayOfMonth)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates a local date out of a year, month, and day
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>year</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Year</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>month</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Month</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dayOfMonth</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_of-year-month-day.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_of-year-month-day.ts.html">LocalDate/of-year-month-day.ts</a>, <a href="LocalDate_of-year-month-day.ts.html#line14">line 14</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".plusDays">
+        <a class="href-link" href="#.plusDays">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                plusDays<span class="signature">(localDate, daysToAdd)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds a number of days to a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>daysToAdd</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_plus-days.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_plus-days.ts.html">LocalDate/plus-days.ts</a>, <a href="LocalDate_plus-days.ts.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>date with days added</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".plusMonths">
+        <a class="href-link" href="#.plusMonths">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                plusMonths<span class="signature">(localDate, monthsToAdd)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds a number of months to a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>monthsToAdd</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_plus-months.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_plus-months.ts.html">LocalDate/plus-months.ts</a>, <a href="LocalDate_plus-months.ts.html#line14">line 14</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>date with months added</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".plusWeeks">
+        <a class="href-link" href="#.plusWeeks">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                plusWeeks<span class="signature">(localDate, weeksToAdd)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds a number of weeks to a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>weeksToAdd</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_plus-weeks.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_plus-weeks.ts.html">LocalDate/plus-weeks.ts</a>, <a href="LocalDate_plus-weeks.ts.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>date with weeks added</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".plusYears">
+        <a class="href-link" href="#.plusYears">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                plusYears<span class="signature">(localDate, yearsToAdd)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds a number of years to a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>yearsToAdd</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_plus-years.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_plus-years.ts.html">LocalDate/plus-years.ts</a>, <a href="LocalDate_plus-years.ts.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>date with years added</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".withDayOfMonth">
+        <a class="href-link" href="#.withDayOfMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                withDayOfMonth<span class="signature">(localDate, dayOfMonth)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates a localDate with an existing date and a day of the month
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dayOfMonth</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_with-day-of-month.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_with-day-of-month.ts.html">LocalDate/with-day-of-month.ts</a>, <a href="LocalDate_with-day-of-month.ts.html#line12">line 12</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".withDayOfYear">
+        <a class="href-link" href="#.withDayOfYear">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                withDayOfYear<span class="signature">(localDate, dayOfYear)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Uses a localDate and day-of-year to create a new localDate
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dayOfYear</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDate_with-day-of-year.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDate_with-day-of-year.ts.html">LocalDate/with-day-of-year.ts</a>, <a href="LocalDate_with-day-of-year.ts.html#line13">line 13</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">LocalDate</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".withMonth">
+        <a class="href-link" href="#.withMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                withMonth<span class="signature">(localDate, month)</span><span class="type-signature"> &rarr; {LocalDate}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the month of a date
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDate</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDate</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
         
 
             
@@ -3294,9 +4746,9 @@
 
     
         <p class="tag-source">
-            <a href="Month_ordinal.ts.html" class="button">View Source</a>
+            <a href="LocalDate_with-month.ts.html" class="button">View Source</a>
             <span>
-                <a href="Month_ordinal.ts.html">Month/ordinal.ts</a>, <a href="Month_ordinal.ts.html#line8">line 8</a>
+                <a href="LocalDate_with-month.ts.html">LocalDate/with-month.ts</a>, <a href="LocalDate_with-month.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -3331,7 +4783,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">number</span>
+<span class="param-type">LocalDate</span>
 
 
     </div>
@@ -3351,12 +4803,16 @@
 
 
     
-    <h4 class="name" id="plus">
-        <a class="href-link" href="#plus">#</a>
+    <h4 class="name" id=".withYear">
+        <a class="href-link" href="#.withYear">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                plus<span class="signature">(dayOfWeek, days)</span><span class="type-signature"> &rarr; {DayOfWeek}</span>
+                withYear<span class="signature">(localDate, year)</span><span class="type-signature"> &rarr; {LocalDate}</span>
             
         </span>
     </h4>
@@ -3365,8 +4821,7 @@
     
     
     <div class="description">
-        Adds a given number of days to a give day of the week
-(e.g. Tuesday + 3 = Friday)
+        Sets the year of a date
     </div>
     
 
@@ -3404,13 +4859,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>dayOfWeek</code></td>
+      <td class="name"><code>localDate</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">DayOfWeek</span>
+<span class="param-type">LocalDate</span>
 
 
   
@@ -3429,13 +4884,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>days</code></td>
+      <td class="name"><code>year</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Number</span>
+<span class="param-type">Year</span>
 
 
   
@@ -3491,9 +4946,9 @@
 
     
         <p class="tag-source">
-            <a href="DayOfWeek_plus.ts.html" class="button">View Source</a>
+            <a href="LocalDate_with-year.ts.html" class="button">View Source</a>
             <span>
-                <a href="DayOfWeek_plus.ts.html">DayOfWeek/plus.ts</a>, <a href="DayOfWeek_plus.ts.html#line11">line 11</a>
+                <a href="LocalDate_with-year.ts.html">LocalDate/with-year.ts</a>, <a href="LocalDate_with-year.ts.html#line12">line 12</a>
             </span>
         </p>
     
@@ -3528,709 +4983,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">DayOfWeek</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="plusMilliseconds">
-        <a class="href-link" href="#plusMilliseconds">#</a>
-        
-        <span class="code-name">
-            
-                plusMilliseconds<span class="signature">(instant, millisecondsToAdd)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Adds a given number of milliseconds to an instance in time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>millisecondsToAdd</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_plus-milliseconds.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_plus-milliseconds.ts.html">Instant/plus-milliseconds.ts</a>, <a href="Instant_plus-milliseconds.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>new instance in time</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="plusSeconds">
-        <a class="href-link" href="#plusSeconds">#</a>
-        
-        <span class="code-name">
-            
-                plusSeconds<span class="signature">(instant, secondsToAdd)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Adds a number of seconds to a given instance in time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>secondsToAdd</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_plus-seconds.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_plus-seconds.ts.html">Instant/plus-seconds.ts</a>, <a href="Instant_plus-seconds.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>new instance in time</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="toOrdinal">
-        <a class="href-link" href="#toOrdinal">#</a>
-        
-        <span class="code-name">
-            
-                toOrdinal<span class="signature">(dayOfWeek)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives a day-of-week value and returns the corresponding ordinal value of that day.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>dayOfWeek</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_to-ordinal.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_to-ordinal.ts.html">DayOfWeek/to-ordinal.ts</a>, <a href="DayOfWeek_to-ordinal.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="toOrdinal_1">
-        <a class="href-link" href="#toOrdinal_1">#</a>
-        
-        <span class="code-name">
-            
-                toOrdinal_1<span class="signature">(dayOfWeek)</span><span class="type-signature"> &rarr; {Number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Receives a day-of-the-week value and converts it to the corresponding ordinal assuming 1-indexing.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>dayOfWeek</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">DayOfWeek</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="DayOfWeek_to-ordinal-1.ts.html" class="button">View Source</a>
-            <span>
-                <a href="DayOfWeek_to-ordinal-1.ts.html">DayOfWeek/to-ordinal-1.ts</a>, <a href="DayOfWeek_to-ordinal-1.ts.html#line8">line 8</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
+<span class="param-type">LocalDate</span>
 
 
     </div>

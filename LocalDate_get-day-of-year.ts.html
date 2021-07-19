@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#compareAsc">compareAsc</a></li><li><a href="global.html#compareDesc">compareDesc</a></li><li><a href="global.html#fromOrdinal">fromOrdinal</a></li><li><a href="global.html#fromOrdinal_1">fromOrdinal_1</a></li><li><a href="global.html#getDayOfMonth">getDayOfMonth</a></li><li><a href="global.html#getDayOfWeek">getDayOfWeek</a></li><li><a href="global.html#getDayOfYear">getDayOfYear</a></li><li><a href="global.html#getEpochMilliseconds">getEpochMilliseconds</a></li><li><a href="global.html#getEpochSecond">getEpochSecond</a></li><li><a href="global.html#getMonth">getMonth</a></li><li><a href="global.html#getMonthOrdinal">getMonthOrdinal</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getYear">getYear</a></li><li><a href="global.html#isLeap">isLeap</a></li><li><a href="global.html#isWeekend">isWeekend</a></li><li><a href="global.html#lengthOfMonth">lengthOfMonth</a></li><li><a href="global.html#lengthOfYear">lengthOfYear</a></li><li><a href="global.html#minus">minus</a></li><li><a href="global.html#minusDays">minusDays</a></li><li><a href="global.html#minusMilliseconds">minusMilliseconds</a></li><li><a href="global.html#minusMonths">minusMonths</a></li><li><a href="global.html#minusSeconds">minusSeconds</a></li><li><a href="global.html#minusWeeks">minusWeeks</a></li><li><a href="global.html#minusYears">minusYears</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#ofEpochMilli">ofEpochMilli</a></li><li><a href="global.html#ofEpochSecond">ofEpochSecond</a></li><li><a href="global.html#ofYearDay">ofYearDay</a></li><li><a href="global.html#ofYearMonthDay">ofYearMonthDay</a></li><li><a href="global.html#ordinal">ordinal</a></li><li><a href="global.html#plus">plus</a></li><li><a href="global.html#plusDays">plusDays</a></li><li><a href="global.html#plusMilliseconds">plusMilliseconds</a></li><li><a href="global.html#plusMonths">plusMonths</a></li><li><a href="global.html#plusSeconds">plusSeconds</a></li><li><a href="global.html#plusWeeks">plusWeeks</a></li><li><a href="global.html#plusYears">plusYears</a></li><li><a href="global.html#toOrdinal">toOrdinal</a></li><li><a href="global.html#toOrdinal_1">toOrdinal_1</a></li><li><a href="global.html#withDayOfMonth">withDayOfMonth</a></li><li><a href="global.html#withDayOfYear">withDayOfYear</a></li><li><a href="global.html#withMonth">withMonth</a></li><li><a href="global.html#withYear">withYear</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="LocalDateFns.html">LocalDateFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#compareAsc">compareAsc</a></li><li><a href="global.html#compareDesc">compareDesc</a></li><li><a href="global.html#fromOrdinal">fromOrdinal</a></li><li><a href="global.html#fromOrdinal_1">fromOrdinal_1</a></li><li><a href="global.html#getEpochMilliseconds">getEpochMilliseconds</a></li><li><a href="global.html#getEpochSecond">getEpochSecond</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#isWeekend">isWeekend</a></li><li><a href="global.html#minus">minus</a></li><li><a href="global.html#minusMilliseconds">minusMilliseconds</a></li><li><a href="global.html#minusSeconds">minusSeconds</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#ofEpochMilli">ofEpochMilli</a></li><li><a href="global.html#ofEpochSecond">ofEpochSecond</a></li><li><a href="global.html#ordinal">ordinal</a></li><li><a href="global.html#plus">plus</a></li><li><a href="global.html#plusMilliseconds">plusMilliseconds</a></li><li><a href="global.html#plusSeconds">plusSeconds</a></li><li><a href="global.html#toOrdinal">toOrdinal</a></li><li><a href="global.html#toOrdinal_1">toOrdinal_1</a></li></ul></div>
                 
             </nav>
         </div>
@@ -93,18 +93,23 @@ import { firstDayOfYear } from '../Month/first-day-of-year'
 import { getDayOfMonth } from './get-day-of-month'
 
 /**
- * Receive a local date and return the corresponding day-of-year
+ * Determines the day-of-year of a given date
+ * @memberof LocalDateFns
+ *
  * @param {LocalDate} localDate
- * @returns {Year}
+ *
+ * @returns {Year} day-of-year
  */
 
-export function getDayOfYear(localDate: LocalDate): Year {
+function getDayOfYear(localDate: LocalDate): Year {
   const month = getMonth(localDate)
   const year = getYear(localDate)
   const leap = isYearLeap(year)
   const dayOfMonth = getDayOfMonth(localDate)
   return firstDayOfYear(month, leap) + dayOfMonth - 1
 }
+
+export { getDayOfYear }
 </code></pre>
         </article>
     </section>
