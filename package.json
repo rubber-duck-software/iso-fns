@@ -1,9 +1,15 @@
 {
   "name": "iso-fns",
-  "version": "0.0.9",
+  "description": "A string-based date-time library for Javascript.",
+  "version": "0.0.16",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "homepage": "iso-fns.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rubber-duck-software/iso-fns.git"
+  },
   "scripts": {
     "lint": "prettier --check .",
     "format": "prettier --write .",
@@ -15,17 +21,17 @@
     "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
   },
   "dependencies": {
+    "dateformat": "^4.5.1"
+  },
+  "devDependencies": {
     "@types/dateformat": "^3.0.1",
+    "all-contributors-cli": "^6.20.0",
+    "beartest-js": "^3.1.1",
     "better-docs": "^2.3.2",
     "c8": "^7.7.3",
     "coveralls": "^3.1.1",
-    "dateformat": "^4.5.1",
-    "jsdoc": "^3.6.7"
-  },
-  "devDependencies": {
-    "all-contributors-cli": "^6.20.0",
-    "beartest-js": "^3.1.1",
     "expect": "^27.0.6",
+    "jsdoc": "^3.6.7",
     "prettier": "^2.3.2",
     "typescript": "^4.3.2"
   }
