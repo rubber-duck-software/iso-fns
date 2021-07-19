@@ -14,6 +14,5 @@ export function plusYears(localDate: LocalDate, yearsToAdd: number): LocalDate {
   const date = new Date(localDate.toString())
   const year = getYear(localDate)
   const newDate = date.setUTCFullYear(year + yearsToAdd)
-  const formattedDate: LocalDate = dateFormat(newDate, 'yyyy-mm-dd')
-  return plusDays(formattedDate, 1)
+  return dateFormat(newDate, 'yyyy-mm-dd')
 }
