@@ -12,6 +12,10 @@ import { ofEpochSecond } from './of-epoch-second'
 import { plusMilliseconds } from './plus-milliseconds'
 import { plusSeconds } from './plus-seconds'
 
+/**
+ * @namespace InstantFns
+ */
+
 export const InstantFns = {
   compareAsc,
   compareDesc,

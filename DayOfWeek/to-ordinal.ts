@@ -2,26 +2,31 @@ import { DayOfWeek } from '../iso-types'
 import { Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday } from './values'
 
 /**
- * Receives a day-of-week value and returns the corresponding ordinal value of that day.
+ * Converts form string day-of-week to ordinal day-of-week assuming 0-indexing.
+ * @memberof DayOfWeekFns
+ *
  * @param {DayOfWeek} dayOfWeek
- * @returns {Number}
+ *
+ * @returns {Number} ordinal dayOfWeek assuming 0-indexing.
  */
 
-export function toOrdinal(dayOfWeek: DayOfWeek): number {
-  let ordinalMap = new Map()
-  ordinalMap.set(Sunday, 0)
-  ordinalMap.set(Monday, 1)
-  ordinalMap.set(Tuesday, 2)
-  ordinalMap.set(Wednesday, 3)
-  ordinalMap.set(Thursday, 4)
-  ordinalMap.set(Friday, 5)
-  ordinalMap.set(Saturday, 6)
+function toOrdinal(dayOfWeek: DayOfWeek): number {
+  const ordinalMap = new Map<DayOfWeek, number>([
+    [Sunday, 0],
+    [Monday, 1],
+    [Tuesday, 2],
+    [Wednesday, 3],
+    [Thursday, 4],
+    [Friday, 5],
+    [Saturday, 6]
+  ])
 
-  try {
+  if (!ordinalMap.has(dayOfWeek)) {
+    throw new RangeError(`Invalid Day: ${dayOfWeek} is not a valid day index`)
+  } else {
+    // @ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
     return ordinalMap.get(dayOfWeek)
-    // This is being tested, but due to how beartest handles detecting thrown errors, c8 doesn't recognize that it is covered.
-    /* c8 ignore next 3 */
-  } catch {
-    throw new TypeError(`${dayOfWeek} does not match type DayOfWeek`)
   }
 }
+
+export { toOrdinal }

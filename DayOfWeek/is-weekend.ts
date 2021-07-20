@@ -2,11 +2,16 @@ import { DayOfWeek } from '../iso-types'
 import { Saturday, Sunday } from './values'
 
 /**
- * Receives a day-of-week variable and returns a boolean value indicating if it is a weekend or not
+ * Determines if a day of the week is a weekend
+ * @memberof DayOfWeekFns
+ *
  * @param {DayOfWeek} dayOfWeek
- * @returns {Boolean}
+ *
+ * @returns {Boolean} true if weekend. false if not weekend.
  */
 
-export function isWeekend(dayOfWeek: DayOfWeek): boolean {
+function isWeekend(dayOfWeek: DayOfWeek): boolean {
   return dayOfWeek === Saturday || dayOfWeek === Sunday
 }
+
+export { isWeekend }
