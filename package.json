@@ -36,7 +36,24 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./*": "./dist/**/*.js",
+    "./DayOfWeek": "./dist/DayOfWeek/index.js",
+    "./DayOfWeek/*": "./dist/DayOfWeek/*.js",
+    "./Instant": "./dist/Instant/index.js",
+    "./Instant/*": "./dist/Instant/*.js",
+    "./LocalDate": "./dist/LocalDate/index.js",
+    "./LocalDate/*": "./dist/LocalDate/*.js",
+    "./LocalDateTime": "./dist/LocalDateTime/index.js",
+    "./LocalDateTime/*": "./dist/LocalDateTime/*.js",
+    "./LocalTime": "./dist/LocalTime/index.js",
+    "./LocalTime/*": "./dist/LocalTime/*.js",
+    "./Month": "./dist/Month/index.js",
+    "./Month/*": "./dist/Month/*.js",
+    "./MonthDay": "./dist/MonthDay/index.js",
+    "./MonthDay/*": "./dist/MonthDay/*.js",
+    "./Year": "./dist/Year/index.js",
+    "./Year/*": "./dist/Year/*.js",
+    "./YearMonth": "./dist/YearMonth/index.js",
+    "./YearMonth/*": "./dist/YearMonth/*.js",
     "./package.json": "./package.json"
   }
 }
