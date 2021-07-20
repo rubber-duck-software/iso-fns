@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDate/with-month.ts</title>
+  <title> DayOfWeek/index.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDate/with-month.ts</h1>
+                    <h1>DayOfWeek/index.ts</h1>
                 </header>
                 
 
@@ -85,28 +85,43 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDate, Month } from '../iso-types'
-import dateFormat from 'dateformat'
-import { ordinal as monthOrdinal } from '../Month/ordinal'
+            <pre class="prettyprint source linenums"><code>/* c8 ignore start */
+
+import { compareAsc } from './compare-asc'
+import { compareDesc } from './compare-desc'
+import { fromOrdinal_1 } from './from-ordinal-1'
+import { fromOrdinal } from './from-ordinal'
+import { isWeekend } from './is-weekend'
+import { minus } from './minus'
+import { plus } from './plus'
+import { toOrdinal_1 } from './to-ordinal-1'
+import { toOrdinal } from './to-ordinal'
+import { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, values } from './values'
 
 /**
- * Sets the month of a date
- * @memberof LocalDateFns
- *
- * @param {LocalDate} localDate
- * @param {Month} month
- *
- * @returns {LocalDate}
+ * @namespace DayOfWeekFns
  */
 
-function withMonth(localDate: LocalDate, month: Month): LocalDate {
-  const date = new Date(localDate.toString())
-  const monthOrd = monthOrdinal(month)
-  const newDate = date.setUTCMonth(monthOrd)
-  return dateFormat(newDate, 'yyyy-mm-dd', true)
+export const DayOfWeekFns = {
+  compareAsc,
+  compareDesc,
+  fromOrdinal_1,
+  fromOrdinal,
+  isWeekend,
+  minus,
+  plus,
+  toOrdinal_1,
+  toOrdinal,
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  values
 }
-
-export { withMonth }
+/* c8 ignore stop */
 </code></pre>
         </article>
     </section>

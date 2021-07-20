@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDate/with-month.ts</title>
+  <title> Year/length.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDate/with-month.ts</h1>
+                    <h1>Year/length.ts</h1>
                 </header>
                 
 
@@ -85,28 +85,25 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDate, Month } from '../iso-types'
-import dateFormat from 'dateformat'
-import { ordinal as monthOrdinal } from '../Month/ordinal'
+            <pre class="prettyprint source linenums"><code>/* c8 ignore start */
+
+import { Year } from '../iso-types'
+import { isLeap } from './is-leap'
 
 /**
- * Sets the month of a date
- * @memberof LocalDateFns
+ * Determines if the given year is 366 or 365 days long
+ * @memberof YearFns
  *
- * @param {LocalDate} localDate
- * @param {Month} month
+ * @param year
  *
- * @returns {LocalDate}
+ * @returns {number}
  */
 
-function withMonth(localDate: LocalDate, month: Month): LocalDate {
-  const date = new Date(localDate.toString())
-  const monthOrd = monthOrdinal(month)
-  const newDate = date.setUTCMonth(monthOrd)
-  return dateFormat(newDate, 'yyyy-mm-dd', true)
+export function length(year: Year): number {
+  return isLeap(year) ? 366 : 365
 }
 
-export { withMonth }
+/* c8 ignore stop */
 </code></pre>
         </article>
     </section>

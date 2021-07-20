@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="LocalDateFns.html">LocalDateFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#compareAsc">compareAsc</a></li><li><a href="global.html#compareDesc">compareDesc</a></li><li><a href="global.html#fromOrdinal">fromOrdinal</a></li><li><a href="global.html#fromOrdinal_1">fromOrdinal_1</a></li><li><a href="global.html#getEpochMilliseconds">getEpochMilliseconds</a></li><li><a href="global.html#getEpochSecond">getEpochSecond</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#isWeekend">isWeekend</a></li><li><a href="global.html#minus">minus</a></li><li><a href="global.html#minusMilliseconds">minusMilliseconds</a></li><li><a href="global.html#minusSeconds">minusSeconds</a></li><li><a href="global.html#now">now</a></li><li><a href="global.html#ofEpochMilli">ofEpochMilli</a></li><li><a href="global.html#ofEpochSecond">ofEpochSecond</a></li><li><a href="global.html#ordinal">ordinal</a></li><li><a href="global.html#plus">plus</a></li><li><a href="global.html#plusMilliseconds">plusMilliseconds</a></li><li><a href="global.html#plusSeconds">plusSeconds</a></li><li><a href="global.html#toOrdinal">toOrdinal</a></li><li><a href="global.html#toOrdinal_1">toOrdinal_1</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="DayOfWeekFns.html">DayOfWeekFns</a></li><li><a href="InstantFns.html">InstantFns</a></li><li><a href="LocalDateFns.html">LocalDateFns</a></li><li><a href="YearFns.html">YearFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#ordinal">ordinal</a></li></ul></div>
                 
             </nav>
         </div>
@@ -91,12 +91,16 @@ import { Instant } from '../iso-types'
 
 /**
  * Returns the current time
+ * @memberof InstantFns
+ *
  * @returns {Instant} current time in yyyy-mm-ddTHH:MM:ss.lZ format
  */
 
-export function now(): Instant {
+function now(): Instant {
   return new Date().toISOString()
 }
+
+export { now }
 
 /* c8 ignore stop */
 </code></pre>

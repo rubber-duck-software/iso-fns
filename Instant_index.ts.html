@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDate/with-month.ts</title>
+  <title> Instant/index.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDate/with-month.ts</h1>
+                    <h1>Instant/index.ts</h1>
                 </header>
                 
 
@@ -85,28 +85,39 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDate, Month } from '../iso-types'
-import dateFormat from 'dateformat'
-import { ordinal as monthOrdinal } from '../Month/ordinal'
+            <pre class="prettyprint source linenums"><code>/* c8 ignore start */
+
+import { compareAsc } from './compare-asc'
+import { compareDesc } from './compare-desc'
+import { getEpochMilliseconds } from './get-epoch-milliseconds'
+import { getEpochSecond } from './get-epoch-second'
+import { minusMilliseconds } from './minus-milliseconds'
+import { minusSeconds } from './minus-seconds'
+import { now } from './now'
+import { ofEpochMilli } from './of-epoch-milli'
+import { ofEpochSecond } from './of-epoch-second'
+import { plusMilliseconds } from './plus-milliseconds'
+import { plusSeconds } from './plus-seconds'
 
 /**
- * Sets the month of a date
- * @memberof LocalDateFns
- *
- * @param {LocalDate} localDate
- * @param {Month} month
- *
- * @returns {LocalDate}
+ * @namespace InstantFns
  */
 
-function withMonth(localDate: LocalDate, month: Month): LocalDate {
-  const date = new Date(localDate.toString())
-  const monthOrd = monthOrdinal(month)
-  const newDate = date.setUTCMonth(monthOrd)
-  return dateFormat(newDate, 'yyyy-mm-dd', true)
+export const InstantFns = {
+  compareAsc,
+  compareDesc,
+  getEpochMilliseconds,
+  getEpochSecond,
+  minusMilliseconds,
+  minusSeconds,
+  now,
+  ofEpochMilli,
+  ofEpochSecond,
+  plusMilliseconds,
+  plusSeconds
 }
 
-export { withMonth }
+/* c8 ignore stop */
 </code></pre>
         </article>
     </section>
