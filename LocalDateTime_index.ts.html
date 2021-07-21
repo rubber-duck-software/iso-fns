@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LocalDate/with-month.ts</title>
+  <title> LocalDateTime/index.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>LocalDate/with-month.ts</h1>
+                    <h1>LocalDateTime/index.ts</h1>
                 </header>
                 
 
@@ -85,28 +85,97 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { LocalDate, Month } from '../iso-types'
-import dateFormat from 'dateformat'
-import { ordinal as monthOrdinal } from '../Month/ordinal'
+            <pre class="prettyprint source linenums"><code>/* c8 ignore start */
+
+import { check } from './check'
+import { compareAsc } from './compare-asc'
+import { compareDesc } from './compare-desc'
+import { getDayOfMonth } from './get-day-of-month'
+import { getDayOfWeek } from './get-day-of-week'
+import { getDayOfYear } from './get-day-of-year'
+import { getHour } from './get-hour'
+import { getLocalDate } from './get-local-date'
+import { getLocalTime } from './get-local-time'
+import { getMillisecond } from './get-millisecond'
+import { getMinute } from './get-minute'
+import { getMonth } from './get-month'
+import { getSecond } from './get-second'
+import { getYear } from './get-year'
+import { minusDays } from './minus-days'
+import { minusHours } from './minus-hours'
+import { minusMilliseconds } from './minus-milliseconds'
+import { minusMinutes } from './minus-minutes'
+import { minusMonths } from './minus-months'
+import { minusSeconds } from './minus-seconds'
+import { minusWeeks } from './minus-weeks'
+import { minusYears } from './minus-years'
+import { ofDateAndTime } from './of-date-and-time'
+import { of } from './of'
+import { plusDays } from './plus-days'
+import { plusHours } from './plus-hours'
+import { plusMilliseconds } from './plus-milliseconds'
+import { plusMinutes } from './plus-minutes'
+import { plusMonths } from './plus-months'
+import { plusSeconds } from './plus-seconds'
+import { plusWeeks } from './plus-weeks'
+import { plusYears } from './plus-years'
+import { withDayOfMonth } from './with-day-of-month'
+import { withDayOfYear } from './with-day-of-year'
+import { withHour } from './with-hour'
+import { withMillisecond } from './with-millisecond'
+import { withMinute } from './with-minute'
+import { withMonth } from './with-month'
+import { withSecond } from './with-second'
+import { withYear } from './with-year'
 
 /**
- * Sets the month of a date
- * @memberof LocalDateFns
- *
- * @param {LocalDate} localDate
- * @param {Month} month
- *
- * @returns {LocalDate}
+ * @namespace LocalDateTimeFns
  */
 
-function withMonth(localDate: LocalDate, month: Month): LocalDate {
-  const date = new Date(localDate.toString())
-  const monthOrd = monthOrdinal(month)
-  const newDate = date.setUTCMonth(monthOrd)
-  return dateFormat(newDate, 'yyyy-mm-dd', true)
+export const LocalDateTimeFns = {
+  check,
+  compareAsc,
+  compareDesc,
+  getDayOfMonth,
+  getDayOfWeek,
+  getDayOfYear,
+  getHour,
+  getLocalDate,
+  getLocalTime,
+  getMillisecond,
+  getMinute,
+  getMonth,
+  getSecond,
+  getYear,
+  minusDays,
+  minusHours,
+  minusMilliseconds,
+  minusMinutes,
+  minusMonths,
+  minusSeconds,
+  minusWeeks,
+  minusYears,
+  ofDateAndTime,
+  of,
+  plusDays,
+  plusHours,
+  plusMilliseconds,
+  plusMinutes,
+  plusMonths,
+  plusSeconds,
+  plusWeeks,
+  plusYears,
+  withDayOfMonth,
+  withDayOfYear,
+  withHour,
+  withMillisecond,
+  withMinute,
+  withMonth,
+  withSecond,
+  withYear
 }
 
-export { withMonth }
+/* c8 ignore stop */
 </code></pre>
         </article>
     </section>

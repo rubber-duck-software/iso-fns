@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="DayOfWeekFns.html">DayOfWeekFns</a></li><li><a href="InstantFns.html">InstantFns</a></li><li><a href="LocalDateFns.html">LocalDateFns</a></li><li><a href="MonthDayFns.html">MonthDayFns</a></li><li><a href="YearFns.html">YearFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#ordinal">ordinal</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="DayOfWeekFns.html">DayOfWeekFns</a></li><li><a href="InstantFns.html">InstantFns</a></li><li><a href="LocalDateFns.html">LocalDateFns</a></li><li><a href="LocalDateTimeFns.html">LocalDateTimeFns</a></li><li><a href="MonthDayFns.html">MonthDayFns</a></li><li><a href="YearFns.html">YearFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#ordinal">ordinal</a></li></ul></div>
                 
             </nav>
         </div>
@@ -95,7 +95,7 @@ import { January, February, March, April, May, June, July, August, September, Oc
  */
 
 export function getValue(month: Month): number {
-  let ordinalMap = new Map&lt;Month, number>([
+  const ordinalMap = new Map&lt;Month, number>([
     [January, 1],
     [February, 2],
     [March, 3],
@@ -113,7 +113,7 @@ export function getValue(month: Month): number {
   if (!ordinalMap.has(month)) {
     throw new RangeError(`Invalid Month: ${month} is not a valid Month`)
   } else {
-    //@ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
+    // @ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
     return ordinalMap.get(month)
   }
 }

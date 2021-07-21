@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> YearFns</title>
+  <title> LocalDateTimeFns</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Namespace</p>
-                    <h1>YearFns</h1>
+                    <h1>LocalDateTimeFns</h1>
                 </header>
                 
 
@@ -85,7 +85,7 @@
 
 <header>
     
-        <h2>YearFns</h2>
+        <h2>LocalDateTimeFns</h2>
         
     
 </header>
@@ -131,9 +131,9 @@
 
     
         <p class="tag-source">
-            <a href="Year_index.ts.html" class="button">View Source</a>
+            <a href="LocalDateTime_index.ts.html" class="button">View Source</a>
             <span>
-                <a href="Year_index.ts.html">Year/index.ts</a>, <a href="Year_index.ts.html#line7">line 7</a>
+                <a href="LocalDateTime_index.ts.html">LocalDateTime/index.ts</a>, <a href="LocalDateTime_index.ts.html#line43">line 43</a>
             </span>
         </p>
     
@@ -176,7 +176,7 @@
         
         <span class="code-name">
             
-                compareAsc<span class="signature">(leftYear, rightYear)</span><span class="type-signature"></span>
+                compareAsc<span class="signature">(leftLocalDateTime, rightLocalDateTime)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -185,7 +185,7 @@
     
     
     <div class="description">
-        Determines if two years are in ascending order
+        Determines if two LocalDateTimes are in ascending order
     </div>
     
 
@@ -223,10 +223,15 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>leftYear</code></td>
+      <td class="name"><code>leftLocalDateTime</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">LocalDateTime</span>
+
+
   
   </td>
 
@@ -243,10 +248,15 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>rightYear</code></td>
+      <td class="name"><code>rightLocalDateTime</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">LocalDateTime</span>
+
+
   
   </td>
 
@@ -300,697 +310,9 @@
 
     
         <p class="tag-source">
-            <a href="Year_compare-asc.ts.html" class="button">View Source</a>
+            <a href="LocalDateTime_compare-asc.ts.html" class="button">View Source</a>
             <span>
-                <a href="Year_compare-asc.ts.html">Year/compare-asc.ts</a>, <a href="Year_compare-asc.ts.html#line11">line 11</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>-1 if the years are in ascending order, 1 if they are in descending order, and 0 if they are the same year.</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".compareDesc">
-        <a class="href-link" href="#.compareDesc">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                compareDesc<span class="signature">(leftYear, rightYear)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Determines if two years are in descending order, ascending order, or the same year
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>leftYear</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>rightYear</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Year_compare-desc.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Year_compare-desc.ts.html">Year/compare-desc.ts</a>, <a href="Year_compare-desc.ts.html#line11">line 11</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>-1 if they are in descending order, 1 if they are in ascending order, and 0 if they are the same</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".exports.isLeap">
-        <a class="href-link" href="#.exports.isLeap">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                exports.isLeap<span class="signature">(year)</span><span class="type-signature"> &rarr; {boolean}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Determines if a year is a leap year
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>year</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Year_is-leap.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Year_is-leap.ts.html">Year/is-leap.ts</a>, <a href="Year_is-leap.ts.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">boolean</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".exports.isThisYear">
-        <a class="href-link" href="#.exports.isThisYear">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                exports.isThisYear<span class="signature">(year)</span><span class="type-signature"> &rarr; {boolean}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Determines if the given year is the current year
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>year</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Year_is-this-year.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Year_is-this-year.ts.html">Year/is-this-year.ts</a>, <a href="Year_is-this-year.ts.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">boolean</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".exports.length">
-        <a class="href-link" href="#.exports.length">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                exports.length<span class="signature">(year)</span><span class="type-signature"> &rarr; {number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Determines if the given year is 366 or 365 days long
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>year</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Year_length.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Year_length.ts.html">Year/length.ts</a>, <a href="Year_length.ts.html#line11">line 11</a>
+                <a href="LocalDateTime_compare-asc.ts.html">LocalDateTime/compare-asc.ts</a>, <a href="LocalDateTime_compare-asc.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -1045,8 +367,8 @@
 
 
     
-    <h4 class="name" id=".format">
-        <a class="href-link" href="#.format">#</a>
+    <h4 class="name" id=".compareDesc">
+        <a class="href-link" href="#.compareDesc">#</a>
         
             
                 <span class='tag'>static</span>
@@ -1054,7 +376,7 @@
         
         <span class="code-name">
             
-                format<span class="signature">(year, format)</span><span class="type-signature"> &rarr; {string}</span>
+                compareDesc<span class="signature">(leftLocalDateTime, rightLocalDateTime)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -1063,7 +385,7 @@
     
     
     <div class="description">
-        Converts a year to an accepted string-based format
+        Determines if two LocalDateTimes are in descending order
     </div>
     
 
@@ -1101,10 +423,15 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>year</code></td>
+      <td class="name"><code>leftLocalDateTime</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">LocalDateTime</span>
+
+
   
   </td>
 
@@ -1121,10 +448,15 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>format</code></td>
+      <td class="name"><code>rightLocalDateTime</code></td>
   
 
   <td class="type">
+  
+      
+<span class="param-type">LocalDateTime</span>
+
+
   
   </td>
 
@@ -1178,9 +510,9 @@
 
     
         <p class="tag-source">
-            <a href="Year_format.ts.html" class="button">View Source</a>
+            <a href="LocalDateTime_compare-desc.ts.html" class="button">View Source</a>
             <span>
-                <a href="Year_format.ts.html">Year/format.ts</a>, <a href="Year_format.ts.html#line12">line 12</a>
+                <a href="LocalDateTime_compare-desc.ts.html">LocalDateTime/compare-desc.ts</a>, <a href="LocalDateTime_compare-desc.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -1211,13 +543,361 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>Formatted Year</div>
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".exports.check">
+        <a class="href-link" href="#.exports.check">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                exports.check<span class="signature">(localDateTime)</span><span class="type-signature"> &rarr; {LocalDateTime}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Type guard for the LocalDateTime type.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDateTime</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">unknown</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDateTime_check.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDateTime_check.ts.html">LocalDateTime/check.ts</a>, <a href="LocalDateTime_check.ts.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">string</span>
+<span class="param-type">LocalDateTime</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".getDayOfMonth">
+        <a class="href-link" href="#.getDayOfMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                getDayOfMonth<span class="signature">(localDateTime)</span><span class="type-signature"> &rarr; {number}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Gets the day of the month from a LocalDateTime
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>localDateTime</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">LocalDateTime</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LocalDateTime_get-day-of-month.ts.html" class="button">View Source</a>
+            <span>
+                <a href="LocalDateTime_get-day-of-month.ts.html">LocalDateTime/get-day-of-month.ts</a>, <a href="LocalDateTime_get-day-of-month.ts.html#line10">line 10</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">number</span>
 
 
     </div>

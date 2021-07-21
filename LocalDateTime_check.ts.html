@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="DayOfWeekFns.html">DayOfWeekFns</a></li><li><a href="InstantFns.html">InstantFns</a></li><li><a href="LocalDateFns.html">LocalDateFns</a></li><li><a href="MonthDayFns.html">MonthDayFns</a></li><li><a href="YearFns.html">YearFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#check">check</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#ordinal">ordinal</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Namespaces</h3><ul><li><a href="DayOfWeekFns.html">DayOfWeekFns</a></li><li><a href="InstantFns.html">InstantFns</a></li><li><a href="LocalDateFns.html">LocalDateFns</a></li><li><a href="LocalDateTimeFns.html">LocalDateTimeFns</a></li><li><a href="MonthDayFns.html">MonthDayFns</a></li><li><a href="YearFns.html">YearFns</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#ordinal">ordinal</a></li></ul></div>
                 
             </nav>
         </div>
@@ -88,10 +88,14 @@
             <pre class="prettyprint source linenums"><code>import { LocalDateTime } from '../iso-types'
 
 /**
- * This is a type guard for the LocalDateTime type.
+ * Type guard for the LocalDateTime type.
+ * @memberof LocalDateTimeFns
+ *
  * @param {unknown} localDateTime
+ *
  * @returns {LocalDateTime}
  */
+
 export function check(localDateTime: unknown): localDateTime is LocalDateTime {
   if (localDateTime instanceof String || typeof localDateTime === 'string') {
     return new Date(localDateTime.toString()).toISOString().replace('Z', '') === localDateTime
