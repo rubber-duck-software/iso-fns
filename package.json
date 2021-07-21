@@ -1,13 +1,12 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "0.0.30",
-  "types": "dist/index.d.ts",
+  "version": "0.0.31",
+  "types": "index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts"
+    "*"
   ],
   "repository": {
     "type": "git",
@@ -17,8 +16,9 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "build": "tsc",
+    "build-package": "./scripts/release.sh",
     "test": "yarn lint && c8 -r none beartest 'dist/**/*.test.js'",
-    "cc": "c8 report -r lcovonly",
+    "cc": "c8 report",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "docs": "jsdoc -c jsdoc.json -r -d ./docs",
     "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
@@ -37,27 +37,5 @@
     "jsdoc": "^3.6.7",
     "prettier": "^2.3.2",
     "typescript": "^4.3.2"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./DayOfWeek": "./dist/DayOfWeek/index.js",
-    "./DayOfWeek/*": "./dist/DayOfWeek/*.js",
-    "./Instant": "./dist/Instant/index.js",
-    "./Instant/*": "./dist/Instant/*.js",
-    "./LocalDate": "./dist/LocalDate/index.js",
-    "./LocalDate/*": "./dist/LocalDate/*.js",
-    "./LocalDateTime": "./dist/LocalDateTime/index.js",
-    "./LocalDateTime/*": "./dist/LocalDateTime/*.js",
-    "./LocalTime": "./dist/LocalTime/index.js",
-    "./LocalTime/*": "./dist/LocalTime/*.js",
-    "./Month": "./dist/Month/index.js",
-    "./Month/*": "./dist/Month/*.js",
-    "./MonthDay": "./dist/MonthDay/index.js",
-    "./MonthDay/*": "./dist/MonthDay/*.js",
-    "./Year": "./dist/Year/index.js",
-    "./Year/*": "./dist/Year/*.js",
-    "./YearMonth": "./dist/YearMonth/index.js",
-    "./YearMonth/*": "./dist/YearMonth/*.js",
-    "./package.json": "./package.json"
   }
 }

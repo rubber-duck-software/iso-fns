@@ -4,4 +4,4 @@ coverage
 coveralls.yml
 out
 docs
-yarn.lock
+package
