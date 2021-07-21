@@ -8,7 +8,7 @@ const Birth = '2001-02-06'
 const Death = '2001-02-20'
 
 describe('LocalDate: minusWeeks', ({ it }) => {
-  it.skip('should remove the given number of weeks from a LocalDate', () => {
+  it('should remove the given number of weeks from a LocalDate', () => {
     expect(minusWeeks(Death, 2)).toStrictEqual(Birth)
   })
 })
