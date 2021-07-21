@@ -41,6 +41,10 @@ import { withMonth } from './with-month'
 import { withSecond } from './with-second'
 import { withYear } from './with-year'
 
+/**
+ * @namespace LocalDateTimeFns
+ */
+
 export const LocalDateTimeFns = {
   check,
   compareAsc,

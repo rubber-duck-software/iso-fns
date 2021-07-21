@@ -1,6 +1,16 @@
 import { LocalDateTime } from '../iso-types'
 
-export function compareDesc(leftLocalDateTime: LocalDateTime, rightLocalDateTime: LocalDateTime): number {
+/**
+ * Determines if two LocalDateTimes are in descending order
+ * @memberof LocalDateTimeFns
+ *
+ * @param {LocalDateTime} leftLocalDateTime
+ * @param {LocalDateTime} rightLocalDateTime
+ *
+ * @returns {number}
+ */
+
+function compareDesc(leftLocalDateTime: LocalDateTime, rightLocalDateTime: LocalDateTime): number {
   if (leftLocalDateTime > rightLocalDateTime) {
     return -1
   } else if (leftLocalDateTime < rightLocalDateTime) {
@@ -9,3 +19,5 @@ export function compareDesc(leftLocalDateTime: LocalDateTime, rightLocalDateTime
     return 0
   }
 }
+
+export { compareDesc }

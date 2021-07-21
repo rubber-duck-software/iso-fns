@@ -6,5 +6,5 @@ export function ofYearAndMonth(year: Year, month: Month) {
   const date = new Date()
   const withYear = new Date(date.setUTCFullYear(year))
   const withMonth = withYear.setUTCMonth(ordinalMonth(month))
-  return dateFormat(withMonth, 'yyyy-mm')
+  return dateFormat(withMonth, 'yyyy-mm', true)
 }

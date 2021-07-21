@@ -8,7 +8,7 @@ import { January, February, March, April, May, June, July, August, September, Oc
  */
 
 export function getValue(month: Month): number {
-  let ordinalMap = new Map<Month, number>([
+  const ordinalMap = new Map<Month, number>([
     [January, 1],
     [February, 2],
     [March, 3],
@@ -26,7 +26,7 @@ export function getValue(month: Month): number {
   if (!ordinalMap.has(month)) {
     throw new RangeError(`Invalid Month: ${month} is not a valid Month`)
   } else {
-    //@ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
+    // @ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
     return ordinalMap.get(month)
   }
 }
