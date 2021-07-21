@@ -8,6 +8,10 @@ import { ofMonthAndNumber } from './of-month-and-number'
 import { withDayOfMonth } from './with-day-of-month'
 import { withMonth } from './with-month'
 
+/**
+ * @namespace MonthDayFns
+ */
+
 export const MonthDayFns = {
   compareAsc,
   compareDesc,

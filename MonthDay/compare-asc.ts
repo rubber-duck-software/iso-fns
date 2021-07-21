@@ -1,6 +1,16 @@
 import { MonthDay } from '../iso-types'
 
-export function compareAsc(leftMonthDay: MonthDay, rightYearMonth: MonthDay): number {
+/**
+ * Determines if two monthDays are in ascending order
+ * @memberof MonthDayFns
+ *
+ * @param {MonthDay} leftMonthDay
+ * @param {MonthDay} rightYearMonth
+ *
+ * @returns {number}
+ */
+
+function compareAsc(leftMonthDay: MonthDay, rightYearMonth: MonthDay): number {
   if (leftMonthDay < rightYearMonth) {
     return -1
   } else if (leftMonthDay > rightYearMonth) {
@@ -9,3 +19,5 @@ export function compareAsc(leftMonthDay: MonthDay, rightYearMonth: MonthDay): nu
     return 0
   }
 }
+
+export { compareAsc }
