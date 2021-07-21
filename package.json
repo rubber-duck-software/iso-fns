@@ -1,7 +1,7 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "types": "index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
@@ -18,7 +18,7 @@
     "build": "tsc",
     "build-package": "./scripts/release.sh",
     "test": "yarn lint && c8 -r none beartest 'dist/**/*.test.js'",
-    "cc": "c8 report",
+    "cc": "c8 report -r lcovonly",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "docs": "jsdoc -c jsdoc.json -r -d ./docs",
     "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
