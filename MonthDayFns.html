@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> InstantFns</title>
+  <title> MonthDayFns</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Namespace</p>
-                    <h1>InstantFns</h1>
+                    <h1>MonthDayFns</h1>
                 </header>
                 
 
@@ -85,7 +85,7 @@
 
 <header>
     
-        <h2>InstantFns</h2>
+        <h2>MonthDayFns</h2>
         
     
 </header>
@@ -131,9 +131,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_index.ts.html" class="button">View Source</a>
+            <a href="MonthDay_index.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_index.ts.html">Instant/index.ts</a>, <a href="Instant_index.ts.html#line14">line 14</a>
+                <a href="MonthDay_index.ts.html">MonthDay/index.ts</a>, <a href="MonthDay_index.ts.html#line10">line 10</a>
             </span>
         </p>
     
@@ -176,7 +176,7 @@
         
         <span class="code-name">
             
-                compareAsc<span class="signature">(leftInstant, rightInstant)</span><span class="type-signature"> &rarr; {Number}</span>
+                compareAsc<span class="signature">(leftMonthDay, rightYearMonth)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -185,7 +185,7 @@
     
     
     <div class="description">
-        Determines if two instances in time are in ascending order
+        Determines if two monthDays are in ascending order
     </div>
     
 
@@ -223,13 +223,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>leftInstant</code></td>
+      <td class="name"><code>leftMonthDay</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -248,13 +248,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>rightInstant</code></td>
+      <td class="name"><code>rightYearMonth</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -310,9 +310,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_compare-asc.ts.html" class="button">View Source</a>
+            <a href="MonthDay_compare-asc.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_compare-asc.ts.html">Instant/compare-asc.ts</a>, <a href="Instant_compare-asc.ts.html#line11">line 11</a>
+                <a href="MonthDay_compare-asc.ts.html">MonthDay/compare-asc.ts</a>, <a href="MonthDay_compare-asc.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -343,13 +343,11 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>-1 if the days are in ascending order, 1 if they are in descending order, and 0 if they are the same instant.</div>
-    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
     </div>
@@ -378,7 +376,7 @@
         
         <span class="code-name">
             
-                compareDesc<span class="signature">(leftInstant, rightInstant)</span><span class="type-signature"> &rarr; {Number}</span>
+                compareDesc<span class="signature">(leftMonthDay, rightYearMonth)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -387,7 +385,7 @@
     
     
     <div class="description">
-        Determines if two instances in time are in descending order
+        Determines if two monthDays are in descending order
     </div>
     
 
@@ -425,13 +423,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>leftInstant</code></td>
+      <td class="name"><code>leftMonthDay</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -450,13 +448,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>rightInstant</code></td>
+      <td class="name"><code>rightYearMonth</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -512,9 +510,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_compare-desc.ts.html" class="button">View Source</a>
+            <a href="MonthDay_compare-desc.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_compare-desc.ts.html">Instant/compare-desc.ts</a>, <a href="Instant_compare-desc.ts.html#line11">line 11</a>
+                <a href="MonthDay_compare-desc.ts.html">MonthDay/compare-desc.ts</a>, <a href="MonthDay_compare-desc.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -544,14 +542,12 @@
                     
 
 <div class="columns">
-    
-    <div class='param-desc column is-7'>returns -1 if they are in descending order, 1 if they are in ascending order, and 0 if they are the dame day.</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">number</span>
 
 
     </div>
@@ -571,8 +567,8 @@
 
 
     
-    <h4 class="name" id=".exports.minusSeconds">
-        <a class="href-link" href="#.exports.minusSeconds">#</a>
+    <h4 class="name" id=".getDayOfMonth">
+        <a class="href-link" href="#.getDayOfMonth">#</a>
         
             
                 <span class='tag'>static</span>
@@ -580,7 +576,7 @@
         
         <span class="code-name">
             
-                exports.minusSeconds<span class="signature">(instant, secondsToSubtract)</span><span class="type-signature"> &rarr; {Instant}</span>
+                getDayOfMonth<span class="signature">(monthDay)</span><span class="type-signature"> &rarr; {number}</span>
             
         </span>
     </h4>
@@ -589,7 +585,7 @@
     
     
     <div class="description">
-        Removes some number of seconds from an instant in time
+        Gets the numerical day of month from a monthDay
     </div>
     
 
@@ -627,38 +623,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>monthDay</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>secondsToSubtract</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Number</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -714,9 +685,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_minus-seconds.ts.html" class="button">View Source</a>
+            <a href="MonthDay_get-day-of-month.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_minus-seconds.ts.html">Instant/minus-seconds.ts</a>, <a href="Instant_minus-seconds.ts.html#line11">line 11</a>
+                <a href="MonthDay_get-day-of-month.ts.html">MonthDay/get-day-of-month.ts</a>, <a href="MonthDay_get-day-of-month.ts.html#line10">line 10</a>
             </span>
         </p>
     
@@ -746,14 +717,12 @@
                     
 
 <div class="columns">
-    
-    <div class='param-desc column is-7'>Instant with seconds removed</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Instant</span>
+<span class="param-type">number</span>
 
 
     </div>
@@ -773,8 +742,8 @@
 
 
     
-    <h4 class="name" id=".getEpochMilliseconds">
-        <a class="href-link" href="#.getEpochMilliseconds">#</a>
+    <h4 class="name" id=".getMonth">
+        <a class="href-link" href="#.getMonth">#</a>
         
             
                 <span class='tag'>static</span>
@@ -782,7 +751,7 @@
         
         <span class="code-name">
             
-                getEpochMilliseconds<span class="signature">(instant)</span><span class="type-signature"> &rarr; {Number}</span>
+                getMonth<span class="signature">(monthDay)</span><span class="type-signature"> &rarr; {Month}</span>
             
         </span>
     </h4>
@@ -791,7 +760,7 @@
     
     
     <div class="description">
-        Converts an instant in time to epoch milliseconds
+        Gets the string month from a monthDay
     </div>
     
 
@@ -829,13 +798,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>monthDay</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
   
@@ -891,9 +860,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_get-epoch-milliseconds.ts.html" class="button">View Source</a>
+            <a href="MonthDay_get-month.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_get-epoch-milliseconds.ts.html">Instant/get-epoch-milliseconds.ts</a>, <a href="Instant_get-epoch-milliseconds.ts.html#line10">line 10</a>
+                <a href="MonthDay_get-month.ts.html">MonthDay/get-month.ts</a>, <a href="MonthDay_get-month.ts.html#line11">line 11</a>
             </span>
         </p>
     
@@ -924,13 +893,13 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>epoch milliseconds</div>
+    <div class='param-desc column is-7'>string</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">Month</span>
 
 
     </div>
@@ -950,8 +919,8 @@
 
 
     
-    <h4 class="name" id=".getEpochSecond">
-        <a class="href-link" href="#.getEpochSecond">#</a>
+    <h4 class="name" id=".ofMonthAndNumber">
+        <a class="href-link" href="#.ofMonthAndNumber">#</a>
         
             
                 <span class='tag'>static</span>
@@ -959,7 +928,7 @@
         
         <span class="code-name">
             
-                getEpochSecond<span class="signature">(instant)</span><span class="type-signature"> &rarr; {Number}</span>
+                ofMonthAndNumber<span class="signature">(month, dayOfMonth)</span><span class="type-signature"> &rarr; {MonthDay}</span>
             
         </span>
     </h4>
@@ -968,7 +937,7 @@
     
     
     <div class="description">
-        Converts and instant in time to epoch seconds
+        Creates a monthDay from a string month and a numerical day
     </div>
     
 
@@ -1006,13 +975,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>month</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">Month</span>
 
 
   
@@ -1027,169 +996,17 @@
 
 
         
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_get-epoch-second.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_get-epoch-second.ts.html">Instant/get-epoch-second.ts</a>, <a href="Instant_get-epoch-second.ts.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>epoch seconds</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Number</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".minusMilliseconds">
-        <a class="href-link" href="#.minusMilliseconds">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                minusMilliseconds<span class="signature">(instant, millisecondsToSubtract)</span><span class="type-signature"> &rarr; {Instant}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Subtracts some amount of milliseconds from an instant in time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
 
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>instant</code></td>
+      <td class="name"><code>dayOfMonth</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Instant</span>
+<span class="param-type">number</span>
 
 
   
@@ -1204,17 +1021,192 @@
 
 
         
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="MonthDay_of-month-and-number.ts.html" class="button">View Source</a>
+            <span>
+                <a href="MonthDay_of-month-and-number.ts.html">MonthDay/of-month-and-number.ts</a>, <a href="MonthDay_of-month-and-number.ts.html#line12">line 12</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">MonthDay</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".withDayOfMonth">
+        <a class="href-link" href="#.withDayOfMonth">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                withDayOfMonth<span class="signature">(monthDay, dayOfMonth)</span><span class="type-signature"> &rarr; {MonthDay}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Changes the day of a monthDay
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
 
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>millisecondsToSubtract</code></td>
+      <td class="name"><code>monthDay</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Number</span>
+<span class="param-type">MonthDay</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dayOfMonth</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
 
 
   
@@ -1270,9 +1262,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_minus-milliseconds.ts.html" class="button">View Source</a>
+            <a href="MonthDay_with-day-of-month.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_minus-milliseconds.ts.html">Instant/minus-milliseconds.ts</a>, <a href="Instant_minus-milliseconds.ts.html#line11">line 11</a>
+                <a href="MonthDay_with-day-of-month.ts.html">MonthDay/with-day-of-month.ts</a>, <a href="MonthDay_with-day-of-month.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -1302,14 +1294,12 @@
                     
 
 <div class="columns">
-    
-    <div class='param-desc column is-7'>Instant in time with seconds removed</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
     </div>
@@ -1329,8 +1319,8 @@
 
 
     
-    <h4 class="name" id=".now">
-        <a class="href-link" href="#.now">#</a>
+    <h4 class="name" id=".withMonth">
+        <a class="href-link" href="#.withMonth">#</a>
         
             
                 <span class='tag'>static</span>
@@ -1338,7 +1328,7 @@
         
         <span class="code-name">
             
-                now<span class="signature">()</span><span class="type-signature"> &rarr; {Instant}</span>
+                withMonth<span class="signature">(monthDay, month)</span><span class="type-signature"> &rarr; {MonthDay}</span>
             
         </span>
     </h4>
@@ -1347,7 +1337,7 @@
     
     
     <div class="description">
-        Returns the current time
+        Updates the month of a monthDay
     </div>
     
 
@@ -1358,6 +1348,82 @@
 
 
 
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>monthDay</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">MonthDay</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>month</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Month</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -1396,9 +1462,9 @@
 
     
         <p class="tag-source">
-            <a href="Instant_now.ts.html" class="button">View Source</a>
+            <a href="MonthDay_with-month.ts.html" class="button">View Source</a>
             <span>
-                <a href="Instant_now.ts.html">Instant/now.ts</a>, <a href="Instant_now.ts.html#line8">line 8</a>
+                <a href="MonthDay_with-month.ts.html">MonthDay/with-month.ts</a>, <a href="MonthDay_with-month.ts.html#line13">line 13</a>
             </span>
         </p>
     
@@ -1428,713 +1494,15 @@
                     
 
 <div class="columns">
-    
-    <div class='param-desc column is-7'>current time in yyyy-mm-ddTHH:MM:ss.lZ format</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Instant</span>
+<span class="param-type">MonthDay</span>
 
 
     </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".ofEpochMilli">
-        <a class="href-link" href="#.ofEpochMilli">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                ofEpochMilli<span class="signature">(epochMilli)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Converts form epoch milliseconds to human-readable datetime
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>epochMilli</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">epoch milliseconds</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_of-epoch-milli.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_of-epoch-milli.ts.html">Instant/of-epoch-milli.ts</a>, <a href="Instant_of-epoch-milli.ts.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>human-readable datetime</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".ofEpochSecond">
-        <a class="href-link" href="#.ofEpochSecond">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                ofEpochSecond<span class="signature">(epochSecond)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Converts epoch seconds to a human-readable datetime
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>epochSecond</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_of-epoch-second.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_of-epoch-second.ts.html">Instant/of-epoch-second.ts</a>, <a href="Instant_of-epoch-second.ts.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>human-readable datetime</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".plusMilliseconds">
-        <a class="href-link" href="#.plusMilliseconds">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                plusMilliseconds<span class="signature">(instant, millisecondsToAdd)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Adds a given number of milliseconds to an instance in time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>millisecondsToAdd</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_plus-milliseconds.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_plus-milliseconds.ts.html">Instant/plus-milliseconds.ts</a>, <a href="Instant_plus-milliseconds.ts.html#line11">line 11</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>new instance in time with added milliseconds</div>
-    
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".plusSeconds">
-        <a class="href-link" href="#.plusSeconds">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                plusSeconds<span class="signature">(instant, secondsToAdd)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Adds a number of seconds to a given instance in time
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>instant</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>secondsToAdd</code></td>
-  
-
-  <td class="type">
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Instant_plus-seconds.ts.html" class="button">View Source</a>
-            <span>
-                <a href="Instant_plus-seconds.ts.html">Instant/plus-seconds.ts</a>, <a href="Instant_plus-seconds.ts.html#line11">line 11</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>new instance in time with seconds added</div>
-    
     
 </div>
 

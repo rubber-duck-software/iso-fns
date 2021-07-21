@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> DayOfWeek/from-ordinal.ts</title>
+  <title> MonthDay/compare-desc.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>DayOfWeek/from-ordinal.ts</h1>
+                    <h1>MonthDay/compare-desc.ts</h1>
                 </header>
                 
 
@@ -85,38 +85,29 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { DayOfWeek } from '../iso-types'
-import { Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday } from './values'
+            <pre class="prettyprint source linenums"><code>import { MonthDay } from '../iso-types'
 
 /**
- * Converts a day-of-week from ordinal to string
- * @memberof DayOfWeekFns
+ * Determines if two monthDays are in descending order
+ * @memberof MonthDayFns
  *
- * @param {Number} dayOfWeek
+ * @param {MonthDay} leftMonthDay
+ * @param {MonthDay} rightYearMonth
  *
- * @returns {DayOfWeek} string day-of-week
+ * @returns {number}
  */
 
-function fromOrdinal(dayOfWeek: number): DayOfWeek {
-  const dayMap = new Map&lt;number, DayOfWeek>([
-    [0, Sunday],
-    [1, Monday],
-    [2, Tuesday],
-    [3, Wednesday],
-    [4, Thursday],
-    [5, Friday],
-    [6, Saturday]
-  ])
-
-  if (!dayMap.has(dayOfWeek)) {
-    throw new RangeError(`Invalid Day: ${dayOfWeek} is not a valid day index`)
+function compareDesc(leftMonthDay: MonthDay, rightYearMonth: MonthDay): number {
+  if (leftMonthDay > rightYearMonth) {
+    return -1
+  } else if (leftMonthDay &lt; rightYearMonth) {
+    return 1
   } else {
-    // @ts-ignore it is impossible for this to return any value other than 0 because of the check that is performed before it.
-    return dayMap.get(dayOfWeek)
+    return 0
   }
 }
 
-export { fromOrdinal }
+export { compareDesc }
 </code></pre>
         </article>
     </section>
