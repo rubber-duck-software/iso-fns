@@ -1,6 +1,17 @@
 import { LocalDateTime } from '../iso-types'
 
-export function getDayOfMonth(localDateTime: LocalDateTime): number {
+/**
+ * Gets the day of the month from a LocalDateTime
+ * @memberof LocalDateTimeFns
+ *
+ * @param {LocalDateTime} localDateTime
+ *
+ * @returns {number}
+ */
+
+function getDayOfMonth(localDateTime: LocalDateTime): number {
   const date = new Date(`${localDateTime}Z`)
   return date.getUTCDate()
 }
+
+export { getDayOfMonth }
