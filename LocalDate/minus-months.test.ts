@@ -8,7 +8,7 @@ const Beginning = '1939-09-02'
 const End = '1945-09-02'
 
 describe('LocalDate: minusMonths', ({ it }) => {
-  it.skip('should return the correct date after removing the specified number of months', () => {
+  it('should return the correct date after removing the specified number of months', () => {
     expect(minusMonths(End, 72)).toBe(Beginning)
   })
 })

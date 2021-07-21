@@ -14,4 +14,10 @@ describe('LocalDate: ofYearDay', ({ it }) => {
   it('should return the first day of the year', () => {
     expect(ofYearDay(2020, 1)).toBe(First)
   })
+
+  it('should throw an error if the day of year is 366 and the year is not a leap year', () => {
+    expect(() => {
+      ofYearDay(1987, 366)
+    }).toThrow()
+  })
 })

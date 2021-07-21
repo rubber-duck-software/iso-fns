@@ -1,5 +1,3 @@
-/* c8 ignore start */
-
 import { compareAsc } from './compare-asc'
 import { compareDesc } from './compare-desc'
 import { fromOrdinal, fromOrdinal_1 } from './from-ordinal'
@@ -32,4 +30,3 @@ export const DayOfWeekFns = {
   Saturday,
   values
 }
-/* c8 ignore stop */
