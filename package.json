@@ -1,10 +1,14 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rubber-duck-software/iso-fns.git"
