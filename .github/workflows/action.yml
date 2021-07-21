@@ -35,7 +35,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Release Package
-        run: yarn build-release
+        run: yarn build-package
 
       - name: Publish To NPM
         run: yarn publish package
