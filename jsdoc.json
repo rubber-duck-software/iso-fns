@@ -9,7 +9,7 @@
   "plugins": ["node_modules/better-docs/typescript"],
   "source": {
     "include": [".", "README.md"],
-    "exclude": [".github", ".vscode", "coverage", "dist", "node_modules"],
+    "exclude": [".github", ".vscode", "coverage", "dist", "package", "node_modules"],
     "includePattern": "\\.(ts|tsx)$"
   }
 }
