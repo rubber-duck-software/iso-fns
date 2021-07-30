@@ -9,6 +9,25 @@
 <a href="https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release"><img src="https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release" alt="Coverage Status"></a>
 </p>
 
+# What is iso-fns?
+
+Iso-fns is a date-time library for Javascript based on the temporal proposal (https://tc39.es/proposal-temporal/docs/index.html)
+and inspired by date-fns (https://date-fns.org).
+
+This library represents all date-time primitives as strings according to the iso-8601 standard.
+
+There are 7 fundamental types covered so far by this library
+
+- Instant (1970-01-01T00:00:00.000Z)
+- DateTime (1970-01-01T00:00:00.000)
+- Date (1970-01-01)
+- Time (00:00:00.000 | 00:00:00 | 00:00)
+- YearMonth (1970-01)
+- MonthDay (01-01)
+- Duration (P1Y1M1W1DT1H1M1.1S)
+
+For documentation on the functions included in this library, check out https://iso-fns.org.
+
 ## Contributors ✨
 
 ---

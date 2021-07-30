@@ -1,34 +1,45 @@
-/* c8 ignore start */
-enum YearEnum {}
+type d = number
 
-// Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
-export interface DayOfWeek extends String {}
+type YYYY = `${d}${d}${d}${d}`
+type MM = `${d}${d}`
+type DD = `${d}${d}`
+type hh = `${d}${d}`
+type mm = `${d}${d}`
+type ss = `${d}${d}`
+type ssss = `${d}${d}${d}`
 
-// January, February, March, April, May, June, July, August, September, October, November, December
-export interface Month extends String {}
+type DateFormat = `${YYYY}-${MM}-${DD}`
+type TimeFormat = `${hh}:${mm}` | `${hh}:${mm}:${ss}` | `${hh}:${mm}:${ss}.${ssss}`
+type InstantFormat = `${DateFormat}T${hh}:${mm}:${ss}.${ssss}Z`
+type DateTimeFormat = `${DateFormat}T${TimeFormat}`
+type YearMonthFormat = `${YYYY}-${MM}`
+type MonthDayFormat = `${MM}-${DD}`
 
-// number
-export type Year = number & YearEnum
+type DurationYear = `${d}Y` | ''
+type DurationMonth = `${d}M` | ''
+type DurationWeek = `${d}W` | ''
+type DurationDay = `${d}D` | ''
+type DurationHour = `${d}H` | ''
+type DurationMinute = `${d}M` | ''
+type DurationSecond = `${d}S` | `${d}.${d}S` | ''
 
-// yyyy-mm
-export interface YearMonth extends String {}
+type DurationDateFormat = `${DurationYear}${DurationMonth}${DurationWeek}${DurationDay}` | ''
+type DurationTimeFormat = `T${DurationHour}${DurationMinute}${DurationSecond}` | ''
 
-// mm-dd
-export interface MonthDay extends String {}
+type DurationFormat = `${'' | '-'}P${DurationDateFormat}${DurationTimeFormat}`
 
-// yyyy-mm-dd
-export interface LocalDate extends String {}
+interface Brand extends String {}
 
-// THH:MM:ss.l
-export interface LocalTime extends String {}
+export type IsoInstant = InstantFormat & Brand
 
-// yyyy-mm-ddTHH:MM:ss.l
-export interface LocalDateTime extends String {}
+export type IsoDate = DateFormat & Brand
 
-// yyyy-mm-ddTHH:MM:ss.lZ
-export interface Instant extends String {}
+export type IsoTime = TimeFormat & Brand
 
-// PnYnMnDTnHnMnSn
-export interface Duration extends String {}
+export type IsoDateTime = DateTimeFormat & Brand
 
-/* c8 ignore stop */
+export type IsoYearMonth = YearMonthFormat & Brand
+
+export type IsoMonthDay = MonthDayFormat & Brand
+
+export type IsoDuration = DurationFormat & Brand
