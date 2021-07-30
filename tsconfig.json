@@ -11,5 +11,6 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true
-  }
+  },
+  "exclude": ["src2", "dist"]
 }
