@@ -1,7 +1,7 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "types": "index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
@@ -23,9 +23,7 @@
     "docs": "typedoc --out docs src/index.ts --readme ./README.md",
     "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
   },
-  "dependencies": {
-    "dateformat": "^4.5.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/dateformat": "^3.0.1",
     "all-contributors-cli": "^6.20.0",
