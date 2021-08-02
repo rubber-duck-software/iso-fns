@@ -1,4 +1,4 @@
-import { IsoDateTime } from './iso-types'
+import { IsoDateTime } from '../iso-types'
 import isoDateTime from '../isoDateTime'
 import { addTemporal } from './addTemporal'
 import { BalanceDurationUnits } from './balanceDuration'
