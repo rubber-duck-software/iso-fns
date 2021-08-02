@@ -1,4 +1,4 @@
-import { IsoInstant } from 'iso-types'
+import { IsoInstant } from './iso-types'
 import { JsDateToIsoInstant } from './utils/jsdateConversions'
 
 function fromEpochMilliseconds(epochMilliseconds: number): IsoInstant {

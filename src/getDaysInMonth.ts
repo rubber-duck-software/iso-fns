@@ -1,6 +1,6 @@
 import getFields from './getFields'
 import isLeapYear from './isLeapYear'
-import { IsoDate, IsoDateTime, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoYearMonth } from './iso-types'
 import { getDaysInMonthByNumber } from './utils/getDaysInMonthByNumber'
 
 function getDaysInMonth(date: IsoDate): number

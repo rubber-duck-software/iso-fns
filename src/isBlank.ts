@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 
 function isBlank(duration: IsoDuration): boolean {
   const fields = getFields(duration)

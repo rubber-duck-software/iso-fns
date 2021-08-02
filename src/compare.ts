@@ -1,4 +1,4 @@
-import { IsoInstant, IsoTime, IsoDate, IsoYearMonth, IsoMonthDay, IsoDuration, IsoDateTime } from 'iso-types'
+import { IsoInstant, IsoTime, IsoDate, IsoYearMonth, IsoMonthDay, IsoDuration, IsoDateTime } from './iso-types'
 import isValidDate from './isValidDate'
 import isValidDateTime from './isValidDateTime'
 import isValidDuration from './isValidDuration'

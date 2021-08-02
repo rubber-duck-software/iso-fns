@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDateTime, IsoTime } from 'iso-types'
+import { IsoDateTime, IsoTime } from './iso-types'
 import isValidDateTime from './isValidDateTime'
 import isValidTime from './isValidTime'
 import { JsDateToIsoTime } from './utils/jsdateConversions'

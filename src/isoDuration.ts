@@ -1,4 +1,4 @@
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 import isValidDuration from './isValidDuration'
 
 const durationKeys: string[] = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds', 'milliseconds']

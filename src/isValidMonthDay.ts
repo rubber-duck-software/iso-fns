@@ -1,4 +1,4 @@
-import { IsoMonthDay } from 'iso-types'
+import { IsoMonthDay } from './iso-types'
 import { IsoMonthDayToJsDate, JsDateToIsoMonthDay } from './utils/jsdateConversions'
 
 function isValidMonthDay(monthDay: unknown): monthDay is IsoMonthDay {

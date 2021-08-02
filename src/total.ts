@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoDuration } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoDuration } from './iso-types'
 import { IsoDateTimeToJsDate } from './utils/jsdateConversions'
 import getDaysInMonth from './getDaysInMonth'
 import isoDateTime from './isoDateTime'

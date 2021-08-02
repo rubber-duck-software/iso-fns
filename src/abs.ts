@@ -1,5 +1,5 @@
 import getSign from './getSign'
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 import negate from './negate'
 
 /**

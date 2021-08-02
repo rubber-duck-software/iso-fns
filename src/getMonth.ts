@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoMonthDay, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoMonthDay, IsoYearMonth } from './iso-types'
 
 function getMonth(date: IsoDate): number
 function getMonth(dateTime: IsoDateTime): number

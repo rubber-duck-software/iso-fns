@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoYearMonth } from './iso-types'
 import { IsoSplitter } from './utils/isoFlexFunction'
 import { getIsLeapByYearNumber } from './utils/getIsLeapByYearNumber'
 

@@ -1,4 +1,4 @@
-import { IsoDate } from 'iso-types'
+import { IsoDate } from './iso-types'
 import { IsoDateToJsDate, JsDateToIsoDate } from './utils/jsdateConversions'
 
 function isValidDate(date: unknown): date is IsoDate {
