@@ -8,7 +8,7 @@ describe('isoDate', ({ it }) => {
     expect(isoDate('2000-12-03')).toBe('2000-12-03')
     expect(isoDate('2000-12-03T00:00:00.000')).toBe('2000-12-03')
     expect(isoDate({ year: 2000, month: 12, day: 3 })).toBe('2000-12-03')
-    expect(isoDate('12-03', 2000)).toBe('2000-12-03')
+    expect(isoDate('--12-03', 2000)).toBe('2000-12-03')
     expect(isoDate('2000-12', 3)).toBe('2000-12-03')
     expect(isoDate(2000, 12, 3)).toBe('2000-12-03')
   })

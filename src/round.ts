@@ -11,7 +11,7 @@ import { msPerTimeUnit } from './utils/msPerTimeUnit'
 import { roundNumberToIncrement } from './utils/roundNumberToIncrement'
 import isoDuration from './isoDuration'
 
-export default function round(
+function round(
   instant: IsoInstant,
   options: {
     smallestUnit: 'hour' | 'minute' | 'second' | 'millisecond'
@@ -20,7 +20,7 @@ export default function round(
   }
 ): IsoDateTime
 
-export default function round(
+function round(
   dateTime: IsoDateTime,
   options: {
     smallestUnit: 'day' | 'hour' | 'minute' | 'second' | 'millisecond'
@@ -29,7 +29,7 @@ export default function round(
   }
 ): IsoDateTime
 
-export default function round(
+function round(
   time: IsoTime,
   options: {
     smallestUnit: 'hour' | 'minute' | 'second' | 'millisecond'
@@ -38,7 +38,7 @@ export default function round(
   }
 ): IsoTime
 
-export default function round(
+function round(
   duration: IsoDuration,
   options: {
     largestUnit?: 'auto' | 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'
@@ -49,7 +49,7 @@ export default function round(
   }
 ): IsoDuration
 
-export default function round(input: string, options: any) {
+function round(input: string, options: any) {
   return IsoSplitter(input, {
     Instant(input) {
       const {
@@ -99,3 +99,5 @@ export default function round(input: string, options: any) {
     }
   })
 }
+
+export default round

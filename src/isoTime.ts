@@ -4,14 +4,14 @@ import isValidDateTime from './isValidDateTime'
 import isValidTime from './isValidTime'
 import { JsDateToIsoTime } from './utils/jsdateConversions'
 
-export default function isoTime(): IsoTime
-export default function isoTime(fields: { hour: number; minute?: number; second?: number; millisecond?: number }): IsoTime
-export default function isoTime(dateTime: IsoDateTime): IsoTime
-export default function isoTime(input: string): IsoTime
+function isoTime(): IsoTime
+function isoTime(fields: { hour: number; minute?: number; second?: number; millisecond?: number }): IsoTime
+function isoTime(dateTime: IsoDateTime): IsoTime
+function isoTime(input: string): IsoTime
 
-export default function isoTime(hour: number, minute?: number, second?: number, millisecond?: number): IsoTime
+function isoTime(hour: number, minute?: number, second?: number, millisecond?: number): IsoTime
 
-export default function isoTime(...args: any[]): any {
+function isoTime(...args: any[]): any {
   if (args.length === 0) {
     return JsDateToIsoTime(new Date())
   } else if (args.length === 1) {
@@ -52,3 +52,5 @@ function isTimeFields(input: any): input is { hour: number; minute?: number; sec
     return false
   }
 }
+
+export default isoTime

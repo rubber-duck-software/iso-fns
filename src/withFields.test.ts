@@ -10,9 +10,9 @@ describe('withFields', ({ it }) => {
   })
 
   it('should set fields for monthDay', () => {
-    expect(withFields('01-01', { month: 3, day: 15 })).toBe('03-15')
-    expect(withFields('01-01', { month: 3 })).toBe('03-01')
-    expect(withFields('01-01', { day: 15 })).toBe('01-15')
+    expect(withFields('--01-01', { month: 3, day: 15 })).toBe('--03-15')
+    expect(withFields('--01-01', { month: 3 })).toBe('--03-01')
+    expect(withFields('--01-01', { day: 15 })).toBe('--01-15')
   })
 
   it('should set fields for date', () => {

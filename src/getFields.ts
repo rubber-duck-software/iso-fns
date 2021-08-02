@@ -8,7 +8,7 @@ import {
   IsoYearMonthToJsDate
 } from './utils/jsdateConversions'
 
-export default function getFields(dateTime: IsoDateTime): {
+function getFields(dateTime: IsoDateTime): {
   year: number
   month: number
   day: number
@@ -18,30 +18,30 @@ export default function getFields(dateTime: IsoDateTime): {
   millisecond: number
 }
 
-export default function getFields(date: IsoDate): {
+function getFields(date: IsoDate): {
   year: number
   month: number
   day: number
 }
 
-export default function getFields(time: IsoTime): {
+function getFields(time: IsoTime): {
   hour: number
   minute: number
   second: number
   millisecond: number
 }
 
-export default function getFields(yearMonth: IsoYearMonth): {
+function getFields(yearMonth: IsoYearMonth): {
   year: number
   month: number
 }
 
-export default function getFields(monthDay: IsoMonthDay): {
+function getFields(monthDay: IsoMonthDay): {
   month: number
   day: number
 }
 
-export default function getFields(duration: IsoDuration): {
+function getFields(duration: IsoDuration): {
   years: number
   months: number
   weeks: number
@@ -52,7 +52,7 @@ export default function getFields(duration: IsoDuration): {
   milliseconds: number
 }
 
-export default function getFields(input: any) {
+function getFields(input: any) {
   return IsoSplitter(input, {
     DateTime(input) {
       const parsed = IsoDateTimeToJsDate(input)
@@ -186,3 +186,5 @@ function parseDurationSegments(duration: string, segments: { character: string; 
   }, duration)
   return values
 }
+
+export default getFields

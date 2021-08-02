@@ -6,17 +6,17 @@ import isValidMonthDay from './isValidMonthDay'
 import isValidYearMonth from './isValidYearMonth'
 import { JsDateToIsoDate } from './utils/jsdateConversions'
 
-export default function isoDate(): IsoDate
-export default function isoDate(fields: { year: number; month: number; day: number }): IsoDate
-export default function isoDate(dateTime: IsoDateTime): IsoDate
-export default function isoDate(input: string): IsoDate
+function isoDate(): IsoDate
+function isoDate(fields: { year: number; month: number; day: number }): IsoDate
+function isoDate(dateTime: IsoDateTime): IsoDate
+function isoDate(input: string): IsoDate
 
-export default function isoDate(monthDay: IsoMonthDay, year: number): IsoDate
-export default function isoDate(yearMonth: IsoYearMonth, day: number): IsoDate
+function isoDate(monthDay: IsoMonthDay, year: number): IsoDate
+function isoDate(yearMonth: IsoYearMonth, day: number): IsoDate
 
-export default function isoDate(year: number, month: number, day: number): IsoDate
+function isoDate(year: number, month: number, day: number): IsoDate
 
-export default function isoDate(...args: any[]): any {
+function isoDate(...args: any[]): any {
   if (!args?.length) {
     return JsDateToIsoDate(new Date())
   } else if (args.length === 1) {
@@ -74,3 +74,5 @@ function isDateFields(input: any): input is { month: number; day: number; year: 
     return false
   }
 }
+
+export default isoDate

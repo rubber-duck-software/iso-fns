@@ -25,11 +25,11 @@ export function JsDateToIsoInstant(jsDate: Date): IsoInstant {
 }
 
 export function IsoMonthDayToJsDate(monthDay: IsoMonthDay): Date {
-  return new Date(`2000-${monthDay.toString()}T00:00:00.000Z`)
+  return new Date(`2000-${monthDay.toString().substr(2)}T00:00:00.000Z`)
 }
 
 export function JsDateToIsoMonthDay(jsDate: Date): IsoMonthDay {
-  return jsDate.toISOString().substr(5, 5) as IsoMonthDay
+  return `--${jsDate.toISOString().substr(5, 5)}` as IsoMonthDay
 }
 
 export function IsoTimeToJsDate(time: IsoTime): Date {
