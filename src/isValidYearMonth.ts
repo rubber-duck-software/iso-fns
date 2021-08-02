@@ -1,4 +1,4 @@
-import { IsoYearMonth } from 'iso-types'
+import { IsoYearMonth } from './iso-types'
 import { IsoYearMonthToJsDate, JsDateToIsoYearMonth } from './utils/jsdateConversions'
 
 function isValidYearMonth(yearMonth: unknown): yearMonth is IsoYearMonth {

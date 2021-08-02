@@ -1,6 +1,6 @@
 import getEpochMilliseconds from './getEpochMilliseconds'
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from './iso-types'
 import isoDate from './isoDate'
 import isoDuration from './isoDuration'
 import isValidDate from './isValidDate'

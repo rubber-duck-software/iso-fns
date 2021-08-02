@@ -1,4 +1,4 @@
-import { IsoDateTime, IsoTime } from 'iso-types'
+import { IsoDateTime, IsoTime } from './iso-types'
 import getFields from './getFields'
 
 function getHour(dateTime: IsoDateTime): number

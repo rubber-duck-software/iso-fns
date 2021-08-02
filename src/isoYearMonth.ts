@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoYearMonth, IsoDateTime } from 'iso-types'
+import { IsoDate, IsoYearMonth, IsoDateTime } from './iso-types'
 import { JsDateToIsoYearMonth } from './utils/jsdateConversions'
 import isValidYearMonth from './isValidYearMonth'
 import isValidDate from './isValidDate'

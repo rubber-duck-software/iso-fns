@@ -1,4 +1,4 @@
-import { IsoDate, IsoDateTime } from 'iso-types'
+import { IsoDate, IsoDateTime } from './iso-types'
 import { IsoSplitter } from './utils/isoFlexFunction'
 import { IsoDateTimeToJsDate, IsoDateToJsDate } from './utils/jsdateConversions'
 
