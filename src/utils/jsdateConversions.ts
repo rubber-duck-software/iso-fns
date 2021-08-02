@@ -1,4 +1,4 @@
-import { IsoDate, IsoDateTime, IsoInstant, IsoMonthDay, IsoTime, IsoYearMonth } from './iso-types'
+import { IsoDate, IsoDateTime, IsoInstant, IsoMonthDay, IsoTime, IsoYearMonth } from '../iso-types'
 
 export function IsoDateTimeToJsDate(dateTime: IsoDateTime) {
   return new Date(`${dateTime}Z`)

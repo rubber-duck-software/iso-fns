@@ -1,5 +1,5 @@
 import getFields from '../getFields'
-import { IsoInstant, IsoDuration, IsoDateTime, IsoDate, IsoTime, IsoYearMonth } from './iso-types'
+import { IsoInstant, IsoDuration, IsoDateTime, IsoDate, IsoTime, IsoYearMonth } from '../iso-types'
 import isoDuration from '../isoDuration'
 import { IsoSplitter } from './isoFlexFunction'
 import {
