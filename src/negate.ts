@@ -1,6 +1,6 @@
 import getSign from './getSign'
 import isBlank from './isBlank'
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 
 function negate(duration: IsoDuration): IsoDuration {
   if (isBlank(duration)) {

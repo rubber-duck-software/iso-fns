@@ -1,4 +1,4 @@
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 
 function isValidDuration(duration: unknown): duration is IsoDuration {
   try {

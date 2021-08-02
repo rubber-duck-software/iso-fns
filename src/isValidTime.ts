@@ -1,4 +1,4 @@
-import { IsoTime } from 'iso-types'
+import { IsoTime } from './iso-types'
 import { IsoTimeToJsDate, JsDateToIsoTime } from './utils/jsdateConversions'
 
 function isValidTime(time: unknown): time is IsoTime {

@@ -1,5 +1,5 @@
 import isLeapYear from './isLeapYear'
-import { IsoYearMonth, IsoDateTime, IsoDate } from 'iso-types'
+import { IsoYearMonth, IsoDateTime, IsoDate } from './iso-types'
 
 function getDaysInYear(date: IsoDate): number
 function getDaysInYear(dateTime: IsoDateTime): number

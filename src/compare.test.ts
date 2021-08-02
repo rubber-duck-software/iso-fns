@@ -1,7 +1,7 @@
 import compare from './compare'
 import describe from 'beartest-js'
 import expect from 'expect'
-import { IsoDate } from 'iso-types'
+import { IsoDate } from './iso-types'
 
 // The Beatles were formed in 1962, whereas the Monkees were not formed until 1966.
 

@@ -1,5 +1,5 @@
 import isBlank from './isBlank'
-import { IsoDuration } from 'iso-types'
+import { IsoDuration } from './iso-types'
 
 function getSign(duration: IsoDuration): number {
   if (isBlank(duration)) {

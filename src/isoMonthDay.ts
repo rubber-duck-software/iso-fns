@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoMonthDay } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoMonthDay } from './iso-types'
 import isValidDate from './isValidDate'
 import isValidDateTime from './isValidDateTime'
 import isValidMonthDay from './isValidMonthDay'

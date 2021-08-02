@@ -1,4 +1,4 @@
-import { IsoInstant } from 'iso-types'
+import { IsoInstant } from './iso-types'
 import isValidInstant from './isValidInstant'
 import { JsDateToIsoInstant } from './utils/jsdateConversions'
 

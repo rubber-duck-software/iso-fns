@@ -1,5 +1,5 @@
 import add from './add'
-import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from './iso-types'
 import isoDuration from './isoDuration'
 import negate from './negate'
 

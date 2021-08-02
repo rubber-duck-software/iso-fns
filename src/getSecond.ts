@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDateTime, IsoTime } from 'iso-types'
+import { IsoDateTime, IsoTime } from './iso-types'
 
 function getSecond(dateTime: IsoDateTime): number
 function getSecond(time: IsoTime): number

@@ -1,5 +1,5 @@
 import getFields from './getFields'
-import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from 'iso-types'
+import { IsoDate, IsoDateTime, IsoDuration, IsoInstant, IsoTime, IsoYearMonth } from './iso-types'
 import isoDuration from './isoDuration'
 import isValidDuration from './isValidDuration'
 import { BalanceDurationUnits } from './utils/balanceDuration'

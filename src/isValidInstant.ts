@@ -1,4 +1,4 @@
-import { IsoInstant } from 'iso-types'
+import { IsoInstant } from './iso-types'
 import { IsoInstantToJsDate, JsDateToIsoInstant } from './utils/jsdateConversions'
 
 function isValidInstant(instant: unknown): instant is IsoInstant {
