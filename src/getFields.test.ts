@@ -13,11 +13,11 @@ describe('getFields', ({ it }) => {
   })
 
   it('should get fields for monthDay', () => {
-    expect(getFields('01-31')).toStrictEqual({ month: 1, day: 31 })
-    expect(getFields('02-29')).toStrictEqual({ month: 2, day: 29 })
-    expect(getFields('03-01')).toStrictEqual({ month: 3, day: 1 })
-    expect(getFields('04-15')).toStrictEqual({ month: 4, day: 15 })
-    expect(getFields('09-10')).toStrictEqual({ month: 9, day: 10 })
+    expect(getFields('--01-31')).toStrictEqual({ month: 1, day: 31 })
+    expect(getFields('--02-29')).toStrictEqual({ month: 2, day: 29 })
+    expect(getFields('--03-01')).toStrictEqual({ month: 3, day: 1 })
+    expect(getFields('--04-15')).toStrictEqual({ month: 4, day: 15 })
+    expect(getFields('--09-10')).toStrictEqual({ month: 9, day: 10 })
   })
 
   it('should get fields for date', () => {
@@ -85,7 +85,8 @@ describe('getFields', ({ it }) => {
   })
 
   it('should get fields for duration', () => {
-    expect(getFields('P1Y1M1DT1H1M1.1S')).toStrictEqual({
+    const fields = getFields('P1Y1M1DT1H1M1.1S')
+    expect(fields).toStrictEqual({
       years: 1,
       months: 1,
       weeks: 0,

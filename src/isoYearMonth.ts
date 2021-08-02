@@ -5,14 +5,14 @@ import isValidYearMonth from './isValidYearMonth'
 import isValidDate from './isValidDate'
 import isValidDateTime from './isValidDateTime'
 
-export default function isoYearMonth(): IsoYearMonth
-export default function isoYearMonth(fields: { year: number; month: number }): IsoYearMonth
-export default function isoYearMonth(date: IsoDate): IsoYearMonth
-export default function isoYearMonth(dateTime: IsoDateTime): IsoYearMonth
-export default function isoYearMonth(input: string): IsoYearMonth
-export default function isoYearMonth(year: number, month: number): IsoYearMonth
+function isoYearMonth(): IsoYearMonth
+function isoYearMonth(fields: { year: number; month: number }): IsoYearMonth
+function isoYearMonth(date: IsoDate): IsoYearMonth
+function isoYearMonth(dateTime: IsoDateTime): IsoYearMonth
+function isoYearMonth(input: string): IsoYearMonth
+function isoYearMonth(year: number, month: number): IsoYearMonth
 
-export default function isoYearMonth(...args: any[]): IsoYearMonth {
+function isoYearMonth(...args: any[]): IsoYearMonth {
   if (args.length === 0) {
     const myDate = new Date()
     return JsDateToIsoYearMonth(myDate)
@@ -51,3 +51,5 @@ function isYearMonthFields(input: any): input is { month: number; year: number }
     throw new Error(`Unrecognized Input: ${input}`)
   }
 }
+
+export default isoYearMonth

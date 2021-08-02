@@ -12,7 +12,7 @@ import round from './round'
 import { BalanceDurationUnits } from './utils/balanceDuration'
 import isoDateTime from './isoDateTime'
 
-export default function difference(
+function difference(
   instantLeft: IsoInstant,
   instantRight: IsoInstant,
   options?: {
@@ -23,7 +23,7 @@ export default function difference(
   }
 ): IsoDuration
 
-export default function difference(
+function difference(
   dateTimeLeft: IsoDateTime,
   dateTimeRight: IsoDateTime,
   options?: {
@@ -34,7 +34,7 @@ export default function difference(
   }
 ): IsoDuration
 
-export default function difference(
+function difference(
   dateLeft: IsoDate,
   dateRight: IsoDate,
   options?: {
@@ -45,7 +45,7 @@ export default function difference(
   }
 ): IsoDuration
 
-export default function difference(
+function difference(
   timeLeft: IsoTime,
   timeRight: IsoTime,
   options?: {
@@ -56,7 +56,7 @@ export default function difference(
   }
 ): IsoDuration
 
-export default function difference(
+function difference(
   yearMonthLeft: IsoYearMonth,
   yearMonthRight: IsoYearMonth,
   options?: {
@@ -67,7 +67,7 @@ export default function difference(
   }
 ): IsoDuration
 
-export default function difference(
+function difference(
   left: string,
   right: string,
   options: {
@@ -221,3 +221,5 @@ function YearMonthDifference(left: IsoYearMonth, right: IsoYearMonth, options: a
     }
   )
 }
+
+export default difference

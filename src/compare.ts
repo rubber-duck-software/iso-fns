@@ -8,13 +8,13 @@ import isValidTime from './isValidTime'
 import isValidYearMonth from './isValidYearMonth'
 import total from './total'
 
-export default function compare(instantLeft: IsoInstant, instantRight: IsoInstant): number
-export default function compare(dateTimeLeft: IsoDateTime, dateTimeRight: IsoDateTime): number
-export default function compare(dateLeft: IsoDate, dateRight: IsoDate): number
-export default function compare(timeLeft: IsoTime, dateRight: IsoTime): number
-export default function compare(yearMonthLeft: IsoYearMonth, yearMonthRight: IsoYearMonth): number
-export default function compare(monthDayLeft: IsoMonthDay, monthDayRight: IsoMonthDay): number
-export default function compare(
+function compare(instantLeft: IsoInstant, instantRight: IsoInstant): number
+function compare(dateTimeLeft: IsoDateTime, dateTimeRight: IsoDateTime): number
+function compare(dateLeft: IsoDate, dateRight: IsoDate): number
+function compare(timeLeft: IsoTime, dateRight: IsoTime): number
+function compare(yearMonthLeft: IsoYearMonth, yearMonthRight: IsoYearMonth): number
+function compare(monthDayLeft: IsoMonthDay, monthDayRight: IsoMonthDay): number
+function compare(
   durationLeft: IsoDuration,
   durationRight: IsoDuration,
   options?: {
@@ -22,7 +22,7 @@ export default function compare(
   }
 ): number
 
-export default function compare(left: string, right: string, options: any = {}) {
+function compare(left: string, right: string, options: any = {}) {
   const temporalValidationFunctions = [
     isValidInstant,
     isValidDateTime,
@@ -53,3 +53,5 @@ export default function compare(left: string, right: string, options: any = {}) 
     throw new Error(`Invalid inputs: ${left}, ${right}`)
   }
 }
+
+export default compare

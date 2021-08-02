@@ -2,7 +2,7 @@ import getSign from './getSign'
 import isBlank from './isBlank'
 import { IsoDuration } from 'iso-types'
 
-export default function negate(duration: IsoDuration): IsoDuration {
+function negate(duration: IsoDuration): IsoDuration {
   if (isBlank(duration)) {
     return duration
   } else if (getSign(duration) < 0) {
@@ -11,3 +11,5 @@ export default function negate(duration: IsoDuration): IsoDuration {
     return `-${duration}` as IsoDuration
   }
 }
+
+export default negate

@@ -17,7 +17,7 @@ import duration from './isoDuration'
 import { getDaysInMonthByNumber } from './utils/getDaysInMonthByNumber'
 import { getIsLeapByYearNumber } from './utils/getIsLeapByYearNumber'
 
-export default function withFields(
+function withFields(
   dateTime: IsoDateTime,
   values: {
     year?: number
@@ -31,19 +31,19 @@ export default function withFields(
   options?: { overflow?: 'constrain' | 'reject' }
 ): IsoDateTime
 
-export default function withFields(
+function withFields(
   date: IsoDate,
   values: { year?: number; month?: number; day?: number },
   options?: { overflow?: 'constrain' | 'reject' }
 ): IsoDate
 
-export default function withFields(
+function withFields(
   time: IsoTime,
   values: { hour?: number; minute?: number; second?: number; millisecond?: number },
   options?: { overflow?: 'constrain' | 'reject' }
 ): IsoTime
 
-export default function withFields(
+function withFields(
   yearMonth: IsoYearMonth,
   values: {
     year?: number
@@ -52,7 +52,7 @@ export default function withFields(
   options?: { overflow?: 'constrain' | 'reject' }
 ): IsoYearMonth
 
-export default function withFields(
+function withFields(
   monthDay: IsoMonthDay,
   values: {
     month?: number
@@ -61,7 +61,7 @@ export default function withFields(
   options?: { overflow?: 'constrain' | 'reject' }
 ): IsoMonthDay
 
-export default function withFields(
+function withFields(
   duration: IsoDuration,
   values: {
     years?: number
@@ -75,7 +75,7 @@ export default function withFields(
   }
 ): IsoDuration
 
-export default function withFields(
+function withFields(
   input: string,
   values: Record<string, number>,
   options: { overflow?: 'constrain' | 'reject' } = {}
@@ -151,3 +151,5 @@ function setTemporalFields(
   dateClone.setUTCDate(day)
   return dateClone
 }
+
+export default withFields

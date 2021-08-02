@@ -6,9 +6,9 @@ import isoTime from './isoTime'
 import getFields from './getFields'
 import isValidDate from './isValidDate'
 
-export default function isoDateTime(): IsoDateTime
+function isoDateTime(): IsoDateTime
 
-export default function isoDateTime(fields: {
+function isoDateTime(fields: {
   year: number
   month: number
   day: number
@@ -17,11 +17,11 @@ export default function isoDateTime(fields: {
   second?: number
   millisecond?: number
 }): IsoDateTime
-export default function isoDateTime(date: IsoDate): IsoDateTime
-export default function isoDateTime(input: string): IsoDateTime
+function isoDateTime(date: IsoDate): IsoDateTime
+function isoDateTime(input: string): IsoDateTime
 
-export default function isoDateTime(date: IsoDate, time: IsoTime): IsoDateTime
-export default function isoDateTime(
+function isoDateTime(date: IsoDate, time: IsoTime): IsoDateTime
+function isoDateTime(
   date: IsoDate,
   time: {
     hour: number
@@ -30,7 +30,7 @@ export default function isoDateTime(
     millisecond?: number
   }
 ): IsoDateTime
-export default function isoDateTime(
+function isoDateTime(
   date: {
     year: number
     month: number
@@ -38,7 +38,7 @@ export default function isoDateTime(
   },
   time: IsoTime
 ): IsoDateTime
-export default function isoDateTime(
+function isoDateTime(
   date: {
     year: number
     month: number
@@ -51,7 +51,7 @@ export default function isoDateTime(
     millisecond?: number
   }
 ): IsoDateTime
-export default function isoDateTime(
+function isoDateTime(
   year: number,
   month: number,
   day: number,
@@ -61,7 +61,7 @@ export default function isoDateTime(
   millisecond?: number
 ): IsoTime
 
-export default function isoDateTime(...args: any[]): any {
+function isoDateTime(...args: any[]): any {
   if (!args?.length) {
     return JsDateToIsoDateTime(new Date())
   } else if (args.length === 1) {
@@ -134,3 +134,5 @@ function isDateTimeFields(input: any): input is {
     throw new Error(`Unrecognized Input: ${input}`)
   }
 }
+
+export default isoDateTime

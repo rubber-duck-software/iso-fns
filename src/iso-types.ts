@@ -13,7 +13,7 @@ type TimeFormat = `${hh}:${mm}` | `${hh}:${mm}:${ss}` | `${hh}:${mm}:${ss}.${sss
 type InstantFormat = `${DateFormat}T${hh}:${mm}:${ss}.${ssss}Z`
 type DateTimeFormat = `${DateFormat}T${TimeFormat}`
 type YearMonthFormat = `${YYYY}-${MM}`
-type MonthDayFormat = `${MM}-${DD}`
+type MonthDayFormat = `--${MM}-${DD}`
 
 type DurationYear = `${d}Y` | ''
 type DurationMonth = `${d}M` | ''

@@ -1,7 +1,7 @@
 import isBlank from './isBlank'
 import { IsoDuration } from 'iso-types'
 
-export default function getSign(duration: IsoDuration): number {
+function getSign(duration: IsoDuration): number {
   if (isBlank(duration)) {
     return 0
   } else if (duration.startsWith('-')) {
@@ -10,3 +10,5 @@ export default function getSign(duration: IsoDuration): number {
     return 1
   }
 }
+
+export default getSign

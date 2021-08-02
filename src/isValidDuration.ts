@@ -1,6 +1,6 @@
 import { IsoDuration } from 'iso-types'
 
-export default function isValidDuration(duration: unknown): duration is IsoDuration {
+function isValidDuration(duration: unknown): duration is IsoDuration {
   try {
     const d: string = duration as string
     if (d.startsWith('P')) {
@@ -81,3 +81,5 @@ function matchesDurationSegments(
   }, duration)
   return remaining === ''
 }
+
+export default isValidDuration

@@ -5,14 +5,14 @@ import isValidDateTime from './isValidDateTime'
 import isValidMonthDay from './isValidMonthDay'
 import { JsDateToIsoMonthDay } from './utils/jsdateConversions'
 
-export default function isoMonthDay(): IsoMonthDay
-export default function isoMonthDay(fields: { month: number; day: number }): IsoMonthDay
-export default function isoMonthDay(date: IsoDate): IsoMonthDay
-export default function isoMonthDay(dateTime: IsoDateTime): IsoMonthDay
-export default function isoMonthDay(input: string): IsoMonthDay
-export default function isoMonthDay(month: number, day: number): IsoMonthDay
+function isoMonthDay(): IsoMonthDay
+function isoMonthDay(fields: { month: number; day: number }): IsoMonthDay
+function isoMonthDay(date: IsoDate): IsoMonthDay
+function isoMonthDay(dateTime: IsoDateTime): IsoMonthDay
+function isoMonthDay(input: string): IsoMonthDay
+function isoMonthDay(month: number, day: number): IsoMonthDay
 
-export default function isoMonthDay(...args: any[]): any {
+function isoMonthDay(...args: any[]): any {
   if (args.length === 0) {
     const myDate = new Date()
     return JsDateToIsoMonthDay(myDate)
@@ -51,3 +51,5 @@ function isMonthDayFields(input: any): input is { month: number; day: number } {
     return false
   }
 }
+
+export default isoMonthDay

@@ -3,12 +3,12 @@ import isLeapYear from './isLeapYear'
 import { IsoDate, IsoDateTime, IsoYearMonth } from 'iso-types'
 import { getDaysInMonthByNumber } from './utils/getDaysInMonthByNumber'
 
-export default function getDaysInMonth(date: IsoDate): number
-export default function getDaysInMonth(dateTime: IsoDateTime): number
-export default function getDaysInMonth(yearMonth: IsoYearMonth): number
-export default function getDaysInMonth(month: number, isLeap?: boolean): number
+function getDaysInMonth(date: IsoDate): number
+function getDaysInMonth(dateTime: IsoDateTime): number
+function getDaysInMonth(yearMonth: IsoYearMonth): number
+function getDaysInMonth(month: number, isLeap?: boolean): number
 
-export default function getDaysInMonth(...args: any[]): number {
+function getDaysInMonth(...args: any[]): number {
   if (args.length === 0) {
     throw new Error('No arguments supplied')
   }
@@ -27,3 +27,5 @@ export default function getDaysInMonth(...args: any[]): number {
     throw new Error('Invalid arguments supplied')
   }
 }
+
+export default getDaysInMonth

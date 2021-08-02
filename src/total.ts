@@ -8,7 +8,7 @@ import getDaysInYear from './getDaysInYear'
 import { msPerTimeUnit } from './utils/msPerTimeUnit'
 import { getTotalDays } from './utils/getTotalDays'
 
-export default function total(
+function total(
   duration: IsoDuration,
   {
     unit,
@@ -106,3 +106,5 @@ function millisecondsToUnits(
     throw new Error(`Unrecognized Unit: ${unit}`)
   }
 }
+
+export default total

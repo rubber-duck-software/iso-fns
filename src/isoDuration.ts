@@ -16,7 +16,7 @@ function isDurationFields(input: any) {
   }
 }
 
-export default function isoDuration(fields: {
+function isoDuration(fields: {
   years?: number
   months?: number
   weeks?: number
@@ -26,8 +26,8 @@ export default function isoDuration(fields: {
   seconds?: number
   milliseconds?: number
 }): IsoDuration
-export default function isoDuration(input: string): IsoDuration
-export default function isoDuration(
+function isoDuration(input: string): IsoDuration
+function isoDuration(
   years?: number,
   months?: number,
   weeks?: number,
@@ -38,7 +38,7 @@ export default function isoDuration(
   milliseconds?: number
 ): IsoDuration
 
-export default function isoDuration(...args: any[]): any {
+function isoDuration(...args: any[]): any {
   if (args.length === 0) {
     return
   } else if (isValidDuration(args[0])) {
@@ -92,3 +92,5 @@ export default function isoDuration(...args: any[]): any {
     })
   }
 }
+
+export default isoDuration

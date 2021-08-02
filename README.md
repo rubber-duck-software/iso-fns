@@ -11,20 +11,27 @@
 
 # What is iso-fns?
 
-Iso-fns is a date-time library for Javascript based on the temporal proposal (https://tc39.es/proposal-temporal/docs/index.html)
-and inspired by date-fns (https://date-fns.org).
+Iso-fns is a date-time library for Javascript based on the [Temporal Proposal for JavaScript](https://tc39.es/proposal-temporal/docs/index.html) and inspired by [date-fns](https://date-fns.org) which represents all date-time primitives as strings formatted according the iso-8601 standard. An instant in time is represented as a string formatted
+as "YYYY-MM-DDThh:mm:ss.sssZ" and a date (or plain date) is represented as "YYYY-MM-DD". Each function in this library will
+input some iso 8601 string and perform an operation on it, returning another iso 8601 formatted string.
 
-This library represents all date-time primitives as strings according to the iso-8601 standard.
+# Why represent temporal types as strings?
 
-There are 7 fundamental types covered so far by this library
+A type represented as a javascript class cannot be sent over the wire in a JSON payload without being serialized. Then on the other end of the wire, the payload has to be deserialized into a class again to access the methods. Representing the type as a string avoids this boilerplate, since the type can be sent over the wire directly and performing operations on the type requires no deserialization.
 
-- Instant (1970-01-01T00:00:00.000Z)
-- DateTime (1970-01-01T00:00:00.000)
-- Date (1970-01-01)
-- Time (00:00:00.000 | 00:00:00 | 00:00)
-- YearMonth (1970-01)
-- MonthDay (01-01)
-- Duration (P1Y1M1W1DT1H1M1.1S)
+An additional benefit to this approach is the transparency of strings. There can be no internal state, no overwritten methods, or any other difficult-to-follow structure. Strings are the most readable format for date-time information.
+
+# Contents
+
+There are 7 fundamental types covered by this library
+
+- Instant (yyyy-mm-ddThh:mm:ss.mmmZ)
+- DateTime (yyyy-mm-ddThh:mm:ss.mmm | yyyy-mm-ddThh:mm:ss | yyyy-mm-ddThh:mm)
+- Date (yyyy-mm-dd)
+- Time (hh:mm:ss.mmm | hh:mm:ss | hh:mm)
+- YearMonth (yyyy-mm)
+- MonthDay (--mm-dd)
+- Duration (PnYnMnWnDTnHnMnS)
 
 For documentation on the functions included in this library, check out https://iso-fns.org.
 

@@ -3,12 +3,12 @@ import { IsoDate, IsoDateTime, IsoYearMonth } from 'iso-types'
 import { IsoSplitter } from './utils/isoFlexFunction'
 import { getIsLeapByYearNumber } from './utils/getIsLeapByYearNumber'
 
-export default function isLeapYear(date: IsoDate): boolean
-export default function isLeapYear(dateTime: IsoDateTime): boolean
-export default function isLeapYear(yearMonth: IsoYearMonth): boolean
-export default function isLeapYear(year: number): boolean
+function isLeapYear(date: IsoDate): boolean
+function isLeapYear(dateTime: IsoDateTime): boolean
+function isLeapYear(yearMonth: IsoYearMonth): boolean
+function isLeapYear(year: number): boolean
 
-export default function isLeapYear(input: any) {
+function isLeapYear(input: any) {
   if (typeof input === 'number') {
     return getIsLeapByYearNumber(input)
   } else {
@@ -28,3 +28,5 @@ export default function isLeapYear(input: any) {
     })
   }
 }
+
+export default isLeapYear
