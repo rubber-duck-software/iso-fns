@@ -1,3 +1,4 @@
+export { IsoInstant, IsoDate, IsoTime, IsoDateTime, IsoYearMonth, IsoMonthDay, IsoDuration } from 'iso-types'
 export { default as abs } from './abs'
 export { default as add } from './add'
 export { default as compare } from './compare'
