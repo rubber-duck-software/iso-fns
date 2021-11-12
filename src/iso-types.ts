@@ -1,45 +1,33 @@
-type d = number
-
-type YYYY = `${d}${d}${d}${d}`
-type MM = `${d}${d}`
-type DD = `${d}${d}`
-type hh = `${d}${d}`
-type mm = `${d}${d}`
-type ss = `${d}${d}`
-type ssss = `${d}${d}${d}`
-
-type DateFormat = `${YYYY}-${MM}-${DD}`
-type TimeFormat = `${hh}:${mm}` | `${hh}:${mm}:${ss}` | `${hh}:${mm}:${ss}.${ssss}`
-type InstantFormat = `${DateFormat}T${hh}:${mm}:${ss}.${ssss}Z`
+type DateFormat = `${number}-${number}-${number}`
+type TimeFormat = `${number}:${number}` | `${number}:${number}:${number}` | `${number}:${number}:${number}.${number}`
+type InstantFormat = `${number}-${number}-${number}T${number}:${number}:${number}.${number}Z`
 type DateTimeFormat = `${DateFormat}T${TimeFormat}`
-type YearMonthFormat = `${YYYY}-${MM}`
-type MonthDayFormat = `--${MM}-${DD}`
 
-type DurationYear = `${d}Y` | ''
-type DurationMonth = `${d}M` | ''
-type DurationWeek = `${d}W` | ''
-type DurationDay = `${d}D` | ''
-type DurationHour = `${d}H` | ''
-type DurationMinute = `${d}M` | ''
-type DurationSecond = `${d}S` | `${d}.${d}S` | ''
+type YearMonthFormat = `${number}-${number}`
+type MonthDayFormat = `--${number}-${number}`
 
-type DurationDateFormat = `${DurationYear}${DurationMonth}${DurationWeek}${DurationDay}` | ''
-type DurationTimeFormat = `T${DurationHour}${DurationMinute}${DurationSecond}` | ''
+type DurationFormat = `${'' | '-'}P${string}`
 
-type DurationFormat = `${'' | '-'}P${DurationDateFormat}${DurationTimeFormat}`
+interface Format {
+  'YYYY-MM-DD': DateFormat
+  'hh:mm:ss.sss': TimeFormat
+  'YYYY-MM-DDThh:mm-ss.sssZ': InstantFormat
+  'YYYY-MM-DDThh:mm-ss.sss': DateTimeFormat
+  'YYYY-MM': YearMonthFormat
+  '--MM-DD': MonthDayFormat
+  'P(n)Y(n)M(n)DT(n)H(n)M(n)S': DurationFormat
+}
 
-interface Brand extends String {}
+export type IsoInstant = Format['YYYY-MM-DDThh:mm-ss.sssZ'] & string
 
-export type IsoInstant = InstantFormat & Brand
+export type IsoDate = Format['YYYY-MM-DD'] & string
 
-export type IsoDate = DateFormat & Brand
+export type IsoTime = Format['hh:mm:ss.sss'] & string
 
-export type IsoTime = TimeFormat & Brand
+export type IsoDateTime = Format['YYYY-MM-DDThh:mm-ss.sss'] & string
 
-export type IsoDateTime = DateTimeFormat & Brand
+export type IsoYearMonth = Format['YYYY-MM'] & string
 
-export type IsoYearMonth = YearMonthFormat & Brand
+export type IsoMonthDay = Format['--MM-DD'] & string
 
-export type IsoMonthDay = MonthDayFormat & Brand
-
-export type IsoDuration = DurationFormat & Brand
+export type IsoDuration = Format['P(n)Y(n)M(n)DT(n)H(n)M(n)S'] & string
