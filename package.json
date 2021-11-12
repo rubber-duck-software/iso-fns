@@ -1,7 +1,7 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "types": "index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
