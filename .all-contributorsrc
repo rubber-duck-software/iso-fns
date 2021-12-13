@@ -27,7 +27,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Marcato-Partners",
+      "name": "Marcato Partners",
+      "avatar_url": "https://avatars.githubusercontent.com/u/84106192?s=200&v=4",
+      "profile": "https://github.com/Marcato-Partners",
+      "contributions": [
+        "financial",
+        "mentoring",
+        "userTesting"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 3
 }

@@ -3,10 +3,10 @@
   <p align="center">A string-based date-time library for Javascript.</p>
 </p>
 <p align="center">
-<a href="https://github.com/rubber-duck-software/iso-fns/blob/release/LICENSE"><img src="https://img.shields.io/npm/l/iso-fns.svg?" alt="NPM License"></a>
-<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/v/iso-fns.svg?style=flat" alt="NPM Version"></a>
-<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/dw/iso-fns.svg?style=flat" alt="NPM Downloads"></a>
-<a href="https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release"><img src="https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release" alt="Coverage Status"></a>
+<a href="https://github.com/rubber-duck-software/iso-fns/blob/release/LICENSE"><img src="https://img.shields.io/npm/l/iso-fns.svg?" alt="NPM License"></img></a>
+<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/v/iso-fns.svg?style=flat" alt="NPM Version"></img></a>
+<a href="https://www.npmjs.com/package/iso-fns"><img src="https://img.shields.io/npm/dw/iso-fns.svg?style=flat" alt="NPM Downloads"></img></a>
+<a href="https://coveralls.io/github/rubber-duck-software/iso-fns?branch=release"><img src="https://coveralls.io/repos/github/rubber-duck-software/iso-fns/badge.svg?branch=release" alt="Coverage Status"></img></a>
 </p>
 
 # What is iso-fns?
@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/rubber-duck-software"><img src="https://avatars.githubusercontent.com/u/25811049?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Grant Colestock</b></sub></a><br /><a href="https://github.com/rubber-duck-software/iso-fns/commits?author=rubber-duck-software" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/kolton-musgrove"><img src="https://avatars.githubusercontent.com/u/78399413?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kolton Musgrove</b></sub></a><br /><a href="https://github.com/rubber-duck-software/iso-fns/commits?author=kolton-musgrove" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Marcato-Partners"><img src="https://avatars.githubusercontent.com/u/84106192?s=200&v=4?s=100" width="100px;" alt=""/><br /><sub><b>Marcato Partners</b></sub></a><br /><a href="#financial-Marcato-Partners" title="Financial">💵</a> <a href="#mentoring-Marcato-Partners" title="Mentoring">🧑‍🏫</a> <a href="#userTesting-Marcato-Partners" title="User Testing">📓</a></td>
   </tr>
 </table>
 
