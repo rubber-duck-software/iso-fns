@@ -5,7 +5,7 @@
   "tags": {
     "allowUnknownTags": ["optional"]
   },
-  "recurseDepth": 10,
+  "recurseDepth": 2,
   "plugins": ["node_modules/better-docs/typescript"],
   "source": {
     "include": [".", "README.md"],
