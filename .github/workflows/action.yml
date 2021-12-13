@@ -38,7 +38,7 @@ jobs:
         run: yarn build-package
 
       - name: Publish To NPM
-        run: yarn publish package —-tag alpha
+        run: yarn publish package —-tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
