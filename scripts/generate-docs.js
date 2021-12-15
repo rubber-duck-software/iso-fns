@@ -2,7 +2,10 @@ const { exec } = require('shelljs')
 const fs = require('fs')
 
 exec('rm -rf ./docs-site/docs/api')
+exec('rm -rf ./docs-site/src/resources')
+
 exec('yarn run typedoc --sort source-order --excludeInternal --hideGenerator')
+exec('yarn tsc --declaration --emitDeclarationOnly --declarationMap false --module amd --out docs-site/src/resources/out')
 
 const rootFolder = './docs-site/docs/api'
 
