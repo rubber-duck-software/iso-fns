@@ -3,12 +3,8 @@ import Editor, { useMonaco } from '@monaco-editor/react'
 import useThemeContext from '@theme/hooks/useThemeContext' //docs: https://v2.docusaurus.io/docs/2.0.0-alpha.69/theme-classic#usethemecontext
 import { files } from './iso-fns-files'
 import { Console, Hook, Unhook } from 'console-feed'
-import BrowserOnly from '@docusaurus/BrowserOnly'
 
-export default function () {
-  return <BrowserOnly>{() => <TypescriptLoader />}</BrowserOnly>
-}
-function TypescriptLoader() {
+export default function TypescriptLoader() {
   const [loaded, setLoaded] = React.useState(false)
   React.useEffect(() => {
     if (document) {
@@ -32,7 +28,7 @@ function TypescriptLoader() {
   }
 }
 
-const startingValue = `import { dateFns } from 'https://cdn.skypack.dev/iso-fns@alpha'
+const startingValue = `import { dateFns, timeFns, zonedDateTimeFns, dateTimeFns, instantFns, yearMonthFns, monthDayFns, durationFns, Iso } from 'https://cdn.skypack.dev/iso-fns@alpha'
 
 const result = dateFns.add("2000-01-01", {days:1})
 console.log(result)`

@@ -1,24 +1,5 @@
 import isoSource from '!!raw-loader!../../../dist/out.d.ts'
 
-import isoTypesSource from '!!raw-loader!../resources/out.d.ts'
-
-const formatSrc = `export default function format(
-  date: {
-    year?: number
-    month?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
-    millisecond?: number
-    offset?: string
-    timeZone?: string
-    epochMilliseconds?: number
-  },
-  formatStr: string
-): string
-`
-
 export const files = [
   {
     source: `
