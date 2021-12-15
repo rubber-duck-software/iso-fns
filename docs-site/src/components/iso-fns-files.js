@@ -1,4 +1,4 @@
-import isoSource from '!!raw-loader!../../../dist/out.d.ts'
+import isoSource from '!!raw-loader!../resources/out.d.ts'
 
 export const files = [
   {
