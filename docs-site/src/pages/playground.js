@@ -1,6 +1,5 @@
-import Monaco from '../components/Monaco'
 import Layout from '@theme/Layout'
-
+import BrowserOnly from '@docusaurus/BrowserOnly'
 import React from 'react'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
@@ -17,7 +16,13 @@ export default function () {
             function results and any error messages in the console below. Have fun!
           </h5>
 
-          <Monaco />
+          <BrowserOnly>
+            {() => {
+              const Monaco = require('../components/Monaco').default
+
+              return <Monaco />
+            }}
+          </BrowserOnly>
         </div>
       </main>
     </Layout>
