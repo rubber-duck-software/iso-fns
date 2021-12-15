@@ -46,6 +46,11 @@ const config = {
             label: 'Documentation'
           },
           {
+            to: 'playground',
+            position: 'left',
+            label: 'Playground'
+          },
+          {
             href: 'https://github.com/rubber-duck-software/iso-fns',
             label: 'GitHub',
             position: 'right'

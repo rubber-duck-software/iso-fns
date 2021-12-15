@@ -1,4 +1,4 @@
-export namespace Iso {
+export module Iso {
   type Offset = `${'+' | '-'}${number}:${number}`
 
   type DateFormat = `${number}-${number}-${number}`
