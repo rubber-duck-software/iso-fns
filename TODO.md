@@ -1,3 +1,8 @@
 - Convert test cases over from Temporal documentation
 - Update documentation to reflect new changes
 - Add Licensing Comments
+- Add date.withCalendar and date.toString({ calendarName }) functionality
+- Implement dayCode, monthCode, yearCode, etc. in creation methods (i.e. .from)
+- Add more convenient way to specify temporalOverflow in the options of a function call
+- Add a way to convert from YearMonth and MonthDay directly to date by passing a day or year, respectively.
+- Add casting functionality when an object instead of a date is passed to date functions

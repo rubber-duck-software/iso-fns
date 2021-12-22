@@ -2085,7 +2085,7 @@ function MillisecondsToDays(milliseconds: number, relativeTo: CalendarDate | und
   let dayLengthMs = 86400e3
   if (sign === 0) return { days: 0, milliseconds: 0, dayLengthMs }
   if (!IsTemporalZonedDateTime(relativeTo)) {
-    const days = Math.floor(milliseconds / dayLengthMs)
+    const days = divmod(milliseconds, dayLengthMs).quotient
     milliseconds = milliseconds % dayLengthMs
     return { days, milliseconds, dayLengthMs }
   } else {
