@@ -39,9 +39,9 @@ const ObjectIs = Object.is
 const ObjectKeys = Object.keys
 
 const DAY_SECONDS = 86400
-const DAY_MILLIS = DAY_SECONDS * 1e9
-const MS_MIN = -8640000000000000
-const MS_MAX = 8640000000000000
+const DAY_MILLIS = DAY_SECONDS * 1e3
+const MS_MIN = -DAY_SECONDS * 1e11
+const MS_MAX = DAY_SECONDS * 1e11
 const BEFORE_FIRST_DST = -388152 * 1e7 // 1847-01-01T00:00:00Z
 
 const YEAR_MIN = -271821
