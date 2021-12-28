@@ -168,6 +168,9 @@ export const instantFns: IInstantFns = {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.CreateTemporalZonedDateTime(ES.GetInstantSlots(instant).epochMilliseconds, timeZone)
   },
+  toJsDate(instant) {
+    return new Date(instant)
+  },
   fromEpochSeconds(epochSeconds) {
     epochSeconds = ES.ToNumber(epochSeconds)
     const epochNanoseconds = epochSeconds * 1e3
@@ -229,6 +232,9 @@ export function buildInstantChain(instant: Iso.Instant): IInstantChain {
     },
     toZonedDateTime(timeZone) {
       return buildZonedDateTimeChain(instantFns.toZonedDateTime(instant, timeZone))
+    },
+    toJsDate() {
+      return new Date(instant)
     }
   }
 }

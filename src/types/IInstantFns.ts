@@ -83,6 +83,7 @@ export interface IInstantFns {
   isBefore(instant: Iso.Instant, other: Iso.Instant): boolean
   isAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   toZonedDateTime(instant: Iso.Instant, timeZone: string): Iso.ZonedDateTime
+  toJsDate(instant: Iso.Instant): Date
   fromEpochSeconds(epochSeconds: number): Iso.Instant
   from(item: any): Iso.Instant
   compare(one: Iso.Instant, two: Iso.Instant): number
@@ -150,4 +151,5 @@ export interface IInstantChain extends ES.Chain<Iso.Instant> {
   isBefore(other: Iso.Instant): ES.Chain<boolean>
   isAfter(other: Iso.Instant): ES.Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
+  toJsDate(): Date
 }
