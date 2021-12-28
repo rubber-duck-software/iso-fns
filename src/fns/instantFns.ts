@@ -234,7 +234,7 @@ export function buildInstantChain(instant: Iso.Instant): IInstantChain {
       return buildZonedDateTimeChain(instantFns.toZonedDateTime(instant, timeZone))
     },
     toJsDate() {
-      return new Date(instant)
+      return ES.buildChain(new Date(instant))
     }
   }
 }
