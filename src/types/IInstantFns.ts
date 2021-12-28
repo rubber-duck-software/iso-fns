@@ -151,5 +151,5 @@ export interface IInstantChain extends ES.Chain<Iso.Instant> {
   isBefore(other: Iso.Instant): ES.Chain<boolean>
   isAfter(other: Iso.Instant): ES.Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
-  toJsDate(): Date
+  toJsDate(): ES.Chain<Date>
 }
