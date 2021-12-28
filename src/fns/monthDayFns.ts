@@ -19,6 +19,12 @@ export const monthDayFns: IMonthDayFns = {
 
     return ES.CreateTemporalMonthDay(month, day)
   },
+  isValid(monthDay): monthDay is Iso.MonthDay {
+    return ES.IsTemporalMonthDay(monthDay)
+  },
+  assertIsValid(monthDay): asserts monthDay is Iso.MonthDay {
+    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
+  },
   getDay(monthDay) {
     if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
     return ES.CalendarDay(monthDay)

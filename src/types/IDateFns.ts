@@ -15,6 +15,8 @@ export interface IDateFns {
    */
   now(timeZone?: string): Iso.Date
   fromNumbers(year: number, month: number, day: number): Iso.Date
+  isValid(date: unknown): date is Iso.Date
+  assertIsValid(date: unknown): asserts date is Iso.Date
   getYear(date: Iso.Date): number
   getMonth(date: Iso.Date): number
   getDay(date: Iso.Date): number
@@ -88,6 +90,8 @@ export interface IDateFns {
     }
   ): Iso.Duration
   equals(date: Iso.Date, other: Iso.Date): boolean
+  isBefore(date: Iso.Date, other: Iso.Date): boolean
+  isAfter(date: Iso.Date, other: Iso.Date): boolean
   toDateTime(date: Iso.Date, time?: Iso.Time): Iso.DateTime
   toZonedDateTime(date: Iso.Date, item: { timeZone: string; time?: Iso.Time } | string): Iso.ZonedDateTime
   toYearMonth(date: Iso.Date): Iso.YearMonth
@@ -297,6 +301,8 @@ export interface IDateChain extends ES.Chain<Iso.Date> {
     }
   ): IDurationChain
   equals(other: Iso.Date): ES.Chain<boolean>
+  isBefore(other: Iso.Date): ES.Chain<boolean>
+  isAfter(other: Iso.Date): ES.Chain<boolean>
   toDateTime(time?: Iso.Time): IDateTimeChain
   toZonedDateTime(item: { timeZone: string; time?: Iso.Time }): IZonedDateTimeChain
   toYearMonth(): IYearMonthChain

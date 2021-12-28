@@ -13,6 +13,8 @@ export interface ITimeFns {
    */
   now(timeZone?: string): Iso.Time
   fromNumbers(hour?: number, minute?: number, second?: number, millisecond?: number): Iso.Time
+  isValid(time: unknown): time is Iso.Time
+  assertIsValid(time: unknown): asserts time is Iso.Time
   getHour(time: Iso.Time): number
   getMinute(time: Iso.Time): number
   getSecond(time: Iso.Time): number

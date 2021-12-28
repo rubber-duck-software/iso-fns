@@ -31,6 +31,12 @@ export const timeFns: ITimeFns = {
 
     return ES.CreateTemporalTime(hour, minute, second, millisecond)
   },
+  isValid(time): time is Iso.Time {
+    return ES.IsTemporalTime(time)
+  },
+  assertIsValid(time): asserts time is Iso.Time {
+    if (!ES.IsTemporalTime(time)) throw new TypeError('invalid receiver')
+  },
   getHour(time) {
     if (!ES.IsTemporalTime(time)) throw new TypeError('invalid receiver')
     return ES.GetTimeSlots(time).hour

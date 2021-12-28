@@ -24,6 +24,8 @@ export interface IDateTimeFns {
     second?: number,
     millisecond?: number
   ): Iso.DateTime
+  isValid(dateTime: unknown): dateTime is Iso.DateTime
+  assertIsValid(dateTime: unknown): asserts dateTime is Iso.DateTime
   getYear(dateTime: Iso.DateTime): number
   getMonth(dateTime: Iso.DateTime): number
   getDay(dateTime: Iso.DateTime): number
@@ -115,6 +117,8 @@ export interface IDateTimeFns {
     }
   ): Iso.DateTime
   equals(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
+  isBefore(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
+  isAfter(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   toZonedDateTime(
     dateTime: Iso.DateTime,
     timeZone: string,
@@ -387,6 +391,8 @@ export interface IDateTimeChain extends ES.Chain<Iso.DateTime> {
     roundingMode?: ES.TemporalRoundingMode
   }): IDateTimeChain
   equals(other: Iso.DateTime): ES.Chain<boolean>
+  isBefore(other: Iso.DateTime): ES.Chain<boolean>
+  isAfter(other: Iso.DateTime): ES.Chain<boolean>
   toZonedDateTime(timeZone: string, options?: { disambiguation: ES.TemporalDisambiguation }): IZonedDateTimeChain
   toDate(): IDateChain
   toYearMonth(): IYearMonthChain

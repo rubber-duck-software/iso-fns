@@ -33,6 +33,12 @@ export const dateTimeFns: IDateTimeFns = {
 
     return ES.CreateTemporalDateTime(year, month, day, hour, minute, second, millisecond)
   },
+  isValid(dateTime): dateTime is Iso.DateTime {
+    return ES.IsTemporalDateTime(dateTime)
+  },
+  assertIsValid(dateTime): asserts dateTime is Iso.DateTime {
+    if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
+  },
   getYear(dateTime) {
     if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
     return ES.CalendarYear(dateTime)
@@ -352,6 +358,36 @@ export const dateTimeFns: IDateTimeFns = {
     }
     return true
   },
+  isBefore(dateTime, other) {
+    if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalDateTime(other)) throw new TypeError('invalid receiver')
+
+    const slots1 = ES.GetDateTimeSlots(dateTime)
+    const slots2 = ES.GetDateTimeSlots(other)
+
+    for (const slot of ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 < val2) return true
+      else if (val1 > val2) return false
+    }
+    return false
+  },
+  isAfter(dateTime, other) {
+    if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalDateTime(other)) throw new TypeError('invalid receiver')
+
+    const slots1 = ES.GetDateTimeSlots(dateTime)
+    const slots2 = ES.GetDateTimeSlots(other)
+
+    for (const slot of ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 > val2) return true
+      else if (val1 < val2) return false
+    }
+    return false
+  },
   toZonedDateTime(dateTime, timeZone, options) {
     if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalTimeZone(timeZone)) throw new TypeError('invalid receiver')
@@ -491,6 +527,12 @@ export function buildDateTimeChain(dateTime: Iso.DateTime): IDateTimeChain {
     },
     equals(other) {
       return ES.buildChain(dateTimeFns.equals(dateTime, other))
+    },
+    isBefore(other) {
+      return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
+    },
+    isAfter(other) {
+      return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
     },
     toZonedDateTime(timeZone, options) {
       return buildZonedDateTimeChain(dateTimeFns.toZonedDateTime(dateTime, timeZone, options))

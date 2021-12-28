@@ -12,6 +12,8 @@ export interface IInstantFns {
    */
   now(): Iso.Instant
   fromEpochMilliseconds(epochMilliseconds: number): Iso.Instant
+  isValid(instant: unknown): instant is Iso.Instant
+  assertIsValid(instant: unknown): asserts instant is Iso.Instant
   getEpochSeconds(instant: Iso.Instant): number
   getEpochMilliseconds(instant: Iso.Instant): number
   /**
@@ -78,6 +80,8 @@ export interface IInstantFns {
     }
   ): Iso.Instant
   equals(instant: Iso.Instant, other: Iso.Instant): boolean
+  isBefore(instant: Iso.Instant, other: Iso.Instant): boolean
+  isAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   toZonedDateTime(instant: Iso.Instant, timeZone: string): Iso.ZonedDateTime
   fromEpochSeconds(epochSeconds: number): Iso.Instant
   from(item: any): Iso.Instant
@@ -143,5 +147,7 @@ export interface IInstantChain extends ES.Chain<Iso.Instant> {
     roundingMode?: ES.TemporalRoundingMode
   }): IInstantChain
   equals(other: Iso.Instant): ES.Chain<boolean>
+  isBefore(other: Iso.Instant): ES.Chain<boolean>
+  isAfter(other: Iso.Instant): ES.Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
 }
