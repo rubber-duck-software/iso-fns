@@ -4,6 +4,8 @@ import { IDateChain } from './IDateFns'
 
 export interface IMonthDayFns {
   fromNumbers(month: number, day: number): Iso.MonthDay
+  isValid(monthDay: unknown): monthDay is Iso.MonthDay
+  assertIsValid(monthDay: unknown): asserts monthDay is Iso.MonthDay
   getDay(monthDay: Iso.MonthDay): number
   getMonth(monthDay: Iso.MonthDay): number
   with(

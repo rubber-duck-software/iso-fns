@@ -30,6 +30,12 @@ export const dateFns: IDateFns = {
 
     return ES.CreateTemporalDate(year, month, day)
   },
+  isValid(date): date is Iso.Date {
+    return ES.IsTemporalDate(date)
+  },
+  assertIsValid(date): asserts date is Iso.Date {
+    if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
+  },
   getYear(date) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     return ES.CalendarYear(date)
@@ -197,6 +203,34 @@ export const dateFns: IDateFns = {
     }
     return true
   },
+  isBefore(date, other) {
+    if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalDate(other)) throw new TypeError('invalid receiver')
+    const slots1 = ES.GetSlots(date)
+    const slots2 = ES.GetSlots(date)
+
+    for (const slot of ['year', 'month', 'day'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 < val2) return true
+      else if (val1 > val2) return false
+    }
+    return false
+  },
+  isAfter(date, other) {
+    if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalDate(other)) throw new TypeError('invalid receiver')
+    const slots1 = ES.GetSlots(date)
+    const slots2 = ES.GetSlots(date)
+
+    for (const slot of ['year', 'month', 'day'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 > val2) return true
+      else if (val1 < val2) return false
+    }
+    return false
+  },
   toDateTime(date, time = undefined) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     const { year, month, day } = ES.GetDateSlots(date)
@@ -317,6 +351,12 @@ export function buildDateChain(date: Iso.Date): IDateChain {
     },
     equals(other) {
       return ES.buildChain(dateFns.equals(date, other))
+    },
+    isBefore(other) {
+      return ES.buildChain(dateFns.isBefore(date, other))
+    },
+    isAfter(other) {
+      return ES.buildChain(dateFns.isAfter(date, other))
     },
     toDateTime(time) {
       return buildDateTimeChain(dateFns.toDateTime(date, time))

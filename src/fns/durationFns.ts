@@ -22,6 +22,12 @@ export const durationFns: IDurationFns = {
 
     return ES.CreateTemporalDuration(years, months, weeks, days, hours, minutes, seconds, milliseconds)
   },
+  isValid(duration): duration is Iso.Duration {
+    return ES.IsTemporalDuration(duration)
+  },
+  assertIsValid(duration): asserts duration is Iso.Duration {
+    ES.AssertIsDuration(duration)
+  },
   getYears(duration) {
     ES.AssertIsDuration(duration)
     return ES.GetDurationSlots(duration).years

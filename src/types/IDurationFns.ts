@@ -12,6 +12,8 @@ export interface IDurationFns {
     seconds?: number,
     milliseconds?: number
   ): Iso.Duration
+  isValid(duration: unknown): duration is Iso.Duration
+  assertIsValid(duration: unknown): asserts duration is Iso.Duration
   getYears(duration: Iso.Duration): number
   getMonths(duration: Iso.Duration): number
   getWeeks(duration: Iso.Duration): number

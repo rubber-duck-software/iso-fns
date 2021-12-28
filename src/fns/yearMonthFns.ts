@@ -22,6 +22,12 @@ export const yearMonthFns: IYearMonthFns = {
 
     return ES.CreateTemporalYearMonth(year, month)
   },
+  isValid(yearMonth): yearMonth is Iso.YearMonth {
+    return ES.IsTemporalYearMonth(yearMonth)
+  },
+  assertIsValid(yearMonth): asserts yearMonth is Iso.YearMonth {
+    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
+  },
   getYear(yearMonth) {
     if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
     return ES.CalendarYear(yearMonth)
@@ -201,6 +207,34 @@ export const yearMonthFns: IYearMonthFns = {
     }
     return true
   },
+  isBefore(yearMonth, other) {
+    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
+    other = ES.ToTemporalYearMonth(other)
+    const slots1 = ES.GetYearMonthSlots(yearMonth)
+    const slots2 = ES.GetYearMonthSlots(other)
+
+    for (const slot of ['year', 'month'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 < val2) return true
+      else if (val1 > val2) return false
+    }
+    return false
+  },
+  isAfter(yearMonth, other) {
+    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
+    other = ES.ToTemporalYearMonth(other)
+    const slots1 = ES.GetYearMonthSlots(yearMonth)
+    const slots2 = ES.GetYearMonthSlots(other)
+
+    for (const slot of ['year', 'month'] as const) {
+      const val1 = slots1[slot]
+      const val2 = slots2[slot]
+      if (val1 > val2) return true
+      else if (val1 < val2) return false
+    }
+    return false
+  },
   toDate(yearMonth, day) {
     if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
     if (typeof day !== 'number') throw new TypeError('argument should be a number')
@@ -278,6 +312,12 @@ export function buildYearMonthChain(yearMonth: Iso.YearMonth): IYearMonthChain {
     },
     equals(other) {
       return ES.buildChain(yearMonthFns.equals(yearMonth, other))
+    },
+    isBefore(other) {
+      return ES.buildChain(yearMonthFns.isBefore(yearMonth, other))
+    },
+    isAfter(other) {
+      return ES.buildChain(yearMonthFns.isAfter(yearMonth, other))
     },
     toDate(day) {
       return buildDateChain(yearMonthFns.toDate(yearMonth, day))

@@ -27,6 +27,12 @@ export const instantFns: IInstantFns = {
     ES.ValidateEpochMilliseconds(ms)
     return ES.CreateTemporalInstant(ms)
   },
+  isValid(instant): instant is Iso.Instant {
+    return ES.IsTemporalInstant(instant)
+  },
+  assertIsValid(instant): asserts instant is Iso.Instant {
+    if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
+  },
   getEpochSeconds(instant) {
     if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
     const value = ES.GetInstantSlots(instant).epochMilliseconds
@@ -143,6 +149,20 @@ export const instantFns: IInstantFns = {
     const two = ES.GetInstantSlots(other).epochMilliseconds
     return one === two
   },
+  isBefore(instant, other) {
+    if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalInstant(other)) throw new TypeError('invalid receiver')
+    const one = ES.GetInstantSlots(instant).epochMilliseconds
+    const two = ES.GetInstantSlots(other).epochMilliseconds
+    return one < two
+  },
+  isAfter(instant, other) {
+    if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
+    if (!ES.IsTemporalInstant(other)) throw new TypeError('invalid receiver')
+    const one = ES.GetInstantSlots(instant).epochMilliseconds
+    const two = ES.GetInstantSlots(other).epochMilliseconds
+    return one > two
+  },
   toZonedDateTime(instant, timeZone) {
     if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
     timeZone = ES.ToTemporalTimeZone(timeZone)
@@ -200,6 +220,12 @@ export function buildInstantChain(instant: Iso.Instant): IInstantChain {
     },
     equals(other) {
       return ES.buildChain(instantFns.equals(instant, other))
+    },
+    isBefore(other) {
+      return ES.buildChain(instantFns.isBefore(instant, other))
+    },
+    isAfter(other) {
+      return ES.buildChain(instantFns.isAfter(instant, other))
     },
     toZonedDateTime(timeZone) {
       return buildZonedDateTimeChain(instantFns.toZonedDateTime(instant, timeZone))

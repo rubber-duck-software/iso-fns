@@ -5,6 +5,8 @@ import { IDateChain } from './IDateFns'
 
 export interface IYearMonthFns {
   fromNumbers(year: number, month: number): Iso.YearMonth
+  isValid(yearMonth: unknown): yearMonth is Iso.YearMonth
+  assertIsValid(yearMonth: unknown): asserts yearMonth is Iso.YearMonth
   getYear(yearMonth: Iso.YearMonth): number
   getMonth(yearMonth: Iso.YearMonth): number
   getDaysInMonth(yearMonth: Iso.YearMonth): number
@@ -68,6 +70,8 @@ export interface IYearMonthFns {
     }
   ): Iso.Duration
   equals(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  isBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  isAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   toDate(yearMonth: Iso.YearMonth, day: number): Iso.Date
   getFields(yearMonth: Iso.YearMonth): ES.YearMonthSlots
   from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.YearMonth
@@ -239,6 +243,8 @@ export interface IYearMonthChain extends ES.Chain<Iso.YearMonth> {
     }
   ): IDurationChain
   equals(other: Iso.YearMonth): ES.Chain<boolean>
+  isBefore(other: Iso.YearMonth): ES.Chain<boolean>
+  isAfter(other: Iso.YearMonth): ES.Chain<boolean>
   toDate(day: number): IDateChain
   getFields(): ES.Chain<ES.YearMonthSlots>
   format(formatString: string): ES.Chain<string>

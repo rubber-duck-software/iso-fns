@@ -23,6 +23,8 @@ export interface IZonedDateTimeFns {
    */
   currentTimeZone(): string
   fromEpochMilliseconds(epochMilliseconds: number, timeZone: string): Iso.ZonedDateTime
+  isValid(zonedDateTime: unknown): zonedDateTime is Iso.ZonedDateTime
+  assertIsValid(zonedDateTime: unknown): asserts zonedDateTime is Iso.ZonedDateTime
   getTimeZone(zonedDateTime: Iso.ZonedDateTime): string
   getYear(zonedDateTime: Iso.ZonedDateTime): number
   getMonth(zonedDateTime: Iso.ZonedDateTime): number

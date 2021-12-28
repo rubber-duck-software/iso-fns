@@ -30,6 +30,12 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
 
     return ES.CreateTemporalZonedDateTime(epochMilliseconds, timeZone)
   },
+  isValid(zonedDateTime): zonedDateTime is Iso.ZonedDateTime {
+    return ES.IsTemporalZonedDateTime(zonedDateTime)
+  },
+  assertIsValid(zonedDateTime): asserts zonedDateTime is Iso.ZonedDateTime {
+    if (!ES.IsTemporalZonedDateTime(zonedDateTime)) throw new TypeError('invalid receiver')
+  },
   getTimeZone(zonedDateTime) {
     if (!ES.IsTemporalZonedDateTime(zonedDateTime)) throw new TypeError('invalid receiver')
     return ES.GetZonedDateTimeSlots(zonedDateTime).timeZone
