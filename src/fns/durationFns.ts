@@ -1,4 +1,4 @@
-import { IDurationChain, IDurationFns } from 'types'
+import { IDurationChain, IDurationFns } from '../types'
 import * as ES from '../ecmascript'
 import { Iso } from '../iso-types'
 
