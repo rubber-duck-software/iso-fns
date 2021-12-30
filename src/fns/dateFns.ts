@@ -207,7 +207,7 @@ export const dateFns: IDateFns = {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalDate(other)) throw new TypeError('invalid receiver')
     const slots1 = ES.GetSlots(date)
-    const slots2 = ES.GetSlots(date)
+    const slots2 = ES.GetSlots(other)
 
     for (const slot of ['year', 'month', 'day'] as const) {
       const val1 = slots1[slot]
@@ -221,7 +221,7 @@ export const dateFns: IDateFns = {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalDate(other)) throw new TypeError('invalid receiver')
     const slots1 = ES.GetSlots(date)
-    const slots2 = ES.GetSlots(date)
+    const slots2 = ES.GetSlots(other)
 
     for (const slot of ['year', 'month', 'day'] as const) {
       const val1 = slots1[slot]
