@@ -1,6 +1,6 @@
 import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
-import { dateFns } from './index'
+import { dateFns, durationFns } from './index'
 
 describe('Date', () => {
   describe('date.until() works', () => {
@@ -364,288 +364,307 @@ describe('Date', () => {
     it('Date.from("2019-02-28").subtract({ months: 1 })', () => {
       assert.equal(dateFns.subtract('2019-02-28', { months: 1 }), '2019-01-28')
     })
-    // it('Date.subtract(durationObj)', () => {
-    //   assert.equal(`${date.subtract(Temporal.Duration.from('P43Y'))}`, '1976-11-18')
-    // })
-    // it('casts argument', () => {
-    //   assert.equal(`${date.subtract('P43Y')}`, '1976-11-18')
-    // })
-    // it('constrain when overflowing result', () => {
-    //   const mar31 = isoDate.from('2020-03-31')
-    //   assert.equal(`${mar31.subtract({ months: 1 })}`, '2020-02-29')
-    //   assert.equal(`${mar31.subtract({ months: 1 }, { overflow: 'constrain' })}`, '2020-02-29')
-    // })
-    // it('throw when overflowing result with reject', () => {
-    //   const mar31 = isoDate.from('2020-03-31')
-    //   assert.throws(() => mar31.subtract({ months: 1 }, { overflow: 'reject' }), RangeError)
-    // })
-    // it('symmetrical with regard to negative durations', () => {
-    //   assert.equal(`${isoDate.from('1976-11-18').subtract({ years: -43 })}`, '2019-11-18')
-    //   assert.equal(`${isoDate.from('2018-12-18').subtract({ months: -11 })}`, '2019-11-18')
-    //   assert.equal(`${isoDate.from('2019-10-29').subtract({ days: -20 })}`, '2019-11-18')
-    //   assert.equal(`${isoDate.from('2019-01-28').subtract({ months: -1 })}`, '2019-02-28')
-    // })
-    // it("ignores lower units that don't balance up to a day", () => {
-    //   assert.equal(`${date.subtract({ hours: 1 })}`, '2019-11-18')
-    //   assert.equal(`${date.subtract({ minutes: 1 })}`, '2019-11-18')
-    //   assert.equal(`${date.subtract({ seconds: 1 })}`, '2019-11-18')
-    //   assert.equal(`${date.subtract({ milliseconds: 1 })}`, '2019-11-18')
-    //   assert.equal(`${date.subtract({ microseconds: 1 })}`, '2019-11-18')
-    //   assert.equal(`${date.subtract({ nanoseconds: 1 })}`, '2019-11-18')
-    // })
-    // it('subtracts lower units that balance up to a day or more', () => {
-    //   assert.equal(`${date.subtract({ hours: 24 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ hours: 36 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ hours: 48 })}`, '2019-11-16')
-    //   assert.equal(`${date.subtract({ minutes: 1440 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ seconds: 86400 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ milliseconds: 86400_000 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ microseconds: 86400_000_000 })}`, '2019-11-17')
-    //   assert.equal(`${date.subtract({ nanoseconds: 86400_000_000_000 })}`, '2019-11-17')
-    // })
-    // it('invalid overflow', () => {
-    //   ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
-    //     assert.throws(() => date.subtract({ months: 1 }, { overflow }), RangeError)
-    //   )
-    // })
-    // it('mixed positive and negative values always throw', () => {
-    //   ;['constrain', 'reject'].forEach((overflow) =>
-    //     assert.throws(() => date.subtract({ months: 1, days: -30 }, { overflow }), RangeError)
-    //   )
-    // })
-    // it('options may only be an object or undefined', () => {
-    //   ;[{}, () => {}, undefined].forEach((options) => assert.equal(`${date.subtract({ months: 1 }, options)}`, '2019-10-18'))
-    // })
-    // it('object must contain at least one correctly-spelled property', () => {
-    //   assert.throws(() => date.subtract({}), TypeError)
-    //   assert.throws(() => date.subtract({ month: 12 }), TypeError)
-    // })
-    // it('incorrectly-spelled properties are ignored', () => {
-    //   assert.equal(`${date.subtract({ month: 1, days: 1 })}`, '2019-11-17')
-    // })
+    it('Date.subtract(durationObj)', () => {
+      assert.equal(dateFns.subtract(date, durationFns.from('P43Y')), '1976-11-18')
+    })
+    it('casts argument', () => {
+      assert.equal(dateFns.subtract(date, 'P43Y'), '1976-11-18')
+    })
+    it('constrain when overflowing result', () => {
+      const mar31 = dateFns.from('2020-03-31')
+      assert.equal(dateFns.subtract(mar31, { months: 1 }), '2020-02-29')
+      assert.equal(dateFns.subtract(mar31, { months: 1 }, { overflow: 'constrain' }), '2020-02-29')
+    })
+    it('throw when overflowing result with reject', () => {
+      const mar31 = dateFns.from('2020-03-31')
+      assert.throws(() => dateFns.subtract(mar31, { months: 1 }, { overflow: 'reject' }), RangeError)
+    })
+    it('symmetrical with regard to negative durations', () => {
+      assert.equal(dateFns.subtract(dateFns.from('1976-11-18'), { years: -43 }), '2019-11-18')
+      assert.equal(dateFns.subtract(dateFns.from('2018-12-18'), { months: -11 }), '2019-11-18')
+      assert.equal(dateFns.subtract(dateFns.from('2019-10-29'), { days: -20 }), '2019-11-18')
+      assert.equal(dateFns.subtract(dateFns.from('2019-01-28'), { months: -1 }), '2019-02-28')
+    })
+    it("ignores lower units that don't balance up to a day", () => {
+      assert.equal(dateFns.subtract(date, { hours: 1 }), '2019-11-18')
+      assert.equal(dateFns.subtract(date, { minutes: 1 }), '2019-11-18')
+      assert.equal(dateFns.subtract(date, { seconds: 1 }), '2019-11-18')
+      assert.equal(dateFns.subtract(date, { milliseconds: 1 }), '2019-11-18')
+    })
+    it('subtracts lower units that balance up to a day or more', () => {
+      assert.equal(dateFns.subtract(date, { hours: 24 }), '2019-11-17')
+      assert.equal(dateFns.subtract(date, { hours: 36 }), '2019-11-17')
+      assert.equal(dateFns.subtract(date, { hours: 48 }), '2019-11-16')
+      assert.equal(dateFns.subtract(date, { minutes: 1440 }), '2019-11-17')
+      assert.equal(dateFns.subtract(date, { seconds: 86400 }), '2019-11-17')
+      assert.equal(dateFns.subtract(date, { milliseconds: 86400_000 }), '2019-11-17')
+    })
+    it('invalid overflow', () => {
+      ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
+        // @ts-ignore
+        assert.throws(() => dateFns.subtract(date, { months: 1 }, { overflow }), RangeError)
+      )
+    })
+    it('mixed positive and negative values always throw', () => {
+      ;['constrain', 'reject'].forEach((overflow) =>
+        // @ts-ignore
+        assert.throws(() => dateFns.subtract(date, { months: 1, days: -30 }, { overflow }), RangeError)
+      )
+    })
+    it('options may only be an object or undefined', () => {
+      ;[{}, () => {}, undefined].forEach((options) =>
+        assert.equal(dateFns.subtract(date, { months: 1 }, options), '2019-10-18')
+      )
+    })
+    it('object must contain at least one correctly-spelled property', () => {
+      assert.throws(() => dateFns.subtract(date, {}), TypeError)
+      // @ts-ignore
+      assert.throws(() => dateFns.subtract(date, { month: 12 }), TypeError)
+    })
+    it('incorrectly-spelled properties are ignored', () => {
+      // @ts-ignore
+      assert.equal(dateFns.subtract(date, { month: 1, days: 1 }), '2019-11-17')
+    })
   })
-  // describe('date.toString() works', () => {
-  //   it('new Date(1976, 11, 18).toString()', () => {
-  //     assert.equal(new PlainDate(1976, 11, 18).toString(), '1976-11-18')
-  //   })
-  //   it('new Date(1914, 2, 23).toString()', () => {
-  //     assert.equal(new PlainDate(1914, 2, 23).toString(), '1914-02-23')
-  //   })
-  //   const d = new PlainDate(1976, 11, 18)
-  //   it('shows only non-ISO calendar if calendarName = auto', () => {
-  //     assert.equal(d.toString({ calendarName: 'auto' }), '1976-11-18')
-  //     assert.equal(d.withCalendar('gregory').toString({ calendarName: 'auto' }), '1976-11-18[u-ca=gregory]')
-  //   })
-  //   it('shows ISO calendar if calendarName = always', () => {
-  //     assert.equal(d.toString({ calendarName: 'always' }), '1976-11-18[u-ca=iso8601]')
-  //   })
-  //   it('omits non-ISO calendar if calendarName = never', () => {
-  //     assert.equal(d.withCalendar('gregory').toString({ calendarName: 'never' }), '1976-11-18')
-  //   })
-  //   it('default is calendar = auto', () => {
-  //     assert.equal(d.toString(), '1976-11-18')
-  //     assert.equal(d.withCalendar('gregory').toString(), '1976-11-18[u-ca=gregory]')
-  //   })
-  // })
-  // describe('Date.from() works', () => {
-  //   it('Date.from("1976-11-18")', () => {
-  //     const date = isoDate.from('1976-11-18')
-  //     assert.equal(date.year, 1976)
-  //     assert.equal(date.month, 11)
-  //     assert.equal(date.day, 18)
-  //   })
-  //   it('Date.from("2019-06-30")', () => {
-  //     const date = isoDate.from('2019-06-30')
-  //     assert.equal(date.year, 2019)
-  //     assert.equal(date.month, 6)
-  //     assert.equal(date.day, 30)
-  //   })
-  //   it('Date.from("+000050-06-30")', () => {
-  //     const date = isoDate.from('+000050-06-30')
-  //     assert.equal(date.year, 50)
-  //     assert.equal(date.month, 6)
-  //     assert.equal(date.day, 30)
-  //   })
-  //   it('Date.from("+010583-06-30")', () => {
-  //     const date = isoDate.from('+010583-06-30')
-  //     assert.equal(date.year, 10583)
-  //     assert.equal(date.month, 6)
-  //     assert.equal(date.day, 30)
-  //   })
-  //   it('Date.from("-010583-06-30")', () => {
-  //     const date = isoDate.from('-010583-06-30')
-  //     assert.equal(date.year, -10583)
-  //     assert.equal(date.month, 6)
-  //     assert.equal(date.day, 30)
-  //   })
-  //   it('Date.from("-000333-06-30")', () => {
-  //     const date = isoDate.from('-000333-06-30')
-  //     assert.equal(date.year, -333)
-  //     assert.equal(date.month, 6)
-  //     assert.equal(date.day, 30)
-  //   })
-  //   it('Date.from(1976-11-18) is not the same object', () => {
-  //     const orig = new PlainDate(1976, 11, 18)
-  //     const actual = isoDate.from(orig)
-  //     assert.notEqual(actual, orig)
-  //   })
-  //   it('Date.from({ year: 1976, month: 11, day: 18 }) == 1976-11-18', () =>
-  //     assert.equal(`${isoDate.from({ year: 1976, month: 11, day: 18 })}`, '1976-11-18'))
-  //   it('can be constructed with month and without monthCode', () =>
-  //     assert.equal(`${isoDate.from({ year: 1976, month: 11, day: 18 })}`, '1976-11-18'))
-  //   it('can be constructed with monthCode and without month', () =>
-  //     assert.equal(`${isoDate.from({ year: 1976, monthCode: 'M11', day: 18 })}`, '1976-11-18'))
-  //   it('month and monthCode must agree', () =>
-  //     assert.throws(() => isoDate.from({ year: 1976, month: 11, monthCode: 'M12', day: 18 }), RangeError))
-  //   it('Date.from({ year: 2019, day: 15 }) throws', () =>
-  //     assert.throws(() => isoDate.from({ year: 2019, day: 15 }), TypeError))
-  //   it('Date.from({ month: 12 }) throws', () => assert.throws(() => isoDate.from({ month: 12 }), TypeError))
-  //   it('object must contain at least the required correctly-spelled properties', () => {
-  //     assert.throws(() => isoDate.from({}), TypeError)
-  //     assert.throws(() => isoDate.from({ year: 1976, months: 11, day: 18 }), TypeError)
-  //   })
-  //   it('incorrectly-spelled properties are ignored', () => {
-  //     assert.equal(`${isoDate.from({ year: 1976, month: 11, day: 18, days: 15 })}`, '1976-11-18')
-  //   })
-  //   it('Date.from(required prop undefined) throws', () =>
-  //     assert.throws(() => isoDate.from({ year: undefined, month: 11, day: 18 }), TypeError))
-  //   it('Date.from(number) is converted to string', () => isoDate.from(19761118).equals(isoDate.from('19761118')))
-  //   it('basic format', () => {
-  //     assert.equal(`${isoDate.from('19761118')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+0019761118')}`, '1976-11-18')
-  //   })
-  //   it('mixture of basic and extended format', () => {
-  //     assert.equal(`${isoDate.from('1976-11-18T152330.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('19761118T15:23:30.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('1976-11-18T15:23:30.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('1976-11-18T152330.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('19761118T15:23:30.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('19761118T152330.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('19761118T152330.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+001976-11-18T152330.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+0019761118T15:23:30.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+001976-11-18T15:23:30.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+001976-11-18T152330.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+0019761118T15:23:30.1+0000')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+0019761118T152330.1+00:00')}`, '1976-11-18')
-  //     assert.equal(`${isoDate.from('+0019761118T152330.1+0000')}`, '1976-11-18')
-  //   })
-  //   it('no junk at end of string', () => assert.throws(() => isoDate.from('1976-11-18junk'), RangeError))
-  //   it('ignores if a timezone is specified', () => assert.equal(`${isoDate.from('2020-01-01[Asia/Kolkata]')}`, '2020-01-01'))
-  //   it('options may only be an object or undefined', () => {
-  //     ;[{}, () => {}, undefined].forEach((options) =>
-  //       assert.equal(`${isoDate.from({ year: 1976, month: 11, day: 18 }, options)}`, '1976-11-18')
-  //     )
-  //   })
-  //   describe('Overflow', () => {
-  //     const bad = { year: 2019, month: 1, day: 32 }
-  //     it('reject', () => assert.throws(() => isoDate.from(bad, { overflow: 'reject' }), RangeError))
-  //     it('constrain', () => {
-  //       assert.equal(`${isoDate.from(bad)}`, '2019-01-31')
-  //       assert.equal(`${isoDate.from(bad, { overflow: 'constrain' })}`, '2019-01-31')
-  //     })
-  //     it('throw when bad overflow', () => {
-  //       ;[new PlainDate(1976, 11, 18), { year: 2019, month: 1, day: 1 }, '2019-01-31'].forEach((input) => {
-  //         ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
-  //           assert.throws(() => isoDate.from(input, { overflow }), RangeError)
-  //         )
-  //       })
-  //     })
-  //     it('constrain has no effect on invalid ISO string', () => {
-  //       assert.throws(() => isoDate.from('2020-13-34', { overflow: 'constrain' }), RangeError)
-  //     })
-  //   })
-  // })
-  // describe('Date.compare works', () => {
-  //   const d1 = isoDate.from('1976-11-18')
-  //   const d2 = isoDate.from('2019-06-30')
-  //   it('equal', () => assert.equal(PlainDate.compare(d1, d1), 0))
-  //   it('smaller/larger', () => assert.equal(PlainDate.compare(d1, d2), -1))
-  //   it('larger/smaller', () => assert.equal(PlainDate.compare(d2, d1), 1))
-  //   it('casts first argument', () => {
-  //     assert.equal(PlainDate.compare({ year: 1976, month: 11, day: 18 }, d2), -1)
-  //     assert.equal(PlainDate.compare('1976-11-18', d2), -1)
-  //   })
-  //   it('casts second argument', () => {
-  //     assert.equal(PlainDate.compare(d1, { year: 2019, month: 6, day: 30 }), -1)
-  //     assert.equal(PlainDate.compare(d1, '2019-06-30'), -1)
-  //   })
-  //   it('object must contain at least the required properties', () => {
-  //     assert.throws(() => PlainDate.compare({ year: 1976 }, d2), TypeError)
-  //     assert.throws(() => PlainDate.compare(d1, { year: 2019 }), TypeError)
-  //   })
-  // })
-  // describe('Date.equal works', () => {
-  //   const d1 = isoDate.from('1976-11-18')
-  //   const d2 = isoDate.from('2019-06-30')
-  //   it('equal', () => assert(d1.equals(d1)))
-  //   it('unequal', () => assert(!d1.equals(d2)))
-  //   it('casts argument', () => {
-  //     assert(!d2.equals({ year: 1976, month: 11, day: 18 }))
-  //     assert(!d2.equals('1976-11-18'))
-  //   })
-  //   it('object must contain at least the required properties', () => {
-  //     assert.throws(() => d2.equals({ year: 1976 }), TypeError)
-  //   })
-  // })
-  // describe('Min/max range', () => {
-  //   it('constructing from numbers', () => {
-  //     assert.throws(() => new PlainDate(-271821, 4, 18), RangeError)
-  //     assert.throws(() => new PlainDate(275760, 9, 14), RangeError)
-  //     assert.equal(`${new PlainDate(-271821, 4, 19)}`, '-271821-04-19')
-  //     assert.equal(`${new PlainDate(275760, 9, 13)}`, '+275760-09-13')
-  //   })
-  //   it('constructing from property bag', () => {
-  //     const tooEarly = { year: -271821, month: 4, day: 18 }
-  //     const tooLate = { year: 275760, month: 9, day: 14 }
-  //     ;['reject', 'constrain'].forEach((overflow) => {
-  //       ;[tooEarly, tooLate].forEach((props) => {
-  //         assert.throws(() => isoDate.from(props, { overflow }), RangeError)
-  //       })
-  //     })
-  //     assert.equal(`${isoDate.from({ year: -271821, month: 4, day: 19 })}`, '-271821-04-19')
-  //     assert.equal(`${isoDate.from({ year: 275760, month: 9, day: 13 })}`, '+275760-09-13')
-  //   })
-  //   it('constructing from ISO string', () => {
-  //     ;['reject', 'constrain'].forEach((overflow) => {
-  //       ;['-271821-04-18', '+275760-09-14'].forEach((str) => {
-  //         assert.throws(() => isoDate.from(str, { overflow }), RangeError)
-  //       })
-  //     })
-  //     assert.equal(`${isoDate.from('-271821-04-19')}`, '-271821-04-19')
-  //     assert.equal(`${isoDate.from('+275760-09-13')}`, '+275760-09-13')
-  //   })
-  //   it('converting from DateTime', () => {
-  //     const min = Temporal.PlainDateTime.from('-271821-04-19T00:00:00.000000001')
-  //     const max = Temporal.PlainDateTime.from('+275760-09-13T23:59:59.999999999')
-  //     assert.equal(`${min.toPlainDate()}`, '-271821-04-19')
-  //     assert.equal(`${max.toPlainDate()}`, '+275760-09-13')
-  //   })
-  //   it('converting from YearMonth', () => {
-  //     const min = Temporal.PlainYearMonth.from('-271821-04')
-  //     const max = Temporal.PlainYearMonth.from('+275760-09')
-  //     assert.throws(() => min.toPlainDate({ day: 1 }), RangeError)
-  //     assert.throws(() => max.toPlainDate({ day: 30 }), RangeError)
-  //     assert.equal(`${min.toPlainDate({ day: 19 })}`, '-271821-04-19')
-  //     assert.equal(`${max.toPlainDate({ day: 13 })}`, '+275760-09-13')
-  //   })
-  //   it('converting from MonthDay', () => {
-  //     const jan1 = Temporal.PlainMonthDay.from('01-01')
-  //     const dec31 = Temporal.PlainMonthDay.from('12-31')
-  //     const minYear = -271821
-  //     const maxYear = 275760
-  //     assert.throws(() => jan1.toPlainDate({ year: minYear }), RangeError)
-  //     assert.throws(() => dec31.toPlainDate({ year: maxYear }), RangeError)
-  //     assert.equal(`${jan1.toPlainDate({ year: minYear + 1 })}`, '-271820-01-01')
-  //     assert.equal(`${dec31.toPlainDate({ year: maxYear - 1 })}`, '+275759-12-31')
-  //   })
-  //   it('adding and subtracting beyond limit', () => {
-  //     const min = isoDate.from('-271821-04-19')
-  //     const max = isoDate.from('+275760-09-13')
-  //     ;['reject', 'constrain'].forEach((overflow) => {
-  //       assert.throws(() => min.subtract({ days: 1 }, { overflow }), RangeError)
-  //       assert.throws(() => max.add({ days: 1 }, { overflow }), RangeError)
-  //     })
-  //   })
-  // })
+  describe('date.toString() works', () => {
+    it('new Date(1976, 11, 18).toString()', () => {
+      assert.equal(dateFns.fromNumbers(1976, 11, 18).toString(), '1976-11-18')
+    })
+    it('new Date(1914, 2, 23).toString()', () => {
+      assert.equal(dateFns.fromNumbers(1914, 2, 23).toString(), '1914-02-23')
+    })
+    const d = dateFns.fromNumbers(1976, 11, 18)
+    // Elements of test commented out because of lacking functionality
+    it('shows only non-ISO calendar if calendarName = auto', () => {
+      // assert.equal(d.toString({ calendarName: 'auto' }), '1976-11-18')
+      // assert.equal(d.withCalendar('gregory').toString({ calendarName: 'auto' }), '1976-11-18[u-ca=gregory]')
+    })
+    it('shows ISO calendar if calendarName = always', () => {
+      // assert.equal(d.toString({ calendarName: 'always' }), '1976-11-18[u-ca=iso8601]')
+    })
+    it('omits non-ISO calendar if calendarName = never', () => {
+      // assert.equal(d.withCalendar('gregory').toString({ calendarName: 'never' }), '1976-11-18')
+    })
+    it('default is calendar = auto', () => {
+      assert.equal(d.toString(), '1976-11-18')
+      // assert.equal(d.withCalendar('gregory').toString(), '1976-11-18[u-ca=gregory]')
+    })
+  })
+  describe('Date.from() works', () => {
+    it('Date.from("1976-11-18")', () => {
+      const date = dateFns.from('1976-11-18')
+      assert.equal(dateFns.getYear(date), 1976)
+      assert.equal(dateFns.getMonth(date), 11)
+      assert.equal(dateFns.getDay(date), 18)
+    })
+    it('Date.from("2019-06-30")', () => {
+      const date = dateFns.from('2019-06-30')
+      assert.equal(dateFns.getYear(date), 2019)
+      assert.equal(dateFns.getMonth(date), 6)
+      assert.equal(dateFns.getDay(date), 30)
+    })
+    it('Date.from("+000050-06-30")', () => {
+      const date = dateFns.from('+000050-06-30')
+      assert.equal(dateFns.getYear(date), 50)
+      assert.equal(dateFns.getMonth(date), 6)
+      assert.equal(dateFns.getDay(date), 30)
+    })
+    it('Date.from("+010583-06-30")', () => {
+      const date = dateFns.from('+010583-06-30')
+      assert.equal(dateFns.getYear(date), 10583)
+      assert.equal(dateFns.getMonth(date), 6)
+      assert.equal(dateFns.getDay(date), 30)
+    })
+    it('Date.from("-010583-06-30")', () => {
+      const date = dateFns.from('-010583-06-30')
+      assert.equal(dateFns.getYear(date), -10583)
+      assert.equal(dateFns.getMonth(date), 6)
+      assert.equal(dateFns.getDay(date), 30)
+    })
+    it('Date.from("-000333-06-30")', () => {
+      const date = dateFns.from('-000333-06-30')
+      assert.equal(dateFns.getYear(date), -333)
+      assert.equal(dateFns.getMonth(date), 6)
+      assert.equal(dateFns.getDay(date), 30)
+    })
+    // Because we're creating strings, it doesn't make sense to check for difference from object
+    // it('Date.from(1976-11-18) is not the same object', () => {
+    //   const orig = new Date(1976, 11, 18)
+    //   const actual = dateFns.from(orig)
+    //   assert.notEqual(actual, orig)
+    // })
+    it('Date.from({ year: 1976, month: 11, day: 18 }) == 1976-11-18', () =>
+      assert.equal(dateFns.from({ year: 1976, month: 11, day: 18 }), '1976-11-18'))
+    it('can be constructed with month and without monthCode', () =>
+      assert.equal(dateFns.from({ year: 1976, month: 11, day: 18 }), '1976-11-18'))
+    // Unsupported functionality
+    // it('can be constructed with monthCode and without month', () =>
+    //   assert.equal(dateFns.from({ year: 1976, monthCode: 'M11', day: 18 }), '1976-11-18'))
+    // it('month and monthCode must agree', () =>
+    //   assert.throws(() => dateFns.from({ year: 1976, month: 11, monthCode: 'M12', day: 18 }), RangeError))
+    it('Date.from({ year: 2019, day: 15 }) throws', () =>
+      assert.throws(() => dateFns.from({ year: 2019, day: 15 }), TypeError))
+    it('Date.from({ month: 12 }) throws', () => assert.throws(() => dateFns.from({ month: 12 }), TypeError))
+    it('object must contain at least the required correctly-spelled properties', () => {
+      assert.throws(() => dateFns.from({}), TypeError)
+      assert.throws(() => dateFns.from({ year: 1976, months: 11, day: 18 }), TypeError)
+    })
+    it('incorrectly-spelled properties are ignored', () => {
+      assert.equal(dateFns.from({ year: 1976, month: 11, day: 18, days: 15 }), '1976-11-18')
+    })
+    it('Date.from(required prop undefined) throws', () =>
+      assert.throws(() => dateFns.from({ year: undefined, month: 11, day: 18 }), TypeError))
+    it('Date.from(number) is converted to string', () => assert.equal(dateFns.from(19761118), dateFns.from('19761118')))
+    it('basic format', () => {
+      assert.equal(dateFns.from('19761118'), '1976-11-18')
+      assert.equal(dateFns.from('+0019761118'), '1976-11-18')
+    })
+    it('mixture of basic and extended format', () => {
+      assert.equal(dateFns.from('1976-11-18T152330.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('19761118T15:23:30.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('1976-11-18T15:23:30.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('1976-11-18T152330.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('19761118T15:23:30.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('19761118T152330.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('19761118T152330.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('+001976-11-18T152330.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('+0019761118T15:23:30.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('+001976-11-18T15:23:30.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('+001976-11-18T152330.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('+0019761118T15:23:30.1+0000'), '1976-11-18')
+      assert.equal(dateFns.from('+0019761118T152330.1+00:00'), '1976-11-18')
+      assert.equal(dateFns.from('+0019761118T152330.1+0000'), '1976-11-18')
+    })
+    it('no junk at end of string', () => assert.throws(() => dateFns.from('1976-11-18junk'), RangeError))
+    it('ignores if a timezone is specified', () => assert.equal(dateFns.from('2020-01-01[Asia/Kolkata]'), '2020-01-01'))
+    it('options may only be an object or undefined', () => {
+      ;[{}, () => {}, undefined].forEach((options) =>
+        //@ts-ignore
+        assert.equal(dateFns.from({ year: 1976, month: 11, day: 18 }, options), '1976-11-18')
+      )
+    })
+    describe('Overflow', () => {
+      const bad = { year: 2019, month: 1, day: 32 }
+      it('reject', () => assert.throws(() => dateFns.from(bad, { overflow: 'reject' }), RangeError))
+      it('constrain', () => {
+        assert.equal(dateFns.from(bad), '2019-01-31')
+        assert.equal(dateFns.from(bad, { overflow: 'constrain' }), '2019-01-31')
+      })
+      it('throw when bad overflow', () => {
+        ;[dateFns.fromNumbers(1976, 11, 18), { year: 2019, month: 1, day: 1 }, '2019-01-31'].forEach((input) => {
+          ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
+            //@ts-ignore
+            assert.throws(() => dateFns.from(input, { overflow }), RangeError)
+          )
+        })
+      })
+      it('constrain has no effect on invalid ISO string', () => {
+        assert.throws(() => dateFns.from('2020-13-34', { overflow: 'constrain' }), RangeError)
+      })
+    })
+  })
+  describe('Date.compare works', () => {
+    const d1 = dateFns.from('1976-11-18')
+    const d2 = dateFns.from('2019-06-30')
+    it('equal', () => assert.equal(dateFns.compare(d1, d1), 0))
+    it('smaller/larger', () => assert.equal(dateFns.compare(d1, d2), -1))
+    it('larger/smaller', () => assert.equal(dateFns.compare(d2, d1), 1))
+    // Lacking functionality for this test.
+    it('casts first argument', () => {
+      // assert.equal(dateFns.compare({ year: 1976, month: 11, day: 18 }, d2), -1)
+      assert.equal(dateFns.compare('1976-11-18', d2), -1)
+    })
+    it('casts second argument', () => {
+      // assert.equal(dateFns.compare(d1, { year: 2019, month: 6, day: 30 }), -1)
+      assert.equal(dateFns.compare(d1, '2019-06-30'), -1)
+    })
+    it('object must contain at least the required properties', () => {
+      //@ts-ignore
+      assert.throws(() => dateFns.compare({ year: 1976 }, d2), TypeError)
+      //@ts-ignore
+      assert.throws(() => dateFns.compare(d1, { year: 2019 }), TypeError)
+    })
+  })
+  describe('Date.equal works', () => {
+    const d1 = dateFns.from('1976-11-18')
+    const d2 = dateFns.from('2019-06-30')
+    it('equal', () => assert(dateFns.equals(d1, d1)))
+    it('unequal', () => assert.equal(dateFns.equals(d1, d2), false))
+    // Lacks functionality for casting
+    // it('casts argument', () => {
+    //   assert(!dateFns.equals({ year: 1976, month: 11, day: 18 }, d1))
+    //   assert(!d2.equals('1976-11-18'))
+    // })
+    it('object must contain at least the required properties', () => {
+      //@ts-ignore
+      assert.throws(() => dateFns.equals(d2, { year: 1976 }), TypeError)
+    })
+  })
+  describe('Min/max range', () => {
+    it('constructing from numbers', () => {
+      assert.throws(() => dateFns.fromNumbers(-271821, 4, 18), RangeError)
+      assert.throws(() => dateFns.fromNumbers(275760, 9, 14), RangeError)
+      assert.equal(dateFns.fromNumbers(-271821, 4, 19), '-271821-04-19')
+      assert.equal(dateFns.fromNumbers(275760, 9, 13), '+275760-09-13')
+    })
+    it('constructing from property bag', () => {
+      const tooEarly = { year: -271821, month: 4, day: 18 }
+      const tooLate = { year: 275760, month: 9, day: 14 }
+      ;['reject', 'constrain'].forEach((overflow) => {
+        ;[tooEarly, tooLate].forEach((props) => {
+          //@ts-ignore
+          assert.throws(() => dateFns.from(props, { overflow }), RangeError)
+        })
+      })
+      assert.equal(dateFns.from({ year: -271821, month: 4, day: 19 }), '-271821-04-19')
+      assert.equal(dateFns.from({ year: 275760, month: 9, day: 13 }), '+275760-09-13')
+    })
+    it('constructing from ISO string', () => {
+      ;['reject', 'constrain'].forEach((overflow) => {
+        ;['-271821-04-18', '+275760-09-14'].forEach((str) => {
+          //@ts-ignore
+          assert.throws(() => dateFns.from(str, { overflow }), RangeError)
+        })
+      })
+      assert.equal(dateFns.from('-271821-04-19'), '-271821-04-19')
+      assert.equal(dateFns.from('+275760-09-13'), '+275760-09-13')
+    })
+    it('converting from DateTime', () => {
+      const min = dateFns.from('-271821-04-19T00:00:00.000000001')
+      const max = dateFns.from('+275760-09-13T23:59:59.999999999')
+      assert.equal(min.toString(), '-271821-04-19')
+      assert.equal(max.toString(), '+275760-09-13')
+    })
+
+    // Do not support the ability to convert a YearMonth directly to a date via the addition of a day
+    //   it('converting from YearMonth', () => {
+    //     const min = Temporal.PlainYearMonth.from('-271821-04')
+    //     const max = Temporal.PlainYearMonth.from('+275760-09')
+    //     assert.throws(() => min.toPlainDate({ day: 1 }), RangeError)
+    //     assert.throws(() => max.toPlainDate({ day: 30 }), RangeError)
+    //     assert.equal(min.toPlainDate({ day: 19 }), '-271821-04-19')
+    //     assert.equal(max.toPlainDate({ day: 13 }), '+275760-09-13')
+    //   })
+    // Do not support the ability to convert a MonthDay directly to a date via the addition of a year
+    //   it('converting from MonthDay', () => {
+    //     const jan1 = Temporal.PlainMonthDay.from('01-01')
+    //     const dec31 = Temporal.PlainMonthDay.from('12-31')
+    //     const minYear = -271821
+    //     const maxYear = 275760
+    //     assert.throws(() => jan1.toPlainDate({ year: minYear }), RangeError)
+    //     assert.throws(() => dec31.toPlainDate({ year: maxYear }), RangeError)
+    //     assert.equal(jan1.toPlainDate({ year: minYear + 1 }), '-271820-01-01')
+    //     assert.equal(dec31.toPlainDate({ year: maxYear - 1 }), '+275759-12-31')
+    //   })
+    it('adding and subtracting beyond limit', () => {
+      const min = dateFns.from('-271821-04-19')
+      const max = dateFns.from('+275760-09-13')
+      ;['reject', 'constrain'].forEach((overflow) => {
+        //@ts-ignore
+        assert.throws(() => dateFns.subtract(min, { days: 1 }, { overflow }), RangeError)
+        //@ts-ignore
+        assert.throws(() => dateFns.add(max, { days: 1 }, { overflow }), RangeError)
+      })
+    })
+  })
 })
