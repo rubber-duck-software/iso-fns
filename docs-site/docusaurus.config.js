@@ -31,6 +31,19 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      algolia: {
+        // If Algolia did not provide you any appId, use 'BH4D9OD16A'
+        appId: 'HKLE5UWARF',
+
+        contextual: true,
+
+        // Public API key: it is safe to commit it
+        apiKey: '358a5f501a65c8110c2242c2bcb3438c',
+
+        indexName: 'iso-fns'
+
+        //... other Algolia params
+      },
       navbar: {
         title: 'iso-fns',
         logo: {
