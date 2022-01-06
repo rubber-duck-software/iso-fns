@@ -1,3 +1,38 @@
+import { describe, it } from 'beartest-js'
+import { instantFns } from './fns'
+import { strict as assert } from 'assert'
+
+describe('Instant', () => {
+  describe('isValid', () => {
+    it('allows minute precision', () => {
+      assert.ok(instantFns.isValid('2020-01-01T12:30Z'))
+    })
+
+    it('allows second precision', () => {
+      assert.ok(instantFns.isValid('2020-01-01T12:30:01Z'))
+      assert.ok(instantFns.isValid('2020-01-01T12:30:00Z'))
+    })
+
+    it('allows 100ms precision', () => {
+      assert.ok(instantFns.isValid('2020-01-01T12:30:01.1Z'))
+      assert.ok(instantFns.isValid('2020-01-01T12:30:00.0Z'))
+    })
+
+    it('allows 10ms precision', () => {
+      assert.ok(instantFns.isValid('2020-01-01T12:30:01.01Z'))
+      assert.ok(instantFns.isValid('2020-01-01T12:30:00.00Z'))
+    })
+    it('allows 1ms precision', () => {
+      assert.ok(instantFns.isValid('2020-01-01T12:30:01.001Z'))
+      assert.ok(instantFns.isValid('2020-01-01T12:30:00.000Z'))
+    })
+    it('does not allow invalid', () => {
+      assert.ok(!instantFns.isValid('2020-01-01T00:00:1Z'))
+      assert.ok(!instantFns.isValid('2020-01-01T00:00:01.1111Z'))
+      assert.ok(!instantFns.isValid('test'))
+    })
+  })
+})
 // #! /usr/bin/env -S node --experimental-modules
 
 // /*

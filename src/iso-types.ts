@@ -1,9 +1,11 @@
 export module Iso {
   type Offset = `${'+' | '-'}${number}:${number}`
 
+  type MinuteFormat = `${number}` | `${number}:${number}` | `${number}:${number}.${number}`
+
   type DateFormat = `${number}-${number}-${number}`
-  type TimeFormat = `${number}:${number}` | `${number}:${number}:${number}` | `${number}:${number}:${number}.${number}`
-  type InstantFormat = `${number}-${number}-${number}T${number}:${number}:${number}.${number}Z`
+  type TimeFormat = `${number}:${MinuteFormat}`
+  type InstantFormat = `${number}-${number}-${number}T${number}:${MinuteFormat}Z`
   type DateTimeFormat = `${DateFormat}T${TimeFormat}`
   type ZonedDateTimeFormat = `${DateFormat}T${TimeFormat}${Offset}[${string}]`
 
@@ -14,10 +16,10 @@ export module Iso {
 
   interface Format {
     'YYYY-MM-DD': DateFormat
-    'hh:mm:ss.sss': TimeFormat
-    'YYYY-MM-DDThh:mm-ss.sssZ': InstantFormat
-    'YYYY-MM-DDThh:mm-ss.sss': DateTimeFormat
-    'YYYY-MM-DDThh:mm-ss.sss+00:00[TimeZoneName]': ZonedDateTimeFormat
+    'hh:mm:ss[.sss]': TimeFormat
+    'YYYY-MM-DDThh:mm-ss[.sss]Z': InstantFormat
+    'YYYY-MM-DDThh:mm-ss[.sss]': DateTimeFormat
+    'YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]': ZonedDateTimeFormat
     'YYYY-MM': YearMonthFormat
     '--MM-DD': MonthDayFormat
     'P(n)Y(n)M(n)DT(n)H(n)M(n)S': DurationFormat
@@ -34,7 +36,7 @@ export module Iso {
    *
    * Like Unix time, Instant ignores leap seconds.
    */
-  export type Instant = Format['YYYY-MM-DDThh:mm-ss.sssZ'] & string
+  export type Instant = Format['YYYY-MM-DDThh:mm-ss[.sss]Z'] & string
 
   /**
    * An `Iso.ZonedDateTime` is a timezone-aware date/time type that represents a real event that has happened (or will happen) at a particular instant from the perspective of a particular region on Earth. As the broadest `Iso` type, `Iso.ZonedDateTime` can be considered a combination of a `Iso.TimeZone`, `Iso.Instant`, and `Iso.DateTime`.
@@ -52,7 +54,7 @@ export module Iso {
    *
    * The `Iso.ZonedDateTime` functions are a superset of `Iso.DateTime` functions, which makes it easy to port code back and forth between the two types as needed. Because `Iso.DateTime` is not aware of time zones, in use cases where the time zone is known it's recommended to use `Iso.ZonedDateTime` which will automatically adjust for DST and can convert easily to `Iso.Instant` without having to re-specify the time zone.
    */
-  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss.sss+00:00[TimeZoneName]'] & string
+  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]'] & string
 
   /**
    * An `Iso.Date` represents a calendar date. "Calendar date" refers to the concept of a date as expressed in everyday usage, independent of any time zone. For example, it could be used to represent an event on a calendar which happens during the whole day no matter which time zone it's happening in.
@@ -68,7 +70,7 @@ export module Iso {
    *
    * `Iso.Time` refers to a time with no associated calendar date; if you need to refer to a specific time on a specific day, use `Iso.DateTime`. A `Iso.Time` can be converted into a `Iso.ZonedDateTime` by combining it with a `Iso.Date` and `Iso.TimeZone` using the `toZonedDateTime()` function. It can also be combined with a `Iso.Date` to yield a "zoneless" `Iso.DateTime` using the `toDateTime()` function.
    */
-  export type Time = Format['hh:mm:ss.sss'] & string
+  export type Time = Format['hh:mm:ss[.sss]'] & string
 
   /**
    * An `Iso.DateTime` represents a calendar date and wall-clock time, with a precision in milliseconds, and without any time zone.
@@ -92,7 +94,7 @@ export module Iso {
    * - Performing arithmetic that deliberately ignores DST. Example: in a day-planner UI, the visual height of a meeting may be the same even if DST skips or repeats an hour.
    * To learn more about time zones and DST best practices, visit [Time Zones and Resolving Ambiguity](https://iso-fns.org/docs/timezones-and-ambiguity).
    */
-  export type DateTime = Format['YYYY-MM-DDThh:mm-ss.sss'] & string
+  export type DateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]'] & string
 
   /**
    * A `Iso.YearMonth` represents a particular month on the calendar. For example, it could be used to represent a particular instance of a monthly recurring event, like "the June 2019 meeting".
