@@ -7,7 +7,7 @@ export type TemporalOverflow = 'constrain' | 'reject'
 export type TemporalOffset = 'prefer' | 'ignore' | 'reject' | 'use'
 export type TemporalSingularUnit = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'
 export type TemporalPluralUnit = 'years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds' | 'milliseconds'
-
+type TimePrecision = 'auto' | 'minute' | 'second' | 'ms100' | 'ms10' | 'ms1'
 export interface Chain<T> {
   value(): T
 }
@@ -214,7 +214,13 @@ export function GetTimeZoneName(timeZone: string, epochMilliseconds: number) {
 
 export function IsTemporalInstant(item: unknown): item is Iso.Instant {
   try {
-    return item === new Date(item as any).toISOString()
+    const stringifiedMs1 = new Date(item as any).toISOString()
+    const stringifiedMs10 = stringifiedMs1.replace('0Z', 'Z')
+    const stringifiedMs100 = stringifiedMs1.replace('00Z', 'Z')
+    const stringifiedS = stringifiedMs1.replace('.000Z', 'Z')
+    const stringifiedM = stringifiedMs1.replace(':00.000Z', 'Z')
+
+    return [stringifiedMs1, stringifiedMs10, stringifiedMs100, stringifiedS, stringifiedM].includes(item as string)
   } catch (e) {
     return false
   }
@@ -261,7 +267,8 @@ export function IsTemporalDate(item: unknown): item is Iso.Date {
 export function IsTemporalTime(item: unknown): item is Iso.Time {
   try {
     const slots = GetTimeSlots(item as Iso.Time)
-    const created = CreateTemporalTime(slots.hour, slots.minute, slots.second, slots.millisecond)
+    const precision = GetTimePrecision(item as Iso.Time)
+    const created = CreateTemporalTime(slots.hour, slots.minute, slots.second, slots.millisecond, { precision })
     return created === item
   } catch (e) {
     return false
@@ -270,6 +277,8 @@ export function IsTemporalTime(item: unknown): item is Iso.Time {
 export function IsTemporalDateTime(item: unknown): item is Iso.DateTime {
   try {
     const slots = GetDateTimeSlots(item as Iso.DateTime)
+    const time = (item as string).split('T')[1] as Iso.Time
+    const precision = GetTimePrecision(time)
     const created = CreateTemporalDateTime(
       slots.year,
       slots.month,
@@ -277,7 +286,8 @@ export function IsTemporalDateTime(item: unknown): item is Iso.DateTime {
       slots.hour,
       slots.minute,
       slots.second,
-      slots.millisecond
+      slots.millisecond,
+      { precision }
     )
     return created === item
   } catch (e) {
@@ -302,13 +312,19 @@ export function IsTemporalMonthDay(item: unknown): item is Iso.MonthDay {
 }
 export function IsTemporalZonedDateTime(item: unknown): item is Iso.ZonedDateTime {
   try {
+    const rawNoDate = (item as string).split('T')[1]
+    const rawTime = rawNoDate.includes('+') ? rawNoDate.split('+')[0] : rawNoDate.split('-')[0]
+    const precision = GetTimePrecision(rawTime as Iso.Time)
     const slots = GetZonedDateTimeSlots(item as Iso.ZonedDateTime)
+    const time = CreateTemporalTime(slots.hour, slots.minute, slots.second, slots.millisecond, { precision })
+
     const created = CreateTemporalZonedDateTime(slots.epochMilliseconds, slots.timeZone)
     const [dirtyDateTime, dirtyTimeZone] = created.split('[')
     const timeZone = dirtyTimeZone.replace(']', '')
     const offsetStr = dirtyDateTime.substring(dirtyDateTime.length - 6, dirtyDateTime.length)
     const dateTime = dirtyDateTime.substring(0, dirtyDateTime.length - 6)
-    return `${dateTime}${offsetStr}[${timeZone}]` === item
+    const [date] = dateTime.split('T')
+    return `${date}T${time}${offsetStr}[${timeZone}]` === item
   } catch (e) {
     return false
   }
@@ -1275,7 +1291,7 @@ export function CreateTemporalDuration(
   seconds = Math.floor(total / 1000)
   milliseconds = total % 1000
   const fraction = MathAbs(milliseconds)
-  let decimalPart = `${fraction}`.padStart(9, '0')
+  let decimalPart = `${fraction}`.padStart(3, '0')
   while (decimalPart[decimalPart.length - 1] === '0') {
     decimalPart = decimalPart.slice(0, -1)
   }
@@ -1293,9 +1309,15 @@ export function CreateTemporalDate(year: number, month: number, day: number) {
   return `${ISOYearString(year)}-${ISODateTimePartString(month)}-${ISODateTimePartString(day)}` as Iso.Date
 }
 
-export function CreateTemporalTime(hour: number, minute: number, second: number, millisecond: number): Iso.Time {
+export function CreateTemporalTime(
+  hour: number,
+  minute: number,
+  second: number,
+  millisecond: number,
+  options?: { precision?: TimePrecision }
+): Iso.Time {
   RejectTime(hour, minute, second, millisecond)
-  const seconds = FormatSecondsStringPart(second, millisecond)
+  const seconds = FormatSecondsStringPart(second, millisecond, options)
   return `${ISODateTimePartString(hour)}:${ISODateTimePartString(minute)}${seconds}` as Iso.Time
 }
 
@@ -1306,12 +1328,13 @@ export function CreateTemporalDateTime(
   h: number,
   min: number,
   s: number,
-  ms: number
+  ms: number,
+  options?: { precision?: TimePrecision }
 ): Iso.DateTime {
   RejectDateTime(year, month, day, h, min, s, ms)
   RejectDateTimeRange(year, month, day, h, min, s, ms)
 
-  const seconds = FormatSecondsStringPart(s, ms)
+  const seconds = FormatSecondsStringPart(s, ms, options)
   return `${ISOYearString(year)}-${ISODateTimePartString(month)}-${ISODateTimePartString(day)}T${ISODateTimePartString(
     h
   )}:${ISODateTimePartString(min)}${seconds}` as Iso.DateTime
@@ -1330,7 +1353,11 @@ export function CreateTemporalYearMonth(year: number, month: number, referenceIS
   return `${year}-${ISODateTimePartString(month)}` as Iso.YearMonth
 }
 
-export function CreateTemporalZonedDateTime(epochMilliseconds: number, timeZone: string): Iso.ZonedDateTime {
+export function CreateTemporalZonedDateTime(
+  epochMilliseconds: number,
+  timeZone: string,
+  options?: { precision?: TimePrecision }
+): Iso.ZonedDateTime {
   ValidateEpochMilliseconds(epochMilliseconds)
   if (!IsTemporalTimeZone(timeZone)) throw new TypeError(`${timeZone} is not a valid timeZone`)
   const dateTime = BuiltinTimeZoneGetPlainDateTimeFor(timeZone, epochMilliseconds)
@@ -1341,7 +1368,7 @@ export function CreateTemporalZonedDateTime(epochMilliseconds: number, timeZone:
   const day = ISODateTimePartString(slots.day)
   const hour = ISODateTimePartString(slots.hour)
   const minute = ISODateTimePartString(slots.minute)
-  const seconds = FormatSecondsStringPart(slots.second, slots.millisecond)
+  const seconds = FormatSecondsStringPart(slots.second, slots.millisecond, options)
   let result = `${year}-${month}-${day}T${hour}:${minute}${seconds}`
   result += BuiltinTimeZoneGetOffsetStringFor(timeZone, epochMilliseconds)
   result += `[${timeZone}]`
@@ -1710,10 +1737,39 @@ export function ISOYearString(year: number): string {
 export function ISODateTimePartString(part: number): string {
   return `00${part}`.slice(-2)
 }
-export function FormatSecondsStringPart(second: number, millisecond: number) {
+
+function GetTimePrecision(time: Iso.Time): TimePrecision {
+  if (time.length === 5) return 'minute'
+  else if (time.length === 8) return 'second'
+  else if (time.length === 10) return 'ms100'
+  else if (time.length === 11) return 'ms10'
+  else if (time.length === 12) return 'ms1'
+  else return 'auto'
+}
+
+export function FormatSecondsStringPart(second: number, millisecond: number, options?: { precision?: TimePrecision }) {
+  function maxPrecision(precision1: TimePrecision, precision2: TimePrecision) {
+    const precisions: TimePrecision[] = ['auto', 'minute', 'second', 'ms100', 'ms10', 'ms1']
+    return precisions.indexOf(precision1) > precisions.indexOf(precision2) ? precision1 : precision2
+  }
+  function inferPrecision() {
+    if (millisecond % 10 !== 0) return 'ms1'
+    else if (millisecond % 100 !== 0) return 'ms10'
+    else if (millisecond !== 0) return 'ms100'
+    else if (second !== 0) return 'second'
+    else return 'minute'
+  }
+  const precision = maxPrecision(options?.precision || 'auto', inferPrecision())
   const secs = `:${ISODateTimePartString(second)}`
-  const fraction = `${millisecond}`.padStart(3, '0').slice(0, 3)
-  return `${secs}.${fraction}`
+  if (precision === 'minute') {
+    return ''
+  } else if (precision === 'second') {
+    return secs
+  } else {
+    const fractionLength = precision === 'ms1' ? 3 : precision === 'ms10' ? 2 : precision === 'ms100' ? 1 : 0
+    const fraction = `${millisecond}`.padStart(3, '0').slice(0, fractionLength)
+    return `${secs}.${fraction}`
+  }
 }
 
 export function ParseOffsetString(string: string): number | null {
@@ -3414,7 +3470,7 @@ export function RoundDuration(
       break
     }
     case 'minute': {
-      const divisor = 60e9
+      const divisor = 60e3
       milliseconds = minutes * 60e3 + seconds * 1e3 + milliseconds
       total = milliseconds / divisor
       const rounded = RoundNumberToIncrement(milliseconds, divisor * increment, roundingMode)
@@ -3423,7 +3479,7 @@ export function RoundDuration(
       break
     }
     case 'second': {
-      const divisor = 1e9
+      const divisor = 1e3
       milliseconds = seconds * 1e3 + milliseconds
       total = milliseconds / divisor
       const rounded = RoundNumberToIncrement(milliseconds, divisor * increment, roundingMode)
@@ -3432,10 +3488,8 @@ export function RoundDuration(
       break
     }
     case 'millisecond': {
-      const divisor = 1e6
-      total = milliseconds / divisor
-      const rounded = RoundNumberToIncrement(milliseconds, divisor * increment, roundingMode)
-      milliseconds = MathTrunc(rounded / divisor)
+      total = milliseconds
+      milliseconds = RoundNumberToIncrement(milliseconds, increment, roundingMode)
       break
     }
   }

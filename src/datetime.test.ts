@@ -1,3 +1,38 @@
+import { describe, it } from 'beartest-js'
+import { dateTimeFns } from './fns'
+import { strict as assert } from 'assert'
+
+describe('dateTimeFns', () => {
+  describe('isValid', () => {
+    it('allows minute precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30'))
+    })
+
+    it('allows second precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00'))
+    })
+
+    it('allows 100ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.1'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.0'))
+    })
+
+    it('allows 10ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.01'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.00'))
+    })
+    it('allows 1ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.001'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.000'))
+    })
+    it('does not allow invalid', () => {
+      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:1'))
+      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:01.1111'))
+      assert.ok(!dateTimeFns.isValid('test'))
+    })
+  })
+})
 // #! /usr/bin/env -S node --experimental-modules
 
 // /*

@@ -4,6 +4,37 @@ import { zonedDateTimeFns } from './index'
 
 describe('ZonedDateTime', () => {
   const tz = 'America/Los_Angeles'
+
+  describe('isValid', () => {
+    it('allows minute precision', () => {
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30-06:00[America/Chicago]'))
+    })
+
+    it('allows second precision', () => {
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:01-06:00[America/Chicago]'))
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:00-06:00[America/Chicago]'))
+    })
+
+    it('allows 100ms precision', () => {
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:01.1-06:00[America/Chicago]'))
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:00.0-06:00[America/Chicago]'))
+    })
+
+    it('allows 10ms precision', () => {
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:01.01-06:00[America/Chicago]'))
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:00.00-06:00[America/Chicago]'))
+    })
+    it('allows 1ms precision', () => {
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:01.001-06:00[America/Chicago]'))
+      assert.ok(zonedDateTimeFns.isValid('2020-01-01T12:30:00.000-06:00[America/Chicago]'))
+    })
+    it('does not allow invalid', () => {
+      assert.ok(!zonedDateTimeFns.isValid('2020-01-01T00:00:1-06:00[America/Chicago]'))
+      assert.ok(!zonedDateTimeFns.isValid('2020-01-01T00:00:01.1111-06:00[America/Chicago]'))
+      assert.ok(!zonedDateTimeFns.isValid('test'))
+    })
+  })
+
   describe('Construction and properties', () => {
     const epochMillis = Date.UTC(1976, 10, 18, 15, 23, 30, 123)
     it('works', () => {
