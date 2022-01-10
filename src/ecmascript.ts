@@ -1288,7 +1288,7 @@ export function CreateTemporalDuration(
 
   const secondParts = []
   let total = TotalDurationMilliseconds(0, 0, 0, seconds, milliseconds, 0)
-  seconds = Math.floor(total / 1000)
+  seconds = Math.trunc(total / 1000)
   milliseconds = total % 1000
   const fraction = MathAbs(milliseconds)
   let decimalPart = `${fraction}`.padStart(3, '0')
