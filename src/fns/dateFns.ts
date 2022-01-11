@@ -203,6 +203,9 @@ export const dateFns: IDateFns = {
     }
     return true
   },
+  isEqual(date, other) {
+    return dateFns.equals(date, other)
+  },
   isBefore(date, other) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalDate(other)) throw new TypeError('invalid receiver')
@@ -230,6 +233,12 @@ export const dateFns: IDateFns = {
       else if (val1 < val2) return false
     }
     return false
+  },
+  isEqualOrBefore(date, other) {
+    return dateFns.isEqual(date, other) || dateFns.isBefore(date, other)
+  },
+  isEqualOrAfter(date, other) {
+    return dateFns.isEqual(date, other) || dateFns.isAfter(date, other)
   },
   toDateTime(date, time = undefined) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
@@ -352,11 +361,20 @@ export function buildDateChain(date: Iso.Date): IDateChain {
     equals(other) {
       return ES.buildChain(dateFns.equals(date, other))
     },
+    isEqual(other) {
+      return ES.buildChain(dateFns.isEqual(date, other))
+    },
     isBefore(other) {
       return ES.buildChain(dateFns.isBefore(date, other))
     },
     isAfter(other) {
       return ES.buildChain(dateFns.isAfter(date, other))
+    },
+    isEqualOrBefore(other) {
+      return ES.buildChain(dateFns.isEqualOrBefore(date, other))
+    },
+    isEqualOrAfter(other) {
+      return ES.buildChain(dateFns.isEqualOrAfter(date, other))
     },
     toDateTime(time) {
       return buildDateTimeChain(dateFns.toDateTime(date, time))

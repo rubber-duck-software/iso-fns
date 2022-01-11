@@ -93,8 +93,10 @@ fs.rmSync(`${rootFolder}/README.md`)
  * @param {string} reference
  */
 function getNewReference(reference) {
+  const splitHash = reference.split('#')
+  const hash = splitHash.length > 1 ? `#${splitHash[1].replace(')', '')}` : ''
   const fileName = GetFileName(reference)
-  return `(./${fileName}.md)`
+  return `(./${fileName}.md${hash})`
 }
 
 /**

@@ -149,6 +149,9 @@ export const instantFns: IInstantFns = {
     const two = ES.GetInstantSlots(other).epochMilliseconds
     return one === two
   },
+  isEqual(instant, other) {
+    return instantFns.equals(instant, other)
+  },
   isBefore(instant, other) {
     if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalInstant(other)) throw new TypeError('invalid receiver')
@@ -162,6 +165,12 @@ export const instantFns: IInstantFns = {
     const one = ES.GetInstantSlots(instant).epochMilliseconds
     const two = ES.GetInstantSlots(other).epochMilliseconds
     return one > two
+  },
+  isEqualOrBefore(instant, other) {
+    return instantFns.isEqual(instant, other) || instantFns.isBefore(instant, other)
+  },
+  isEqualOrAfter(instant, other) {
+    return instantFns.isEqual(instant, other) || instantFns.isAfter(instant, other)
   },
   toZonedDateTime(instant, timeZone) {
     if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
@@ -224,11 +233,20 @@ export function buildInstantChain(instant: Iso.Instant): IInstantChain {
     equals(other) {
       return ES.buildChain(instantFns.equals(instant, other))
     },
+    isEqual(other) {
+      return ES.buildChain(instantFns.isEqual(instant, other))
+    },
     isBefore(other) {
       return ES.buildChain(instantFns.isBefore(instant, other))
     },
     isAfter(other) {
       return ES.buildChain(instantFns.isAfter(instant, other))
+    },
+    isEqualOrBefore(other) {
+      return ES.buildChain(instantFns.isEqualOrBefore(instant, other))
+    },
+    isEqualOrAfter(other) {
+      return ES.buildChain(instantFns.isEqualOrAfter(instant, other))
     },
     toZonedDateTime(timeZone) {
       return buildZonedDateTimeChain(instantFns.toZonedDateTime(instant, timeZone))

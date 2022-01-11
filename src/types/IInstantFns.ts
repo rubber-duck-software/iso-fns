@@ -80,8 +80,14 @@ export interface IInstantFns {
     }
   ): Iso.Instant
   equals(instant: Iso.Instant, other: Iso.Instant): boolean
+  /**
+   * alias for {@link IInstantFns.equals equals}
+   */
+  isEqual(instant: Iso.Instant, other: Iso.Instant): boolean
   isBefore(instant: Iso.Instant, other: Iso.Instant): boolean
   isAfter(instant: Iso.Instant, other: Iso.Instant): boolean
+  isEqualOrBefore(instant: Iso.Instant, other: Iso.Instant): boolean
+  isEqualOrAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   toZonedDateTime(instant: Iso.Instant, timeZone: string): Iso.ZonedDateTime
   toJsDate(instant: Iso.Instant): Date
   fromEpochSeconds(epochSeconds: number): Iso.Instant
@@ -148,8 +154,11 @@ export interface IInstantChain extends ES.Chain<Iso.Instant> {
     roundingMode?: ES.TemporalRoundingMode
   }): IInstantChain
   equals(other: Iso.Instant): ES.Chain<boolean>
+  isEqual(other: Iso.Instant): ES.Chain<boolean>
   isBefore(other: Iso.Instant): ES.Chain<boolean>
   isAfter(other: Iso.Instant): ES.Chain<boolean>
+  isEqualOrBefore(other: Iso.Instant): ES.Chain<boolean>
+  isEqualOrAfter(other: Iso.Instant): ES.Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
   toJsDate(): ES.Chain<Date>
 }

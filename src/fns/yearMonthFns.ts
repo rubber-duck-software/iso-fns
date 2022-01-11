@@ -207,6 +207,9 @@ export const yearMonthFns: IYearMonthFns = {
     }
     return true
   },
+  isEqual(yearMonth, other) {
+    return yearMonthFns.equals(yearMonth, other)
+  },
   isBefore(yearMonth, other) {
     if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
     other = ES.ToTemporalYearMonth(other)
@@ -234,6 +237,12 @@ export const yearMonthFns: IYearMonthFns = {
       else if (val1 < val2) return false
     }
     return false
+  },
+  isEqualOrBefore(yearMonth, other) {
+    return yearMonthFns.isEqual(yearMonth, other) || yearMonthFns.isBefore(yearMonth, other)
+  },
+  isEqualOrAfter(yearMonth, other) {
+    return yearMonthFns.isEqual(yearMonth, other) || yearMonthFns.isAfter(yearMonth, other)
   },
   toDate(yearMonth, day) {
     if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
@@ -313,11 +322,20 @@ export function buildYearMonthChain(yearMonth: Iso.YearMonth): IYearMonthChain {
     equals(other) {
       return ES.buildChain(yearMonthFns.equals(yearMonth, other))
     },
+    isEqual(other) {
+      return ES.buildChain(yearMonthFns.isEqual(yearMonth, other))
+    },
     isBefore(other) {
       return ES.buildChain(yearMonthFns.isBefore(yearMonth, other))
     },
     isAfter(other) {
       return ES.buildChain(yearMonthFns.isAfter(yearMonth, other))
+    },
+    isEqualOrBefore(other) {
+      return ES.buildChain(yearMonthFns.isEqualOrBefore(yearMonth, other))
+    },
+    isEqualOrAfter(other) {
+      return ES.buildChain(yearMonthFns.isEqualOrAfter(yearMonth, other))
     },
     toDate(day) {
       return buildDateChain(yearMonthFns.toDate(yearMonth, day))
