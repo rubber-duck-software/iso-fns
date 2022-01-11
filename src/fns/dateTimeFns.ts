@@ -358,6 +358,9 @@ export const dateTimeFns: IDateTimeFns = {
     }
     return true
   },
+  isEqual(dateTime, other) {
+    return dateTimeFns.equals(dateTime, other)
+  },
   isBefore(dateTime, other) {
     if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
     if (!ES.IsTemporalDateTime(other)) throw new TypeError('invalid receiver')
@@ -387,6 +390,12 @@ export const dateTimeFns: IDateTimeFns = {
       else if (val1 < val2) return false
     }
     return false
+  },
+  isEqualOrBefore(dateTime, other) {
+    return dateTimeFns.isEqual(dateTime, other) || dateTimeFns.isBefore(dateTime, other)
+  },
+  isEqualOrAfter(dateTime, other) {
+    return dateTimeFns.isEqual(dateTime, other) || dateTimeFns.isAfter(dateTime, other)
   },
   toZonedDateTime(dateTime, timeZone, options) {
     if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
@@ -528,11 +537,20 @@ export function buildDateTimeChain(dateTime: Iso.DateTime): IDateTimeChain {
     equals(other) {
       return ES.buildChain(dateTimeFns.equals(dateTime, other))
     },
+    isEqual(other) {
+      return ES.buildChain(dateTimeFns.isEqual(dateTime, other))
+    },
     isBefore(other) {
       return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
     },
     isAfter(other) {
       return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
+    },
+    isEqualOrBefore(other) {
+      return ES.buildChain(dateTimeFns.isEqualOrBefore(dateTime, other))
+    },
+    isEqualOrAfter(other) {
+      return ES.buildChain(dateTimeFns.isEqualOrAfter(dateTime, other))
     },
     toZonedDateTime(timeZone, options) {
       return buildZonedDateTimeChain(dateTimeFns.toZonedDateTime(dateTime, timeZone, options))
