@@ -111,7 +111,7 @@ export interface IDateTimeFns {
   round(
     dateTime: Iso.DateTime,
     options: {
-      smallestUnit: Exclude<ES.TemporalSingularUnit, 'year' | 'month' | 'week'>
+      smallestUnit: ES.TemporalPluralUnit | Exclude<ES.TemporalSingularUnit, 'year' | 'month' | 'week'>
       roundingIncrement?: number
       roundingMode?: ES.TemporalRoundingMode
     }

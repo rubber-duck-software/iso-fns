@@ -200,7 +200,7 @@ export const dateTimeFns: IDateTimeFns = {
     const defaultLargestUnit = ES.LargerOfTwoTemporalUnits('day', smallestUnit)
     const largestUnit = ES.ToLargestTemporalUnit(options, 'auto', [], defaultLargestUnit) as ES.TemporalSingularUnit
     ES.ValidateTemporalUnitRange(largestUnit, smallestUnit)
-    const roundingMode = ES.ToTemporalRoundingMode(options, 'trunc')
+    const roundingMode = ES.ToTemporalRoundingMode(options, 'floor')
     const roundingIncrement = ES.ToTemporalDateTimeRoundingIncrement(options, smallestUnit)
 
     const thisSlots = ES.GetDateTimeSlots(from)
@@ -441,7 +441,7 @@ export const dateTimeFns: IDateTimeFns = {
     if (!ES.IsTemporalDateTime(two)) throw new TypeError('invalid receiver')
 
     const slots1 = ES.GetDateTimeSlots(one)
-    const slots2 = ES.GetDateTimeSlots(one)
+    const slots2 = ES.GetDateTimeSlots(two)
 
     for (const slot of ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond'] as const) {
       const val1 = slots1[slot]
