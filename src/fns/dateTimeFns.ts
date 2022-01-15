@@ -321,9 +321,7 @@ export const dateTimeFns: IDateTimeFns = {
       hour: 24,
       minute: 60,
       second: 60,
-      millisecond: 1000,
-      microsecond: 1000,
-      nanosecond: 1000
+      millisecond: 1000
     }
     const roundingIncrement = ES.ToTemporalRoundingIncrement(options, maximumIncrements[smallestUnit], false)
 
