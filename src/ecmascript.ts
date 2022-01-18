@@ -1910,14 +1910,10 @@ export function GetIANATimeZonePreviousTransition(epochMilliseconds: number, tim
 // ts-prune-ignore-next TODO: remove this after tests are converted to TS
 export function GetFormatterParts(timeZone: string, epochMilliseconds: number) {
   const formatter = getIntlDateTimeFormatEnUsForTimeZone(timeZone)
-  // FIXME: can this use formatToParts instead?
   const datetime = formatter.format(new Date(epochMilliseconds))
-  const [date, fullYear, time] = datetime.split(/,\s+/)
-  const [month, day] = date.split(' ')
-  const [year, era] = fullYear.split(' ')
-  const [hour, minute, second] = time.split(':')
+  const [month, day, year, era, hour, minute, second] = datetime.split(/[^\w]+/)
   return {
-    year: era === 'BC' ? -year + 1 : +year,
+    year: era.toUpperCase().startsWith('B') ? -year + 1 : +year,
     month: +month,
     day: +day,
     hour: hour === '24' ? 0 : +hour, // bugs.chromium.org/p/chromium/issues/detail?id=1045791
