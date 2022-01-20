@@ -359,7 +359,7 @@ export const durationFns: IDurationFns = {
       ;({ days: d2 } = ES.UnbalanceDurationRelative(y2, mon2, w2, d2, 'day', relativeTo))
     }
     ms1 = ES.TotalDurationMilliseconds(d1, h1, min1, s1, ms1, shift1)
-    ms1 = ES.TotalDurationMilliseconds(d2, h2, min2, s2, ms2, shift2)
+    ms2 = ES.TotalDurationMilliseconds(d2, h2, min2, s2, ms2, shift2)
     return ES.ComparisonResult(ms1 - ms2)
   },
   chain: buildDurationChain
