@@ -70,8 +70,14 @@ export interface IYearMonthFns {
     }
   ): Iso.Duration
   equals(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  /**
+   * alias for {@link IYearMonthFns.equals equals}
+   */
+  isEqual(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  isEqualOrBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  isEqualOrAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   toDate(yearMonth: Iso.YearMonth, day: number): Iso.Date
   getFields(yearMonth: Iso.YearMonth): ES.YearMonthSlots
   from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.YearMonth
@@ -243,8 +249,11 @@ export interface IYearMonthChain extends ES.Chain<Iso.YearMonth> {
     }
   ): IDurationChain
   equals(other: Iso.YearMonth): ES.Chain<boolean>
+  isEqual(other: Iso.YearMonth): ES.Chain<boolean>
   isBefore(other: Iso.YearMonth): ES.Chain<boolean>
   isAfter(other: Iso.YearMonth): ES.Chain<boolean>
+  isEqualOrBefore(other: Iso.YearMonth): ES.Chain<boolean>
+  isEqualOrAfter(other: Iso.YearMonth): ES.Chain<boolean>
   toDate(day: number): IDateChain
   getFields(): ES.Chain<ES.YearMonthSlots>
   format(formatString: string): ES.Chain<string>
