@@ -200,7 +200,7 @@ export const dateTimeFns: IDateTimeFns = {
     const defaultLargestUnit = ES.LargerOfTwoTemporalUnits('day', smallestUnit)
     const largestUnit = ES.ToLargestTemporalUnit(options, 'auto', [], defaultLargestUnit) as ES.TemporalSingularUnit
     ES.ValidateTemporalUnitRange(largestUnit, smallestUnit)
-    const roundingMode = ES.ToTemporalRoundingMode(options, 'floor')
+    const roundingMode = ES.ToTemporalRoundingMode(options, 'trunc')
     const roundingIncrement = ES.ToTemporalDateTimeRoundingIncrement(options, smallestUnit)
 
     const thisSlots = ES.GetDateTimeSlots(from)
