@@ -321,9 +321,7 @@ export const dateTimeFns: IDateTimeFns = {
       hour: 24,
       minute: 60,
       second: 60,
-      millisecond: 1000,
-      microsecond: 1000,
-      nanosecond: 1000
+      millisecond: 1000
     }
     const roundingIncrement = ES.ToTemporalRoundingIncrement(options, maximumIncrements[smallestUnit], false)
 
@@ -450,7 +448,7 @@ export const dateTimeFns: IDateTimeFns = {
     if (!ES.IsTemporalDateTime(two)) throw new TypeError('invalid receiver')
 
     const slots1 = ES.GetDateTimeSlots(one)
-    const slots2 = ES.GetDateTimeSlots(one)
+    const slots2 = ES.GetDateTimeSlots(two)
 
     for (const slot of ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond'] as const) {
       const val1 = slots1[slot]
