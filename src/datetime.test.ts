@@ -13,38 +13,6 @@ import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
 
 describe('dateTimeFns', () => {
-  describe('isValid', () => {
-    it('allows minute precision', () => {
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30'))
-    })
-
-    it('allows second precision', () => {
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01'))
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00'))
-    })
-
-    it('allows 100ms precision', () => {
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.1'))
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.0'))
-    })
-
-    it('allows 10ms precision', () => {
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.01'))
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.00'))
-    })
-    it('allows 1ms precision', () => {
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.001'))
-      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.000'))
-    })
-    it('does not allow invalid', () => {
-      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:1'))
-      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:01.1111'))
-      assert.ok(!dateTimeFns.isValid('test'))
-    })
-  })
-})
-
-describe('dateTimeFns', () => {
   describe('Construction', () => {
     describe('fromNumbers(year, month, day, hour, minute, second, millisecond)', () => {
       let datetime: Iso.DateTime
@@ -119,6 +87,35 @@ describe('dateTimeFns', () => {
         assert.equal(dateTimeFns.getSecond(datetime), 0)
         assert.equal(dateTimeFns.getMillisecond(datetime), 0)
       })
+    })
+  })
+  describe('isValid', () => {
+    it('allows minute precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30'))
+    })
+
+    it('allows second precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00'))
+    })
+
+    it('allows 100ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.1'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.0'))
+    })
+
+    it('allows 10ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.01'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.00'))
+    })
+    it('allows 1ms precision', () => {
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:01.001'))
+      assert.ok(dateTimeFns.isValid('2020-01-01T12:30:00.000'))
+    })
+    it('does not allow invalid', () => {
+      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:1'))
+      assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:01.1111'))
+      assert.ok(!dateTimeFns.isValid('test'))
     })
   })
   describe('with()', () => {
@@ -262,11 +259,10 @@ describe('dateTimeFns', () => {
     it('dateTimeFns.add(earlier, diff) = later', () => assert(dateTimeFns.equals(dateTimeFns.add(earlier, diff), later)))
     it('dateTimeFns.subtract(later, diff) = earlier', () =>
       assert(dateTimeFns.equals(dateTimeFns.subtract(later, diff), earlier)))
-    // #71
-    // it('symmetrical with regard to negative durations', () => {
-    //   assert(dateTimeFns.equals(dateTimeFns.subtract(earlier, durationFns.negated(diff)), later))
-    //   assert(dateTimeFns.equals(dateTimeFns.add(later, durationFns.negated(diff)), earlier))
-    // })
+    it('symmetrical with regard to negative durations', () => {
+      assert(dateTimeFns.equals(dateTimeFns.subtract(earlier, durationFns.negated(diff)), later))
+      assert(dateTimeFns.equals(dateTimeFns.add(later, durationFns.negated(diff)), earlier))
+    })
   })
   describe('date/time maths: hours overflow', () => {
     it('subtract result', () => {
@@ -1005,11 +1001,10 @@ describe('dateTimeFns', () => {
       ['seconds', '1976-11-18T14:23:30'],
       ['milliseconds', '1976-11-18T14:23:30.123']
     ]
-    // #72
-    // incrementOneNearest.forEach(([smallestUnit, expected]) => {
-    //   it(`rounds to nearest ${smallestUnit}`, () =>
-    //     assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'halfExpand' })}`, expected))
-    // })
+    incrementOneNearest.forEach(([smallestUnit, expected]) => {
+      it(`rounds to nearest ${smallestUnit}`, () =>
+        assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'halfExpand' })}`, expected))
+    })
     const incrementOneCeil: [TemporalPluralUnit, Iso.DateTime][] = [
       ['days', '1976-11-19T00:00'],
       ['hours', '1976-11-18T15:00'],
@@ -1060,10 +1055,9 @@ describe('dateTimeFns', () => {
         '1976-11-18T14:23:30.12'
       )
     })
-    // #72
-    // it('1 day is a valid increment', () => {
-    //   assert.equal(`${dateTimeFns.round(dt, { smallestUnit: 'day', roundingIncrement: 1 })}`, '1976-11-19T00:00')
-    // })
+    it('1 day is a valid increment', () => {
+      assert.equal(`${dateTimeFns.round(dt, { smallestUnit: 'day', roundingIncrement: 1 })}`, '1976-11-19T00:00')
+    })
     it('valid hour increments divide into 24', () => {
       const smallestUnit = 'hour'
       ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
@@ -1099,14 +1093,13 @@ describe('dateTimeFns', () => {
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'second', roundingIncrement: 60 }), RangeError)
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'millisecond', roundingIncrement: 1000 }), RangeError)
     })
-    // #72
-    // const bal = dateTimeFns.from('1976-11-18T23:59:59.999')
-    // let smallestUnits: TemporalPluralUnit[] = ['days', 'hours', 'minutes', 'seconds', 'milliseconds']
-    // smallestUnits.forEach((smallestUnit) => {
-    //   it(`balances to next ${smallestUnit}`, () => {
-    //     assert.equal(`${dateTimeFns.round(bal, { smallestUnit })}`, '1976-11-19T00:00')
-    //   })
-    // })
+    const bal = dateTimeFns.from('1976-11-18T23:59:59.999')
+    let smallestUnits: TemporalPluralUnit[] = ['days', 'hours', 'minutes', 'seconds']
+    smallestUnits.forEach((smallestUnit) => {
+      it(`balances to next ${smallestUnit}`, () => {
+        assert.equal(`${dateTimeFns.round(bal, { smallestUnit })}`, '1976-11-19T00:00')
+      })
+    })
     it('accepts plural units', () => {
       assert(
         dateTimeFns.equals(dateTimeFns.round(dt, { smallestUnit: 'days' }), dateTimeFns.round(dt, { smallestUnit: 'day' }))
