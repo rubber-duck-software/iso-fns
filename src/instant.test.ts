@@ -221,224 +221,229 @@ describe('Instant', () => {
     it('cross epoch unequal', () => assert(!instantFns.equals(i1, i2)))
     it('epoch unequal', () => assert(!instantFns.equals(i2, i3)))
   })
-  // describe('Instant.since() works', () => {
-  //   const earlier = instantFns.from('1976-11-18T15:23:30.123Z')
-  //   const later = instantFns.from('2019-10-29T10:46:38.271986102Z')
-  //   const diff = instantFns.since(later, earlier)
-  //   it(`(${earlier}).since(${later}) == (${later}).since(${earlier}).negated()`, () =>
-  //     assert.equal(`${instantFns.since(earlier, later)}`, `${durationFns.negated(diff)}`))
-  //   it(`(${later}).since(${earlier}) == (${earlier}).until(${later})`, () =>
-  //     assert.equal(`${instantFns.until(earlier, later)}`, `${diff}`))
-  //   it(`(${earlier}).add(${diff}) == (${later})`, () => assert(instantFns.equals(instantFns.add(earlier, diff), later)))
-  //   it(`(${later}).subtract(${diff}) == (${earlier})`, () =>
-  //     assert(instantFns.equals(instantFns.subtract(later, diff), earlier)))
-  //   const feb20 = instantFns.from('2020-02-01T00:00Z')
-  //   const feb21 = instantFns.from('2021-02-01T00:00Z')
-  //   it('can return minutes and hours', () => {
-  //     assert.equal(`${instantFns.since(feb21, feb20, { largestUnit: 'hours' })}`, 'PT8784H')
-  //     assert.equal(`${instantFns.since(feb21, feb20, { largestUnit: 'minutes' })}`, 'PT527040M')
-  //   })
-  //   it('can return subseconds', () => {
-  //     const later = instantFns.add(feb20, { hours: 24, milliseconds: 250 })
+  describe('Instant.since() works', () => {
+    const earlier = instantFns.from('1976-11-18T15:23:30.123Z')
+    const later = instantFns.from('2019-10-29T10:46:38.271Z')
+    const diff = instantFns.since(later, earlier)
 
-  //     const msDiff = instantFns.since(later, feb20, { largestUnit: 'milliseconds' })
-  //     assert.equal(durationFns.getSeconds(msDiff), 0)
-  //     assert.equal(durationFns.getSeconds(msDiff), 86400250)
-  //   })
-  //   it('cannot return days, weeks, months, and years', () => {
-  //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'days' }), RangeError)
-  //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'weeks' }), RangeError)
-  //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'months' }), RangeError)
-  //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'years' }), RangeError)
-  //   })
-  //   it('options may only be an object or undefined', () => {
-  //     ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
-  //       //@ts-expect-error
-  //       assert.throws(() => instantFns.since(feb21, feb20, badOptions), TypeError)
-  //     )
-  //     ;[{}, () => {}, undefined].forEach((options) =>
-  //       assert.equal(`${instantFns.since(feb21, feb20, options)}`, 'PT31622400S')
-  //     )
-  //   })
-  //   it('throws on disallowed or invalid smallestUnit', () => {
-  //     ;['era', 'year', 'month', 'week', 'day', 'years', 'months', 'weeks', 'days', 'nonsense'].forEach((smallestUnit) => {
-  //       //@ts-expect-error
-  //       assert.throws(() => instantFns.since(later, earlier, { smallestUnit }), RangeError)
-  //     })
-  //   })
-  //   it('throws if smallestUnit is larger than largestUnit', () => {
-  //     const units: TemporalPluralUnit[] = ['hours', 'minutes', 'seconds', 'milliseconds']
-  //     for (let largestIdx = 1; largestIdx < units.length; largestIdx++) {
-  //       for (let smallestIdx = 0; smallestIdx < largestIdx; smallestIdx++) {
-  //         const largestUnit = units[largestIdx]
-  //         const smallestUnit = units[smallestIdx]
-  //         assert.throws(() => instantFns.since(later, earlier, { largestUnit, smallestUnit }), RangeError)
-  //       }
-  //     }
-  //   })
-  //   it('assumes a different default for largestUnit if smallestUnit is larger than seconds', () => {
-  //     assert.equal(`${instantFns.since(later, earlier, { smallestUnit: 'hours', roundingMode: 'halfExpand' })}`, 'PT376435H')
-  //     assert.equal(
-  //       `${instantFns.since(later, earlier, { smallestUnit: 'minutes', roundingMode: 'halfExpand' })}`,
-  //       'PT22586123M'
-  //     )
-  //   })
-  //   const largestUnit = 'hours'
-  //   const incrementOneNearest: [TemporalPluralUnit, string][] = [
-  //     ['hours', 'PT376435H'],
-  //     ['minutes', 'PT376435H23M'],
-  //     ['seconds', 'PT376435H23M8S'],
-  //     ['milliseconds', 'PT376435H23M8.149S']
-  //   ]
-  //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
-  //     const roundingMode = 'halfExpand'
-  //     it(`rounds to nearest ${smallestUnit}`, () => {
-  //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expected)
-  //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, `-${expected}`)
-  //     })
-  //   })
-  //   const incrementOneCeil: [TemporalPluralUnit, string, string][] = [
-  //     ['hours', 'PT376436H', '-PT376435H'],
-  //     ['minutes', 'PT376435H24M', '-PT376435H23M'],
-  //     ['seconds', 'PT376435H23M9S', '-PT376435H23M8S'],
-  //     ['milliseconds', 'PT376435H23M8.149S', '-PT376435H23M8.148S']
-  //   ]
-  //   incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
-  //     const roundingMode = 'ceil'
-  //     it(`rounds up to ${smallestUnit}`, () => {
-  //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expectedPositive)
-  //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, expectedNegative)
-  //     })
-  //   })
-  //   const incrementOneFloor: [TemporalPluralUnit, string, string][] = [
-  //     ['hours', 'PT376435H', '-PT376436H'],
-  //     ['minutes', 'PT376435H23M', '-PT376435H24M'],
-  //     ['seconds', 'PT376435H23M8S', '-PT376435H23M9S'],
-  //     ['milliseconds', 'PT376435H23M8.148S', '-PT376435H23M8.149S']
-  //   ]
-  //   incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
-  //     const roundingMode = 'floor'
-  //     it(`rounds down to ${smallestUnit}`, () => {
-  //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expectedPositive)
-  //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, expectedNegative)
-  //     })
-  //   })
-  //   const incrementOneTrunc: [TemporalPluralUnit, string][] = [
-  //     ['hours', 'PT376435H'],
-  //     ['minutes', 'PT376435H23M'],
-  //     ['seconds', 'PT376435H23M8S'],
-  //     ['milliseconds', 'PT376435H23M8.148S']
-  //   ]
-  //   incrementOneTrunc.forEach(([smallestUnit, expected]) => {
-  //     const roundingMode = 'trunc'
-  //     it(`truncates to ${smallestUnit}`, () => {
-  //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expected)
-  //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, `-${expected}`)
-  //     })
-  //   })
-  //   it('rounds to an increment of hours', () => {
-  //     assert.equal(
-  //       `${instantFns.since(later, earlier, {
-  //         largestUnit,
-  //         smallestUnit: 'hours',
-  //         roundingIncrement: 3,
-  //         roundingMode: 'halfExpand'
-  //       })}`,
-  //       'PT376434H'
-  //     )
-  //   })
-  //   it('rounds to an increment of minutes', () => {
-  //     assert.equal(
-  //       `${instantFns.since(later, earlier, {
-  //         largestUnit,
-  //         smallestUnit: 'minutes',
-  //         roundingIncrement: 30,
-  //         roundingMode: 'halfExpand'
-  //       })}`,
-  //       'PT376435H30M'
-  //     )
-  //   })
-  //   it('rounds to an increment of seconds', () => {
-  //     assert.equal(
-  //       `${instantFns.since(later, earlier, {
-  //         largestUnit,
-  //         smallestUnit: 'seconds',
-  //         roundingIncrement: 15,
-  //         roundingMode: 'halfExpand'
-  //       })}`,
-  //       'PT376435H23M15S'
-  //     )
-  //   })
-  //   it('rounds to an increment of milliseconds', () => {
-  //     assert.equal(
-  //       `${instantFns.since(later, earlier, {
-  //         largestUnit,
-  //         smallestUnit: 'milliseconds',
-  //         roundingIncrement: 10,
-  //         roundingMode: 'halfExpand'
-  //       })}`,
-  //       'PT376435H23M8.15S'
-  //     )
-  //   })
-  //   // it('valid hour increments divide into 24', () => {
-  //   //   ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
-  //   //     const options = { largestUnit, smallestUnit: 'hours', roundingIncrement }
-  //   //     assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
-  //   //   })
-  //   // })
-  //   // ;['minutes', 'seconds'].forEach((smallestUnit) => {
-  //   //   it(`valid ${smallestUnit} increments divide into 60`, () => {
-  //   //     ;[1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30].forEach((roundingIncrement) => {
-  //   //       const options = { largestUnit, smallestUnit, roundingIncrement }
-  //   //       assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
-  //   //     })
-  //   //   })
-  //   // })
-  //   // ;['milliseconds'].forEach((smallestUnit) => {
-  //   //   it(`valid ${smallestUnit} increments divide into 1000`, () => {
-  //   //     ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
-  //   //       const options = { largestUnit, smallestUnit, roundingIncrement }
-  //   //       assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
-  //   //     })
-  //   //   })
-  //   // })
-  //   it('throws on increments that do not divide evenly into the next highest', () => {
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'hours', roundingIncrement: 11 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'minutes', roundingIncrement: 29 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'seconds', roundingIncrement: 29 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'milliseconds', roundingIncrement: 29 }),
-  //       RangeError
-  //     )
-  //   })
-  //   it('throws on increments that are equal to the next highest', () => {
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'hours', roundingIncrement: 24 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'minutes', roundingIncrement: 60 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'seconds', roundingIncrement: 60 }),
-  //       RangeError
-  //     )
-  //     assert.throws(
-  //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'milliseconds', roundingIncrement: 1000 }),
-  //       RangeError
-  //     )
-  //   })
-  // })
+    it(`instantFns.since(${earlier}, ${later}) = durationFns.negated(${diff}`, () =>
+      assert.equal(instantFns.since(earlier, later), durationFns.negated(diff)))
+
+    it(`instantFns.since(${later}, ${earlier}) = ${diff}`, () => assert.equal(instantFns.since(later, earlier), diff))
+
+    const temp = instantFns.add(earlier, diff)
+
+    it(`instantFns.add(${earlier}, ${diff}) == ${later}`, () => assert.equal(temp, later))
+
+    it(`(${later}).subtract(${diff}) == (${earlier})`, () =>
+      assert(instantFns.equals(instantFns.subtract(later, diff), earlier)))
+    const feb20 = instantFns.from('2020-02-01T00:00Z')
+    const feb21 = instantFns.from('2021-02-01T00:00Z')
+    it('can return minutes and hours', () => {
+      assert.equal(`${instantFns.since(feb21, feb20, { largestUnit: 'hours' })}`, 'PT8784H')
+      assert.equal(`${instantFns.since(feb21, feb20, { largestUnit: 'minutes' })}`, 'PT527040M')
+    })
+    //   it('can return subseconds', () => {
+    //     const later = instantFns.add(feb20, { hours: 24, milliseconds: 250 })
+
+    //     const msDiff = instantFns.since(later, feb20, { largestUnit: 'milliseconds' })
+    //     assert.equal(durationFns.getSeconds(msDiff), 0)
+    //     assert.equal(durationFns.getSeconds(msDiff), 86400250)
+    //   })
+    //   it('cannot return days, weeks, months, and years', () => {
+    //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'days' }), RangeError)
+    //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'weeks' }), RangeError)
+    //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'months' }), RangeError)
+    //     assert.throws(() => instantFns.since(feb21, feb20, { largestUnit: 'years' }), RangeError)
+    //   })
+    //   it('options may only be an object or undefined', () => {
+    //     ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
+    //       //@ts-expect-error
+    //       assert.throws(() => instantFns.since(feb21, feb20, badOptions), TypeError)
+    //     )
+    //     ;[{}, () => {}, undefined].forEach((options) =>
+    //       assert.equal(`${instantFns.since(feb21, feb20, options)}`, 'PT31622400S')
+    //     )
+    //   })
+    //   it('throws on disallowed or invalid smallestUnit', () => {
+    //     ;['era', 'year', 'month', 'week', 'day', 'years', 'months', 'weeks', 'days', 'nonsense'].forEach((smallestUnit) => {
+    //       //@ts-expect-error
+    //       assert.throws(() => instantFns.since(later, earlier, { smallestUnit }), RangeError)
+    //     })
+    //   })
+    //   it('throws if smallestUnit is larger than largestUnit', () => {
+    //     const units: TemporalPluralUnit[] = ['hours', 'minutes', 'seconds', 'milliseconds']
+    //     for (let largestIdx = 1; largestIdx < units.length; largestIdx++) {
+    //       for (let smallestIdx = 0; smallestIdx < largestIdx; smallestIdx++) {
+    //         const largestUnit = units[largestIdx]
+    //         const smallestUnit = units[smallestIdx]
+    //         assert.throws(() => instantFns.since(later, earlier, { largestUnit, smallestUnit }), RangeError)
+    //       }
+    //     }
+    //   })
+    //   it('assumes a different default for largestUnit if smallestUnit is larger than seconds', () => {
+    //     assert.equal(`${instantFns.since(later, earlier, { smallestUnit: 'hours', roundingMode: 'halfExpand' })}`, 'PT376435H')
+    //     assert.equal(
+    //       `${instantFns.since(later, earlier, { smallestUnit: 'minutes', roundingMode: 'halfExpand' })}`,
+    //       'PT22586123M'
+    //     )
+    //   })
+    //   const largestUnit = 'hours'
+    //   const incrementOneNearest: [TemporalPluralUnit, string][] = [
+    //     ['hours', 'PT376435H'],
+    //     ['minutes', 'PT376435H23M'],
+    //     ['seconds', 'PT376435H23M8S'],
+    //     ['milliseconds', 'PT376435H23M8.149S']
+    //   ]
+    //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
+    //     const roundingMode = 'halfExpand'
+    //     it(`rounds to nearest ${smallestUnit}`, () => {
+    //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expected)
+    //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, `-${expected}`)
+    //     })
+    //   })
+    //   const incrementOneCeil: [TemporalPluralUnit, string, string][] = [
+    //     ['hours', 'PT376436H', '-PT376435H'],
+    //     ['minutes', 'PT376435H24M', '-PT376435H23M'],
+    //     ['seconds', 'PT376435H23M9S', '-PT376435H23M8S'],
+    //     ['milliseconds', 'PT376435H23M8.149S', '-PT376435H23M8.148S']
+    //   ]
+    //   incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
+    //     const roundingMode = 'ceil'
+    //     it(`rounds up to ${smallestUnit}`, () => {
+    //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expectedPositive)
+    //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, expectedNegative)
+    //     })
+    //   })
+    //   const incrementOneFloor: [TemporalPluralUnit, string, string][] = [
+    //     ['hours', 'PT376435H', '-PT376436H'],
+    //     ['minutes', 'PT376435H23M', '-PT376435H24M'],
+    //     ['seconds', 'PT376435H23M8S', '-PT376435H23M9S'],
+    //     ['milliseconds', 'PT376435H23M8.148S', '-PT376435H23M8.149S']
+    //   ]
+    //   incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
+    //     const roundingMode = 'floor'
+    //     it(`rounds down to ${smallestUnit}`, () => {
+    //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expectedPositive)
+    //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, expectedNegative)
+    //     })
+    //   })
+    //   const incrementOneTrunc: [TemporalPluralUnit, string][] = [
+    //     ['hours', 'PT376435H'],
+    //     ['minutes', 'PT376435H23M'],
+    //     ['seconds', 'PT376435H23M8S'],
+    //     ['milliseconds', 'PT376435H23M8.148S']
+    //   ]
+    //   incrementOneTrunc.forEach(([smallestUnit, expected]) => {
+    //     const roundingMode = 'trunc'
+    //     it(`truncates to ${smallestUnit}`, () => {
+    //       assert.equal(`${instantFns.since(later, earlier, { largestUnit, smallestUnit, roundingMode })}`, expected)
+    //       assert.equal(`${instantFns.since(earlier, later, { largestUnit, smallestUnit, roundingMode })}`, `-${expected}`)
+    //     })
+    //   })
+    //   it('rounds to an increment of hours', () => {
+    //     assert.equal(
+    //       `${instantFns.since(later, earlier, {
+    //         largestUnit,
+    //         smallestUnit: 'hours',
+    //         roundingIncrement: 3,
+    //         roundingMode: 'halfExpand'
+    //       })}`,
+    //       'PT376434H'
+    //     )
+    //   })
+    //   it('rounds to an increment of minutes', () => {
+    //     assert.equal(
+    //       `${instantFns.since(later, earlier, {
+    //         largestUnit,
+    //         smallestUnit: 'minutes',
+    //         roundingIncrement: 30,
+    //         roundingMode: 'halfExpand'
+    //       })}`,
+    //       'PT376435H30M'
+    //     )
+    //   })
+    //   it('rounds to an increment of seconds', () => {
+    //     assert.equal(
+    //       `${instantFns.since(later, earlier, {
+    //         largestUnit,
+    //         smallestUnit: 'seconds',
+    //         roundingIncrement: 15,
+    //         roundingMode: 'halfExpand'
+    //       })}`,
+    //       'PT376435H23M15S'
+    //     )
+    //   })
+    //   it('rounds to an increment of milliseconds', () => {
+    //     assert.equal(
+    //       `${instantFns.since(later, earlier, {
+    //         largestUnit,
+    //         smallestUnit: 'milliseconds',
+    //         roundingIncrement: 10,
+    //         roundingMode: 'halfExpand'
+    //       })}`,
+    //       'PT376435H23M8.15S'
+    //     )
+    //   })
+    //   // it('valid hour increments divide into 24', () => {
+    //   //   ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
+    //   //     const options = { largestUnit, smallestUnit: 'hours', roundingIncrement }
+    //   //     assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
+    //   //   })
+    //   // })
+    //   // ;['minutes', 'seconds'].forEach((smallestUnit) => {
+    //   //   it(`valid ${smallestUnit} increments divide into 60`, () => {
+    //   //     ;[1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30].forEach((roundingIncrement) => {
+    //   //       const options = { largestUnit, smallestUnit, roundingIncrement }
+    //   //       assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
+    //   //     })
+    //   //   })
+    //   // })
+    //   // ;['milliseconds'].forEach((smallestUnit) => {
+    //   //   it(`valid ${smallestUnit} increments divide into 1000`, () => {
+    //   //     ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
+    //   //       const options = { largestUnit, smallestUnit, roundingIncrement }
+    //   //       assert(instantFns.since(later, earlier, options) instanceof Temporal.Duration)
+    //   //     })
+    //   //   })
+    //   // })
+    //   it('throws on increments that do not divide evenly into the next highest', () => {
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'hours', roundingIncrement: 11 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'minutes', roundingIncrement: 29 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'seconds', roundingIncrement: 29 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'milliseconds', roundingIncrement: 29 }),
+    //       RangeError
+    //     )
+    //   })
+    //   it('throws on increments that are equal to the next highest', () => {
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'hours', roundingIncrement: 24 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'minutes', roundingIncrement: 60 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'seconds', roundingIncrement: 60 }),
+    //       RangeError
+    //     )
+    //     assert.throws(
+    //       () => instantFns.since(later, earlier, { largestUnit, smallestUnit: 'milliseconds', roundingIncrement: 1000 }),
+    //       RangeError
+    //     )
+    //   })
+  })
   // describe('Instant.until() works', () => {
   //   const earlier = instantFns.from('1969-07-24T16:50:35.123Z')
   //   const later = instantFns.from('2019-10-29T10:46:38.271986102Z')
