@@ -49,6 +49,7 @@ describe('Time', () => {
       assert.equal(duration, 'PT1H37M')
     })
     it(`(${two}).until(${time}) => -PT1H37M`, () => assert.equal(timeFns.until(two, time), '-PT1H37M'))
+    //# 84
     // it(`(${time}).until(${two}) === (${two}).since(${time})`, () =>
     //   assert.equal(timeFns.until(time, two), timeFns.since(two, time)))
     it('object must contain at least one correctly-spelled property', () => {
@@ -70,6 +71,7 @@ describe('Time', () => {
       assert.throws(() => timeFns.until(time1, time2, { largestUnit: 'months' }), RangeError)
       assert.throws(() => timeFns.until(time1, time2, { largestUnit: 'years' }), RangeError)
     })
+    // #85
     // it('can return lower units', () => {
     //   assert.equal(timeFns.until(time1, time2, { largestUnit: 'minutes' }), 'PT412M42S')
     //   assert.equal(timeFns.until(time1, time2, { largestUnit: 'seconds' }), 'PT24762S')
@@ -118,10 +120,10 @@ describe('Time', () => {
     ]
     incrementOneNearest.forEach(([smallestUnit, expected]) => {
       const roundingMode = 'halfExpand'
-      // it(`rounds to nearest ${smallestUnit, () => {
-      //   assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
-      //   assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected)
-      // })
+      it(`rounds to nearest ${smallestUnit}`, () => {
+        assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
+        assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected}`)
+      })
     })
     const incrementOneCeil: [TemporalPluralUnit, string, string][] = [
       ['hours', 'PT5H', '-PT4H'],
@@ -131,10 +133,10 @@ describe('Time', () => {
     ]
     incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
       const roundingMode = 'ceil'
-      // it(`rounds up to ${smallestUnit, () => {
-      //   assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
-      //   assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
-      // })
+      it(`rounds up to ${smallestUnit}`, () => {
+        assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
+        assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
+      })
     })
     const incrementOneFloor: [TemporalPluralUnit, string, string][] = [
       ['hours', 'PT4H', '-PT5H'],
@@ -144,10 +146,10 @@ describe('Time', () => {
     ]
     incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
       const roundingMode = 'floor'
-      // it(`rounds down to ${smallestUnit, () => {
-      //   assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
-      //   assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
-      // })
+      it(`rounds down to ${smallestUnit}`, () => {
+        assert.equal(timeFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
+        assert.equal(timeFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
+      })
     })
     const incrementOneTrunc: [TemporalPluralUnit, string][] = [
       ['hours', 'PT4H'],
@@ -272,11 +274,13 @@ describe('Time', () => {
   describe('time.since() works', () => {
     const time = timeFns.fromNumbers(15, 23, 30, 123)
     const one = timeFns.fromNumbers(14, 23, 30, 123)
+    // #86
     // it(`(${time}).since(${one}) => PT1H`, () => {
     //   const duration = timeFns.since(time, one)
     //   assert.equal(duration, 'PT1H')
     // })
     const two = timeFns.fromNumbers(13, 30, 30, 123)
+    //# 86
     // it(`(${time}).since(${two}) => PT1H53M`, () => {
     //   const duration = timeFns.since(time, two)
     //   assert.equal(duration, 'PT1H53M')
@@ -292,6 +296,7 @@ describe('Time', () => {
     })
     const time1 = timeFns.from('10:23:15')
     const time2 = timeFns.from('17:15:57')
+    // #86
     // it('the default largest unit is at least hours', () => {
     //   assert.equal(timeFns.since(time2, time1), 'PT6H52M42S')
     //   assert.equal(timeFns.since(time2, time1, { largestUnit: 'auto' }), 'PT6H52M42S')
@@ -303,10 +308,12 @@ describe('Time', () => {
       assert.throws(() => timeFns.since(time2, time1, { largestUnit: 'months' }), RangeError)
       assert.throws(() => timeFns.since(time2, time1, { largestUnit: 'years' }), RangeError)
     })
+    // #86
     // it('can return lower units', () => {
     //   assert.equal(timeFns.since(time2, time1, { largestUnit: 'minutes' }), 'PT412M42S')
     //   assert.equal(timeFns.since(time2, time1, { largestUnit: 'seconds' }), 'PT24762S')
     // })
+    // #86
     // it('can return subseconds', () => {
     //   const time3 = timeFns.add(time2, { milliseconds: 250 })
     //   const msDiff = timeFns.since(time3, time1, { largestUnit: 'milliseconds' })
@@ -318,6 +325,7 @@ describe('Time', () => {
         //@ts-expect-error
         assert.throws(() => timeFns.since(time, one, badOptions), TypeError)
       )
+      // #86
       // ;[{}, () => {}, undefined].forEach((options) => assert.equal(timeFns.since(time, one, options), 'PT1H'))
     })
     const earlier = timeFns.from('08:22:36.123')
@@ -351,6 +359,7 @@ describe('Time', () => {
     ]
     incrementOneNearest.forEach(([smallestUnit, expected]) => {
       const roundingMode = 'halfExpand'
+      // #86
       // it(`rounds to nearest ${smallestUnit, () => {
       //   assert.equal(timeFns.since(later, earlier, { smallestUnit, roundingMode }), expected)
       //   assert.equal(timeFns.since(earlier, later, { smallestUnit, roundingMode }), `-${expected)
@@ -364,6 +373,7 @@ describe('Time', () => {
     ]
     incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
       const roundingMode = 'ceil'
+      // #86
       // it(`rounds up to ${smallestUnit, () => {
       //   assert.equal(timeFns.since(later, earlier, { smallestUnit, roundingMode }), expectedPositive)
       //   assert.equal(timeFns.since(earlier, later, { smallestUnit, roundingMode }), expectedNegative)
@@ -377,6 +387,7 @@ describe('Time', () => {
     ]
     incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
       const roundingMode = 'floor'
+      // #86
       // it(`rounds down to ${smallestUnit, () => {
       //   assert.equal(timeFns.since(later, earlier, { smallestUnit, roundingMode }), expectedPositive)
       //   assert.equal(timeFns.since(earlier, later, { smallestUnit, roundingMode }), expectedNegative)
@@ -390,11 +401,13 @@ describe('Time', () => {
     ]
     incrementOneTrunc.forEach(([smallestUnit, expected]) => {
       const roundingMode = 'trunc'
+      // #86
       // it(`truncates to ${smallestUnit, () => {
       //   assert.equal(timeFns.since(later, earlier, { smallestUnit, roundingMode }), expected)
       //   assert.equal(timeFns.since(earlier, later, { smallestUnit, roundingMode }), `-${expected)
       // })
     })
+    // #86
     // it('trunc is the default', () => {
     //   assert.equal(timeFns.since(later, earlier, { smallestUnit: 'minutes' }), 'PT4H17M')
     //   assert.equal(timeFns.since(later, earlier, { smallestUnit: 'seconds' }), 'PT4H17M4S')
@@ -467,6 +480,7 @@ describe('Time', () => {
         RangeError
       )
     })
+    // #86
     // it('accepts singular units', () => {
     //   assert.equal(
     //     timeFns.since(later, earlier, { largestUnit: 'hour' }),
@@ -607,12 +621,7 @@ describe('Time', () => {
       assert.throws(() => timeFns.round(time, { smallestUnit: 'millisecond', roundingIncrement: 1000 }), RangeError)
     })
     const bal = timeFns.from('23:59:59.999')
-    const units: ('hour' | 'minute' | 'second' | 'millisecond' | 'day')[] = [
-      'hour',
-      'minute',
-      'second'
-      // 'millisecond'
-    ]
+    const units: ('hour' | 'minute' | 'second')[] = ['hour', 'minute', 'second']
     units.forEach((smallestUnit) => {
       it(`balances to next ${smallestUnit}`, () => {
         assert.equal(timeFns.round(bal, { smallestUnit }), '00:00')
