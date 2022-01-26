@@ -13,6 +13,82 @@ import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
 
 describe('dateTimeFns', () => {
+  describe('Construction', () => {
+    describe('fromNumbers(year, month, day, hour, minute, second, millisecond)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23, 30, 123)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 30', () => assert.equal(dateTimeFns.getSecond(datetime), 30))
+      it('datetime.millisecond is 123', () => assert.equal(dateTimeFns.getMillisecond(datetime), 123))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23:30.123', () => assert.equal(`${datetime}`, '1976-11-18T15:23:30.123'))
+    })
+    describe('fromNumbers(year, month, day, hour, minute, second)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23, 30)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 30', () => assert.equal(dateTimeFns.getSecond(datetime), 30))
+      it('datetime.millisecond is 0', () => assert.equal(dateTimeFns.getMillisecond(datetime), 0))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23:30', () => assert.equal(`${datetime}`, '1976-11-18T15:23:30'))
+    })
+    describe('fromNumbers(year, month, day, hour, minute)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 0', () => assert.equal(dateTimeFns.getSecond(datetime), 0))
+      it('datetime.millisecond is 0', () => assert.equal(dateTimeFns.getMillisecond(datetime), 0))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23', () => assert.equal(`${datetime}`, '1976-11-18T15:23'))
+    })
+    describe('fromNumbers(year, month, day, hour)', () => {
+      const datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15)
+      it('`${datetime}` is 1976-11-18T15', () => assert.equal(`${datetime}`, '1976-11-18T15:00'))
+    })
+    describe('fromNumbers(year, month, day)', () => {
+      const datetime = dateTimeFns.fromNumbers(1976, 11, 18)
+      it('`${datetime}` is 1976-11-18', () => assert.equal(`${datetime}`, '1976-11-18T00:00'))
+    })
+    describe('fromNumbers() treats -0 as 0', () => {
+      it('ignores the sign of -0', () => {
+        const datetime = dateTimeFns.fromNumbers(1976, 11, 18, -0, -0, -0, -0)
+        assert.equal(dateTimeFns.getHour(datetime), 0)
+        assert.equal(dateTimeFns.getMinute(datetime), 0)
+        assert.equal(dateTimeFns.getSecond(datetime), 0)
+        assert.equal(dateTimeFns.getMillisecond(datetime), 0)
+      })
+    })
+  })
   describe('isValid', () => {
     it('allows minute precision', () => {
       assert.ok(dateTimeFns.isValid('2020-01-01T12:30'))
@@ -262,11 +338,10 @@ describe('dateTimeFns', () => {
     it('dateTimeFns.add(earlier, diff) = later', () => assert(dateTimeFns.equals(dateTimeFns.add(earlier, diff), later)))
     it('dateTimeFns.subtract(later, diff) = earlier', () =>
       assert(dateTimeFns.equals(dateTimeFns.subtract(later, diff), earlier)))
-    // #71
-    // it('symmetrical with regard to negative durations', () => {
-    //   assert(dateTimeFns.equals(dateTimeFns.subtract(earlier, durationFns.negated(diff)), later))
-    //   assert(dateTimeFns.equals(dateTimeFns.add(later, durationFns.negated(diff)), earlier))
-    // })
+    it('symmetrical with regard to negative durations', () => {
+      assert(dateTimeFns.equals(dateTimeFns.subtract(earlier, durationFns.negated(diff)), later))
+      assert(dateTimeFns.equals(dateTimeFns.add(later, durationFns.negated(diff)), earlier))
+    })
   })
   describe('date/time maths: hours overflow', () => {
     it('subtract result', () => {
@@ -1005,11 +1080,10 @@ describe('dateTimeFns', () => {
       ['seconds', '1976-11-18T14:23:30'],
       ['milliseconds', '1976-11-18T14:23:30.123']
     ]
-    // #72
-    // incrementOneNearest.forEach(([smallestUnit, expected]) => {
-    //   it(`rounds to nearest ${smallestUnit}`, () =>
-    //     assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'halfExpand' })}`, expected))
-    // })
+    incrementOneNearest.forEach(([smallestUnit, expected]) => {
+      it(`rounds to nearest ${smallestUnit}`, () =>
+        assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'halfExpand' })}`, expected))
+    })
     const incrementOneCeil: [TemporalPluralUnit, Iso.DateTime][] = [
       ['days', '1976-11-19T00:00'],
       ['hours', '1976-11-18T15:00'],
@@ -1060,10 +1134,9 @@ describe('dateTimeFns', () => {
         '1976-11-18T14:23:30.12'
       )
     })
-    // #72
-    // it('1 day is a valid increment', () => {
-    //   assert.equal(`${dateTimeFns.round(dt, { smallestUnit: 'day', roundingIncrement: 1 })}`, '1976-11-19T00:00')
-    // })
+    it('1 day is a valid increment', () => {
+      assert.equal(`${dateTimeFns.round(dt, { smallestUnit: 'day', roundingIncrement: 1 })}`, '1976-11-19T00:00')
+    })
     it('valid hour increments divide into 24', () => {
       const smallestUnit = 'hour'
       ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
@@ -1099,14 +1172,13 @@ describe('dateTimeFns', () => {
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'second', roundingIncrement: 60 }), RangeError)
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'millisecond', roundingIncrement: 1000 }), RangeError)
     })
-    // #72
-    // const bal = dateTimeFns.from('1976-11-18T23:59:59.999')
-    // let smallestUnits: TemporalPluralUnit[] = ['days', 'hours', 'minutes', 'seconds', 'milliseconds']
-    // smallestUnits.forEach((smallestUnit) => {
-    //   it(`balances to next ${smallestUnit}`, () => {
-    //     assert.equal(`${dateTimeFns.round(bal, { smallestUnit })}`, '1976-11-19T00:00')
-    //   })
-    // })
+    const bal = dateTimeFns.from('1976-11-18T23:59:59.999')
+    let smallestUnits: TemporalPluralUnit[] = ['days', 'hours', 'minutes', 'seconds']
+    smallestUnits.forEach((smallestUnit) => {
+      it(`balances to next ${smallestUnit}`, () => {
+        assert.equal(`${dateTimeFns.round(bal, { smallestUnit })}`, '1976-11-19T00:00')
+      })
+    })
     it('accepts plural units', () => {
       assert(
         dateTimeFns.equals(dateTimeFns.round(dt, { smallestUnit: 'days' }), dateTimeFns.round(dt, { smallestUnit: 'day' }))
