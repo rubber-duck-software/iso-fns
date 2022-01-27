@@ -4,137 +4,132 @@ import { strict as assert } from 'assert'
 import { TemporalOverflow, TemporalPluralUnit } from 'ecmascript'
 
 describe('YearMonth', () => {
-  //   describe('Construction', () => {
-  //     let ym = yearMonthFns.fromNumbers(1976, 11)
-  //     it('YearMonth can be constructed', () => {
-  //       assert(ym)
-  //       assert.equal(typeof ym, 'object')
-  //     })
-  //     it('ym.year is 1976', () => assert.equal(yearMonthFns.getYear(ym), 1976))
-  //     it('ym.month is 11', () => assert.equal(yearMonthFns.getMonth(ym), 11))
-  //     it('ym.daysInMonth is 30', () => assert.equal(yearMonthFns.getDaysInMonth(ym), 30))
-  //     it('ym.daysInYear is 366', () => assert.equal(yearMonthFns.getDaysInYear(ym), 366))
-  //     describe('.from()', () => {
-  //       it('YearMonth.from(2019-10) == 2019-10', () => assert.equal(`${yearMonthFns.from('2019-10')}`, '2019-10'))
-  //       it('YearMonth.from(2019-10-01T09:00:00Z) == 2019-10', () =>
-  //         assert.equal(`${yearMonthFns.from('2019-10-01T09:00:00Z')}`, '2019-10'))
-  //       it("YearMonth.from('1976-11') == (1976-11)", () => assert.equal(`${yearMonthFns.from('1976-11')}`, '1976-11'))
-  //       it("YearMonth.from('1976-11-18') == (1976-11)", () => assert.equal(`${yearMonthFns.from('1976-11-18')}`, '1976-11'))
-  //       it('YearMonth.from(2019-11) is not the same object', () => {
-  //         const orig = yearMonthFns.fromNumbers(2019, 11)
-  //         const actu = yearMonthFns.from(orig)
-  //         assert.notEqual(actu, orig)
-  //       })
-  //       it('YearMonth.from({ year: 2019 }) throws', () => assert.throws(() => yearMonthFns.from({ year: 2019 }), TypeError))
-  //       it('YearMonth.from({ month: 6 }) throws', () => assert.throws(() => yearMonthFns.from({ month: 6 }), TypeError))
-  //       it('YearMonth.from({}) throws', () => assert.throws(() => yearMonthFns.from({}), TypeError))
-  //       it('YearMonth.from(required prop undefined) throws', () =>
-  //         assert.throws(() => yearMonthFns.from({ year: undefined, month: 6 }), TypeError))
-  //       it('YearMonth.from(number) is converted to string', () =>
-  //         assert.equal(yearMonthFns.from(201906), yearMonthFns.from('201906')))
-  //       it('basic format', () => {
-  //         assert.equal(`${yearMonthFns.from('197611')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+00197611')}`, '1976-11')
-  //       })
-  //       it('variant minus sign', () => {
-  //         assert.equal(`${yearMonthFns.from('\u2212009999-11')}`, '-009999-11')
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T15:23:30.1\u221202:00')}`, '1976-11')
-  //       })
-  //       it('mixture of basic and extended format', () => {
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T152330.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('19761118T15:23:30.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T15:23:30.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T152330.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('19761118T15:23:30.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('19761118T152330.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('19761118T152330.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+001976-11-18T152330.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+0019761118T15:23:30.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+001976-11-18T15:23:30.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+001976-11-18T152330.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+0019761118T15:23:30.1+0000')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+0019761118T152330.1+00:00')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('+0019761118T152330.1+0000')}`, '1976-11')
-  //       })
-  //       it('optional components', () => {
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T15:23')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('1976-11-18T15')}`, '1976-11')
-  //         assert.equal(`${yearMonthFns.from('1976-11-18')}`, '1976-11')
-  //       })
-  //       it('no junk at end of string', () => assert.throws(() => yearMonthFns.from('1976-11junk'), RangeError))
-  //       it('options may only be an object or undefined', () => {
-  //         ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
-  //           //@ts-expect-error
-  //           assert.throws(() => yearMonthFns.from({ year: 1976, month: 11 }, badOptions), TypeError)
-  //         )
-  //         ;[{}, () => {}, undefined].forEach((options) =>
-  //           //@ts-expect-error
-  //           assert.equal(`${yearMonthFns.from({ year: 1976, month: 11 }, options)}`, '1976-11')
-  //         )
-  //       })
-  //       describe('Overflow', () => {
-  //         const bad = { year: 2019, month: 13 }
-  //         it('reject', () => assert.throws(() => yearMonthFns.from(bad, { overflow: 'reject' }), RangeError))
-  //         it('constrain', () => {
-  //           assert.equal(`${yearMonthFns.from(bad)}`, '2019-12')
-  //           assert.equal(`${yearMonthFns.from(bad, { overflow: 'constrain' })}`, '2019-12')
-  //         })
-  //         it('throw on bad overflow', () => {
-  //           ;[yearMonthFns.fromNumbers(2019, 1), { year: 2019, month: 1 }, '2019-01'].forEach((input) => {
-  //             ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
-  //               //@ts-expect-error
-  //               assert.throws(() => yearMonthFns.from(input, { overflow }), RangeError)
-  //             )
-  //           })
-  //         })
-  //         it('constrain has no effect on invalid ISO string', () => {
-  //           assert.throws(() => yearMonthFns.from('2020-13', { overflow: 'constrain' }), RangeError)
-  //         })
-  //       })
-  //       it('object must contain at least the required correctly-spelled properties', () => {
-  //         assert.throws(() => yearMonthFns.from({}), TypeError)
-  //         assert.throws(() => yearMonthFns.from({ year: 1976, months: 11 }), TypeError)
-  //       })
-  //       it('incorrectly-spelled properties are ignored', () => {
-  //         assert.equal(`${yearMonthFns.from({ year: 1976, month: 11, months: 12 })}`, '1976-11')
-  //       })
-  //     })
-  //     describe('.with()', () => {
-  //       const ym = yearMonthFns.from('2019-10')
-  //       it('with(2020)', () => assert.equal(`${yearMonthFns.with(ym, { year: 2020 })}`, '2020-10'))
-  //       it('with(09)', () => assert.equal(`${yearMonthFns.with(ym, { month: 9 })}`, '2019-09'))
-  //     })
-  //   })
-  //   describe('YearMonth.with() works', () => {
-  //     const ym = yearMonthFns.from('2019-10')
-  //     it('throws with calendar property', () => {
-  //       //@ts-expect-error
-  //       assert.throws(() => yearMonthFns.with(ym, { year: 2021, calendar: 'iso8601' }), TypeError)
-  //     })
-  //     it('throws with timeZone property', () => {
-  //       //@ts-expect-error
-  //       assert.throws(() => yearMonthFns.with(ym, { year: 2021, timeZone: 'UTC' }), TypeError)
-  //     })
-  //     it('options may only be an object or undefined', () => {
-  //       ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
-  //         //@ts-expect-error
-  //         assert.throws(() => yearMonthFns.with(ym, { year: 2020 }, badOptions), TypeError)
-  //       )
-  //       ;[{}, () => {}, undefined].forEach((options) =>
-  //         //@ts-expect-error
-  //         assert.equal(`${yearMonthFns.with(ym, { year: 2020 }, options)}`, '2020-10')
-  //       )
-  //     })
-  //     it('object must contain at least one correctly-spelled property', () => {
-  //       assert.throws(() => yearMonthFns.with(ym, {}), TypeError)
-  //       //@ts-expect-error
-  //       assert.throws(() => yearMonthFns.with(ym, { months: 12 }), TypeError)
-  //     })
-  //     it('incorrectly-spelled properties are ignored', () => {
-  //       //@ts-expect-error
-  //       assert.equal(`${yearMonthFns.with(ym, { month: 1, years: 2020 })}`, '2019-01')
-  //     })
-  //   })
+  describe('Construction', () => {
+    let ym = yearMonthFns.fromNumbers(1976, 11)
+    it('YearMonth can be constructed', () => {
+      assert(ym)
+      assert.equal(typeof ym, 'string')
+    })
+    it('ym.year is 1976', () => assert.equal(yearMonthFns.getYear(ym), 1976))
+    it('ym.month is 11', () => assert.equal(yearMonthFns.getMonth(ym), 11))
+    it('ym.daysInMonth is 30', () => assert.equal(yearMonthFns.getDaysInMonth(ym), 30))
+    it('ym.daysInYear is 366', () => assert.equal(yearMonthFns.getDaysInYear(ym), 366))
+    describe('.from()', () => {
+      it('YearMonth.from(2019-10) == 2019-10', () => assert.equal(`${yearMonthFns.from('2019-10')}`, '2019-10'))
+      it('YearMonth.from(2019-10-01T09:00:00Z) == 2019-10', () =>
+        assert.equal(`${yearMonthFns.from('2019-10-01T09:00:00Z')}`, '2019-10'))
+      it("YearMonth.from('1976-11') == (1976-11)", () => assert.equal(`${yearMonthFns.from('1976-11')}`, '1976-11'))
+      it("YearMonth.from('1976-11-18') == (1976-11)", () => assert.equal(`${yearMonthFns.from('1976-11-18')}`, '1976-11'))
+      it('YearMonth.from({ year: 2019 }) throws', () => assert.throws(() => yearMonthFns.from({ year: 2019 }), TypeError))
+      it('YearMonth.from({ month: 6 }) throws', () => assert.throws(() => yearMonthFns.from({ month: 6 }), TypeError))
+      it('YearMonth.from({}) throws', () => assert.throws(() => yearMonthFns.from({}), TypeError))
+      it('YearMonth.from(required prop undefined) throws', () =>
+        assert.throws(() => yearMonthFns.from({ year: undefined, month: 6 }), TypeError))
+      it('YearMonth.from(number) is converted to string', () =>
+        assert.equal(yearMonthFns.from(201906), yearMonthFns.from('201906')))
+      it('basic format', () => {
+        assert.equal(`${yearMonthFns.from('197611')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+00197611')}`, '1976-11')
+      })
+      it('variant minus sign', () => {
+        assert.equal(`${yearMonthFns.from('\u2212009999-11')}`, '-9999-11')
+        assert.equal(`${yearMonthFns.from('1976-11-18T15:23:30.1\u221202:00')}`, '1976-11')
+      })
+      it('mixture of basic and extended format', () => {
+        assert.equal(`${yearMonthFns.from('1976-11-18T152330.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('19761118T15:23:30.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('1976-11-18T15:23:30.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('1976-11-18T152330.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('19761118T15:23:30.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('19761118T152330.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('19761118T152330.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+001976-11-18T152330.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+0019761118T15:23:30.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+001976-11-18T15:23:30.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+001976-11-18T152330.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+0019761118T15:23:30.1+0000')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+0019761118T152330.1+00:00')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('+0019761118T152330.1+0000')}`, '1976-11')
+      })
+      it('optional components', () => {
+        assert.equal(`${yearMonthFns.from('1976-11-18T15:23')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('1976-11-18T15')}`, '1976-11')
+        assert.equal(`${yearMonthFns.from('1976-11-18')}`, '1976-11')
+      })
+      it('no junk at end of string', () => assert.throws(() => yearMonthFns.from('1976-11junk'), RangeError))
+      it('options may only be an object or undefined', () => {
+        ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
+          //@ts-expect-error
+          assert.throws(() => yearMonthFns.from({ year: 1976, month: 11 }, badOptions), TypeError)
+        )
+        ;[{}, () => {}, undefined].forEach((options) =>
+          //@ts-expect-error
+          assert.equal(`${yearMonthFns.from({ year: 1976, month: 11 }, options)}`, '1976-11')
+        )
+      })
+      describe('Overflow', () => {
+        const bad = { year: 2019, month: 13 }
+        it('reject', () => assert.throws(() => yearMonthFns.from(bad, { overflow: 'reject' }), RangeError))
+        it('constrain', () => {
+          assert.equal(`${yearMonthFns.from(bad)}`, '2019-12')
+          assert.equal(`${yearMonthFns.from(bad, { overflow: 'constrain' })}`, '2019-12')
+        })
+        it('throw on bad overflow', () => {
+          ;[yearMonthFns.fromNumbers(2019, 1), { year: 2019, month: 1 }, '2019-01'].forEach((input) => {
+            ;['', 'CONSTRAIN', 'balance', 3, null].forEach((overflow) =>
+              //@ts-expect-error
+              assert.throws(() => yearMonthFns.from(input, { overflow }), RangeError)
+            )
+          })
+        })
+        it('constrain has no effect on invalid ISO string', () => {
+          assert.throws(() => yearMonthFns.from('2020-13', { overflow: 'constrain' }), RangeError)
+        })
+      })
+      it('object must contain at least the required correctly-spelled properties', () => {
+        assert.throws(() => yearMonthFns.from({}), TypeError)
+        assert.throws(() => yearMonthFns.from({ year: 1976, months: 11 }), TypeError)
+      })
+      it('incorrectly-spelled properties are ignored', () => {
+        assert.equal(`${yearMonthFns.from({ year: 1976, month: 11, months: 12 })}`, '1976-11')
+      })
+    })
+    describe('.with()', () => {
+      const ym = yearMonthFns.from('2019-10')
+      it('with(2020)', () => assert.equal(`${yearMonthFns.with(ym, { year: 2020 })}`, '2020-10'))
+      it('with(09)', () => assert.equal(`${yearMonthFns.with(ym, { month: 9 })}`, '2019-09'))
+    })
+  })
+  describe('YearMonth.with() works', () => {
+    const ym = yearMonthFns.from('2019-10')
+    it('throws with calendar property', () => {
+      //@ts-expect-error
+      assert.throws(() => yearMonthFns.with(ym, { year: 2021, calendar: 'iso8601' }), TypeError)
+    })
+    it('throws with timeZone property', () => {
+      //@ts-expect-error
+      assert.throws(() => yearMonthFns.with(ym, { year: 2021, timeZone: 'UTC' }), TypeError)
+    })
+    it('options may only be an object or undefined', () => {
+      ;[null, 1, 'hello', true, Symbol('foo')].forEach((badOptions) =>
+        //@ts-expect-error
+        assert.throws(() => yearMonthFns.with(ym, { year: 2020 }, badOptions), TypeError)
+      )
+      ;[{}, () => {}, undefined].forEach((options) =>
+        //@ts-expect-error
+        assert.equal(`${yearMonthFns.with(ym, { year: 2020 }, options)}`, '2020-10')
+      )
+    })
+    it('object must contain at least one correctly-spelled property', () => {
+      assert.throws(() => yearMonthFns.with(ym, {}), TypeError)
+      //@ts-expect-error
+      assert.throws(() => yearMonthFns.with(ym, { months: 12 }), TypeError)
+    })
+    it('incorrectly-spelled properties are ignored', () => {
+      //@ts-expect-error
+      assert.equal(`${yearMonthFns.with(ym, { month: 1, years: 2020 })}`, '2019-01')
+    })
+  })
   //   describe('YearMonth.compare() works', () => {
   //     const nov94 = yearMonthFns.from('1994-11')
   //     const jun13 = yearMonthFns.from('2013-06')
@@ -671,5 +666,5 @@ describe('YearMonth', () => {
   //       const ym2 = yearMonthFns.fromNumbers(fields.year, fields.month)
   //       assert.equal(ym2, ym1)
   //     })
-  //   })
+  // })
 })
