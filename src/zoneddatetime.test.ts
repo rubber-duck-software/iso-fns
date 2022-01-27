@@ -71,8 +71,6 @@ describe('ZonedDateTime', () => {
     //   it('zdt.minute is 23', () => assert.equal(zdt.minute, 23))
     //   it('zdt.second is 30', () => assert.equal(zdt.second, 30))
     //   it('zdt.millisecond is 123', () => assert.equal(zdt.millisecond, 123))
-    //   it('zdt.microsecond is 456', () => assert.equal(zdt.microsecond, 456))
-    //   it('zdt.nanosecond is 789', () => assert.equal(zdt.nanosecond, 789))
     //   it('zdt.epochSeconds is 217178610', () => assert.equal(zdt.epochSeconds, 217178610))
     //   it('zdt.epochMilliseconds is 217178610123', () => assert.equal(zdt.epochMilliseconds, 217178610123))
     //   it('zdt.dayOfWeek is 4', () => assert.equal(zdt.dayOfWeek, 4))
@@ -84,43 +82,8 @@ describe('ZonedDateTime', () => {
     //   it('zdt.monthsInYear is 12', () => assert.equal(zdt.monthsInYear, 12))
     //   it('zdt.inLeapYear is true', () => assert.equal(zdt.inLeapYear, true))
     //   it('zdt.offset is +00:00', () => assert.equal(zdt.offset, '+00:00'))
-    //   it('zdt.offsetNanoseconds is 0', () => assert.equal(zdt.offsetNanoseconds, 0))
     //   it('string output is 1976-11-18T15:23:30.123456789+00:00[UTC]', () =>
     //     assert.equal(`${zdt}`, '1976-11-18T15:23:30.123456789+00:00[UTC]'))
-    // })
-    // describe('ZonedDateTime with non-UTC time zone and non-ISO calendar', () => {
-    //   const zdt = new ZonedDateTime(epochNanos, Temporal.TimeZone.from('Europe/Vienna'), Temporal.Calendar.from('gregory'))
-    //   it('can be constructed', () => {
-    //     assert(zdt)
-    //     assert.equal(typeof zdt, 'object')
-    //   })
-    //   it('zdt.era is ce', () => assert.equal(zdt.era, 'ce'))
-    //   it('zdt.year is 1976', () => assert.equal(zdt.year, 1976))
-    //   it('zdt.month is 11', () => assert.equal(zdt.month, 11))
-    //   it('zdt.monthCode is "M11"', () => assert.equal(zdt.monthCode, 'M11'))
-    //   it('zdt.day is 18', () => assert.equal(zdt.day, 18))
-    //   it('zdt.hour is 16', () => assert.equal(zdt.hour, 16))
-    //   it('zdt.minute is 23', () => assert.equal(zdt.minute, 23))
-    //   it('zdt.second is 30', () => assert.equal(zdt.second, 30))
-    //   it('zdt.millisecond is 123', () => assert.equal(zdt.millisecond, 123))
-    //   it('zdt.microsecond is 456', () => assert.equal(zdt.microsecond, 456))
-    //   it('zdt.nanosecond is 789', () => assert.equal(zdt.nanosecond, 789))
-    //   it('zdt.epochSeconds is 217178610', () => assert.equal(zdt.epochSeconds, 217178610))
-    //   it('zdt.epochMilliseconds is 217178610123', () => assert.equal(zdt.epochMilliseconds, 217178610123))
-    //   it('zdt.epochMicroseconds is 217178610123456n', () => assert.equal(zdt.epochMicroseconds, 217178610123456n))
-    //   it('zdt.epochNanoseconds is 217178610123456789n', () => assert.equal(zdt.epochNanoseconds, 217178610123456789n))
-    //   it('zdt.dayOfWeek is 4', () => assert.equal(zdt.dayOfWeek, 4))
-    //   it('zdt.dayOfYear is 323', () => assert.equal(zdt.dayOfYear, 323))
-    //   it('zdt.weekOfYear is 47', () => assert.equal(zdt.weekOfYear, 47))
-    //   it('zdt.daysInWeek is 7', () => assert.equal(zdt.daysInWeek, 7))
-    //   it('zdt.daysInMonth is 30', () => assert.equal(zdt.daysInMonth, 30))
-    //   it('zdt.daysInYear is 366', () => assert.equal(zdt.daysInYear, 366))
-    //   it('zdt.monthsInYear is 12', () => assert.equal(zdt.monthsInYear, 12))
-    //   it('zdt.inLeapYear is true', () => assert.equal(zdt.inLeapYear, true))
-    //   it('zdt.offset is +01:00', () => assert.equal(zdt.offset, '+01:00'))
-    //   it('zdt.offsetNanoseconds is 3600e9', () => assert.equal(zdt.offsetNanoseconds, 3600e9))
-    //   it('string output is 1976-11-18T16:23:30.123456789+01:00[Europe/Vienna][u-ca=gregory]', () =>
-    //     assert.equal(`${zdt}`, '1976-11-18T16:23:30.123456789+01:00[Europe/Vienna][u-ca=gregory]'))
     // })
 
     // it('casts time zone', () => {
@@ -128,18 +91,6 @@ describe('ZonedDateTime', () => {
     //   assert.equal(typeof zdt.timeZone, 'object')
     //   assert(zdt.timeZone instanceof Temporal.TimeZone)
     //   assert.equal(zdt.timeZone.id, 'Asia/Seoul')
-    // })
-    // it('defaults to ISO calendar', () => {
-    //   const zdt = new ZonedDateTime(epochNanos, tz)
-    //   assert.equal(typeof zdt.calendar, 'object')
-    //   assert(zdt.calendar instanceof Temporal.Calendar)
-    //   assert.equal(zdt.calendar.id, 'iso8601')
-    // })
-    // it('casts calendar', () => {
-    //   const zdt = new ZonedDateTime(epochNanos, Temporal.TimeZone.from('Asia/Tokyo'), 'japanese')
-    //   assert.equal(typeof zdt.calendar, 'object')
-    //   assert(zdt.calendar instanceof Temporal.Calendar)
-    //   assert.equal(zdt.calendar.id, 'japanese')
     // })
   })
 
@@ -617,12 +568,6 @@ describe('ZonedDateTime', () => {
   //   it('zdt.with({ millisecond: 5 } works', () => {
   //     assert.equal(`${zdt.with({ millisecond: 5 })}`, '1976-11-18T15:23:30.005456789+00:00[UTC]')
   //   })
-  //   it('zdt.with({ microsecond: 5 } works', () => {
-  //     assert.equal(`${zdt.with({ microsecond: 5 })}`, '1976-11-18T15:23:30.123005789+00:00[UTC]')
-  //   })
-  //   it('zdt.with({ nanosecond: 5 } works', () => {
-  //     assert.equal(`${zdt.with({ nanosecond: 5 })}`, '1976-11-18T15:23:30.123456005+00:00[UTC]')
-  //   })
   //   it('zdt.with({ month: 5, second: 15 } works', () => {
   //     assert.equal(`${zdt.with({ month: 5, second: 15 })}`, '1976-05-18T15:23:15.123456789+00:00[UTC]')
   //   })
@@ -632,14 +577,12 @@ describe('ZonedDateTime', () => {
   //       assert.equal(`${zdt.with({ month: 29 }, { overflow })}`, '1976-12-18T15:23:30.123456789+00:00[UTC]')
   //       assert.equal(`${zdt.with({ day: 31 }, { overflow })}`, '1976-11-30T15:23:30.123456789+00:00[UTC]')
   //       assert.equal(`${zdt.with({ hour: 29 }, { overflow })}`, '1976-11-18T23:23:30.123456789+00:00[UTC]')
-  //       assert.equal(`${zdt.with({ nanosecond: 9000 }, { overflow })}`, '1976-11-18T15:23:30.123456999+00:00[UTC]')
   //     })
   //     it('reject', () => {
   //       const overflow = 'reject'
   //       assert.throws(() => zdt.with({ month: 29 }, { overflow }), RangeError)
   //       assert.throws(() => zdt.with({ day: 31 }, { overflow }), RangeError)
   //       assert.throws(() => zdt.with({ hour: 29 }, { overflow }), RangeError)
-  //       assert.throws(() => zdt.with({ nanosecond: 9000 }, { overflow }), RangeError)
   //     })
   //     it('constrain is the default', () => {
   //       assert.equal(`${zdt.with({ month: 29 })}`, `${zdt.with({ month: 29 }, { overflow: 'constrain' })}`)
@@ -717,7 +660,6 @@ describe('ZonedDateTime', () => {
   //     it('use, with bogus offset, changes to the exact time with the offset', () => {
   //       const preserveExact = dstStartDay.with(bogus, { offset: 'use' })
   //       assert.equal(`${preserveExact}`, '2019-03-08T23:01:01-03:30[America/St_Johns]')
-  //       assert.equal(preserveExact.epochNanoseconds, Temporal.Instant.from('2019-03-10T02:30:01+23:59').epochNanoseconds)
   //     })
   //     it('ignore, with bogus offset, defers to disambiguation option', () => {
   //       const offset = 'ignore'
@@ -748,7 +690,6 @@ describe('ZonedDateTime', () => {
   //     it('use changes to the exact time with the offset', () => {
   //       const preserveExact = doubleTime.with({ offset: '-02:30' }, { offset: 'use' })
   //       assert.equal(preserveExact.offset, '-02:30')
-  //       assert.equal(preserveExact.epochNanoseconds, Temporal.Instant.from('2019-11-03T01:30:01-02:30').epochNanoseconds)
   //     })
   //     it('ignore defers to disambiguation option', () => {
   //       const offset = 'ignore'
@@ -805,16 +746,6 @@ describe('ZonedDateTime', () => {
   //   it('throws if given a Temporal object with a time zone', () => {
   //     assert.throws(() => zdt.with(dstStartDay), TypeError)
   //   })
-  //   it('throws if calendarName is included', () => {
-  //     assert.throws(() => zdt.with({ month: 2, calendar: 'japanese' }), TypeError)
-  //   })
-  //   it('throws if given a Temporal object with a calendar', () => {
-  //     assert.throws(() => zdt.with(Temporal.PlainDateTime.from('1976-11-18T12:00')), TypeError)
-  //     assert.throws(() => zdt.with(Temporal.PlainDate.from('1976-11-18')), TypeError)
-  //     assert.throws(() => zdt.with(Temporal.PlainTime.from('12:00')), TypeError)
-  //     assert.throws(() => zdt.with(Temporal.PlainYearMonth.from('1976-11')), TypeError)
-  //     assert.throws(() => zdt.with(Temporal.PlainMonthDay.from('11-18')), TypeError)
-  //   })
   //   it('throws if given a string', () => {
   //     assert.throws(() => zdt.with('1976-11-18T12:00+00:00[UTC]'), TypeError)
   //     assert.throws(() => zdt.with('1976-11-18'), TypeError)
@@ -861,24 +792,6 @@ describe('ZonedDateTime', () => {
   //   it("withPlainDate('2018-09-15') works", () => {
   //     assert.equal(`${zdt.withPlainDate('2018-09-15')}`, '2018-09-15T03:24:30-07:00[America/Los_Angeles]')
   //   })
-  //   it('result contains a non-ISO calendar if present in the input', () => {
-  //     assert.equal(
-  //       `${zdt.withCalendar('japanese').withPlainDate('2008-09-06')}`,
-  //       '2008-09-06T03:24:30-07:00[America/Los_Angeles][u-ca=japanese]'
-  //     )
-  //   })
-  //   it('calendar is unchanged if input has ISO calendar', () => {
-  //     assert.equal(
-  //       `${zdt.withPlainDate('2008-09-06[u-ca=japanese]')}`,
-  //       '2008-09-06T03:24:30-07:00[America/Los_Angeles][u-ca=japanese]'
-  //     )
-  //   })
-  //   it('throws if both `this` and `other` have a non-ISO calendar', () => {
-  //     assert.throws(
-  //       () => zdt.withCalendar('gregory').withPlainDate('2008-09-06-07:00[America/Los_Angeles][u-ca=japanese]'),
-  //       RangeError
-  //     )
-  //   })
   //   it('object must contain at least one correctly-spelled property', () => {
   //     assert.throws(() => zdt.withPlainDate({}), TypeError)
   //     assert.throws(() => zdt.withPlainDate({ months: 12 }), TypeError)
@@ -899,34 +812,6 @@ describe('ZonedDateTime', () => {
   //   })
   //   it('casts its argument', () => {
   //     assert.equal(`${zdt.withTimeZone('America/Los_Angeles')}`, '2019-11-18T15:23:30.123456789-08:00[America/Los_Angeles]')
-  //   })
-  //   it('keeps instant and calendar the same', () => {
-  //     const zdt = ZonedDateTime.from('2019-11-18T15:23:30.123456789+01:00[Europe/Madrid][u-ca=gregory]')
-  //     const zdt2 = zdt.withTimeZone('America/Vancouver')
-  //     assert.equal(zdt.epochNanoseconds, zdt2.epochNanoseconds)
-  //     assert.equal(zdt2.calendar.id, 'gregory')
-  //     assert.equal(zdt2.timeZone.id, 'America/Vancouver')
-  //     assert.notequal(`${zdt.toPlainDateTime()}`, `${zdt2.toPlainDateTime()}`)
-  //   })
-  // })
-  // describe('ZonedDateTime.withCalendar()', () => {
-  //   const zdt = ZonedDateTime.from('2019-11-18T15:23:30.123456789-08:00[America/Los_Angeles]')
-  //   it('zonedDateTime.withCalendar(japanese) works', () => {
-  //     const cal = Temporal.Calendar.from('japanese')
-  //     assert.equal(`${zdt.withCalendar(cal)}`, '2019-11-18T15:23:30.123456789-08:00[America/Los_Angeles][u-ca=japanese]')
-  //   })
-  //   it('casts its argument', () => {
-  //     assert.equal(
-  //       `${zdt.withCalendar('japanese')}`,
-  //       '2019-11-18T15:23:30.123456789-08:00[America/Los_Angeles][u-ca=japanese]'
-  //     )
-  //   })
-  //   it('keeps instant and time zone the same', () => {
-  //     const zdt = ZonedDateTime.from('2019-11-18T15:23:30.123456789+01:00[Europe/Madrid][u-ca=gregory]')
-  //     const zdt2 = zdt.withCalendar('japanese')
-  //     assert.equal(zdt.epochNanoseconds, zdt2.epochNanoseconds)
-  //     assert.equal(zdt2.calendar.id, 'japanese')
-  //     assert.equal(zdt2.timeZone.id, 'Europe/Madrid')
   //   })
   // })
 
@@ -978,16 +863,16 @@ describe('ZonedDateTime', () => {
   // describe('ZonedDateTime.add()', () => {
   //   const zdt = ZonedDateTime.from('1969-12-25T12:23:45.678901234+00:00[UTC]')
   //   describe('cross epoch in ms', () => {
-  //     const one = zdt.subtract({ hours: 240, nanoseconds: 800 })
-  //     const two = zdt.add({ hours: 240, nanoseconds: 800 })
-  //     const three = two.subtract({ hours: 480, nanoseconds: 1600 })
-  //     const four = one.add({ hours: 480, nanoseconds: 1600 })
-  //     it(`(${zdt}).subtract({ hours: 240, nanoseconds: 800 }) = ${one}`, () =>
+  //     const one = zdt.subtract({ hours: 240, milliseconds: 800 })
+  //     const two = zdt.add({ hours: 240, milliseconds: 800 })
+  //     const three = two.subtract({ hours: 480, milliseconds: 1600 })
+  //     const four = one.add({ hours: 480, milliseconds: 1600 })
+  //     it(`(${zdt}).subtract({ hours: 240, milliseconds: 800 }) = ${one}`, () =>
   //       assert.equal(`${one}`, '1969-12-15T12:23:45.678900434+00:00[UTC]'))
-  //     it(`(${zdt}).add({ hours: 240, nanoseconds: 800 }) = ${two}`, () =>
+  //     it(`(${zdt}).add({ hours: 240, milliseconds: 800 }) = ${two}`, () =>
   //       assert.equal(`${two}`, '1970-01-04T12:23:45.678902034+00:00[UTC]'))
-  //     it(`(${two}).subtract({ hours: 480, nanoseconds: 1600 }) = ${one}`, () => assert(three.equals(one)))
-  //     it(`(${one}).add({ hours: 480, nanoseconds: 1600 }) = ${two}`, () => assert(four.equals(two)))
+  //     it(`(${two}).subtract({ hours: 480, milliseconds: 1600 }) = ${one}`, () => assert(three.equals(one)))
+  //     it(`(${one}).add({ hours: 480, milliseconds: 1600 }) = ${two}`, () => assert(four.equals(two)))
   //   })
   //   it('zdt.add(durationObj)', () => {
   //     const later = zdt.add(Temporal.Duration.from('PT240H0.000000800S'))
@@ -1122,22 +1007,11 @@ describe('ZonedDateTime', () => {
   //     assert.equal(`${feb20.until(feb21, { largestUnit: 'seconds' })}`, 'PT31622400S')
   //   })
   //   it('can return subseconds', () => {
-  //     const later = feb20.add({ days: 1, milliseconds: 250, microseconds: 250, nanoseconds: 250 })
+  //     const later = feb20.add({ days: 1, milliseconds: 250 })
 
   //     const msDiff = feb20.until(later, { largestUnit: 'milliseconds' })
   //     assert.equal(msDiff.seconds, 0)
   //     assert.equal(msDiff.milliseconds, 86400250)
-  //     assert.equal(msDiff.microseconds, 250)
-  //     assert.equal(msDiff.nanoseconds, 250)
-
-  //     const µsDiff = feb20.until(later, { largestUnit: 'microseconds' })
-  //     assert.equal(µsDiff.milliseconds, 0)
-  //     assert.equal(µsDiff.microseconds, 86400250250)
-  //     assert.equal(µsDiff.nanoseconds, 250)
-
-  //     const nsDiff = feb20.until(later, { largestUnit: 'nanoseconds' })
-  //     assert.equal(nsDiff.microseconds, 0)
-  //     assert.equal(nsDiff.nanoseconds, 86400250250250)
   //   })
   //   it('does not include higher units than necessary', () => {
   //     const lastFeb20 = ZonedDateTime.from('2020-02-29T00:00+01:00[Europe/Vienna]')
@@ -1154,11 +1028,6 @@ describe('ZonedDateTime', () => {
   //     const monthsDifference = zdt.until(laterDateTime, { largestUnit: 'months' })
   //     assert.equal(monthsDifference.weeks, 0)
   //     assert.notequal(monthsDifference.months, 0)
-  //   })
-  //   it('no two different calendars', () => {
-  //     const zdt1 = new ZonedDateTime(0n, 'UTC')
-  //     const zdt2 = new ZonedDateTime(0n, 'UTC', Temporal.Calendar.from('japanese'))
-  //     assert.throws(() => zdt1.until(zdt2), RangeError)
   //   })
   //   it('options may only be an object or undefined', () => {
   //     ;[null, 1, 'hello', true, Symbol('foo'), 1n].forEach((badOptions) =>
@@ -1183,8 +1052,6 @@ describe('ZonedDateTime', () => {
   //       'minutes',
   //       'seconds',
   //       'milliseconds',
-  //       'microseconds',
-  //       'nanoseconds'
   //     ]
   //     for (let largestIdx = 1; largestIdx < units.length; largestIdx++) {
   //       for (let smallestIdx = 0; smallestIdx < largestIdx; smallestIdx++) {
@@ -1211,9 +1078,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23356H'],
   //     ['minutes', 'PT23356H17M'],
   //     ['seconds', 'PT23356H17M5S'],
-  //     ['milliseconds', 'PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864198S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.864S']
   //   ]
   //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
   //     const roundingMode = 'halfExpand'
@@ -1230,9 +1095,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23357H', '-PT23356H'],
   //     ['minutes', 'PT23356H18M', '-PT23356H17M'],
   //     ['seconds', 'PT23356H17M5S', '-PT23356H17M4S'],
-  //     ['milliseconds', 'PT23356H17M4.865S', '-PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864198S', '-PT23356H17M4.864197S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S', '-PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.865S', '-PT23356H17M4.864S']
   //   ]
   //   incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
   //     const roundingMode = 'ceil'
@@ -1249,9 +1112,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23356H', '-PT23357H'],
   //     ['minutes', 'PT23356H17M', '-PT23356H18M'],
   //     ['seconds', 'PT23356H17M4S', '-PT23356H17M5S'],
-  //     ['milliseconds', 'PT23356H17M4.864S', '-PT23356H17M4.865S'],
-  //     ['microseconds', 'PT23356H17M4.864197S', '-PT23356H17M4.864198S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S', '-PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.864S', '-PT23356H17M4.865S']
   //   ]
   //   incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
   //     const roundingMode = 'floor'
@@ -1268,9 +1129,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23356H'],
   //     ['minutes', 'PT23356H17M'],
   //     ['seconds', 'PT23356H17M4S'],
-  //     ['milliseconds', 'PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864197S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.864S']
   //   ]
   //   incrementOneTrunc.forEach(([smallestUnit, expected]) => {
   //     const roundingMode = 'trunc'
@@ -1307,18 +1166,6 @@ describe('ZonedDateTime', () => {
   //       'PT23356H17M4.86S'
   //     )
   //   })
-  //   it('rounds to an increment of microseconds', () => {
-  //     assert.equal(
-  //       `${earlier.until(later, { smallestUnit: 'microseconds', roundingIncrement: 10, roundingMode: 'halfExpand' })}`,
-  //       'PT23356H17M4.8642S'
-  //     )
-  //   })
-  //   it('rounds to an increment of nanoseconds', () => {
-  //     assert.equal(
-  //       `${earlier.until(later, { smallestUnit: 'nanoseconds', roundingIncrement: 10, roundingMode: 'halfExpand' })}`,
-  //       'PT23356H17M4.86419753S'
-  //     )
-  //   })
   //   it('valid hour increments divide into 24', () => {
   //     ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
   //       const options = { smallestUnit: 'hours', roundingIncrement }
@@ -1333,7 +1180,7 @@ describe('ZonedDateTime', () => {
   //       })
   //     })
   //   })
-  //   ;['milliseconds', 'microseconds', 'nanoseconds'].forEach((smallestUnit) => {
+  //   ;['milliseconds'].forEach((smallestUnit) => {
   //     it(`valid ${smallestUnit} increments divide into 1000`, () => {
   //       ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
   //         const options = { smallestUnit, roundingIncrement }
@@ -1346,16 +1193,12 @@ describe('ZonedDateTime', () => {
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'minutes', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'seconds', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'milliseconds', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => earlier.until(later, { smallestUnit: 'microseconds', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => earlier.until(later, { smallestUnit: 'nanoseconds', roundingIncrement: 29 }), RangeError)
   //   })
   //   it('throws on increments that are equal to the next highest', () => {
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'hours', roundingIncrement: 24 }), RangeError)
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'minutes', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'seconds', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => earlier.until(later, { smallestUnit: 'milliseconds', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => earlier.until(later, { smallestUnit: 'microseconds', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => earlier.until(later, { smallestUnit: 'nanoseconds', roundingIncrement: 1000 }), RangeError)
   //   })
   //   it('accepts singular units', () => {
   //     assert.equal(`${earlier.until(later, { largestUnit: 'year' })}`, `${earlier.until(later, { largestUnit: 'years' })}`)
@@ -1392,22 +1235,6 @@ describe('ZonedDateTime', () => {
   //     assert.equal(
   //       `${earlier.until(later, { smallestUnit: 'millisecond' })}`,
   //       `${earlier.until(later, { smallestUnit: 'milliseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${earlier.until(later, { largestUnit: 'microsecond' })}`,
-  //       `${earlier.until(later, { largestUnit: 'microseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${earlier.until(later, { smallestUnit: 'microsecond' })}`,
-  //       `${earlier.until(later, { smallestUnit: 'microseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${earlier.until(later, { largestUnit: 'nanosecond' })}`,
-  //       `${earlier.until(later, { largestUnit: 'nanoseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${earlier.until(later, { smallestUnit: 'nanosecond' })}`,
-  //       `${earlier.until(later, { smallestUnit: 'nanoseconds' })}`
   //     )
   //   })
   //   it('rounds relative to the receiver', () => {
@@ -1454,22 +1281,11 @@ describe('ZonedDateTime', () => {
   //     assert.equal(`${feb21.since(feb20, { largestUnit: 'seconds' })}`, 'PT31622400S')
   //   })
   //   it('can return subseconds', () => {
-  //     const later = feb20.add({ days: 1, milliseconds: 250, microseconds: 250, nanoseconds: 250 })
+  //     const later = feb20.add({ days: 1, milliseconds: 250})
 
   //     const msDiff = later.since(feb20, { largestUnit: 'milliseconds' })
   //     assert.equal(msDiff.seconds, 0)
   //     assert.equal(msDiff.milliseconds, 86400250)
-  //     assert.equal(msDiff.microseconds, 250)
-  //     assert.equal(msDiff.nanoseconds, 250)
-
-  //     const µsDiff = later.since(feb20, { largestUnit: 'microseconds' })
-  //     assert.equal(µsDiff.milliseconds, 0)
-  //     assert.equal(µsDiff.microseconds, 86400250250)
-  //     assert.equal(µsDiff.nanoseconds, 250)
-
-  //     const nsDiff = later.since(feb20, { largestUnit: 'nanoseconds' })
-  //     assert.equal(nsDiff.microseconds, 0)
-  //     assert.equal(nsDiff.nanoseconds, 86400250250250)
   //   })
   //   it('does not include higher units than necessary', () => {
   //     const lastFeb20 = ZonedDateTime.from('2020-02-29T00:00+01:00[Europe/Vienna]')
@@ -1486,11 +1302,6 @@ describe('ZonedDateTime', () => {
   //     const monthsDifference = laterDateTime.since(zdt, { largestUnit: 'months' })
   //     assert.equal(monthsDifference.weeks, 0)
   //     assert.notequal(monthsDifference.months, 0)
-  //   })
-  //   it('no two different calendars', () => {
-  //     const zdt1 = new ZonedDateTime(0n, 'UTC')
-  //     const zdt2 = new ZonedDateTime(0n, 'UTC', Temporal.Calendar.from('japanese'))
-  //     assert.throws(() => zdt1.since(zdt2), RangeError)
   //   })
   //   it('options may only be an object or undefined', () => {
   //     ;[null, 1, 'hello', true, Symbol('foo'), 1n].forEach((badOptions) =>
@@ -1514,9 +1325,7 @@ describe('ZonedDateTime', () => {
   //       'hours',
   //       'minutes',
   //       'seconds',
-  //       'milliseconds',
-  //       'microseconds',
-  //       'nanoseconds'
+  //       'milliseconds'
   //     ]
   //     for (let largestIdx = 1; largestIdx < units.length; largestIdx++) {
   //       for (let smallestIdx = 0; smallestIdx < largestIdx; smallestIdx++) {
@@ -1542,9 +1351,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23356H'],
   //     ['minutes', 'PT23356H17M'],
   //     ['seconds', 'PT23356H17M5S'],
-  //     ['milliseconds', 'PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864198S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.864S']
   //   ]
   //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
   //     const roundingMode = 'halfExpand'
@@ -1561,9 +1368,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23357H', '-PT23356H'],
   //     ['minutes', 'PT23356H18M', '-PT23356H17M'],
   //     ['seconds', 'PT23356H17M5S', '-PT23356H17M4S'],
-  //     ['milliseconds', 'PT23356H17M4.865S', '-PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864198S', '-PT23356H17M4.864197S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S', '-PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.865S', '-PT23356H17M4.864S']
   //   ]
   //   incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
   //     const roundingMode = 'ceil'
@@ -1580,9 +1385,7 @@ describe('ZonedDateTime', () => {
   //     ['hours', 'PT23356H', '-PT23357H'],
   //     ['minutes', 'PT23356H17M', '-PT23356H18M'],
   //     ['seconds', 'PT23356H17M4S', '-PT23356H17M5S'],
-  //     ['milliseconds', 'PT23356H17M4.864S', '-PT23356H17M4.865S'],
-  //     ['microseconds', 'PT23356H17M4.864197S', '-PT23356H17M4.864198S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S', '-PT23356H17M4.864197532S']
+  //     ['milliseconds', 'PT23356H17M4.864S', '-PT23356H17M4.865S']
   //   ]
   //   incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
   //     const roundingMode = 'floor'
@@ -1600,8 +1403,6 @@ describe('ZonedDateTime', () => {
   //     ['minutes', 'PT23356H17M'],
   //     ['seconds', 'PT23356H17M4S'],
   //     ['milliseconds', 'PT23356H17M4.864S'],
-  //     ['microseconds', 'PT23356H17M4.864197S'],
-  //     ['nanoseconds', 'PT23356H17M4.864197532S']
   //   ]
   //   incrementOneTrunc.forEach(([smallestUnit, expected]) => {
   //     const roundingMode = 'trunc'
@@ -1638,18 +1439,6 @@ describe('ZonedDateTime', () => {
   //       'PT23356H17M4.86S'
   //     )
   //   })
-  //   it('rounds to an increment of microseconds', () => {
-  //     assert.equal(
-  //       `${later.since(earlier, { smallestUnit: 'microseconds', roundingIncrement: 10, roundingMode: 'halfExpand' })}`,
-  //       'PT23356H17M4.8642S'
-  //     )
-  //   })
-  //   it('rounds to an increment of nanoseconds', () => {
-  //     assert.equal(
-  //       `${later.since(earlier, { smallestUnit: 'nanoseconds', roundingIncrement: 10, roundingMode: 'halfExpand' })}`,
-  //       'PT23356H17M4.86419753S'
-  //     )
-  //   })
   //   it('valid hour increments divide into 24', () => {
   //     ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
   //       const options = { smallestUnit: 'hours', roundingIncrement }
@@ -1664,7 +1453,7 @@ describe('ZonedDateTime', () => {
   //       })
   //     })
   //   })
-  //   ;['milliseconds', 'microseconds', 'nanoseconds'].forEach((smallestUnit) => {
+  //   ;['milliseconds'].forEach((smallestUnit) => {
   //     it(`valid ${smallestUnit} increments divide into 1000`, () => {
   //       ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
   //         const options = { smallestUnit, roundingIncrement }
@@ -1677,16 +1466,12 @@ describe('ZonedDateTime', () => {
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'minutes', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'seconds', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'milliseconds', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => later.since(earlier, { smallestUnit: 'microseconds', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => later.since(earlier, { smallestUnit: 'nanoseconds', roundingIncrement: 29 }), RangeError)
   //   })
   //   it('throws on increments that are equal to the next highest', () => {
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'hours', roundingIncrement: 24 }), RangeError)
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'minutes', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'seconds', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => later.since(earlier, { smallestUnit: 'milliseconds', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => later.since(earlier, { smallestUnit: 'microseconds', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => later.since(earlier, { smallestUnit: 'nanoseconds', roundingIncrement: 1000 }), RangeError)
   //   })
   //   it('accepts singular units', () => {
   //     assert.equal(`${later.since(earlier, { largestUnit: 'year' })}`, `${later.since(earlier, { largestUnit: 'years' })}`)
@@ -1724,22 +1509,6 @@ describe('ZonedDateTime', () => {
   //       `${later.since(earlier, { smallestUnit: 'millisecond' })}`,
   //       `${later.since(earlier, { smallestUnit: 'milliseconds' })}`
   //     )
-  //     assert.equal(
-  //       `${later.since(earlier, { largestUnit: 'microsecond' })}`,
-  //       `${later.since(earlier, { largestUnit: 'microseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${later.since(earlier, { smallestUnit: 'microsecond' })}`,
-  //       `${later.since(earlier, { smallestUnit: 'microseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${later.since(earlier, { largestUnit: 'nanosecond' })}`,
-  //       `${later.since(earlier, { largestUnit: 'nanoseconds' })}`
-  //     )
-  //     assert.equal(
-  //       `${later.since(earlier, { smallestUnit: 'nanosecond' })}`,
-  //       `${later.since(earlier, { smallestUnit: 'nanoseconds' })}`
-  //     )
   //   })
   //   it('rounds relative to the receiver', () => {
   //     const dt1 = ZonedDateTime.from('2019-01-01T00:00+00:00[UTC]')
@@ -1771,9 +1540,7 @@ describe('ZonedDateTime', () => {
   //     ['hour', '1976-11-18T15:00:00+01:00[Europe/Vienna]'],
   //     ['minute', '1976-11-18T15:24:00+01:00[Europe/Vienna]'],
   //     ['second', '1976-11-18T15:23:30+01:00[Europe/Vienna]'],
-  //     ['millisecond', '1976-11-18T15:23:30.123+01:00[Europe/Vienna]'],
-  //     ['microsecond', '1976-11-18T15:23:30.123457+01:00[Europe/Vienna]'],
-  //     ['nanosecond', '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]']
+  //     ['millisecond', '1976-11-18T15:23:30.123+01:00[Europe/Vienna]']
   //   ]
   //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
   //     it(`rounds to nearest ${smallestUnit}`, () =>
@@ -1784,9 +1551,7 @@ describe('ZonedDateTime', () => {
   //     ['hour', '1976-11-18T16:00:00+01:00[Europe/Vienna]'],
   //     ['minute', '1976-11-18T15:24:00+01:00[Europe/Vienna]'],
   //     ['second', '1976-11-18T15:23:31+01:00[Europe/Vienna]'],
-  //     ['millisecond', '1976-11-18T15:23:30.124+01:00[Europe/Vienna]'],
-  //     ['microsecond', '1976-11-18T15:23:30.123457+01:00[Europe/Vienna]'],
-  //     ['nanosecond', '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]']
+  //     ['millisecond', '1976-11-18T15:23:30.124+01:00[Europe/Vienna]']
   //   ]
   //   incrementOneCeil.forEach(([smallestUnit, expected]) => {
   //     it(`rounds up to ${smallestUnit}`, () =>
@@ -1797,9 +1562,7 @@ describe('ZonedDateTime', () => {
   //     ['hour', '1976-11-18T15:00:00+01:00[Europe/Vienna]'],
   //     ['minute', '1976-11-18T15:23:00+01:00[Europe/Vienna]'],
   //     ['second', '1976-11-18T15:23:30+01:00[Europe/Vienna]'],
-  //     ['millisecond', '1976-11-18T15:23:30.123+01:00[Europe/Vienna]'],
-  //     ['microsecond', '1976-11-18T15:23:30.123456+01:00[Europe/Vienna]'],
-  //     ['nanosecond', '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]']
+  //     ['millisecond', '1976-11-18T15:23:30.123+01:00[Europe/Vienna]']
   //   ]
   //   incrementOneFloor.forEach(([smallestUnit, expected]) => {
   //     it(`rounds down to ${smallestUnit}`, () =>
@@ -1851,18 +1614,6 @@ describe('ZonedDateTime', () => {
   //       '1976-11-18T15:23:30.12+01:00[Europe/Vienna]'
   //     )
   //   })
-  //   it('rounds to an increment of microseconds', () => {
-  //     assert.equal(
-  //       `${zdt.round({ smallestUnit: 'microsecond', roundingIncrement: 10 })}`,
-  //       '1976-11-18T15:23:30.12346+01:00[Europe/Vienna]'
-  //     )
-  //   })
-  //   it('rounds to an increment of nanoseconds', () => {
-  //     assert.equal(
-  //       `${zdt.round({ smallestUnit: 'nanosecond', roundingIncrement: 10 })}`,
-  //       '1976-11-18T15:23:30.12345679+01:00[Europe/Vienna]'
-  //     )
-  //   })
   //   it('1 day is a valid increment', () => {
   //     assert.equal(`${zdt.round({ smallestUnit: 'day', roundingIncrement: 1 })}`, '1976-11-19T00:00:00+01:00[Europe/Vienna]')
   //   })
@@ -1879,7 +1630,7 @@ describe('ZonedDateTime', () => {
   //       })
   //     })
   //   })
-  //   ;['millisecond', 'microsecond', 'nanosecond'].forEach((smallestUnit) => {
+  //   ;['millisecond'].forEach((smallestUnit) => {
   //     it(`valid ${smallestUnit} increments divide into 1000`, () => {
   //       ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
   //         assert(zdt.round({ smallestUnit, roundingIncrement }) instanceof ZonedDateTime)
@@ -1892,19 +1643,15 @@ describe('ZonedDateTime', () => {
   //     assert.throws(() => zdt.round({ smallestUnit: 'minute', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => zdt.round({ smallestUnit: 'second', roundingIncrement: 29 }), RangeError)
   //     assert.throws(() => zdt.round({ smallestUnit: 'millisecond', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => zdt.round({ smallestUnit: 'microsecond', roundingIncrement: 29 }), RangeError)
-  //     assert.throws(() => zdt.round({ smallestUnit: 'nanosecond', roundingIncrement: 29 }), RangeError)
   //   })
   //   it('throws on increments that are equal to the next highest', () => {
   //     assert.throws(() => zdt.round({ smallestUnit: 'hour', roundingIncrement: 24 }), RangeError)
   //     assert.throws(() => zdt.round({ smallestUnit: 'minute', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => zdt.round({ smallestUnit: 'second', roundingIncrement: 60 }), RangeError)
   //     assert.throws(() => zdt.round({ smallestUnit: 'millisecond', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => zdt.round({ smallestUnit: 'microsecond', roundingIncrement: 1000 }), RangeError)
-  //     assert.throws(() => zdt.round({ smallestUnit: 'nanosecond', roundingIncrement: 1000 }), RangeError)
   //   })
   //   const bal = ZonedDateTime.from('1976-11-18T23:59:59.999999999+01:00[Europe/Vienna]')
-  //   ;['day', 'hour', 'minute', 'second', 'millisecond', 'microsecond'].forEach((smallestUnit) => {
+  //   ;['day', 'hour', 'minute', 'second', 'millisecond'].forEach((smallestUnit) => {
   //     it(`balances to next ${smallestUnit}`, () => {
   //       assert.equal(`${bal.round({ smallestUnit })}`, '1976-11-19T00:00:00+01:00[Europe/Vienna]')
   //     })
@@ -1914,8 +1661,6 @@ describe('ZonedDateTime', () => {
   //     assert(zdt.round({ smallestUnit: 'minutes' }).equals(zdt.round({ smallestUnit: 'minute' })))
   //     assert(zdt.round({ smallestUnit: 'seconds' }).equals(zdt.round({ smallestUnit: 'second' })))
   //     assert(zdt.round({ smallestUnit: 'milliseconds' }).equals(zdt.round({ smallestUnit: 'millisecond' })))
-  //     assert(zdt.round({ smallestUnit: 'microseconds' }).equals(zdt.round({ smallestUnit: 'microsecond' })))
-  //     assert(zdt.round({ smallestUnit: 'nanoseconds' }).equals(zdt.round({ smallestUnit: 'nanosecond' })))
   //   })
   //   it('rounds correctly to a 25-hour day', () => {
   //     const options = { smallestUnit: 'day' }
@@ -1935,13 +1680,11 @@ describe('ZonedDateTime', () => {
   //     const almostSkipped = ZonedDateTime.from('2018-11-03T23:59:59.999999999-03:00[America/Sao_Paulo]')
   //     const rounded = almostSkipped.round({ smallestUnit: 'microsecond', roundingMode: 'halfExpand' })
   //     assert.equal(`${rounded}`, '2018-11-04T01:00:00-02:00[America/Sao_Paulo]')
-  //     assert.equal(rounded.epochNanoseconds - almostSkipped.epochNanoseconds, 1n)
   //   })
   // })
 
   // describe('ZonedDateTime.equals()', () => {
   //   const tz = Temporal.TimeZone.from('America/New_York')
-  //   const cal = Temporal.Calendar.from('gregory')
   //   const zdt = new ZonedDateTime(0n, tz, cal)
   //   it('constructed from equivalent parameters are equal', () => {
   //     const zdt2 = ZonedDateTime.from('1969-12-31T19:00-05:00[America/New_York][u-ca=gregory]')
@@ -1955,23 +1698,6 @@ describe('ZonedDateTime', () => {
   //   it('different time zone not equal', () => {
   //     const zdt2 = new ZonedDateTime(0n, 'America/Chicago', cal)
   //     assert(!zdt.equals(zdt2))
-  //   })
-  //   it('different calendar not equal', () => {
-  //     const zdt2 = new ZonedDateTime(0n, tz, 'iso8601')
-  //     assert(!zdt.equals(zdt2))
-  //   })
-  //   it('casts its argument', () => {
-  //     assert(zdt.equals('1969-12-31T19:00-05:00[America/New_York][u-ca=gregory]'))
-  //     assert(
-  //       zdt.equals({
-  //         year: 1969,
-  //         month: 12,
-  //         day: 31,
-  //         hour: 19,
-  //         timeZone: 'America/New_York',
-  //         calendar: 'gregory'
-  //       })
-  //     )
   //   })
   //   it('at least the required properties must be present', () => {
   //     assert(!zdt.equals({ year: 1969, month: 12, day: 31, timeZone: 'America/New_York' }))
@@ -1994,31 +1720,6 @@ describe('ZonedDateTime', () => {
   //     assert.equal(zdt2.toString(), '1976-11-18T15:23:30+01:00[Europe/Vienna]')
   //     assert.equal(zdt3.toString(), '1976-11-18T15:23:30.1234+01:00[Europe/Vienna]')
   //   })
-  //   it('shows only non-ISO calendar if calendarName = auto', () => {
-  //     assert.equal(zdt1.toString({ calendarName: 'auto' }), '1976-11-18T15:23:00+01:00[Europe/Vienna]')
-  //     assert.equal(
-  //       zdt1.withCalendar('gregory').toString({ calendarName: 'auto' }),
-  //       '1976-11-18T15:23:00+01:00[Europe/Vienna][u-ca=gregory]'
-  //     )
-  //   })
-  //   it('shows ISO calendar if calendarName = always', () => {
-  //     assert.equal(zdt1.toString({ calendarName: 'always' }), '1976-11-18T15:23:00+01:00[Europe/Vienna][u-ca=iso8601]')
-  //   })
-  //   it('omits non-ISO calendar if calendarName = never', () => {
-  //     assert.equal(
-  //       zdt1.withCalendar('gregory').toString({ calendarName: 'never' }),
-  //       '1976-11-18T15:23:00+01:00[Europe/Vienna]'
-  //     )
-  //   })
-  //   it('default is calendar = auto', () => {
-  //     assert.equal(zdt1.toString(), '1976-11-18T15:23:00+01:00[Europe/Vienna]')
-  //     assert.equal(zdt1.withCalendar('gregory').toString(), '1976-11-18T15:23:00+01:00[Europe/Vienna][u-ca=gregory]')
-  //   })
-  //   it('throws on invalid calendar', () => {
-  //     ;['ALWAYS', 'sometimes', false, 3, null].forEach((calendarName) => {
-  //       assert.throws(() => zdt1.toString({ calendarName }), RangeError)
-  //     })
-  //   })
   //   it('shows time zone if timeZoneName = auto', () => {
   //     assert.equal(zdt1.toString({ timeZoneName: 'auto' }), '1976-11-18T15:23:00+01:00[Europe/Vienna]')
   //   })
@@ -2031,13 +1732,6 @@ describe('ZonedDateTime', () => {
   //   it('omits offset if offset = never', () => {
   //     assert.equal(zdt1.toString({ offset: 'never' }), '1976-11-18T15:23:00[Europe/Vienna]')
   //   })
-  //   it('combinations of calendar, time zone, and offset', () => {
-  //     const zdt = zdt1.withCalendar('gregory')
-  //     assert.equal(zdt.toString({ timeZoneName: 'never', calendarName: 'never' }), '1976-11-18T15:23:00+01:00')
-  //     assert.equal(zdt.toString({ offset: 'never', calendarName: 'never' }), '1976-11-18T15:23:00[Europe/Vienna]')
-  //     assert.equal(zdt.toString({ offset: 'never', timeZoneName: 'never' }), '1976-11-18T15:23:00[u-ca=gregory]')
-  //     assert.equal(zdt.toString({ offset: 'never', timeZoneName: 'never', calendarName: 'never' }), '1976-11-18T15:23:00')
-  //   })
   //   it('truncates to minute', () => {
   //     ;[zdt1, zdt2, zdt3].forEach((zdt) =>
   //       assert.equal(zdt.toString({ smallestUnit: 'minute' }), '1976-11-18T15:23+01:00[Europe/Vienna]')
@@ -2046,8 +1740,6 @@ describe('ZonedDateTime', () => {
   //   it('other smallestUnits are aliases for fractional digits', () => {
   //     assert.equal(zdt3.toString({ smallestUnit: 'second' }), zdt3.toString({ fractionalSecondDigits: 0 }))
   //     assert.equal(zdt3.toString({ smallestUnit: 'millisecond' }), zdt3.toString({ fractionalSecondDigits: 3 }))
-  //     assert.equal(zdt3.toString({ smallestUnit: 'microsecond' }), zdt3.toString({ fractionalSecondDigits: 6 }))
-  //     assert.equal(zdt3.toString({ smallestUnit: 'nanosecond' }), zdt3.toString({ fractionalSecondDigits: 9 }))
   //   })
   //   it('throws on invalid or disallowed smallestUnit', () => {
   //     ;['era', 'year', 'month', 'day', 'hour', 'nonsense'].forEach((smallestUnit) =>
@@ -2058,8 +1750,6 @@ describe('ZonedDateTime', () => {
   //     assert.equal(zdt3.toString({ smallestUnit: 'minutes' }), zdt3.toString({ smallestUnit: 'minute' }))
   //     assert.equal(zdt3.toString({ smallestUnit: 'seconds' }), zdt3.toString({ smallestUnit: 'second' }))
   //     assert.equal(zdt3.toString({ smallestUnit: 'milliseconds' }), zdt3.toString({ smallestUnit: 'millisecond' }))
-  //     assert.equal(zdt3.toString({ smallestUnit: 'microseconds' }), zdt3.toString({ smallestUnit: 'microsecond' }))
-  //     assert.equal(zdt3.toString({ smallestUnit: 'nanoseconds' }), zdt3.toString({ smallestUnit: 'nanosecond' }))
   //   })
   //   it('truncates or pads to 2 places', () => {
   //     const options = { fractionalSecondDigits: 2 }
@@ -2135,7 +1825,6 @@ describe('ZonedDateTime', () => {
   //     const roundedString = zdt5.toString({ fractionalSecondDigits: 8, roundingMode: 'halfExpand' })
   //     assert.equal(roundedString, '2018-11-04T01:00:00.00000000-02:00[America/Sao_Paulo]')
   //     const zdt6 = ZonedDateTime.from(roundedString)
-  //     assert.equal(zdt6.epochNanoseconds - zdt5.epochNanoseconds, 1n)
   //   })
   //   it('options may only be an object or undefined', () => {
   //     ;[null, 1, 'hello', true, Symbol('foo'), 1n].forEach((badOptions) =>
@@ -2193,13 +1882,6 @@ describe('ZonedDateTime', () => {
   //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTimeISO(tz)
   //     assert.equal(`${zdt.toPlainDate()}`, '2019-10-29')
   //   })
-  //   it('preserves the calendar', () => {
-  //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTime({
-  //       timeZone: tz,
-  //       calendar: 'gregory'
-  //     })
-  //     assert.equal(zdt.toPlainDate().calendar.id, 'gregory')
-  //   })
   // })
   // describe('ZonedDateTime.toPlainTime()', () => {
   //   it('works', () => {
@@ -2212,25 +1894,12 @@ describe('ZonedDateTime', () => {
   //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTimeISO(tz)
   //     assert.equal(`${zdt.toPlainYearMonth()}`, '2019-10')
   //   })
-  //   it('preserves the calendar', () => {
-  //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTime({
-  //       timeZone: tz,
-  //       calendar: 'gregory'
-  //     })
-  //     assert.equal(zdt.toPlainYearMonth().calendar.id, 'gregory')
   //   })
   // })
   // describe('ZonedDateTime.toPlainMonthDay()', () => {
   //   it('works', () => {
   //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTimeISO(tz)
   //     assert.equal(`${zdt.toPlainMonthDay()}`, '10-29')
-  //   })
-  //   it('preserves the calendar', () => {
-  //     const zdt = Temporal.Instant.from('2019-10-29T09:46:38.271986102Z').toZonedDateTime({
-  //       timeZone: tz,
-  //       calendar: 'gregory'
-  //     })
-  //     assert.equal(zdt.toPlainMonthDay().calendar.id, 'gregory')
   //   })
   // })
 
@@ -2245,11 +1914,8 @@ describe('ZonedDateTime', () => {
   //     assert.equal(fields.isoMinute, 23)
   //     assert.equal(fields.isoSecond, 30)
   //     assert.equal(fields.isoMillisecond, 123)
-  //     assert.equal(fields.isoMicrosecond, 456)
-  //     assert.equal(fields.isoNanosecond, 789)
   //     assert.equal(fields.offset, '+08:00')
   //     assert.equal(fields.timeZone.id, 'Asia/Shanghai')
-  //     assert.equal(fields.calendar.id, 'iso8601')
   //   })
   //   it('enumerable', () => {
   //     const fields2 = { ...fields }
@@ -2260,11 +1926,9 @@ describe('ZonedDateTime', () => {
   //     assert.equal(fields2.isoMinute, 23)
   //     assert.equal(fields2.isoSecond, 30)
   //     assert.equal(fields2.isoMillisecond, 123)
-  //     assert.equal(fields2.isoMicrosecond, 456)
-  //     assert.equal(fields2.isoNanosecond, 789)
   //     assert.equal(fields2.offset, '+08:00')
   //     assert.equal(fields2.timeZone, fields.timeZone)
-  //     assert.equal(fields2.calendar, fields.calendar)
+
   //   })
   // })
 
@@ -2591,8 +2255,6 @@ describe('ZonedDateTime', () => {
   //           minutes: d.minutes,
   //           seconds: d.seconds,
   //           milliseconds: d.milliseconds,
-  //           microseconds: d.microseconds,
-  //           nanoseconds: d.nanoseconds
   //         },
 
   //         options
@@ -2680,9 +2342,6 @@ describe('ZonedDateTime', () => {
   //   })
   //   it('disregards time zone IDs if exact times are equal', () => {
   //     assert.equal(ZonedDateTime.compare(zdt1, zdt1.withTimeZone('Asia/Kolkata')), 0)
-  //   })
-  //   it('disregards calendar IDs if exact times and time zones are equal', () => {
-  //     assert.equal(ZonedDateTime.compare(zdt1, zdt1.withCalendar('japanese')), 0)
   //   })
   //   it('compares exact time, not clock time', () => {
   //     const clockBefore = ZonedDateTime.from('1999-12-31T23:30-08:00[America/Vancouver]')
