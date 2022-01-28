@@ -75,7 +75,7 @@ export interface IDurationFns {
     duration: Iso.Duration,
     options: {
       largestUnit?: ES.TemporalSingularUnit | 'auto' | ES.TemporalPluralUnit
-      smallestUnit: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
       roundingIncrement?: number
       roundingMode?: ES.TemporalRoundingMode
       relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
@@ -156,7 +156,7 @@ export interface IDurationChain extends ES.Chain<Iso.Duration> {
   ): IDurationChain
   round(options: {
     largestUnit?: ES.TemporalSingularUnit | 'auto'
-    smallestUnit: ES.TemporalSingularUnit
+    smallestUnit?: ES.TemporalSingularUnit
     roundingIncrement?: number
     roundingMode?: ES.TemporalRoundingMode
     relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date

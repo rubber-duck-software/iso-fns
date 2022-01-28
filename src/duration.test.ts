@@ -3,6 +3,7 @@ import { strict as assert } from 'assert'
 import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from './fns'
 import { Iso } from 'iso-types'
 import { TemporalPluralUnit, TemporalSingularUnit } from 'ecmascript'
+import { TemporalRoundingMode } from 'ecmascript'
 
 describe('durationFns', () => {
   describe('Structure', () => {
@@ -186,44 +187,43 @@ describe('durationFns', () => {
       ].forEach((str) => assert.throws(() => durationFns.from(str), RangeError))
     })
     // # 77
-    // it('max safe integer is allowed', () => {
-    //   ;[
-    //     'P9007199254740991Y',
-    //     'P9007199254740991M',
-    //     'P9007199254740991W',
-    //     'P9007199254740991D',
-    //     'PT9007199254740991H',
-    //     'PT9007199254740991M',
-    //     'PT9007199254740991.976S'
-    //   ].forEach((str, ix) => {
-    //     assert.equal(`${durationFns.fromNumbers(...Array(ix).fill(0), Number.MAX_SAFE_INTEGER)}`, str)
-    //     assert.equal(`${durationFns.from(str)}`, str)
-    //   })
-    // })
+    it('max safe integer is allowed', () => {
+      ;[
+        'P9007199254740991Y',
+        'P9007199254740991M',
+        'P9007199254740991W',
+        'P9007199254740991D',
+        'PT9007199254740991H',
+        'PT9007199254740991M',
+        'PT9007199254740991S',
+        'PT9007199254740.991S'
+      ].forEach((str, ix) => {
+        assert.equal(`${durationFns.fromNumbers(...Array(ix).fill(0), Number.MAX_SAFE_INTEGER)}`, str)
+        assert.equal(`${durationFns.from(str)}`, str)
+      })
+    })
 
-    // it('larger integers are allowed but may lose precision', () => {
-    //   function test(ix: any, prefix: string, suffix: string, infix = '') {
-    //     function doAsserts(duration: Iso.Duration) {
-    //       assert.equal(duration.slice(0, prefix.length + 10), `${prefix}1000000000`)
-    //       assert(duration.includes(infix))
-    //       assert.equal(duration.slice(-1), suffix)
-    //       assert.equal(duration.length, prefix.length + suffix.length + infix.length + 27)
-    //     }
-    //     doAsserts(durationFns.fromNumbers(...Array(ix).fill(0), 1e26, ...Array(9 - ix).fill(0)))
-    //     doAsserts(durationFns.from({ [units[ix]]: 1e26 }))
-    //     if (!infix) doAsserts(durationFns.from(`${prefix}100000000000000000000000000${suffix}`))
-    //   }
-    //   test(0, 'P', 'Y')
-    //   test(1, 'P', 'M')
-    //   test(2, 'P', 'W')
-    //   test(3, 'P', 'D')
-    //   test(4, 'PT', 'H')
-    //   test(5, 'PT', 'M')
-    //   test(6, 'PT', 'S')
-    //   test(7, 'PT', 'S', '.')
-    //   test(8, 'PT', 'S', '.')
-    //   test(9, 'PT', 'S', '.')
-    // })
+    it('larger integers are allowed but may lose precision', () => {
+      function test(ix: any, prefix: string, suffix: string, infix = '') {
+        function doAsserts(duration: Iso.Duration) {
+          assert.equal(duration.slice(0, prefix.length + 10), `${prefix}1000000000`)
+          assert(duration.includes(infix))
+          assert.equal(duration.slice(-1), suffix)
+          assert.equal(duration.length, prefix.length + suffix.length + infix.length + 27)
+        }
+        doAsserts(durationFns.fromNumbers(...Array(ix).fill(0), 1e26, ...Array(9 - ix).fill(0)))
+        doAsserts(durationFns.from({ [units[ix]]: 1e26 }))
+        if (!infix) doAsserts(durationFns.from(`${prefix}100000000000000000000000000${suffix}`))
+      }
+      test(0, 'P', 'Y')
+      test(1, 'P', 'M')
+      test(2, 'P', 'W')
+      test(3, 'P', 'D')
+      test(4, 'PT', 'H')
+      test(5, 'PT', 'M')
+      test(6, 'PT', 'S')
+      test(7, 'PT', 'S', '.')
+    })
   })
   describe('Duration.with()', () => {
     const duration = durationFns.fromNumbers(5, 5, 5, 5, 5, 5, 5, 5)
@@ -257,13 +257,12 @@ describe('durationFns', () => {
     it('mixed positive and negative values throw', () => {
       assert.throws(() => durationFns.with(duration, { hours: 1, minutes: -1 }), RangeError)
     })
-    // Mixed sign values are not allowed as duration fields (RangeError)
-    // it('can reverse the sign if all the fields are replaced', () => {
-    //   const d = durationFns.from({ years: 5, days: 1 })
-    //   const d2 = durationFns.with(duration, { years: -1, days: -1, minutes: -0 })
-    //   assert.equal(`${d2}`, '-P1Y1D')
-    //   assert.notEqual(durationFns.getSign(d), durationFns.getSign(d2))
-    // })
+    it('can reverse the sign if all the fields are replaced', () => {
+      const d = durationFns.from({ years: 5, days: 1 })
+      const d2 = durationFns.with(d, { years: -1, days: -1, minutes: -0 })
+      assert.equal(`${d2}`, '-P1Y1D')
+      assert.notEqual(durationFns.getSign(d), durationFns.getSign(d2))
+    })
     it('throws if new fields have a different sign from the old fields', () => {
       const d = durationFns.from({ years: 5, days: 1 })
       assert.throws(() => durationFns.with(d, { months: -5, minutes: 0 }), RangeError)
@@ -812,11 +811,9 @@ describe('durationFns', () => {
       assert.throws(() => durationFns.round(d, TypeError))
     })
     it('throws with empty object', () => {
-      //@ts-expect-error
       assert.throws(() => durationFns.round(d, {}), RangeError)
     })
     it("succeeds with largestUnit: 'auto'", () => {
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(durationFns.from({ hours: 25 }), { largestUnit: 'auto' })}`, 'PT25H')
     })
     it('throws on disallowed or invalid smallestUnit', () => {
@@ -826,12 +823,20 @@ describe('durationFns', () => {
       })
     })
     it('throws if smallestUnit is larger than largestUnit', () => {
-      const units = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds', 'milliseconds']
+      const units = [
+        'years',
+        'months',
+        'weeks',
+        'days',
+        'hours',
+        'minutes',
+        'seconds',
+        'milliseconds'
+      ] as TemporalPluralUnit[]
       for (let largestIdx = 1; largestIdx < units.length; largestIdx++) {
         for (let smallestIdx = 0; smallestIdx < largestIdx; smallestIdx++) {
           const largestUnit = units[largestIdx]
           const smallestUnit = units[smallestIdx]
-          //@ts-expect-error
           assert.throws(() => durationFns.round(d, { largestUnit, smallestUnit, relativeTo }), RangeError)
         }
       }
@@ -852,17 +857,14 @@ describe('durationFns', () => {
     })
     const hours25 = durationFns.fromNumbers(0, 0, 0, 0, 25)
     it('days are 24 hours if relativeTo not given', () => {
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(hours25, { largestUnit: 'day' })}`, 'P1DT1H')
     })
     it('days are 24 hours if relativeTo is PlainDateTime', () => {
       const relativeTo = dateTimeFns.from('2017-01-01')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo })}`, 'P1DT1H')
     })
     it('days are 24 hours if relativeTo is ZonedDateTime, and duration encompasses no DST change', () => {
       const relativeTo = zonedDateTimeFns.from('2017-01-01T00:00[America/Montevideo]')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo })}`, 'P1DT1H')
     })
     const skippedHourDay = zonedDateTimeFns.from('2019-03-10T00:00[America/Vancouver]')
@@ -872,21 +874,16 @@ describe('durationFns', () => {
     const hours12 = durationFns.fromNumbers(0, 0, 0, 0, 12)
     describe('relativeTo affects days if ZonedDateTime, and duration encompasses DST change', () => {
       it('start inside repeated hour, end after', () => {
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo: inRepeatedHour })}`, 'P1D')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(oneDay, { largestUnit: 'hour', relativeTo: inRepeatedHour })}`, 'PT25H')
       })
       it('start after repeated hour, end inside (negative)', () => {
         const relativeTo = zonedDateTimeFns.from('2019-11-04T01:00[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(hours25), { largestUnit: 'day', relativeTo })}`, '-P1D')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(oneDay), { largestUnit: 'hour', relativeTo })}`, '-PT25H')
       })
       it('start inside repeated hour, end in skipped hour', () => {
         assert.equal(
-          //@ts-ignore #74
           `${durationFns.round(durationFns.from({ days: 126, hours: 1 }), {
             largestUnit: 'day',
             relativeTo: inRepeatedHour
@@ -894,7 +891,6 @@ describe('durationFns', () => {
           'P126DT1H'
         )
         assert.equal(
-          //@ts-ignore #74
           `${durationFns.round(durationFns.from({ days: 126, hours: 1 }), {
             largestUnit: 'hour',
             relativeTo: inRepeatedHour
@@ -904,66 +900,49 @@ describe('durationFns', () => {
       })
       it('start in normal hour, end in skipped hour', () => {
         const relativeTo = zonedDateTimeFns.from('2019-03-09T02:30[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo })}`, 'P1DT1H')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(oneDay, { largestUnit: 'hour', relativeTo })}`, 'PT24H')
       })
       it('start before skipped hour, end >1 day after', () => {
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo: skippedHourDay })}`, 'P1DT2H')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(oneDay, { largestUnit: 'hour', relativeTo: skippedHourDay })}`, 'PT23H')
       })
       it('start after skipped hour, end >1 day before (negative)', () => {
         const relativeTo = zonedDateTimeFns.from('2019-03-11T00:00[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(hours25), { largestUnit: 'day', relativeTo })}`, '-P1DT2H')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(oneDay), { largestUnit: 'hour', relativeTo })}`, '-PT23H')
       })
       it('start before skipped hour, end <1 day after', () => {
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours12, { largestUnit: 'day', relativeTo: skippedHourDay })}`, 'PT12H')
       })
       it('start after skipped hour, end <1 day before (negative)', () => {
         const relativeTo = zonedDateTimeFns.from('2019-03-10T12:00[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(hours12), { largestUnit: 'day', relativeTo })}`, '-PT12H')
       })
       it('start before repeated hour, end >1 day after', () => {
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo: repeatedHourDay })}`, 'P1D')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(oneDay, { largestUnit: 'hour', relativeTo: repeatedHourDay })}`, 'PT25H')
       })
       it('start after repeated hour, end >1 day before (negative)', () => {
         const relativeTo = zonedDateTimeFns.from('2019-11-04T00:00[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(hours25), { largestUnit: 'day', relativeTo })}`, '-P1D')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(oneDay), { largestUnit: 'hour', relativeTo })}`, '-PT25H')
       })
       it('start before repeated hour, end <1 day after', () => {
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours12, { largestUnit: 'day', relativeTo: repeatedHourDay })}`, 'PT12H')
       })
       it('start after repeated hour, end <1 day before (negative)', () => {
         const relativeTo = zonedDateTimeFns.from('2019-11-03T12:00[America/Vancouver]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.negated(hours12), { largestUnit: 'day', relativeTo })}`, '-PT12H')
       })
       it('Samoa skipped 24 hours', () => {
         const relativeTo = zonedDateTimeFns.from('2011-12-29T12:00-10:00[Pacific/Apia]')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(hours25, { largestUnit: 'day', relativeTo })}`, 'P2DT1H')
-        //@ts-ignore #74
         assert.equal(`${durationFns.round(durationFns.from({ hours: 48 }), { largestUnit: 'day', relativeTo })}`, 'P3D')
       })
     })
     it('casts relativeTo to ZonedDateTime if possible', () => {
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(hours25, {
           largestUnit: 'day',
           relativeTo: zonedDateTimeFns.from('2019-11-03T00:00[America/Vancouver]')
@@ -971,7 +950,6 @@ describe('durationFns', () => {
         'P1D'
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(hours25, {
           largestUnit: 'day',
           relativeTo: zonedDateTimeFns.from({ year: 2019, month: 11, day: 3, timeZone: 'America/Vancouver' })
@@ -981,12 +959,10 @@ describe('durationFns', () => {
     })
     it('casts relativeTo to PlainDateTime if possible', () => {
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(hours25, { largestUnit: 'day', relativeTo: dateTimeFns.from('2019-11-02T00:00') })}`,
         'P1DT1H'
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(hours25, {
           largestUnit: 'day',
           relativeTo: dateTimeFns.from({ year: 2019, month: 11, day: 2 })
@@ -1028,7 +1004,6 @@ describe('durationFns', () => {
     it('incorrectly-spelled properties are ignored in relativeTo', () => {
       const oneMonth = durationFns.from({ months: 1 })
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(oneMonth, {
           largestUnit: 'day',
           relativeTo: dateFns.from({ year: 2020, month: 1, day: 1, months: 2 })
@@ -1062,21 +1037,13 @@ describe('durationFns', () => {
       assert.throws(() => durationFns.round(d2, { smallestUnit: 'week' }), RangeError)
     })
     it('relativeTo is required for rounding durations with calendar units', () => {
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'year' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'month' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'week' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'day' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'hour' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'minute' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'second' }), RangeError)
-      //@ts-ignore #74
       assert.throws(() => durationFns.round(d, { largestUnit: 'millisecond' }), RangeError)
     })
     it('durations do not balance beyond their current largest unit by default', () => {
@@ -1155,39 +1122,38 @@ describe('durationFns', () => {
     }
     for (const [roundingMode, [posResult, negResult]] of Object.entries(roundingModeResults)) {
       it(`rounds correctly in ${roundingMode} mode`, () => {
-        //@ts-ignore #74
-        assert.equal(`${durationFns.round(d, { smallestUnit: 'year', relativeTo, roundingMode })}`, posResult)
         assert.equal(
-          //@ts-ignore #74
-          `${durationFns.round(durationFns.negated(d), { smallestUnit: 'year', relativeTo, roundingMode })}`,
+          `${durationFns.round(d, {
+            smallestUnit: 'year',
+            relativeTo,
+            roundingMode: roundingMode as TemporalRoundingMode
+          })}`,
+          posResult
+        )
+        assert.equal(
+          `${durationFns.round(durationFns.negated(d), {
+            smallestUnit: 'year',
+            relativeTo,
+            roundingMode: roundingMode as TemporalRoundingMode
+          })}`,
           negResult
         )
       })
     }
     it('halfExpand is the default', () => {
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(d, { smallestUnit: 'year', relativeTo })}`, 'P6Y')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(durationFns.negated(d), { smallestUnit: 'year', relativeTo })}`, '-P6Y')
     })
     it('balances up differently depending on relativeTo', () => {
       const fortyDays = durationFns.from({ days: 40 })
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(fortyDays, { largestUnit: 'year', relativeTo: '2020-01-01' })}`, 'P1M9D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(fortyDays, { largestUnit: 'year', relativeTo: '2020-02-01' })}`, 'P1M11D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(fortyDays, { largestUnit: 'year', relativeTo: '2020-03-01' })}`, 'P1M9D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(fortyDays, { largestUnit: 'year', relativeTo: '2020-04-01' })}`, 'P1M10D')
       const minusForty = durationFns.from({ days: -40 })
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(minusForty, { largestUnit: 'year', relativeTo: '2020-02-01' })}`, '-P1M9D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(minusForty, { largestUnit: 'year', relativeTo: '2020-01-01' })}`, '-P1M9D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(minusForty, { largestUnit: 'year', relativeTo: '2020-03-01' })}`, '-P1M11D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(minusForty, { largestUnit: 'year', relativeTo: '2020-04-01' })}`, '-P1M9D')
     })
     it('balances up to the next unit after rounding', () => {
@@ -1199,7 +1165,6 @@ describe('durationFns', () => {
     })
     it('balances days up to both years and months', () => {
       const twoYears = durationFns.from({ months: 11, days: 396 })
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(twoYears, { largestUnit: 'year', relativeTo: '2017-01-01' })}`, 'P2Y')
     })
     it('does not balance up to weeks if largestUnit is larger than weeks', () => {
@@ -1208,14 +1173,10 @@ describe('durationFns', () => {
     })
     it('balances down differently depending on relativeTo', () => {
       const oneYear = durationFns.from({ years: 1 })
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(oneYear, { largestUnit: 'day', relativeTo: '2019-01-01' })}`, 'P365D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(oneYear, { largestUnit: 'day', relativeTo: '2019-07-01' })}`, 'P366D')
       const minusYear = durationFns.from({ years: -1 })
-      ///@ts-ignore #74
       assert.equal(`${durationFns.round(minusYear, { largestUnit: 'day', relativeTo: '2020-01-01' })}`, '-P365D')
-      //@ts-ignore #74
       assert.equal(`${durationFns.round(minusYear, { largestUnit: 'day', relativeTo: '2020-07-01' })}`, '-P366D')
     })
     it('rounds to an increment of hours', () => {
@@ -1238,8 +1199,7 @@ describe('durationFns', () => {
     })
     it('valid hour increments divide into 24', () => {
       ;[1, 2, 3, 4, 6, 8, 12].forEach((roundingIncrement) => {
-        const options = { smallestUnit: 'hour', roundingIncrement, relativeTo }
-        //@ts-expect-error
+        const options = { smallestUnit: 'hour', roundingIncrement, relativeTo } as const
         assert(durationFns.isValid(durationFns.round(d, options)))
       })
     })
@@ -1254,8 +1214,7 @@ describe('durationFns', () => {
     })
     it(`valid millisecond increments divide into 1000`, () => {
       ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500].forEach((roundingIncrement) => {
-        const options = { smallestUnit: 'millisecond', roundingIncrement, relativeTo }
-        //@ts-expect-error
+        const options = { smallestUnit: 'millisecond', roundingIncrement, relativeTo } as const
         assert(durationFns.isValid(durationFns.round(d, options)))
       })
     })
@@ -1279,21 +1238,15 @@ describe('durationFns', () => {
     })
     it('accepts singular units', () => {
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'year', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'years', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { smallestUnit: 'year', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { smallestUnit: 'years', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'month', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'months', relativeTo })}`
       )
       assert.equal(
@@ -1301,9 +1254,7 @@ describe('durationFns', () => {
         `${durationFns.round(d, { smallestUnit: 'months', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'day', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'days', relativeTo })}`
       )
       assert.equal(
@@ -1311,9 +1262,7 @@ describe('durationFns', () => {
         `${durationFns.round(d, { smallestUnit: 'days', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'hour', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'hours', relativeTo })}`
       )
       assert.equal(
@@ -1321,9 +1270,7 @@ describe('durationFns', () => {
         `${durationFns.round(d, { smallestUnit: 'hours', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'minute', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'minutes', relativeTo })}`
       )
       assert.equal(
@@ -1331,9 +1278,7 @@ describe('durationFns', () => {
         `${durationFns.round(d, { smallestUnit: 'minutes', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'second', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'seconds', relativeTo })}`
       )
       assert.equal(
@@ -1341,9 +1286,7 @@ describe('durationFns', () => {
         `${durationFns.round(d, { smallestUnit: 'seconds', relativeTo })}`
       )
       assert.equal(
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'millisecond', relativeTo })}`,
-        //@ts-ignore #74
         `${durationFns.round(d, { largestUnit: 'milliseconds', relativeTo })}`
       )
       assert.equal(
