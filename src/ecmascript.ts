@@ -2732,7 +2732,7 @@ export function DifferenceInstant(
 ) {
   const diff = ms2 - ms1
 
-  const remainder = diff % 86400e9
+  const remainder = diff % 86400e3
   const wholeDays = diff - remainder
   const roundedRemainder = RoundNumberToIncrement(remainder, msPerTimeUnit[unit] * increment, roundingMode)
   const roundedDiff = wholeDays + roundedRemainder
@@ -3136,7 +3136,7 @@ export function RoundISODateTime(
   increment: number,
   unit: 'day' | 'hour' | 'minute' | 'second' | 'millisecond',
   roundingMode: TemporalRoundingMode,
-  dayLengthMs = 86400e9
+  dayLengthMs = 86400e3
 ): DateTimeSlots {
   let deltaDays = 0
   ;({ deltaDays, hour, minute, second, millisecond } = RoundTime(
