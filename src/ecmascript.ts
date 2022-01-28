@@ -1245,6 +1245,12 @@ export function CreateTemporalInstant(epochMilliseconds: number): Iso.Instant {
   return new Date(epochMilliseconds).toISOString() as Iso.Instant
 }
 
+const BigMath = {
+  abs(x: bigint) {
+    return x < BigInt(0) ? -x : x
+  }
+}
+
 export function CreateTemporalDuration(
   years: number,
   months: number,
@@ -1271,9 +1277,9 @@ export function CreateTemporalDuration(
     if (propSign !== 0 && propSign !== sign) throw new RangeError('mixed-sign values not allowed as duration fields')
   }
 
-  function formatNumber(num: number) {
+  function formatNumber(num: number | bigint) {
     if (num <= NumberMaxSafeInteger) return num.toString(10)
-    return num.toString()
+    return BigInt(num).toString()
   }
 
   const dateParts = []
@@ -1287,16 +1293,16 @@ export function CreateTemporalDuration(
   if (minutes) timeParts.push(`${formatNumber(MathAbs(minutes))}M`)
 
   const secondParts = []
-  let total = TotalDurationMilliseconds(0, 0, 0, seconds, milliseconds, 0)
-  seconds = Math.trunc(total / 1000)
-  milliseconds = total % 1000
+  let total = TotalDurationMillisecondsBigInt(0, 0, 0, seconds, milliseconds, 0)
+  const bigSeconds = total / BigInt(1000)
+  milliseconds = Number(total % BigInt(1000))
   const fraction = MathAbs(milliseconds)
   let decimalPart = `${fraction}`.padStart(3, '0')
   while (decimalPart[decimalPart.length - 1] === '0') {
     decimalPart = decimalPart.slice(0, -1)
   }
   if (decimalPart) secondParts.unshift('.', decimalPart)
-  if (seconds !== 0 || secondParts.length) secondParts.unshift(Math.abs(seconds).toString())
+  if (bigSeconds !== BigInt(0) || secondParts.length) secondParts.unshift(formatNumber(BigMath.abs(bigSeconds)))
   if (secondParts.length) timeParts.push(`${secondParts.join('')}S`)
   if (timeParts.length) timeParts.unshift('T')
   if (!dateParts.length && !timeParts.length) return 'PT0S'
@@ -2130,6 +2136,21 @@ export function TotalDurationMilliseconds(
   seconds = seconds + minutes * 60
   milliseconds = milliseconds + seconds * 1000
   return milliseconds
+}
+
+function TotalDurationMillisecondsBigInt(
+  days: number,
+  hours: number,
+  minutes: number,
+  seconds: number,
+  milliseconds: number,
+  offsetShift: number
+): bigint {
+  if (days !== 0) milliseconds = milliseconds - offsetShift
+  const bigHours = BigInt(hours) + BigInt(days) * BigInt(24)
+  const bigMinutes = BigInt(minutes) + BigInt(bigHours) * BigInt(60)
+  const bigSeconds = BigInt(seconds) + BigInt(bigMinutes) * BigInt(60)
+  return BigInt(milliseconds) + BigInt(bigSeconds) * BigInt(1000)
 }
 
 function MillisecondsToDays(milliseconds: number, relativeTo: CalendarDate | undefined) {
