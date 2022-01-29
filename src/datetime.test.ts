@@ -1,14 +1,6 @@
-import {
-  AssertIsDuration,
-  TemporalOverflow,
-  TemporalPluralUnit,
-  TemporalRoundingMode,
-  TemporalSingularUnit,
-  ToSmallestTemporalUnit
-} from './ecmascript'
+import { AssertIsDuration, TemporalOverflow, TemporalPluralUnit, TemporalRoundingMode } from './ecmascript'
 import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from './index'
 import { Iso } from 'iso-types'
-
 import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
 

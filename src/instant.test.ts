@@ -1,7 +1,7 @@
 import { describe, it } from 'beartest-js'
 import { dateTimeFns, durationFns, instantFns, zonedDateTimeFns } from './fns'
 import { strict as assert } from 'assert'
-import { IsObject, TemporalPluralUnit, TemporalSingularUnit } from 'ecmascript'
+import { TemporalSingularUnit } from 'ecmascript'
 
 describe('Instant', () => {
   describe('isValid', () => {

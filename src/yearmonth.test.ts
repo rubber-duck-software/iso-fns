@@ -1,7 +1,7 @@
 import { describe, it } from 'beartest-js'
 import { dateFns, durationFns, yearMonthFns } from './fns'
 import { strict as assert } from 'assert'
-import { TemporalOverflow, TemporalPluralUnit } from 'ecmascript'
+import { TemporalPluralUnit } from 'ecmascript'
 
 describe('YearMonth', () => {
   describe('Construction', () => {
