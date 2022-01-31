@@ -888,9 +888,7 @@ describe('durationFns', () => {
           }),
           'P126DT1H'
         )
-        assert.equal(
-          'PT3026H'
-        )
+        assert.equal('PT3026H')
       })
       it('start in normal hour, end in skipped hour', () => {
         const relativeTo = zonedDateTimeFns.from('2019-03-09T02:30[America/Vancouver]')
