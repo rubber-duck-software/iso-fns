@@ -20,8 +20,11 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Run test coverage
+      - name: Run tests
         run: yarn test
+
+      - name: Generate lcov
+        run: yarn cc
 
       - name: Upload code coverage for ref branch
         uses: actions/upload-artifact@v2
@@ -50,8 +53,11 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Run test coverage
+      - name: Run tests
         run: yarn test
+
+      - name: Generate lcov
+        run: yarn cc
 
       #  Compares two code coverage files and generates report as a comment
       - name: Generate Code Coverage report
