@@ -3002,7 +3002,7 @@ export function AddDuration(
 
 export function AddInstant(epochMilliseconds: number, h: number, min: number, s: number, ms: number): number {
   let sum = 0
-  sum = sum + ms * 1e6
+  sum = sum + ms * 1
   sum = sum + s * 1e3
   sum = sum + min * 60 * 1e3
   sum = sum + h * 60 * 60 * 1e3
