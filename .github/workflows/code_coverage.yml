@@ -1,0 +1,71 @@
+name: Code Coverage
+
+on: [pull_request]
+
+jobs:
+  base_branch_cov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
+      - name: Use Node.js v16.11.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: v16.11.0
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Generate lcov
+        run: yarn cc
+
+      - name: Upload code coverage for ref branch
+        uses: actions/upload-artifact@v2
+        with:
+          name: ref-lcov.info
+          path: ./coverage/lcov.info
+
+  checks:
+    runs-on: ubuntu-latest
+    needs: base_branch_cov
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js v16.11.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: v16.11.0
+
+      - name: Download code coverage report from base branch
+        uses: actions/download-artifact@v2
+        with:
+          name: ref-lcov.info
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Generate lcov
+        run: yarn cc
+
+      #  Compares two code coverage files and generates report as a comment
+      - name: Generate Code Coverage report
+        id: code-coverage
+        uses: barecheck/code-coverage-action@v0.5.1
+        with:
+          barecheck-github-app-token: ${{ secrets.BARECHECK_GITHUB_APP_TOKEN }}
+          lcov-file: './coverage/lcov.info'
+          base-lcov-file: './lcov.info'
+          send-summary-comment: true
+          show-annotations: 'warning' # Possible options warning|error
