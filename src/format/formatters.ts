@@ -207,40 +207,41 @@ var formatters = {
   },
   // ISO day of week
   i(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
-    const dayOfWeek = ES.DayOfWeek(date.year, date.month, date.day) as Day
-    const isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek
+    const dayOfWeek = ES.DayOfWeek(date.year, date.month, date.day) as 1 | 2 | 3 | 4 | 5 | 6 | 7
+    const isoDayOfWeek = dayOfWeek === 7 ? 0 : dayOfWeek
+
     switch (token) {
       // 2
       case 'i':
-        return String(isoDayOfWeek)
+        return String(dayOfWeek)
       // 02
       case 'ii':
-        return addLeadingZeros(isoDayOfWeek, token.length)
+        return addLeadingZeros(dayOfWeek, token.length)
       // 2nd
       case 'io':
-        return localize.ordinalNumber(isoDayOfWeek, { unit: 'day' })
+        return localize.ordinalNumber(dayOfWeek, { unit: 'day' })
       // Tue
       case 'iii':
-        return localize.day(dayOfWeek, {
+        return localize.day(isoDayOfWeek, {
           width: 'abbreviated',
           context: 'formatting'
         })
       // T
       case 'iiiii':
-        return localize.day(dayOfWeek, {
+        return localize.day(isoDayOfWeek, {
           width: 'narrow',
           context: 'formatting'
         })
       // Tu
       case 'iiiiii':
-        return localize.day(dayOfWeek, {
+        return localize.day(isoDayOfWeek, {
           width: 'short',
           context: 'formatting'
         })
       // Tuesday
       case 'iiii':
       default:
-        return localize.day(dayOfWeek, { width: 'wide', context: 'formatting' })
+        return localize.day(isoDayOfWeek, { width: 'wide', context: 'formatting' })
     }
   },
   // AM or PM
