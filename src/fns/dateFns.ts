@@ -11,7 +11,7 @@ import format from '../format'
 const DISALLOWED_UNITS: ES.TemporalSingularUnit[] = ['hour', 'minute', 'second', 'millisecond']
 
 export const dateFns: IDateFns = {
-  now(timeZone = ES.DefaultTimeZone()) {
+  now(timeZone = ES.SystemTimeZone()) {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.TemporalDateTimeToDate(ES.BuiltinTimeZoneGetPlainDateTimeFor(timeZone, ES.SystemUTCEpochMilliSeconds()))
   },

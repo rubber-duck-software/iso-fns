@@ -11,12 +11,12 @@ import { buildMonthDayChain } from './monthDayFns'
 import format from '../format'
 
 export const zonedDateTimeFns: IZonedDateTimeFns = {
-  now(timeZone = ES.DefaultTimeZone()) {
+  now(timeZone = ES.SystemTimeZone()) {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.CreateTemporalZonedDateTime(ES.SystemUTCEpochMilliSeconds(), timeZone)
   },
   currentTimeZone() {
-    return ES.DefaultTimeZone()
+    return ES.SystemTimeZone()
   },
   fromEpochMilliseconds(epochMilliseconds, timeZone) {
     // Note: if the argument is not passed, ToBigInt(undefined) will throw. This check exists only

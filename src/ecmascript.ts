@@ -3546,8 +3546,9 @@ export function SystemUTCEpochMilliSeconds(): number {
   return Date.now()
 }
 
-export function DefaultTimeZone(): string {
-  return new Intl.DateTimeFormat().resolvedOptions().timeZone
+export function SystemTimeZone(): string {
+  const fmt = new IntlDateTimeFormat('en-us')
+  return TemporalTimeZoneFromString(fmt.resolvedOptions().timeZone)
 }
 
 export function ComparisonResult(value: number): number {

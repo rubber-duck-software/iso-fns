@@ -10,7 +10,7 @@ import { buildTimeChain } from './timeFns'
 import format from '../format'
 
 export const dateTimeFns: IDateTimeFns = {
-  now(timeZone = ES.DefaultTimeZone()) {
+  now(timeZone = ES.SystemTimeZone()) {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.BuiltinTimeZoneGetPlainDateTimeFor(timeZone, ES.SystemUTCEpochMilliSeconds())
   },

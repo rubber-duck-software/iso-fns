@@ -17,7 +17,7 @@ const MAX_INCREMENTS = {
 }
 
 export const timeFns: ITimeFns = {
-  now(timeZone = ES.DefaultTimeZone()) {
+  now(timeZone = ES.SystemTimeZone()) {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.TemporalDateTimeToTime(ES.BuiltinTimeZoneGetPlainDateTimeFor(timeZone, ES.SystemUTCEpochMilliSeconds()))
   },
