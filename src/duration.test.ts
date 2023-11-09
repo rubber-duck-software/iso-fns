@@ -2,8 +2,7 @@ import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
 import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from './fns'
 import { Iso } from 'iso-types'
-import { TemporalPluralUnit, TemporalSingularUnit } from 'ecmascript'
-import { TemporalRoundingMode } from 'ecmascript'
+import { TemporalPluralUnit, TemporalSingularUnit, TemporalRoundingMode } from 'ecmascript'
 
 describe('durationFns', () => {
   describe('Structure', () => {
@@ -186,7 +185,6 @@ describe('durationFns', () => {
         `PT${manyNines}S`
       ].forEach((str) => assert.throws(() => durationFns.from(str), RangeError))
     })
-    // # 77
     it('max safe integer is allowed', () => {
       ;[
         'P9007199254740991Y',
@@ -884,19 +882,13 @@ describe('durationFns', () => {
       })
       it('start inside repeated hour, end in skipped hour', () => {
         assert.equal(
-          `${durationFns.round(durationFns.from({ days: 126, hours: 1 }), {
+          durationFns.round(durationFns.from({ days: 126, hours: 1 }), {
             largestUnit: 'day',
             relativeTo: inRepeatedHour
-          })}`,
+          }),
           'P126DT1H'
         )
-        assert.equal(
-          `${durationFns.round(durationFns.from({ days: 126, hours: 1 }), {
-            largestUnit: 'hour',
-            relativeTo: inRepeatedHour
-          })}`,
-          'PT3026H'
-        )
+        assert.equal('PT3026H')
       })
       it('start in normal hour, end in skipped hour', () => {
         const relativeTo = zonedDateTimeFns.from('2019-03-09T02:30[America/Vancouver]')

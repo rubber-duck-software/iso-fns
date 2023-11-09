@@ -111,8 +111,8 @@ export const instantFns: IInstantFns = {
     ES.ValidateTemporalUnitRange(largestUnit, smallestUnit)
     const roundingMode = ES.ToTemporalRoundingMode(options, 'trunc')
     const roundingIncrement = ES.ToTemporalRoundingIncrement(options, MAX_DIFFERENCE_INCREMENTS[smallestUnit], false)
-    const oneMs = ES.GetInstantSlots(to).epochMilliseconds
-    const twoMs = ES.GetInstantSlots(since).epochMilliseconds
+    const oneMs = ES.GetInstantSlots(since).epochMilliseconds
+    const twoMs = ES.GetInstantSlots(to).epochMilliseconds
     let { seconds, milliseconds } = ES.DifferenceInstant(oneMs, twoMs, roundingIncrement, smallestUnit, roundingMode)
     let hours, minutes
     ;({ hours, minutes, seconds, milliseconds } = ES.BalanceDuration(0, 0, 0, seconds, milliseconds, largestUnit))
