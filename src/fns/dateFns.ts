@@ -254,7 +254,8 @@ export const dateFns: IDateFns = {
   toZonedDateTime(date, item) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')
     if (typeof item !== 'object') throw new TypeError('invalid receiver')
-    if (!ES.IsTemporalTimeZone(item.timeZone)) throw new TypeError('invalid receiver')
+    const timeZone = ES.ToTemporalTimeZone(item.timeZone)
+    if (!ES.IsTemporalTimeZone(timeZone)) throw new TypeError('invalid receiver')
 
     const { year, month, day } = ES.GetDateSlots(date)
 
@@ -270,8 +271,8 @@ export const dateFns: IDateFns = {
     }
 
     const dt = ES.CreateTemporalDateTime(year, month, day, hour, minute, second, millisecond)
-    const instant = ES.BuiltinTimeZoneGetInstantFor(item.timeZone, dt, 'compatible')
-    return ES.CreateTemporalZonedDateTime(instant, item.timeZone)
+    const instant = ES.BuiltinTimeZoneGetInstantFor(timeZone, dt, 'compatible')
+    return ES.CreateTemporalZonedDateTime(instant, timeZone)
   },
   toYearMonth(date) {
     if (!ES.IsTemporalDate(date)) throw new TypeError('invalid receiver')

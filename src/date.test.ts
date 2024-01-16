@@ -667,4 +667,11 @@ describe('Date', () => {
       })
     })
   })
+  describe('Date.toZonedDateTime works', () => {
+    it('convert to ZonedDateTime with a timezone alias', () => {
+      const date1 = dateFns.from('2019-01-01')
+      const zonedDateTime1 = dateFns.toZonedDateTime(date1, { timeZone: 'US/Central' })
+      assert.equal(zonedDateTime1, '2019-01-01T00:00-06:00[America/Chicago]')
+    })
+  })
 })
