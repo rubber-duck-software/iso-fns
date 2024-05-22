@@ -1,8 +1,16 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "2.0.0-alpha.17",
-  "types": "index.d.ts",
+  "version": "2.0.0-alpha.18",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js"
+    }
+  },
+  "types": "./esm/index.d.ts",
   "license": "MIT",
   "homepage": "iso-fns.org",
   "files": [
