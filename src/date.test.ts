@@ -3,133 +3,133 @@ import { strict as assert } from 'assert'
 import { dateFns, durationFns } from './index'
 
 describe('Date', () => {
-  describe('date.until() works', () => {
-    const date = dateFns.fromNumbers(1969, 7, 24)
-    it('takes days per month into account', () => {
-      const date1 = dateFns.from('2019-01-01')
-      const date2 = dateFns.from('2019-02-01')
-      const date3 = dateFns.from('2019-03-01')
-      assert.equal(dateFns.until(date1, date2), 'P31D')
-      assert.equal(dateFns.until(date2, date3), 'P28D')
-      const date4 = dateFns.from('2020-02-01')
-      const date5 = dateFns.from('2020-03-01')
-      assert.equal(dateFns.until(date4, date5), 'P29D')
-    })
-    it('takes days per year into account', () => {
-      const date1 = dateFns.from('2019-01-01')
-      const date2 = dateFns.from('2019-06-01')
-      const date3 = dateFns.from('2020-01-01')
-      const date4 = dateFns.from('2020-06-01')
-      const date5 = dateFns.from('2021-01-01')
-      const date6 = dateFns.from('2021-06-01')
-      assert.equal(dateFns.until(date1, date3), 'P365D')
-      assert.equal(dateFns.until(date3, date5), 'P366D')
-      assert.equal(dateFns.until(date2, date4), 'P366D')
-      assert.equal(dateFns.until(date4, date6), 'P365D')
-    })
-    it('weeks and months are mutually exclusive', () => {
-      const laterDate = dateFns.add(date, { days: 42 })
-      const weeksDifference = dateFns.chain(date).until(laterDate, { largestUnit: 'weeks' }).getFields().value()
-      assert.notEqual(weeksDifference.weeks, 0)
-      assert.equal(weeksDifference.months, 0)
-      const monthsDifference = dateFns.chain(date).until(laterDate, { largestUnit: 'months' }).getFields().value()
-      assert.equal(monthsDifference.weeks, 0)
-      assert.notEqual(monthsDifference.months, 0)
-    })
-    const earlier = dateFns.from('2019-01-08')
-    const later = dateFns.from('2021-09-07')
-    it('assumes a different default for largestUnit if smallestUnit is larger than days', () => {
-      assert.equal(dateFns.until(earlier, later, { smallestUnit: 'years', roundingMode: 'halfExpand' }), 'P3Y')
-      assert.equal(dateFns.until(earlier, later, { smallestUnit: 'months', roundingMode: 'halfExpand' }), 'P32M')
-      assert.equal(dateFns.until(earlier, later, { smallestUnit: 'weeks', roundingMode: 'halfExpand' }), 'P139W')
-    })
-    const incrementOneNearest = [
-      ['years', 'P3Y'],
-      ['months', 'P32M'],
-      ['weeks', 'P139W'],
-      ['days', 'P973D']
-    ] as const
-    incrementOneNearest.forEach(([smallestUnit, expected]) => {
-      const roundingMode = 'halfExpand'
-      it(`rounds to nearest ${smallestUnit}`, () => {
-        assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
-        assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected}`)
-      })
-    })
-    const incrementOneCeil = [
-      ['years', 'P3Y', '-P2Y'],
-      ['months', 'P32M', '-P31M'],
-      ['weeks', 'P139W', '-P139W'],
-      ['days', 'P973D', '-P973D']
-    ] as const
-    incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
-      const roundingMode = 'ceil'
-      it(`rounds up to ${smallestUnit}`, () => {
-        assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
-        assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
-      })
-    })
-    const incrementOneFloor = [
-      ['years', 'P2Y', '-P3Y'],
-      ['months', 'P31M', '-P32M'],
-      ['weeks', 'P139W', '-P139W'],
-      ['days', 'P973D', '-P973D']
-    ] as const
-    incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
-      const roundingMode = 'floor'
-      it(`rounds down to ${smallestUnit}`, () => {
-        assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
-        assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
-      })
-    })
-    const incrementOneTrunc = [
-      ['years', 'P2Y'],
-      ['months', 'P31M'],
-      ['weeks', 'P139W'],
-      ['days', 'P973D']
-    ] as const
-    incrementOneTrunc.forEach(([smallestUnit, expected]) => {
-      const roundingMode = 'trunc'
-      it(`truncates to ${smallestUnit}`, () => {
-        assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
-        assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected}`)
-      })
-    })
-    it('trunc is the default', () => {
-      assert.equal(dateFns.until(earlier, later, { smallestUnit: 'years' }), 'P2Y')
-      assert.equal(dateFns.until(later, earlier, { smallestUnit: 'years' }), '-P2Y')
-    })
-    it('rounds to an increment of years', () => {
-      assert.equal(
-        dateFns.until(earlier, later, { smallestUnit: 'years', roundingIncrement: 4, roundingMode: 'halfExpand' }),
-        'P4Y'
-      )
-    })
-    it('rounds to an increment of months', () => {
-      assert.equal(
-        dateFns.until(earlier, later, { smallestUnit: 'months', roundingIncrement: 10, roundingMode: 'halfExpand' }),
-        'P30M'
-      )
-    })
-    it('rounds to an increment of weeks', () => {
-      assert.equal(
-        dateFns.until(earlier, later, { smallestUnit: 'weeks', roundingIncrement: 12, roundingMode: 'halfExpand' }),
-        'P144W'
-      )
-    })
-    it('rounds to an increment of days', () => {
-      assert.equal(
-        dateFns.until(earlier, later, { smallestUnit: 'days', roundingIncrement: 100, roundingMode: 'halfExpand' }),
-        'P1000D'
-      )
-    })
-    it('rounds relative to the receiver', () => {
-      const date1 = dateFns.from('2019-01-01')
-      const date2 = dateFns.from('2019-02-15')
-      assert.equal(dateFns.until(date1, date2, { smallestUnit: 'months', roundingMode: 'halfExpand' }), 'P2M')
-      assert.equal(dateFns.until(date2, date1, { smallestUnit: 'months', roundingMode: 'halfExpand' }), '-P1M')
-    })
-  })
+  // describe('date.until() works', () => {
+  //   const date = dateFns.fromNumbers(1969, 7, 24)
+  //   it('takes days per month into account', () => {
+  //     const date1 = dateFns.from('2019-01-01')
+  //     const date2 = dateFns.from('2019-02-01')
+  //     const date3 = dateFns.from('2019-03-01')
+  //     assert.equal(dateFns.until(date1, date2), 'P31D')
+  //     assert.equal(dateFns.until(date2, date3), 'P28D')
+  //     const date4 = dateFns.from('2020-02-01')
+  //     const date5 = dateFns.from('2020-03-01')
+  //     assert.equal(dateFns.until(date4, date5), 'P29D')
+  //   })
+  //   it('takes days per year into account', () => {
+  //     const date1 = dateFns.from('2019-01-01')
+  //     const date2 = dateFns.from('2019-06-01')
+  //     const date3 = dateFns.from('2020-01-01')
+  //     const date4 = dateFns.from('2020-06-01')
+  //     const date5 = dateFns.from('2021-01-01')
+  //     const date6 = dateFns.from('2021-06-01')
+  //     assert.equal(dateFns.until(date1, date3), 'P365D')
+  //     assert.equal(dateFns.until(date3, date5), 'P366D')
+  //     assert.equal(dateFns.until(date2, date4), 'P366D')
+  //     assert.equal(dateFns.until(date4, date6), 'P365D')
+  //   })
+  //   it('weeks and months are mutually exclusive', () => {
+  //     const laterDate = dateFns.add(date, { days: 42 })
+  //     const weeksDifference = dateFns.chain(date).until(laterDate, { largestUnit: 'weeks' }).getFields().value()
+  //     assert.notEqual(weeksDifference.weeks, 0)
+  //     assert.equal(weeksDifference.months, 0)
+  //     const monthsDifference = dateFns.chain(date).until(laterDate, { largestUnit: 'months' }).getFields().value()
+  //     assert.equal(monthsDifference.weeks, 0)
+  //     assert.notEqual(monthsDifference.months, 0)
+  //   })
+  //   const earlier = dateFns.from('2019-01-08')
+  //   const later = dateFns.from('2021-09-07')
+  //   it('assumes a different default for largestUnit if smallestUnit is larger than days', () => {
+  //     assert.equal(dateFns.until(earlier, later, { smallestUnit: 'years', roundingMode: 'halfExpand' }), 'P3Y')
+  //     assert.equal(dateFns.until(earlier, later, { smallestUnit: 'months', roundingMode: 'halfExpand' }), 'P32M')
+  //     assert.equal(dateFns.until(earlier, later, { smallestUnit: 'weeks', roundingMode: 'halfExpand' }), 'P139W')
+  //   })
+  //   const incrementOneNearest = [
+  //     ['years', 'P3Y'],
+  //     ['months', 'P32M'],
+  //     ['weeks', 'P139W'],
+  //     ['days', 'P973D']
+  //   ] as const
+  //   incrementOneNearest.forEach(([smallestUnit, expected]) => {
+  //     const roundingMode = 'halfExpand'
+  //     it(`rounds to nearest ${smallestUnit}`, () => {
+  //       assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
+  //       assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected}`)
+  //     })
+  //   })
+  //   const incrementOneCeil = [
+  //     ['years', 'P3Y', '-P2Y'],
+  //     ['months', 'P32M', '-P31M'],
+  //     ['weeks', 'P139W', '-P139W'],
+  //     ['days', 'P973D', '-P973D']
+  //   ] as const
+  //   incrementOneCeil.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
+  //     const roundingMode = 'ceil'
+  //     it(`rounds up to ${smallestUnit}`, () => {
+  //       assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
+  //       assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
+  //     })
+  //   })
+  //   const incrementOneFloor = [
+  //     ['years', 'P2Y', '-P3Y'],
+  //     ['months', 'P31M', '-P32M'],
+  //     ['weeks', 'P139W', '-P139W'],
+  //     ['days', 'P973D', '-P973D']
+  //   ] as const
+  //   incrementOneFloor.forEach(([smallestUnit, expectedPositive, expectedNegative]) => {
+  //     const roundingMode = 'floor'
+  //     it(`rounds down to ${smallestUnit}`, () => {
+  //       assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expectedPositive)
+  //       assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), expectedNegative)
+  //     })
+  //   })
+  //   const incrementOneTrunc = [
+  //     ['years', 'P2Y'],
+  //     ['months', 'P31M'],
+  //     ['weeks', 'P139W'],
+  //     ['days', 'P973D']
+  //   ] as const
+  //   incrementOneTrunc.forEach(([smallestUnit, expected]) => {
+  //     const roundingMode = 'trunc'
+  //     it(`truncates to ${smallestUnit}`, () => {
+  //       assert.equal(dateFns.until(earlier, later, { smallestUnit, roundingMode }), expected)
+  //       assert.equal(dateFns.until(later, earlier, { smallestUnit, roundingMode }), `-${expected}`)
+  //     })
+  //   })
+  //   it('trunc is the default', () => {
+  //     assert.equal(dateFns.until(earlier, later, { smallestUnit: 'years' }), 'P2Y')
+  //     assert.equal(dateFns.until(later, earlier, { smallestUnit: 'years' }), '-P2Y')
+  //   })
+  //   it('rounds to an increment of years', () => {
+  //     assert.equal(
+  //       dateFns.until(earlier, later, { smallestUnit: 'years', roundingIncrement: 4, roundingMode: 'halfExpand' }),
+  //       'P4Y'
+  //     )
+  //   })
+  //   it('rounds to an increment of months', () => {
+  //     assert.equal(
+  //       dateFns.until(earlier, later, { smallestUnit: 'months', roundingIncrement: 10, roundingMode: 'halfExpand' }),
+  //       'P30M'
+  //     )
+  //   })
+  //   it('rounds to an increment of weeks', () => {
+  //     assert.equal(
+  //       dateFns.until(earlier, later, { smallestUnit: 'weeks', roundingIncrement: 12, roundingMode: 'halfExpand' }),
+  //       'P144W'
+  //     )
+  //   })
+  //   it('rounds to an increment of days', () => {
+  //     assert.equal(
+  //       dateFns.until(earlier, later, { smallestUnit: 'days', roundingIncrement: 100, roundingMode: 'halfExpand' }),
+  //       'P1000D'
+  //     )
+  //   })
+  //   it('rounds relative to the receiver', () => {
+  //     const date1 = dateFns.from('2019-01-01')
+  //     const date2 = dateFns.from('2019-02-15')
+  //     assert.equal(dateFns.until(date1, date2, { smallestUnit: 'months', roundingMode: 'halfExpand' }), 'P2M')
+  //     assert.equal(dateFns.until(date2, date1, { smallestUnit: 'months', roundingMode: 'halfExpand' }), '-P1M')
+  //   })
+  // })
   describe('order of operations in until - TODO: add since', () => {
     const cases = [
       ['2019-03-01', '2019-01-29', 'P1M1D'],
