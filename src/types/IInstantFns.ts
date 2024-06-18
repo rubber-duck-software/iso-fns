@@ -89,6 +89,7 @@ export interface IInstantFns {
   isEqualOrBefore(instant: Iso.Instant, other: Iso.Instant): boolean
   isEqualOrAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   toZonedDateTime(instant: Iso.Instant, timeZone: string): Iso.ZonedDateTime
+  formatISO9075(instant: Iso.Instant): Iso.DateTime
   toJsDate(instant: Iso.Instant): Date
   fromEpochSeconds(epochSeconds: number): Iso.Instant
   from(item: any): Iso.Instant
