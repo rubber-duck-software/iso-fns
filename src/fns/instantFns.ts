@@ -177,6 +177,10 @@ export const instantFns: IInstantFns = {
     timeZone = ES.ToTemporalTimeZone(timeZone)
     return ES.CreateTemporalZonedDateTime(ES.GetInstantSlots(instant).epochMilliseconds, timeZone)
   },
+  formatISO9075(instant) {
+    if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
+    return instant.slice(0, -1).replace('T', ' ') as Iso.DateTime
+  },
   toJsDate(instant) {
     return new Date(instant)
   },
