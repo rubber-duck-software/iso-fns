@@ -179,7 +179,7 @@ export const instantFns: IInstantFns = {
   },
   formatISO9075(instant) {
     if (!ES.IsTemporalInstant(instant)) throw new TypeError('invalid receiver')
-    return instant.slice(0, -1).replace('T', ' ') as Iso.DateTime
+    return instant.slice(0, -1).replace('T', ' ')
   },
   toJsDate(instant) {
     return new Date(instant)
