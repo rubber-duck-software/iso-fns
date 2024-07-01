@@ -1,5 +1,4 @@
-tsc --project tsconfig.release-cjs.json
-tsc --project tsconfig.release-esm.json
+pnpm tsup src/index.ts --format esm,cjs --dts --outDir ./package
 cp ./package.json ./package/package.json
 cp ./README.md ./package/README.md
 cp ./LICENSE ./package/LICENSE
