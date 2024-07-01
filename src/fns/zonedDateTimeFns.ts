@@ -190,11 +190,11 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   withTime(zonedDateTime, time) {
     if (!ES.IsTemporalZonedDateTime(zonedDateTime)) throw new TypeError('invalid receiver')
 
-    time = time == undefined ? ES.CreateTemporalTime(0, 0, 0, 0) : ES.ToTemporalTime(time)
+    const isoTime = time == undefined ? ES.CreateTemporalTime(0, 0, 0, 0) : ES.ToTemporalTime(time)
 
     const thisDt = dateTime(zonedDateTime)
     const { year, month, day } = ES.GetDateTimeSlots(thisDt)
-    const { hour, minute, second, millisecond } = ES.GetTimeSlots(time)
+    const { hour, minute, second, millisecond } = ES.GetTimeSlots(isoTime)
 
     const timeZone = ES.GetZonedDateTimeSlots(zonedDateTime).timeZone
     const dt = ES.CreateTemporalDateTime(year, month, day, hour, minute, second, millisecond)
