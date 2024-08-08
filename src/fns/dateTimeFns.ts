@@ -397,7 +397,7 @@ export const dateTimeFns: IDateTimeFns = {
   },
   toZonedDateTime(dateTime, timeZone, options) {
     if (!ES.IsTemporalDateTime(dateTime)) throw new TypeError('invalid receiver')
-    if (!ES.IsTemporalTimeZone(timeZone)) throw new TypeError('invalid receiver')
+    timeZone = ES.ToTemporalTimeZone(timeZone)
     options = ES.GetOptionsObject(options)
     const disambiguation = ES.ToTemporalDisambiguation(options)
     const instant = ES.BuiltinTimeZoneGetInstantFor(timeZone, dateTime, disambiguation)
