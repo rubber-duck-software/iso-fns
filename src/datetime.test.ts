@@ -1,14 +1,6 @@
-import {
-  AssertIsDuration,
-  TemporalOverflow,
-  TemporalPluralUnit,
-  TemporalRoundingMode,
-  TemporalSingularUnit,
-  ToSmallestTemporalUnit
-} from './ecmascript'
+import { AssertIsDuration, TemporalOverflow, TemporalPluralUnit, TemporalRoundingMode } from './ecmascript'
 import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from './index'
 import { Iso } from 'iso-types'
-
 import { describe, it } from 'beartest-js'
 import { strict as assert } from 'assert'
 
@@ -116,6 +108,85 @@ describe('dateTimeFns', () => {
       assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:1'))
       assert.ok(!dateTimeFns.isValid('2020-01-01T00:00:01.1111'))
       assert.ok(!dateTimeFns.isValid('test'))
+    })
+  })
+})
+
+describe('dateTimeFns', () => {
+  describe('Construction', () => {
+    describe('fromNumbers(year, month, day, hour, minute, second, millisecond)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23, 30, 123)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 30', () => assert.equal(dateTimeFns.getSecond(datetime), 30))
+      it('datetime.millisecond is 123', () => assert.equal(dateTimeFns.getMillisecond(datetime), 123))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23:30.123', () => assert.equal(`${datetime}`, '1976-11-18T15:23:30.123'))
+    })
+    describe('fromNumbers(year, month, day, hour, minute, second)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23, 30)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 30', () => assert.equal(dateTimeFns.getSecond(datetime), 30))
+      it('datetime.millisecond is 0', () => assert.equal(dateTimeFns.getMillisecond(datetime), 0))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23:30', () => assert.equal(`${datetime}`, '1976-11-18T15:23:30'))
+    })
+    describe('fromNumbers(year, month, day, hour, minute)', () => {
+      let datetime: Iso.DateTime
+      it('datetime can be constructed', () => {
+        datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15, 23)
+        assert(datetime)
+        assert.equal(typeof datetime, 'string')
+      })
+      it('datetime.year is 1976', () => assert.equal(dateTimeFns.getYear(datetime), 1976))
+      it('datetime.month is 11', () => assert.equal(dateTimeFns.getMonth(datetime), 11))
+      it('datetime.day is 18', () => assert.equal(dateTimeFns.getDay(datetime), 18))
+      it('datetime.hour is 15', () => assert.equal(dateTimeFns.getHour(datetime), 15))
+      it('datetime.minute is 23', () => assert.equal(dateTimeFns.getMinute(datetime), 23))
+      it('datetime.second is 0', () => assert.equal(dateTimeFns.getSecond(datetime), 0))
+      it('datetime.millisecond is 0', () => assert.equal(dateTimeFns.getMillisecond(datetime), 0))
+      it('datetime.dayOfWeek is 4', () => assert.equal(dateTimeFns.getDayOfWeek(datetime), 4))
+      it('datetime.dayOfYear is 323', () => assert.equal(dateTimeFns.getDayOfYear(datetime), 323))
+      it('datetime.weekOfYear is 47', () => assert.equal(dateTimeFns.getWeekOfYear(datetime), 47))
+      it('`${datetime}` is 1976-11-18T15:23', () => assert.equal(`${datetime}`, '1976-11-18T15:23'))
+    })
+    describe('fromNumbers(year, month, day, hour)', () => {
+      const datetime = dateTimeFns.fromNumbers(1976, 11, 18, 15)
+      it('`${datetime}` is 1976-11-18T15', () => assert.equal(`${datetime}`, '1976-11-18T15:00'))
+    })
+    describe('fromNumbers(year, month, day)', () => {
+      const datetime = dateTimeFns.fromNumbers(1976, 11, 18)
+      it('`${datetime}` is 1976-11-18', () => assert.equal(`${datetime}`, '1976-11-18T00:00'))
+    })
+    describe('fromNumbers() treats -0 as 0', () => {
+      it('ignores the sign of -0', () => {
+        const datetime = dateTimeFns.fromNumbers(1976, 11, 18, -0, -0, -0, -0)
+        assert.equal(dateTimeFns.getHour(datetime), 0)
+        assert.equal(dateTimeFns.getMinute(datetime), 0)
+        assert.equal(dateTimeFns.getSecond(datetime), 0)
+        assert.equal(dateTimeFns.getMillisecond(datetime), 0)
+      })
     })
   })
   describe('with()', () => {
