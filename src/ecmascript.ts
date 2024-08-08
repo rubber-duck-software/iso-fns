@@ -2273,10 +2273,13 @@ export function BalanceDuration(
       ;({ quotient: hours, remainder: minutes } = divmod(minutes, 60))
       break
     case 'minute':
+      hours = 0
       ;({ quotient: seconds, remainder: milliseconds } = divmod(milliseconds, 1000))
       ;({ quotient: minutes, remainder: seconds } = divmod(seconds, 60))
       break
     case 'second':
+      minutes = 0
+      hours = 0
       ;({ quotient: seconds, remainder: milliseconds } = divmod(milliseconds, 1000))
       break
     case 'millisecond':

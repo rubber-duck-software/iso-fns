@@ -1,6 +1,9 @@
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
 import { instantFns } from './fns'
 import { strict as assert } from 'assert'
+
+const { describe } = test
+const it = test
 
 describe('Instant', () => {
   describe('isValid', () => {

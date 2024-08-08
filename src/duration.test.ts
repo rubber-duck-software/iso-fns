@@ -1,9 +1,12 @@
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
 import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from './fns'
 import { Iso } from 'iso-types'
 import { TemporalPluralUnit, TemporalSingularUnit } from 'ecmascript'
 import { TemporalRoundingMode } from 'ecmascript'
+
+const { describe } = test
+const it = test
 
 describe('durationFns', () => {
   describe('Structure', () => {

@@ -9,8 +9,11 @@ import {
 import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from './index'
 import { Iso } from 'iso-types'
 
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
+
+const { describe } = test
+const it = test
 
 describe('dateTimeFns', () => {
   describe('Construction', () => {
