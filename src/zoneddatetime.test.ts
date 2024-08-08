@@ -1,6 +1,9 @@
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
 import { zonedDateTimeFns } from './index'
+
+const { describe } = test
+const it = test
 
 describe('ZonedDateTime', () => {
   const tz = 'America/Los_Angeles'

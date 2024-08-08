@@ -1,6 +1,9 @@
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
 import { dateFns, durationFns } from './index'
+
+const { describe } = test
+const it = test
 
 describe('Date', () => {
   describe('date.until() works', () => {

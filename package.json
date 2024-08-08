@@ -1,7 +1,7 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "2.0.0-alpha.24",
+  "version": "2.0.0-alpha.25",
   "main": "./index.js",
   "module": "./index.mjs",
   "exports": {
@@ -25,7 +25,7 @@
     "format": "prettier --write .",
     "build": "tsup src/index.ts --format esm,cjs --dts --outDir dist",
     "build-package": "./scripts/release.sh",
-    "test": "yarn lint && c8 -r text beartest 'dist/**/*.test.js'",
+    "test": "yarn lint && c8 -r text node -r ts-node/register ./run-tests",
     "cc": "c8 report -r lcovonly",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "docs": "node ./scripts/generate-docs.js",
@@ -33,12 +33,13 @@
   },
   "devDependencies": {
     "all-contributors-cli": "^6.20.0",
-    "beartest-js": "^4.0.0",
+    "beartest-js": "^6.0.2",
     "c8": "^7.7.3",
     "coveralls": "^3.1.1",
     "expect": "^27.0.6",
     "prettier": "^2.3.2",
     "shelljs": "^0.8.4",
+    "ts-node": "^10.9.2",
     "tsup": "^8.1.0",
     "typedoc": "^0.22.7",
     "typedoc-plugin-markdown": "^3.11.3",

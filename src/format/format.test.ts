@@ -3,7 +3,9 @@
 
 import { strict as assert } from 'assert'
 import format from '.'
-import { describe, it } from 'beartest-js'
+import { test } from 'beartest-js'
+const { describe } = test
+const it = test
 
 describe('format', function () {
   var date = {
