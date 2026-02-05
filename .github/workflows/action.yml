@@ -1,13 +1,10 @@
 name: Deploy Package
-
 permissions:
   id-token: write # Required for OIDC
   contents: read
-
 on:
   push:
     branches: [release]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,6 +37,8 @@ jobs:
 
       - name: Build Release Package
         run: yarn build-package
+
+      - run: "npm --version"
 
       - name: Publish To NPM
         run: npm publish ./package
