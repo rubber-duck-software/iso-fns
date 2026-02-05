@@ -43,7 +43,7 @@ jobs:
       - run: "npm --version"
 
       - name: Publish To NPM
-        run: npm publish ./package
+        run: npm publish ./package --tag alpha
 
       - name: Install Doc Dependencies
         run: cd docs-site && yarn install
