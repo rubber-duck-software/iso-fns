@@ -1,5 +1,9 @@
 name: Deploy Package
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 on:
   push:
     branches: [release]
@@ -39,8 +43,6 @@ jobs:
 
       - name: Publish To NPM
         run: yarn publish package
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Doc Dependencies
         run: cd docs-site && yarn install
