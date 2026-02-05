@@ -38,6 +38,8 @@ jobs:
       - name: Build Release Package
         run: yarn build-package
 
+      - run: "npm install -g npm@^11.0.0"
+
       - run: "npm --version"
 
       - name: Publish To NPM
