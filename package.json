@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/rubber-duck-software/iso-fns.git"
+    "url": "git+https://github.com/rubber-duck-software/iso-fns.git"
   },
   "scripts": {
     "lint": "prettier --check ./src",

@@ -42,7 +42,7 @@ jobs:
         run: yarn build-package
 
       - name: Publish To NPM
-        run: yarn publish package
+        run: npm publish ./package
 
       - name: Install Doc Dependencies
         run: cd docs-site && yarn install
