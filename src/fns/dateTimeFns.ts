@@ -542,7 +542,7 @@ export function buildDateTimeChain(dateTime: Iso.DateTime): IDateTimeChain {
       return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
     },
     isAfter(other) {
-      return ES.buildChain(dateTimeFns.isBefore(dateTime, other))
+      return ES.buildChain(dateTimeFns.isAfter(dateTime, other))
     },
     isEqualOrBefore(other) {
       return ES.buildChain(dateTimeFns.isEqualOrBefore(dateTime, other))
