@@ -55,7 +55,10 @@ export interface IDurationFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { relativeTo: Iso.DateTime | Iso.ZonedDateTime }
+    options?: {
+      relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+    }
   ): Iso.Duration
   subtract(
     duration: Iso.Duration,
@@ -71,7 +74,10 @@ export interface IDurationFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { relativeTo: Iso.DateTime | Iso.ZonedDateTime | Iso.Date }
+    options?: {
+      relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+    }
   ): Iso.Duration
   round(
     duration: Iso.Duration,
@@ -139,7 +145,10 @@ export interface IDurationChain extends Chain<Iso.Duration> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { relativeTo: Iso.DateTime | Iso.ZonedDateTime }
+    options?: {
+      relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+    }
   ): IDurationChain
   subtract(
     other:
@@ -154,7 +163,10 @@ export interface IDurationChain extends Chain<Iso.Duration> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { relativeTo: Iso.DateTime | Iso.ZonedDateTime | Iso.Date }
+    options?: {
+      relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+    }
   ): IDurationChain
   round(options: {
     largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>

@@ -38,14 +38,15 @@ export const durationFns: IDurationFns = {
     const d1 = Temporal.Duration.from(duration)
     const d2 = Temporal.Duration.from(other as any)
     const rel = toRelativePoint(options?.relativeTo as RelativeTo)
-    if (rel) return toIsoDuration(rel.until(rel.add(d1).add(d2), { largestUnit: 'year' }))
+    if (rel) return toIsoDuration(rel.until(rel.add(d1).add(d2), { largestUnit: options?.largestUnit ?? 'year' } as any))
     return toIsoDuration(d1.add(d2))
   },
   subtract: (duration, other, options) => {
     const d1 = Temporal.Duration.from(duration)
     const d2 = Temporal.Duration.from(other as any)
     const rel = toRelativePoint(options?.relativeTo as RelativeTo)
-    if (rel) return toIsoDuration(rel.until(rel.add(d1).subtract(d2), { largestUnit: 'year' }))
+    if (rel)
+      return toIsoDuration(rel.until(rel.add(d1).subtract(d2), { largestUnit: options?.largestUnit ?? 'year' } as any))
     return toIsoDuration(d1.subtract(d2))
   },
   round: (duration, options) => toIsoDuration(Temporal.Duration.from(duration).round(options as any)),
@@ -73,8 +74,8 @@ export function buildDurationChain(input: Iso.Duration | Temporal.Duration): IDu
     with: (durationLike) => buildDurationChain(dur.with(durationLike)),
     negated: () => buildDurationChain(dur.negated()),
     abs: () => buildDurationChain(dur.abs()),
-    add: (other) => buildDurationChain(dur.add(Temporal.Duration.from(other as any))),
-    subtract: (other) => buildDurationChain(dur.subtract(Temporal.Duration.from(other as any))),
+    add: (other, options) => buildDurationChain(durationFns.add(toIsoDuration(dur), other, options)),
+    subtract: (other, options) => buildDurationChain(durationFns.subtract(toIsoDuration(dur), other, options)),
     round: (options) => buildDurationChain(dur.round(options as any)),
     total: (options) => buildChain(dur.total(options as any)),
     getFields: () => buildChain(slotsFromDuration(dur))

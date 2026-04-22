@@ -61,8 +61,11 @@ export function toIsoInstant(inst: Temporal.Instant): Iso.Instant {
 export function toIsoYearMonth(pym: Temporal.PlainYearMonth): Iso.YearMonth {
   return pym.toString() as Iso.YearMonth
 }
+// ISO 8601 prescribes `--MM-DD` for month-day. temporal-polyfill emits `MM-DD`
+// without the leading `--`; normalize every iso-fns output to the spec form.
 export function toIsoMonthDay(pmd: Temporal.PlainMonthDay): Iso.MonthDay {
-  return pmd.toString() as Iso.MonthDay
+  const s = pmd.toString()
+  return (s.startsWith('--') ? s : `--${s}`) as Iso.MonthDay
 }
 export function toIsoDuration(dur: Temporal.Duration): Iso.Duration {
   return dur.toString() as Iso.Duration
@@ -118,8 +121,9 @@ export function isIsoYearMonth(item: unknown): item is Iso.YearMonth {
 }
 export function isIsoMonthDay(item: unknown): item is Iso.MonthDay {
   if (typeof item !== 'string') return false
+  if (!item.startsWith('--')) return false
   try {
-    return Temporal.PlainMonthDay.from(item).toString() === item
+    return toIsoMonthDay(Temporal.PlainMonthDay.from(item)) === item
   } catch {
     return false
   }

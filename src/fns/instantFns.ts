@@ -30,8 +30,8 @@ export const instantFns: IInstantFns = {
     toIsoInstant(Temporal.Instant.from(instant).add(Temporal.Duration.from(durationLike as any))),
   subtract: (instant, durationLike) =>
     toIsoInstant(Temporal.Instant.from(instant).subtract(Temporal.Duration.from(durationLike as any))),
-  until: (from, until, options) => toIsoDuration(Temporal.Instant.from(from).until(until, options as any)),
-  since: (to, since, options) => toIsoDuration(Temporal.Instant.from(to).since(since, options as any)),
+  until: (instant, other, options) => toIsoDuration(Temporal.Instant.from(instant).until(other, options as any)),
+  since: (instant, other, options) => toIsoDuration(Temporal.Instant.from(instant).since(other, options as any)),
   round: (instant, options) => toIsoInstant(Temporal.Instant.from(instant).round(options as any)),
   equals: (instant, other) => Temporal.Instant.from(instant).equals(other),
   isEqual: (instant, other) => Temporal.Instant.compare(instant, other) === 0,

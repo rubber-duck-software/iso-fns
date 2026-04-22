@@ -53,8 +53,8 @@ export interface IInstantFns {
         }
   ): Iso.Instant
   until(
-    from: Iso.Instant,
-    until: Iso.Instant,
+    instant: Iso.Instant,
+    other: Iso.Instant,
     options?: {
       largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
       smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
@@ -63,8 +63,8 @@ export interface IInstantFns {
     }
   ): Iso.Duration
   since(
-    to: Iso.Instant,
-    since: Iso.Instant,
+    instant: Iso.Instant,
+    other: Iso.Instant,
     options?: {
       largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
       smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
@@ -133,7 +133,7 @@ export interface IInstantChain extends Chain<Iso.Instant> {
         }
   ): IInstantChain
   until(
-    until: Iso.Instant,
+    other: Iso.Instant,
     options?: {
       largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
       smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
@@ -142,7 +142,7 @@ export interface IInstantChain extends Chain<Iso.Instant> {
     }
   ): IDurationChain
   since(
-    since: Iso.Instant,
+    other: Iso.Instant,
     options?: {
       largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
       smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
