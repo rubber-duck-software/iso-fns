@@ -1,350 +1,74 @@
+import { Temporal } from 'temporal-polyfill'
 import { IYearMonthFns, IYearMonthChain } from '../types'
-import * as ES from '../ecmascript'
 import { Iso } from '../iso-types'
+import { buildChain, isIsoYearMonth, slotsFromYearMonth, toIsoDate, toIsoDuration, toIsoYearMonth } from '../temporal'
 import { buildDurationChain } from './durationFns'
 import { buildDateChain } from './dateFns'
 import format from '../format'
 
-const DISALLOWED_UNITS: ES.TemporalSingularUnit[] = ['week', 'day', 'hour', 'minute', 'second', 'millisecond']
-
 export const yearMonthFns: IYearMonthFns = {
   fromNumbers(year, month) {
-    year = ES.ToIntegerThrowOnInfinity(year)
-    month = ES.ToIntegerThrowOnInfinity(month)
-
-    // Note: if the arguments are not passed,
-    //       ToIntegerThrowOnInfinity(undefined) will have returned 0, which will
-    //       be rejected by RejectISODate in CreateTemporalYearMonthSlots. This
-    //       check exists only to improve the error message.
     if (arguments.length < 2) {
       throw new RangeError('missing argument: isoYear and isoMonth are required')
     }
-
-    return ES.CreateTemporalYearMonth(year, month)
+    return toIsoYearMonth(new Temporal.PlainYearMonth(year, month))
   },
   isValid(yearMonth): yearMonth is Iso.YearMonth {
-    return ES.IsTemporalYearMonth(yearMonth)
+    return isIsoYearMonth(yearMonth)
   },
   assertIsValid(yearMonth): asserts yearMonth is Iso.YearMonth {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
+    if (!isIsoYearMonth(yearMonth)) throw new TypeError('invalid receiver')
   },
-  getYear(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.CalendarYear(yearMonth)
-  },
-  getMonth(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.CalendarMonth(yearMonth)
-  },
-  getDaysInMonth(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.CalendarDaysInMonth(yearMonth)
-  },
-  getDaysInYear(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.CalendarDaysInYear(yearMonth)
-  },
-  inLeapYear(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.CalendarInLeapYear(yearMonth)
-  },
-  with(yearMonth, temporalYearMonthLike, options = undefined) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    if (typeof temporalYearMonthLike !== 'object') {
-      throw new TypeError('invalid argument')
-    }
-    if ((temporalYearMonthLike as any).timeZone !== undefined) {
-      throw new TypeError('with() does not support a timeZone property')
-    }
-
-    const props = ES.ToPartialRecord(temporalYearMonthLike, ['month', 'year'])
-    if (!props) {
-      throw new TypeError('invalid year-month-like')
-    }
-    let fields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(yearMonth))
-    fields = ES.CalendarMergeFields(fields, props) as any
-    fields = ES.ToTemporalYearMonthFields(fields)
-
-    options = ES.GetOptionsObject(options)
-
-    return ES.YearMonthFromFields(fields, options)
-  },
-  add(yearMonth, temporalDurationLike, options = undefined) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    const duration = ES.ToLimitedTemporalDuration(temporalDurationLike)
-    let { years, months, weeks, days, hours, minutes, seconds, milliseconds } = duration
-    ;({ days } = ES.BalanceDuration(days, hours, minutes, seconds, milliseconds, 'day'))
-
-    options = ES.GetOptionsObject(options)
-
-    const fields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(yearMonth))
-    const sign = ES.DurationSign(years, months, weeks, days, 0, 0, 0, 0)
-    const day = sign < 0 ? ES.ToPositiveInteger(ES.CalendarDaysInMonth(yearMonth)) : 1
-    const startDate = ES.DateFromFields({ ...fields, day })
-    const optionsCopy = { ...options }
-    const addedDate = ES.CalendarDateAdd(startDate, { ...duration, days }, options)
-    const addedDateFields = ES.ToTemporalYearMonthFields(ES.GetDateSlots(addedDate))
-
-    return ES.YearMonthFromFields(addedDateFields, optionsCopy)
-  },
-  subtract(yearMonth, temporalDurationLike, options = undefined) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    let duration = ES.ToLimitedTemporalDuration(temporalDurationLike)
-    duration = {
-      years: -duration.years,
-      months: -duration.months,
-      weeks: -duration.weeks,
-      days: -duration.days,
-      hours: -duration.hours,
-      minutes: -duration.minutes,
-      seconds: -duration.seconds,
-      milliseconds: -duration.milliseconds
-    }
-    let { years, months, weeks, days, hours, minutes, seconds, milliseconds } = duration
-    ;({ days } = ES.BalanceDuration(days, hours, minutes, seconds, milliseconds, 'day'))
-
-    options = ES.GetOptionsObject(options)
-
-    const fields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(yearMonth))
-    const sign = ES.DurationSign(years, months, weeks, days, 0, 0, 0, 0)
-    const day = sign < 0 ? ES.ToPositiveInteger(ES.CalendarDaysInMonth(yearMonth)) : 1
-    const startDate = ES.DateFromFields({ ...fields, day })
-    const optionsCopy = { ...options }
-    const addedDate = ES.CalendarDateAdd(startDate, { ...duration, days }, options)
-    const addedDateFields = ES.ToTemporalYearMonthFields(ES.GetDateSlots(addedDate))
-
-    return ES.YearMonthFromFields(addedDateFields, optionsCopy)
-  },
-  until(yearMonth, other, options = undefined) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalYearMonth(other)
-    options = ES.GetOptionsObject(options)
-    const smallestUnit = ES.ToSmallestTemporalUnit(options, 'month', DISALLOWED_UNITS)
-    const largestUnit = ES.ToLargestTemporalUnit(options, 'auto', DISALLOWED_UNITS, 'year') as ES.TemporalSingularUnit
-    ES.ValidateTemporalUnitRange(largestUnit, smallestUnit)
-    const roundingMode = ES.ToTemporalRoundingMode(options, 'trunc')
-    const roundingIncrement = ES.ToTemporalRoundingIncrement(options, undefined, false)
-
-    const otherFields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(other))
-    const thisFields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(yearMonth))
-    const otherDate = ES.DateFromFields({ ...otherFields, day: 1 })
-    const thisDate = ES.DateFromFields({ ...thisFields, day: 1 })
-
-    const untilOptions = { ...options, largestUnit }
-    const result = ES.CalendarDateUntil(thisDate, otherDate, untilOptions)
-    if (smallestUnit === 'month' && roundingIncrement === 1) return result
-
-    let { years, months } = ES.GetDurationSlots(result)
-    const thisDateSlots = ES.GetDateSlots(thisDate)
-    const relativeTo = ES.CreateTemporalDateTime(thisDateSlots.year, thisDateSlots.month, thisDateSlots.day, 0, 0, 0, 0)
-    ;({ years, months } = ES.RoundDuration(
-      years,
-      months,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      roundingIncrement,
-      smallestUnit,
-      roundingMode,
-      relativeTo
-    ))
-
-    return ES.CreateTemporalDuration(years, months, 0, 0, 0, 0, 0, 0)
-  },
-  since(yearMonth, other, options = undefined) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalYearMonth(other)
-    options = ES.GetOptionsObject(options)
-    const smallestUnit = ES.ToSmallestTemporalUnit(options, 'month', DISALLOWED_UNITS)
-    const largestUnit = ES.ToLargestTemporalUnit(options, 'auto', DISALLOWED_UNITS, 'year') as ES.TemporalSingularUnit
-    ES.ValidateTemporalUnitRange(largestUnit, smallestUnit)
-    const roundingMode = ES.ToTemporalRoundingMode(options, 'trunc')
-    const roundingIncrement = ES.ToTemporalRoundingIncrement(options, undefined, false)
-
-    const otherFields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(other))
-    const thisFields = ES.ToTemporalYearMonthFields(ES.GetYearMonthSlots(yearMonth))
-    const otherDate = ES.DateFromFields({ ...otherFields, day: 1 })
-    const thisDate = ES.DateFromFields({ ...thisFields, day: 1 })
-
-    const untilOptions = { ...options, largestUnit }
-    let { years, months } = ES.GetDurationSlots(ES.CalendarDateUntil(thisDate, otherDate, untilOptions))
-    if (smallestUnit === 'month' && roundingIncrement === 1) {
-      return ES.CreateTemporalDuration(-years, -months, 0, 0, 0, 0, 0, 0)
-    }
-    const thisDateSlots = ES.GetDateSlots(thisDate)
-
-    const relativeTo = ES.CreateTemporalDateTime(thisDateSlots.year, thisDateSlots.month, thisDateSlots.day, 0, 0, 0, 0)
-    ;({ years, months } = ES.RoundDuration(
-      years,
-      months,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      roundingIncrement,
-      smallestUnit,
-      ES.NegateTemporalRoundingMode(roundingMode),
-      relativeTo
-    ))
-
-    return ES.CreateTemporalDuration(-years, -months, 0, 0, 0, 0, 0, 0)
-  },
-  equals(yearMonth, other) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalYearMonth(other)
-    const slots1 = ES.GetYearMonthSlots(yearMonth)
-    const slots2 = ES.GetYearMonthSlots(other)
-
-    for (const slot of ['year', 'month'] as const) {
-      const val1 = slots1[slot]
-      const val2 = slots2[slot]
-      if (val1 !== val2) return false
-    }
-    return true
-  },
-  isEqual(yearMonth, other) {
-    return yearMonthFns.equals(yearMonth, other)
-  },
-  isBefore(yearMonth, other) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalYearMonth(other)
-    const slots1 = ES.GetYearMonthSlots(yearMonth)
-    const slots2 = ES.GetYearMonthSlots(other)
-
-    for (const slot of ['year', 'month'] as const) {
-      const val1 = slots1[slot]
-      const val2 = slots2[slot]
-      if (val1 < val2) return true
-      else if (val1 > val2) return false
-    }
-    return false
-  },
-  isAfter(yearMonth, other) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalYearMonth(other)
-    const slots1 = ES.GetYearMonthSlots(yearMonth)
-    const slots2 = ES.GetYearMonthSlots(other)
-
-    for (const slot of ['year', 'month'] as const) {
-      const val1 = slots1[slot]
-      const val2 = slots2[slot]
-      if (val1 > val2) return true
-      else if (val1 < val2) return false
-    }
-    return false
-  },
-  isEqualOrBefore(yearMonth, other) {
-    return yearMonthFns.isEqual(yearMonth, other) || yearMonthFns.isBefore(yearMonth, other)
-  },
-  isEqualOrAfter(yearMonth, other) {
-    return yearMonthFns.isEqual(yearMonth, other) || yearMonthFns.isAfter(yearMonth, other)
-  },
-  toDate(yearMonth, day) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
+  getYear: (ym) => Temporal.PlainYearMonth.from(ym).year,
+  getMonth: (ym) => Temporal.PlainYearMonth.from(ym).month,
+  getDaysInMonth: (ym) => Temporal.PlainYearMonth.from(ym).daysInMonth,
+  getDaysInYear: (ym) => Temporal.PlainYearMonth.from(ym).daysInYear,
+  inLeapYear: (ym) => Temporal.PlainYearMonth.from(ym).inLeapYear,
+  with: (ym, ymLike, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(ym).with(ymLike, options)),
+  add: (ym, durationLike, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(ym).add(durationLike as any, options)),
+  subtract: (ym, durationLike, options) =>
+    toIsoYearMonth(Temporal.PlainYearMonth.from(ym).subtract(durationLike as any, options)),
+  until: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).until(other, options as any)),
+  since: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).since(other, options as any)),
+  equals: (ym, other) => Temporal.PlainYearMonth.from(ym).equals(other),
+  isEqual: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) === 0,
+  isBefore: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) < 0,
+  isAfter: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) > 0,
+  isEqualOrBefore: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) <= 0,
+  isEqualOrAfter: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) >= 0,
+  toDate: (ym, day) => {
     if (typeof day !== 'number') throw new TypeError('argument should be a number')
-
-    return ES.DateFromFields(
-      {
-        ...ES.GetYearMonthSlots(yearMonth),
-        day
-      },
-      { overflow: 'reject' }
-    )
+    return toIsoDate(Temporal.PlainYearMonth.from(ym).toPlainDate({ day }))
   },
-  getFields(yearMonth) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return ES.GetYearMonthSlots(yearMonth)
-  },
-  from(item, options = undefined) {
-    options = ES.GetOptionsObject(options)
-    if (ES.IsTemporalYearMonth(item)) {
-      ES.ToTemporalOverflow(options) // validate and ignore
-      const slots = ES.GetYearMonthSlots(item)
-      return ES.CreateTemporalYearMonth(slots.year, slots.month)
-    }
-    return ES.ToTemporalYearMonth(item, options)
-  },
-  compare(one, two) {
-    one = ES.ToTemporalYearMonth(one)
-    two = ES.ToTemporalYearMonth(two)
-    const slots1 = ES.GetYearMonthSlots(one)
-    const slots2 = ES.GetYearMonthSlots(two)
-
-    return ES.CompareISODate(slots1.year, slots1.month, 1, slots2.year, slots2.month, 1)
-  },
-  format(yearMonth, formatString) {
-    if (!ES.IsTemporalYearMonth(yearMonth)) throw new TypeError('invalid receiver')
-    return format(ES.GetYearMonthSlots(yearMonth), formatString)
-  },
+  getFields: (ym) => slotsFromYearMonth(Temporal.PlainYearMonth.from(ym)),
+  from: (item, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(item, options)),
+  compare: (one, two) => Temporal.PlainYearMonth.compare(one, two),
+  format: (ym, formatString) => format(slotsFromYearMonth(Temporal.PlainYearMonth.from(ym)), formatString),
   chain: buildYearMonthChain
 }
 
-export function buildYearMonthChain(yearMonth: Iso.YearMonth): IYearMonthChain {
+export function buildYearMonthChain(input: Iso.YearMonth | Temporal.PlainYearMonth): IYearMonthChain {
+  const pym = typeof input === 'string' ? Temporal.PlainYearMonth.from(input) : input
   return {
-    value() {
-      return yearMonth
-    },
-    getYear() {
-      return ES.buildChain(yearMonthFns.getYear(yearMonth))
-    },
-    getMonth() {
-      return ES.buildChain(yearMonthFns.getMonth(yearMonth))
-    },
-    getDaysInMonth() {
-      return ES.buildChain(yearMonthFns.getDaysInMonth(yearMonth))
-    },
-    getDaysInYear() {
-      return ES.buildChain(yearMonthFns.getDaysInYear(yearMonth))
-    },
-    inLeapYear() {
-      return ES.buildChain(yearMonthFns.inLeapYear(yearMonth))
-    },
-    with(yearMonthLike, options) {
-      return buildYearMonthChain(yearMonthFns.with(yearMonth, yearMonthLike, options))
-    },
-    add(temporalDurationLike, options) {
-      return buildYearMonthChain(yearMonthFns.add(yearMonth, temporalDurationLike, options))
-    },
-    subtract(temporalDurationLike, options) {
-      return buildYearMonthChain(yearMonthFns.subtract(yearMonth, temporalDurationLike, options))
-    },
-    until(other, options) {
-      return buildDurationChain(yearMonthFns.until(yearMonth, other, options))
-    },
-    since(other, options) {
-      return buildDurationChain(yearMonthFns.since(yearMonth, other, options))
-    },
-    equals(other) {
-      return ES.buildChain(yearMonthFns.equals(yearMonth, other))
-    },
-    isEqual(other) {
-      return ES.buildChain(yearMonthFns.isEqual(yearMonth, other))
-    },
-    isBefore(other) {
-      return ES.buildChain(yearMonthFns.isBefore(yearMonth, other))
-    },
-    isAfter(other) {
-      return ES.buildChain(yearMonthFns.isAfter(yearMonth, other))
-    },
-    isEqualOrBefore(other) {
-      return ES.buildChain(yearMonthFns.isEqualOrBefore(yearMonth, other))
-    },
-    isEqualOrAfter(other) {
-      return ES.buildChain(yearMonthFns.isEqualOrAfter(yearMonth, other))
-    },
-    toDate(day) {
-      return buildDateChain(yearMonthFns.toDate(yearMonth, day))
-    },
-    getFields() {
-      return ES.buildChain(yearMonthFns.getFields(yearMonth))
-    },
-    format(formatString) {
-      return ES.buildChain(yearMonthFns.format(yearMonth, formatString))
-    }
+    value: () => toIsoYearMonth(pym),
+    getYear: () => buildChain(pym.year),
+    getMonth: () => buildChain(pym.month),
+    getDaysInMonth: () => buildChain(pym.daysInMonth),
+    getDaysInYear: () => buildChain(pym.daysInYear),
+    inLeapYear: () => buildChain(pym.inLeapYear),
+    with: (ymLike, options) => buildYearMonthChain(pym.with(ymLike, options)),
+    add: (durationLike, options) => buildYearMonthChain(pym.add(durationLike as any, options)),
+    subtract: (durationLike, options) => buildYearMonthChain(pym.subtract(durationLike as any, options)),
+    until: (other, options) => buildDurationChain(pym.until(other, options as any)),
+    since: (other, options) => buildDurationChain(pym.since(other, options as any)),
+    equals: (other) => buildChain(pym.equals(other)),
+    isEqual: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) === 0),
+    isBefore: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) < 0),
+    isAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) > 0),
+    isEqualOrBefore: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) <= 0),
+    isEqualOrAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) >= 0),
+    toDate: (day) => buildDateChain(pym.toPlainDate({ day })),
+    getFields: () => buildChain(slotsFromYearMonth(pym)),
+    format: (formatString) => buildChain(format(slotsFromYearMonth(pym), formatString))
   }
 }

@@ -31,7 +31,7 @@ describe('Instant', () => {
     })
     it('does not allow invalid', () => {
       assert.ok(!instantFns.isValid('2020-01-01T00:00:1Z'))
-      assert.ok(!instantFns.isValid('2020-01-01T00:00:01.1111Z'))
+      // sub-ms precision is valid in Temporal
       assert.ok(!instantFns.isValid('test'))
     })
   })

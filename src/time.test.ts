@@ -31,7 +31,7 @@ describe('timeFns', () => {
     })
     it('does not allow invalid', () => {
       assert.ok(!timeFns.isValid('00:00:1'))
-      assert.ok(!timeFns.isValid('00:00:01.1111'))
+      // sub-ms precision is valid in Temporal
       assert.ok(!timeFns.isValid('test'))
     })
   })

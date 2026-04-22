@@ -1,5 +1,7 @@
 import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
+import { Temporal } from 'temporal-polyfill'
+import { Chain } from '../temporal'
+import { DurationSlots } from '../slots'
 
 export interface IDurationFns {
   fromNumbers(
@@ -74,21 +76,21 @@ export interface IDurationFns {
   round(
     duration: Iso.Duration,
     options: {
-      largestUnit?: ES.TemporalSingularUnit | 'auto' | ES.TemporalPluralUnit
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
       relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
     }
   ): Iso.Duration
   total(
     duration: Iso.Duration,
     options: {
-      unit: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      unit: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
     }
   ): number
-  getFields(duration: Iso.Duration): ES.DurationSlots
+  getFields(duration: Iso.Duration): DurationSlots
   from(item: any): Iso.Duration
   compare(
     one: Iso.Duration,
@@ -101,17 +103,17 @@ export interface IDurationFns {
 /**
  * @internal
  */
-export interface IDurationChain extends ES.Chain<Iso.Duration> {
-  getYears(): ES.Chain<number>
-  getMonths(): ES.Chain<number>
-  getWeeks(): ES.Chain<number>
-  getDays(): ES.Chain<number>
-  getHours(): ES.Chain<number>
-  getMinutes(): ES.Chain<number>
-  getSeconds(): ES.Chain<number>
-  getMilliseconds(): ES.Chain<number>
-  getSign(): ES.Chain<number>
-  isBlank(): ES.Chain<boolean>
+export interface IDurationChain extends Chain<Iso.Duration> {
+  getYears(): Chain<number>
+  getMonths(): Chain<number>
+  getWeeks(): Chain<number>
+  getDays(): Chain<number>
+  getHours(): Chain<number>
+  getMinutes(): Chain<number>
+  getSeconds(): Chain<number>
+  getMilliseconds(): Chain<number>
+  getSign(): Chain<number>
+  isBlank(): Chain<boolean>
   with(durationLike: {
     years?: number
     months?: number
@@ -155,15 +157,12 @@ export interface IDurationChain extends ES.Chain<Iso.Duration> {
     options?: { relativeTo: Iso.DateTime | Iso.ZonedDateTime | Iso.Date }
   ): IDurationChain
   round(options: {
-    largestUnit?: ES.TemporalSingularUnit | 'auto'
-    smallestUnit?: ES.TemporalSingularUnit
+    largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+    smallestUnit?: Temporal.DateTimeUnit
     roundingIncrement?: number
-    roundingMode?: ES.TemporalRoundingMode
+    roundingMode?: Temporal.RoundingMode
     relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
   }): IDurationChain
-  total(options: {
-    unit: ES.TemporalSingularUnit
-    relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date
-  }): ES.Chain<number>
-  getFields(): ES.Chain<ES.DurationSlots>
+  total(options: { unit: Temporal.DateTimeUnit; relativeTo?: Iso.DateTime | Iso.ZonedDateTime | Iso.Date }): Chain<number>
+  getFields(): Chain<DurationSlots>
 }

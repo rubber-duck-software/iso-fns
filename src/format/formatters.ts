@@ -1,7 +1,54 @@
+import { Temporal } from 'temporal-polyfill'
 import lightFormatters from './lightFormatters'
-import * as ES from '../ecmascript'
 import addLeadingZeros from './addLeadingZeros'
 import { Localize, QuarterIndex, Month, Day, LocaleDayPeriod } from './types'
+
+function computeWeekOfYear(year: number, month: number, day: number): number {
+  return new Temporal.PlainDate(year, month, day).weekOfYear as number
+}
+
+function computeDayOfWeek(year: number, month: number, day: number): number {
+  return new Temporal.PlainDate(year, month, day).dayOfWeek
+}
+
+function parseOffsetString(offset: string): number | null {
+  if (offset === 'Z' || offset === '+00:00' || offset === '-00:00') return 0
+  const match = /^([+-])(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(offset)
+  if (!match) return null
+  const sign = match[1] === '-' ? -1 : 1
+  const hours = parseInt(match[2], 10)
+  const minutes = parseInt(match[3], 10)
+  const seconds = match[4] ? parseInt(match[4], 10) : 0
+  return sign * (hours * 3600 + minutes * 60 + seconds) * 1000
+}
+
+const timeZoneAbbreviationCache = new Map<string, string>()
+function getTimeZoneAbbreviation(timeZone: string, epochMilliseconds: number): string {
+  let cached = timeZoneAbbreviationCache.get(timeZone)
+  if (cached === undefined) {
+    const parts = new Intl.DateTimeFormat('en-us', {
+      timeZone,
+      timeZoneName: 'short'
+    }).formatToParts(new Date(epochMilliseconds))
+    cached = parts.find((p) => p.type === 'timeZoneName')?.value ?? timeZone
+    timeZoneAbbreviationCache.set(timeZone, cached)
+  }
+  return cached
+}
+
+const timeZoneFullNameCache = new Map<string, string>()
+function getTimeZoneName(timeZone: string, epochMilliseconds: number): string {
+  let cached = timeZoneFullNameCache.get(timeZone)
+  if (cached === undefined) {
+    const parts = new Intl.DateTimeFormat('en-us', {
+      timeZone,
+      timeZoneName: 'long'
+    }).formatToParts(new Date(epochMilliseconds))
+    cached = parts.find((p) => p.type === 'timeZoneName')?.value ?? timeZone
+    timeZoneFullNameCache.set(timeZone, cached)
+  }
+  return cached
+}
 
 const dayPeriodEnum = {
   am: 'am',
@@ -158,7 +205,7 @@ var formatters = {
   },
   // ISO week of year
   I(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
-    const isoWeek = ES.WeekOfYear(date.year, date.month, date.day)
+    const isoWeek = computeWeekOfYear(date.year, date.month, date.day)
 
     if (token === 'Io') {
       return localize.ordinalNumber(isoWeek, { unit: 'week' })
@@ -177,7 +224,7 @@ var formatters = {
   },
   // Day of week
   E(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
-    const dayOfWeek = ES.DayOfWeek(date.year, date.month, date.day) as Day
+    const dayOfWeek = computeDayOfWeek(date.year, date.month, date.day) as Day
     switch (token) {
       // Tue
       case 'E':
@@ -207,7 +254,7 @@ var formatters = {
   },
   // ISO day of week
   i(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
-    const dayOfWeek = ES.DayOfWeek(date.year, date.month, date.day) as 1 | 2 | 3 | 4 | 5 | 6 | 7
+    const dayOfWeek = computeDayOfWeek(date.year, date.month, date.day) as 1 | 2 | 3 | 4 | 5 | 6 | 7
     const isoDayOfWeek = dayOfWeek === 7 ? 0 : dayOfWeek
 
     switch (token) {
@@ -405,7 +452,7 @@ var formatters = {
   },
   // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
   X(date: { offset: string }, token: string) {
-    const timezoneOffset = ES.ParseOffsetString(date.offset)
+    const timezoneOffset = parseOffsetString(date.offset)
 
     if (timezoneOffset === null) {
       throw new Error('Invalid timezone offset supplied')
@@ -438,7 +485,7 @@ var formatters = {
   },
   // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
   x(date: { offset: string }, token: string) {
-    const timezoneOffset = ES.ParseOffsetString(date.offset)
+    const timezoneOffset = parseOffsetString(date.offset)
 
     if (timezoneOffset === null) {
       throw new Error('Invalid timezone offset supplied')
@@ -467,7 +514,7 @@ var formatters = {
   },
   // Timezone (GMT)
   O(date: { offset: string }, token: string) {
-    const timezoneOffset = ES.ParseOffsetString(date.offset)
+    const timezoneOffset = parseOffsetString(date.offset)
 
     if (timezoneOffset === null) {
       throw new Error('Invalid timezone offset supplied')
@@ -491,11 +538,11 @@ var formatters = {
       case 'z':
       case 'zz':
       case 'zzz':
-        return ES.GetTimeZoneAbbreviation(date.timeZone, date.epochMilliseconds)
+        return getTimeZoneAbbreviation(date.timeZone, date.epochMilliseconds)
       // Long
       case 'zzzz':
       default:
-        return ES.GetTimeZoneName(date.timeZone, date.epochMilliseconds)
+        return getTimeZoneName(date.timeZone, date.epochMilliseconds)
     }
   }
 }

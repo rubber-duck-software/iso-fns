@@ -15,20 +15,20 @@ jobs:
       - name: Select Node Version
         uses: actions/setup-node@v1
         with:
-          node-version: "22.x"
-          registry-url: "https://registry.npmjs.org"
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Deps
-        run: yarn install
+        run: pnpm install
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Test
-        run: yarn test
+        run: pnpm test
 
       - name: Generate Coverage
-        run: yarn cc
+        run: pnpm cc
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
@@ -36,20 +36,20 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Release Package
-        run: yarn build-package
+        run: pnpm build-package
 
-      - run: "npm install -g npm@^11.0.0"
+      - run: 'npm install -g npm@^11.0.0'
 
-      - run: "npm --version"
+      - run: 'npm --version'
 
       - name: Publish To NPM
         run: npm publish ./package --tag alpha
 
       - name: Install Doc Dependencies
-        run: cd docs-site && yarn install
+        run: cd docs-site && pnpm install
 
       - name: Generate Documentation
-        run: rm -rf ./docs && yarn docs
+        run: rm -rf ./docs && pnpm docs
 
       - name: Deploy Documentation
         uses: peaceiris/actions-gh-pages@v3

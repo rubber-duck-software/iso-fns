@@ -1,5 +1,5 @@
 import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
+import { Chain } from '../temporal'
 import { IDateChain } from './IDateFns'
 
 export interface IMonthDayFns {
@@ -14,7 +14,7 @@ export interface IMonthDayFns {
       month: number
       day: number
     },
-    options?: { overflow: ES.TemporalOverflow }
+    options?: { overflow: 'constrain' | 'reject' }
   ): Iso.MonthDay
   equals(monthDay: Iso.MonthDay, other: Iso.MonthDay): boolean
   toDate(monthDay: Iso.MonthDay, year: number): Iso.Date
@@ -22,7 +22,7 @@ export interface IMonthDayFns {
     month: number
     day: number
   }
-  from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.MonthDay
+  from(item: any, options?: { overflow: 'constrain' | 'reject' }): Iso.MonthDay
   compare(one: Iso.MonthDay, two: Iso.MonthDay): number
   /**
    * @summary Format the ZonedDateTime.
@@ -102,21 +102,21 @@ export interface IMonthDayFns {
 /**
  * @internal
  */
-export interface IMonthDayChain extends ES.Chain<Iso.MonthDay> {
-  getDay(): ES.Chain<number>
-  getMonth(): ES.Chain<number>
+export interface IMonthDayChain extends Chain<Iso.MonthDay> {
+  getDay(): Chain<number>
+  getMonth(): Chain<number>
   with(
     monthDayLike: {
       month: number
       day: number
     },
-    options?: { overflow: ES.TemporalOverflow }
+    options?: { overflow: 'constrain' | 'reject' }
   ): IMonthDayChain
-  equals(other: Iso.MonthDay): ES.Chain<boolean>
+  equals(other: Iso.MonthDay): Chain<boolean>
   toDate(year: number): IDateChain
-  getFields(): ES.Chain<{
+  getFields(): Chain<{
     month: number
     day: number
   }>
-  format(formatString: string): ES.Chain<string>
+  format(formatString: string): Chain<string>
 }

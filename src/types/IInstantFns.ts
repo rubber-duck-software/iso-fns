@@ -1,5 +1,6 @@
 import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
+import { Temporal } from 'temporal-polyfill'
+import { Chain } from '../temporal'
 import { IDurationChain } from './IDurationFns'
 import { IZonedDateTimeChain } from './IZonedDateTimeFns'
 
@@ -55,28 +56,28 @@ export interface IInstantFns {
     from: Iso.Instant,
     until: Iso.Instant,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   since(
     to: Iso.Instant,
     since: Iso.Instant,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   round(
     instant: Iso.Instant,
     options: {
-      smallestUnit?: ES.TemporalSingularUnit
+      smallestUnit?: Temporal.DateTimeUnit
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Instant
   equals(instant: Iso.Instant, other: Iso.Instant): boolean
@@ -100,9 +101,9 @@ export interface IInstantFns {
 /**
  * @internal
  */
-export interface IInstantChain extends ES.Chain<Iso.Instant> {
-  getEpochSeconds(): ES.Chain<number>
-  getEpochMilliseconds(): ES.Chain<number>
+export interface IInstantChain extends Chain<Iso.Instant> {
+  getEpochSeconds(): Chain<number>
+  getEpochMilliseconds(): Chain<number>
   add(
     temporalDurationLike:
       | Iso.Duration
@@ -134,32 +135,32 @@ export interface IInstantChain extends ES.Chain<Iso.Instant> {
   until(
     until: Iso.Instant,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   since(
     since: Iso.Instant,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   round(options: {
-    smallestUnit?: ES.TemporalSingularUnit
+    smallestUnit?: Temporal.DateTimeUnit
     roundingIncrement?: number
-    roundingMode?: ES.TemporalRoundingMode
+    roundingMode?: Temporal.RoundingMode
   }): IInstantChain
-  equals(other: Iso.Instant): ES.Chain<boolean>
-  isEqual(other: Iso.Instant): ES.Chain<boolean>
-  isBefore(other: Iso.Instant): ES.Chain<boolean>
-  isAfter(other: Iso.Instant): ES.Chain<boolean>
-  isEqualOrBefore(other: Iso.Instant): ES.Chain<boolean>
-  isEqualOrAfter(other: Iso.Instant): ES.Chain<boolean>
+  equals(other: Iso.Instant): Chain<boolean>
+  isEqual(other: Iso.Instant): Chain<boolean>
+  isBefore(other: Iso.Instant): Chain<boolean>
+  isAfter(other: Iso.Instant): Chain<boolean>
+  isEqualOrBefore(other: Iso.Instant): Chain<boolean>
+  isEqualOrAfter(other: Iso.Instant): Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
-  toJsDate(): ES.Chain<Date>
+  toJsDate(): Chain<Date>
 }

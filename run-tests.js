@@ -43,7 +43,7 @@ async function runTests() {
     const files = await getFiles('./')
 
     for (const file of files) {
-      process.stdout.write(`\u001b[34m${path.parse(file).name} (${path.relative('./', file)})\u001b[39m\n`)
+      process.stdout.write(`[34m${path.parse(file).name} (${path.relative('./', file)})[39m\n`)
       require(file)
       await beartest.runner.waitForTests()
     }

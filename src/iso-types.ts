@@ -56,7 +56,9 @@ export module Iso {
    *
    * The `Iso.ZonedDateTime` functions are a superset of `Iso.DateTime` functions, which makes it easy to port code back and forth between the two types as needed. Because `Iso.DateTime` is not aware of time zones, in use cases where the time zone is known it's recommended to use `Iso.ZonedDateTime` which will automatically adjust for DST and can convert easily to `Iso.Instant` without having to re-specify the time zone.
    */
-  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]'] & { readonly [__brand]?: 'ZonedDateTime' }
+  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]'] & {
+    readonly [__brand]?: 'ZonedDateTime'
+  }
 
   /**
    * An `Iso.Date` represents a calendar date. "Calendar date" refers to the concept of a date as expressed in everyday usage, independent of any time zone. For example, it could be used to represent an event on a calendar which happens during the whole day no matter which time zone it's happening in.

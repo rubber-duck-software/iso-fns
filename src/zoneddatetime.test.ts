@@ -33,7 +33,7 @@ describe('ZonedDateTime', () => {
     })
     it('does not allow invalid', () => {
       assert.ok(!zonedDateTimeFns.isValid('2020-01-01T00:00:1-06:00[America/Chicago]'))
-      assert.ok(!zonedDateTimeFns.isValid('2020-01-01T00:00:01.1111-06:00[America/Chicago]'))
+      // sub-ms precision is valid in Temporal
       assert.ok(!zonedDateTimeFns.isValid('test'))
     })
   })

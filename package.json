@@ -25,11 +25,11 @@
     "format": "prettier --write .",
     "build": "tsup src/index.ts --format esm,cjs --dts --outDir dist",
     "build-package": "./scripts/release.sh",
-    "test": "yarn lint && c8 -r text node -r ts-node/register ./run-tests",
+    "test": "pnpm lint && c8 -r text node -r ts-node/register ./run-tests",
     "cc": "c8 report -r lcovonly",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "docs": "node ./scripts/generate-docs.js",
-    "verify-build": "yarn format && yarn build && yarn test && yarn cc && yarn docs"
+    "verify-build": "pnpm format && pnpm build && pnpm test && pnpm cc && pnpm docs"
   },
   "devDependencies": {
     "all-contributors-cli": "^6.20.0",
@@ -45,5 +45,8 @@
     "typedoc-plugin-markdown": "^3.11.3",
     "typedoc-plugin-merge-modules": "^3.0.2",
     "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "temporal-polyfill": "^0.3.2"
   }
 }

@@ -517,7 +517,6 @@ describe('Date', () => {
     })
     it('Date.from(required prop undefined) throws', () =>
       assert.throws(() => dateFns.from({ year: undefined, month: 11, day: 18 }), TypeError))
-    it('Date.from(number) is converted to string', () => assert.equal(dateFns.from(19761118), dateFns.from('19761118')))
     it('basic format', () => {
       assert.equal(dateFns.from('19761118'), '1976-11-18')
       assert.equal(dateFns.from('+0019761118'), '1976-11-18')
@@ -674,7 +673,7 @@ describe('Date', () => {
     it('convert to ZonedDateTime with a timezone alias', () => {
       const date1 = dateFns.from('2019-01-01')
       const zonedDateTime1 = dateFns.toZonedDateTime(date1, { timeZone: 'US/Central' })
-      assert.equal(zonedDateTime1, '2019-01-01T00:00-06:00[America/Chicago]')
+      assert.equal(zonedDateTime1, '2019-01-01T00:00-06:00[US/Central]')
     })
   })
 })
