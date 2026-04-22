@@ -1,13 +1,14 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { DateTimeSlots } from '../slots'
-import { IDurationChain } from './IDurationFns'
-import { IZonedDateTimeChain } from './IZonedDateTimeFns'
-import { IDateChain } from './IDateFns'
-import { IYearMonthChain } from './IYearMonthFns'
-import { IMonthDayChain } from './IMonthDayFns'
-import { ITimeChain } from './ITimeFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type DateTimeSlots } from '../slots'
+import { type FormatOptions } from '../format'
+import { type IDurationChain } from './IDurationFns'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
+import { type IDateChain } from './IDateFns'
+import { type IYearMonthChain } from './IYearMonthFns'
+import { type IMonthDayChain } from './IMonthDayFns'
+import { type ITimeChain } from './ITimeFns'
 
 export interface IDateTimeFns {
   /**
@@ -119,10 +120,6 @@ export interface IDateTimeFns {
     }
   ): Iso.DateTime
   equals(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
-  /**
-   * alias for {@link IDateTimeFns.equals equals}
-   */
-  isEqual(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isBefore(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isAfter(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isEqualOrBefore(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
@@ -137,7 +134,10 @@ export interface IDateTimeFns {
   toMonthDay(dateTime: Iso.DateTime): Iso.MonthDay
   toTime(dateTime: Iso.DateTime): Iso.Time
   getFields(dateTime: Iso.DateTime): DateTimeSlots
-  from(item: any, options?: { overflow: 'constrain' | 'reject' }): Iso.DateTime
+  from(
+    item: string | Partial<DateTimeSlots & { offset: string; timeZone: string }>,
+    options?: { overflow: 'constrain' | 'reject' }
+  ): Iso.DateTime
   compare(one: Iso.DateTime, two: Iso.DateTime): number
   /**
    * @summary Format the ZonedDateTime.
@@ -308,7 +308,7 @@ export interface IDateTimeFns {
    * //=> "3 o'clock"
    * ```
    */
-  format(dateTime: Iso.DateTime, formatString: string): string
+  format(dateTime: Iso.DateTime, formatString: string, options?: FormatOptions): string
   chain(dateTime: Iso.DateTime): IDateTimeChain
 }
 
@@ -399,7 +399,6 @@ export interface IDateTimeChain extends Chain<Iso.DateTime> {
     roundingMode?: Temporal.RoundingMode
   }): IDateTimeChain
   equals(other: Iso.DateTime): Chain<boolean>
-  isEqual(other: Iso.DateTime): Chain<boolean>
   isBefore(other: Iso.DateTime): Chain<boolean>
   isAfter(other: Iso.DateTime): Chain<boolean>
   isEqualOrBefore(other: Iso.DateTime): Chain<boolean>
@@ -413,5 +412,5 @@ export interface IDateTimeChain extends Chain<Iso.DateTime> {
   toMonthDay(): IMonthDayChain
   toTime(): ITimeChain
   getFields(): Chain<DateTimeSlots>
-  format(formatString: string): Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

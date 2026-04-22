@@ -2,8 +2,8 @@ import { Temporal } from 'temporal-polyfill'
 import { IInstantChain, IInstantFns } from '../types'
 import { Iso } from '../iso-types'
 import { buildChain, isIsoInstant, toIsoDuration, toIsoInstant, toIsoZonedDateTime } from '../temporal'
-import { buildDurationChain } from './durationFns'
-import { buildZonedDateTimeChain } from './zonedDateTimeFns'
+import { buildDurationChainFromTemporal } from './durationFns'
+import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
 
 export const instantFns: IInstantFns = {
   now() {
@@ -16,7 +16,10 @@ export const instantFns: IInstantFns = {
     return toIsoInstant(Temporal.Instant.fromEpochMilliseconds(epochMilliseconds))
   },
   fromEpochSeconds(epochSeconds) {
-    return toIsoInstant(Temporal.Instant.fromEpochMilliseconds(Number(epochSeconds) * 1000))
+    if (arguments.length < 1) {
+      throw new TypeError('missing argument: epochSeconds is required')
+    }
+    return toIsoInstant(Temporal.Instant.fromEpochMilliseconds(Math.round(Number(epochSeconds) * 1000)))
   },
   isValid(instant): instant is Iso.Instant {
     return isIsoInstant(instant)
@@ -24,7 +27,7 @@ export const instantFns: IInstantFns = {
   assertIsValid(instant): asserts instant is Iso.Instant {
     if (!isIsoInstant(instant)) throw new TypeError('invalid receiver')
   },
-  getEpochSeconds: (instant) => Math.floor(Temporal.Instant.from(instant).epochMilliseconds / 1000),
+  getEpochSeconds: (instant) => Temporal.Instant.from(instant).epochMilliseconds / 1000,
   getEpochMilliseconds: (instant) => Temporal.Instant.from(instant).epochMilliseconds,
   add: (instant, durationLike) =>
     toIsoInstant(Temporal.Instant.from(instant).add(Temporal.Duration.from(durationLike as any))),
@@ -34,7 +37,7 @@ export const instantFns: IInstantFns = {
   since: (instant, other, options) => toIsoDuration(Temporal.Instant.from(instant).since(other, options as any)),
   round: (instant, options) => toIsoInstant(Temporal.Instant.from(instant).round(options as any)),
   equals: (instant, other) => Temporal.Instant.from(instant).equals(other),
-  isEqual: (instant, other) => Temporal.Instant.compare(instant, other) === 0,
+  isEqual: (instant, other) => Temporal.Instant.from(instant).equals(other),
   isBefore: (instant, other) => Temporal.Instant.compare(instant, other) < 0,
   isAfter: (instant, other) => Temporal.Instant.compare(instant, other) > 0,
   isEqualOrBefore: (instant, other) => Temporal.Instant.compare(instant, other) <= 0,
@@ -50,24 +53,27 @@ export const instantFns: IInstantFns = {
   chain: buildInstantChain
 }
 
-export function buildInstantChain(input: Iso.Instant | Temporal.Instant): IInstantChain {
-  const inst = typeof input === 'string' ? Temporal.Instant.from(input) : input
+export function buildInstantChain(input: Iso.Instant): IInstantChain {
+  return buildInstantChainFromTemporal(Temporal.Instant.from(input))
+}
+
+export function buildInstantChainFromTemporal(inst: Temporal.Instant): IInstantChain {
   return {
     value: () => toIsoInstant(inst),
-    getEpochSeconds: () => buildChain(Math.floor(inst.epochMilliseconds / 1000)),
+    getEpochSeconds: () => buildChain(inst.epochMilliseconds / 1000),
     getEpochMilliseconds: () => buildChain(inst.epochMilliseconds),
-    add: (durationLike) => buildInstantChain(inst.add(Temporal.Duration.from(durationLike as any))),
-    subtract: (durationLike) => buildInstantChain(inst.subtract(Temporal.Duration.from(durationLike as any))),
-    until: (other, options) => buildDurationChain(inst.until(other, options as any)),
-    since: (other, options) => buildDurationChain(inst.since(other, options as any)),
-    round: (options) => buildInstantChain(inst.round(options as any)),
+    add: (durationLike) => buildInstantChainFromTemporal(inst.add(Temporal.Duration.from(durationLike as any))),
+    subtract: (durationLike) => buildInstantChainFromTemporal(inst.subtract(Temporal.Duration.from(durationLike as any))),
+    until: (other, options) => buildDurationChainFromTemporal(inst.until(other, options as any)),
+    since: (other, options) => buildDurationChainFromTemporal(inst.since(other, options as any)),
+    round: (options) => buildInstantChainFromTemporal(inst.round(options as any)),
     equals: (other) => buildChain(inst.equals(other)),
-    isEqual: (other) => buildChain(Temporal.Instant.compare(inst, other) === 0),
+    isEqual: (other) => buildChain(inst.equals(other)),
     isBefore: (other) => buildChain(Temporal.Instant.compare(inst, other) < 0),
     isAfter: (other) => buildChain(Temporal.Instant.compare(inst, other) > 0),
     isEqualOrBefore: (other) => buildChain(Temporal.Instant.compare(inst, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.Instant.compare(inst, other) >= 0),
-    toZonedDateTime: (timeZone) => buildZonedDateTimeChain(inst.toZonedDateTimeISO(timeZone)),
+    toZonedDateTime: (timeZone) => buildZonedDateTimeChainFromTemporal(inst.toZonedDateTimeISO(timeZone)),
     toJsDate: () => buildChain(new Date(inst.epochMilliseconds))
   }
 }

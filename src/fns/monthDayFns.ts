@@ -2,7 +2,7 @@ import { Temporal } from 'temporal-polyfill'
 import { IMonthDayFns, IMonthDayChain } from '../types'
 import { Iso } from '../iso-types'
 import { buildChain, isIsoMonthDay, slotsFromMonthDay, toIsoDate, toIsoMonthDay } from '../temporal'
-import { buildDateChain } from './dateFns'
+import { buildDateChainFromTemporal } from './dateFns'
 import format from '../format'
 
 export const monthDayFns: IMonthDayFns = {
@@ -22,6 +22,7 @@ export const monthDayFns: IMonthDayFns = {
   getMonth: (md) => slotsFromMonthDay(Temporal.PlainMonthDay.from(md)).month,
   with: (md, mdLike, options) => toIsoMonthDay(Temporal.PlainMonthDay.from(md).with(mdLike, options)),
   equals: (md, other) => Temporal.PlainMonthDay.from(md).equals(other),
+  isEqual: (md, other) => Temporal.PlainMonthDay.from(md).equals(other),
   toDate: (md, year) => toIsoDate(Temporal.PlainMonthDay.from(md).toPlainDate({ year })),
   getFields: (md) => slotsFromMonthDay(Temporal.PlainMonthDay.from(md)),
   from: (item, options) => toIsoMonthDay(Temporal.PlainMonthDay.from(item, options)),
@@ -32,21 +33,25 @@ export const monthDayFns: IMonthDayFns = {
     if (a.day !== b.day) return a.day < b.day ? -1 : 1
     return 0
   },
-  format: (md, formatString) => format(slotsFromMonthDay(Temporal.PlainMonthDay.from(md)), formatString),
+  format: (md, formatString, options) => format(Temporal.PlainMonthDay.from(md), formatString, options),
   chain: buildMonthDayChain
 }
 
-export function buildMonthDayChain(input: Iso.MonthDay | Temporal.PlainMonthDay): IMonthDayChain {
-  const pmd = typeof input === 'string' ? Temporal.PlainMonthDay.from(input) : input
+export function buildMonthDayChain(input: Iso.MonthDay): IMonthDayChain {
+  return buildMonthDayChainFromTemporal(Temporal.PlainMonthDay.from(input))
+}
+
+export function buildMonthDayChainFromTemporal(pmd: Temporal.PlainMonthDay): IMonthDayChain {
   const slots = slotsFromMonthDay(pmd)
   return {
     value: () => toIsoMonthDay(pmd),
     getDay: () => buildChain(slots.day),
     getMonth: () => buildChain(slots.month),
-    with: (mdLike, options) => buildMonthDayChain(pmd.with(mdLike, options)),
+    with: (mdLike, options) => buildMonthDayChainFromTemporal(pmd.with(mdLike, options)),
     equals: (other) => buildChain(pmd.equals(other)),
-    toDate: (year: number) => buildDateChain(pmd.toPlainDate({ year })),
+    isEqual: (other) => buildChain(pmd.equals(other)),
+    toDate: (year: number) => buildDateChainFromTemporal(pmd.toPlainDate({ year })),
     getFields: () => buildChain(slots),
-    format: (formatString) => buildChain(format(slots, formatString))
+    format: (formatString, options) => buildChain(format(pmd, formatString, options))
   }
 }

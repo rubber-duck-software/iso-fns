@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
-import { zonedDateTimeFns } from './index'
+import { zonedDateTimeFns } from '../src/index'
 
 const { describe } = test
 const it = test
@@ -46,7 +46,7 @@ describe('ZonedDateTime', () => {
       // assert.equal(typeof zdt, 'object')
       assert.equal(
         zonedDateTimeFns.chain(zdt).toInstant().getEpochSeconds().value(),
-        Math.floor(Date.UTC(1976, 10, 18, 15, 23, 30, 123) / 1e3),
+        Date.UTC(1976, 10, 18, 15, 23, 30, 123) / 1e3,
         'epochSeconds'
       )
       assert.equal(

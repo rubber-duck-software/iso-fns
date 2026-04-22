@@ -1,14 +1,15 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { DateSlots, TimeSlots } from '../slots'
-import { IInstantChain } from './IInstantFns'
-import { IDateChain } from './IDateFns'
-import { ITimeChain } from './ITimeFns'
-import { IYearMonthChain } from './IYearMonthFns'
-import { IMonthDayChain } from './IMonthDayFns'
-import { IDateTimeChain } from './IDateTimeFns'
-import { IDurationChain } from './IDurationFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type DateSlots, type DateTimeSlots, type TimeSlots } from '../slots'
+import { type FormatOptions } from '../format'
+import { type IInstantChain } from './IInstantFns'
+import { type IDateChain } from './IDateFns'
+import { type ITimeChain } from './ITimeFns'
+import { type IYearMonthChain } from './IYearMonthFns'
+import { type IMonthDayChain } from './IMonthDayFns'
+import { type IDateTimeChain } from './IDateTimeFns'
+import { type IDurationChain } from './IDurationFns'
 
 export interface IZonedDateTimeFns {
   /**
@@ -127,6 +128,7 @@ export interface IZonedDateTimeFns {
     }
   ): Iso.ZonedDateTime
   equals(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqual(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
   startOfDay(zonedDateTime: Iso.ZonedDateTime): Iso.ZonedDateTime
   toInstant(zonedDateTime: Iso.ZonedDateTime): Iso.Instant
   toDate(zonedDateTime: Iso.ZonedDateTime): Iso.Date
@@ -146,7 +148,7 @@ export interface IZonedDateTimeFns {
     timeZone: string
   }
   from(
-    item: any,
+    item: string | Partial<DateTimeSlots & { timeZone: string; offset: string }>,
     options?: {
       overflow?: 'constrain' | 'reject'
       disambiguation?: 'compatible' | 'earlier' | 'later' | 'reject'
@@ -334,7 +336,7 @@ export interface IZonedDateTimeFns {
    * //=> '02/11/2014'
    * ```
    */
-  format(zonedDateTime: Iso.ZonedDateTime, format: string): string
+  format(zonedDateTime: Iso.ZonedDateTime, format: string, options?: FormatOptions): string
   chain(zonedDateTime: Iso.ZonedDateTime): IZonedDateTimeChain
 }
 
@@ -435,6 +437,7 @@ export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
     roundingMode?: Temporal.RoundingMode
   }): IZonedDateTimeChain
   equals(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqual(other: Iso.ZonedDateTime): Chain<boolean>
   startOfDay(): IZonedDateTimeChain
   toInstant(): IInstantChain
   toDate(): IDateChain
@@ -453,5 +456,5 @@ export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
     offset: string
     timeZone: string
   }>
-  format(formatString: string): Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

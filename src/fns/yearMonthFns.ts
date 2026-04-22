@@ -2,8 +2,8 @@ import { Temporal } from 'temporal-polyfill'
 import { IYearMonthFns, IYearMonthChain } from '../types'
 import { Iso } from '../iso-types'
 import { buildChain, isIsoYearMonth, slotsFromYearMonth, toIsoDate, toIsoDuration, toIsoYearMonth } from '../temporal'
-import { buildDurationChain } from './durationFns'
-import { buildDateChain } from './dateFns'
+import { buildDurationChainFromTemporal } from './durationFns'
+import { buildDateChainFromTemporal } from './dateFns'
 import format from '../format'
 
 export const yearMonthFns: IYearMonthFns = {
@@ -31,7 +31,7 @@ export const yearMonthFns: IYearMonthFns = {
   until: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).until(other, options as any)),
   since: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).since(other, options as any)),
   equals: (ym, other) => Temporal.PlainYearMonth.from(ym).equals(other),
-  isEqual: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) === 0,
+  isEqual: (ym, other) => Temporal.PlainYearMonth.from(ym).equals(other),
   isBefore: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) < 0,
   isAfter: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) > 0,
   isEqualOrBefore: (ym, other) => Temporal.PlainYearMonth.compare(ym, other) <= 0,
@@ -43,12 +43,15 @@ export const yearMonthFns: IYearMonthFns = {
   getFields: (ym) => slotsFromYearMonth(Temporal.PlainYearMonth.from(ym)),
   from: (item, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(item, options)),
   compare: (one, two) => Temporal.PlainYearMonth.compare(one, two),
-  format: (ym, formatString) => format(slotsFromYearMonth(Temporal.PlainYearMonth.from(ym)), formatString),
+  format: (ym, formatString, options) => format(Temporal.PlainYearMonth.from(ym), formatString, options),
   chain: buildYearMonthChain
 }
 
-export function buildYearMonthChain(input: Iso.YearMonth | Temporal.PlainYearMonth): IYearMonthChain {
-  const pym = typeof input === 'string' ? Temporal.PlainYearMonth.from(input) : input
+export function buildYearMonthChain(input: Iso.YearMonth): IYearMonthChain {
+  return buildYearMonthChainFromTemporal(Temporal.PlainYearMonth.from(input))
+}
+
+export function buildYearMonthChainFromTemporal(pym: Temporal.PlainYearMonth): IYearMonthChain {
   return {
     value: () => toIsoYearMonth(pym),
     getYear: () => buildChain(pym.year),
@@ -56,19 +59,19 @@ export function buildYearMonthChain(input: Iso.YearMonth | Temporal.PlainYearMon
     getDaysInMonth: () => buildChain(pym.daysInMonth),
     getDaysInYear: () => buildChain(pym.daysInYear),
     inLeapYear: () => buildChain(pym.inLeapYear),
-    with: (ymLike, options) => buildYearMonthChain(pym.with(ymLike, options)),
-    add: (durationLike, options) => buildYearMonthChain(pym.add(durationLike as any, options)),
-    subtract: (durationLike, options) => buildYearMonthChain(pym.subtract(durationLike as any, options)),
-    until: (other, options) => buildDurationChain(pym.until(other, options as any)),
-    since: (other, options) => buildDurationChain(pym.since(other, options as any)),
+    with: (ymLike, options) => buildYearMonthChainFromTemporal(pym.with(ymLike, options)),
+    add: (durationLike, options) => buildYearMonthChainFromTemporal(pym.add(durationLike as any, options)),
+    subtract: (durationLike, options) => buildYearMonthChainFromTemporal(pym.subtract(durationLike as any, options)),
+    until: (other, options) => buildDurationChainFromTemporal(pym.until(other, options as any)),
+    since: (other, options) => buildDurationChainFromTemporal(pym.since(other, options as any)),
     equals: (other) => buildChain(pym.equals(other)),
-    isEqual: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) === 0),
+    isEqual: (other) => buildChain(pym.equals(other)),
     isBefore: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) < 0),
     isAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) > 0),
     isEqualOrBefore: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) >= 0),
-    toDate: (day) => buildDateChain(pym.toPlainDate({ day })),
+    toDate: (day) => buildDateChainFromTemporal(pym.toPlainDate({ day })),
     getFields: () => buildChain(slotsFromYearMonth(pym)),
-    format: (formatString) => buildChain(format(slotsFromYearMonth(pym), formatString))
+    format: (formatString, options) => buildChain(format(pym, formatString, options))
   }
 }

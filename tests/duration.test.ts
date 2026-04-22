@@ -1,7 +1,7 @@
 import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
-import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from './fns'
-import { Iso } from 'iso-types'
+import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from '../src/fns'
+import { Iso } from '../src/iso-types'
 import { Temporal } from 'temporal-polyfill'
 type TemporalPluralUnit = Temporal.PluralUnit<Temporal.DateTimeUnit>
 type TemporalSingularUnit = Temporal.DateTimeUnit
@@ -156,9 +156,11 @@ describe('durationFns', () => {
     })
     it('object must contain at least one correctly-spelled property', () => {
       assert.throws(() => durationFns.from({}), TypeError)
+      // @ts-expect-error - typo in 'month' (should be 'months') is intentional
       assert.throws(() => durationFns.from({ month: 12 }), TypeError)
     })
     it('incorrectly-spelled properties are ignored', () => {
+      // @ts-expect-error - typo in 'month' is intentional; extra keys should be ignored
       assert.equal(`${durationFns.from({ month: 1, days: 1 })}`, 'P1D')
     })
   })
@@ -996,6 +998,7 @@ describe('durationFns', () => {
       assert.equal(
         `${durationFns.round(oneMonth, {
           largestUnit: 'day',
+          // @ts-expect-error - extraneous 'months' is intentional; ignored at runtime
           relativeTo: dateFns.from({ year: 2020, month: 1, day: 1, months: 2 })
         })}`,
         'P31D'
@@ -1368,6 +1371,7 @@ describe('durationFns', () => {
       assert.equal(
         durationFns.total(oneMonth, {
           unit: 'months',
+          // @ts-expect-error - extraneous 'months' is intentional
           relativeTo: dateFns.from({ year: 2020, month: 1, day: 1, months: 2 })
         }),
         1

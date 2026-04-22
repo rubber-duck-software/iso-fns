@@ -57,8 +57,11 @@ export const durationFns: IDurationFns = {
   chain: buildDurationChain
 }
 
-export function buildDurationChain(input: Iso.Duration | Temporal.Duration): IDurationChain {
-  const dur = typeof input === 'string' ? Temporal.Duration.from(input) : input
+export function buildDurationChain(input: Iso.Duration): IDurationChain {
+  return buildDurationChainFromTemporal(Temporal.Duration.from(input))
+}
+
+export function buildDurationChainFromTemporal(dur: Temporal.Duration): IDurationChain {
   return {
     value: () => toIsoDuration(dur),
     getYears: () => buildChain(dur.years),
@@ -71,12 +74,12 @@ export function buildDurationChain(input: Iso.Duration | Temporal.Duration): IDu
     getMilliseconds: () => buildChain(dur.milliseconds),
     getSign: () => buildChain(dur.sign),
     isBlank: () => buildChain(dur.blank),
-    with: (durationLike) => buildDurationChain(dur.with(durationLike)),
-    negated: () => buildDurationChain(dur.negated()),
-    abs: () => buildDurationChain(dur.abs()),
+    with: (durationLike) => buildDurationChainFromTemporal(dur.with(durationLike)),
+    negated: () => buildDurationChainFromTemporal(dur.negated()),
+    abs: () => buildDurationChainFromTemporal(dur.abs()),
     add: (other, options) => buildDurationChain(durationFns.add(toIsoDuration(dur), other, options)),
     subtract: (other, options) => buildDurationChain(durationFns.subtract(toIsoDuration(dur), other, options)),
-    round: (options) => buildDurationChain(dur.round(options as any)),
+    round: (options) => buildDurationChainFromTemporal(dur.round(options as any)),
     total: (options) => buildChain(dur.total(options as any)),
     getFields: () => buildChain(slotsFromDuration(dur))
   }

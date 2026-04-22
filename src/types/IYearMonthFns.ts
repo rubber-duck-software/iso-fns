@@ -1,9 +1,10 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { YearMonthSlots } from '../slots'
-import { IDurationChain } from './IDurationFns'
-import { IDateChain } from './IDateFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type YearMonthSlots } from '../slots'
+import { type FormatOptions } from '../format'
+import { type IDurationChain } from './IDurationFns'
+import { type IDateChain } from './IDateFns'
 
 export interface IYearMonthFns {
   fromNumbers(year: number, month: number): Iso.YearMonth
@@ -72,17 +73,13 @@ export interface IYearMonthFns {
     }
   ): Iso.Duration
   equals(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
-  /**
-   * alias for {@link IYearMonthFns.equals equals}
-   */
-  isEqual(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isEqualOrBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isEqualOrAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   toDate(yearMonth: Iso.YearMonth, day: number): Iso.Date
   getFields(yearMonth: Iso.YearMonth): YearMonthSlots
-  from(item: any, options?: { overflow: 'constrain' | 'reject' }): Iso.YearMonth
+  from(item: string | Partial<YearMonthSlots>, options?: { overflow: 'constrain' | 'reject' }): Iso.YearMonth
   compare(one: Iso.YearMonth, two: Iso.YearMonth): number
   /**
    * @summary Format the ZonedDateTime.
@@ -188,7 +185,7 @@ export interface IYearMonthFns {
    * //=> '02/2014'
    * ```
    */
-  format(yearMonth: Iso.YearMonth, format: string): string
+  format(yearMonth: Iso.YearMonth, format: string, options?: FormatOptions): string
   chain(yearMonth: Iso.YearMonth): IYearMonthChain
 }
 
@@ -251,12 +248,11 @@ export interface IYearMonthChain extends Chain<Iso.YearMonth> {
     }
   ): IDurationChain
   equals(other: Iso.YearMonth): Chain<boolean>
-  isEqual(other: Iso.YearMonth): Chain<boolean>
   isBefore(other: Iso.YearMonth): Chain<boolean>
   isAfter(other: Iso.YearMonth): Chain<boolean>
   isEqualOrBefore(other: Iso.YearMonth): Chain<boolean>
   isEqualOrAfter(other: Iso.YearMonth): Chain<boolean>
   toDate(day: number): IDateChain
   getFields(): Chain<YearMonthSlots>
-  format(formatString: string): Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

@@ -1,22 +1,22 @@
-import { Temporal } from 'temporal-polyfill'
-import { IDateChain, IDateFns } from '../types'
-import { Iso } from '../iso-types'
+import {  Temporal } from 'temporal-polyfill'
+import { type IDateChain, type IDateFns } from '../types'
+import { type Iso } from '../iso-types'
 import {
-  buildChain,
-  isIsoDate,
-  slotsFromDate,
-  toIsoDate,
-  toIsoDateTime,
-  toIsoDuration,
-  toIsoMonthDay,
-  toIsoYearMonth,
-  toIsoZonedDateTime
+   buildChain,
+   isIsoDate,
+   slotsFromDate,
+   toIsoDate,
+   toIsoDateTime,
+   toIsoDuration,
+   toIsoMonthDay,
+   toIsoYearMonth,
+   toIsoZonedDateTime
 } from '../temporal'
-import { buildDurationChain } from './durationFns'
-import { buildDateTimeChain } from './dateTimeFns'
-import { buildZonedDateTimeChain } from './zonedDateTimeFns'
-import { buildYearMonthChain } from './yearMonthFns'
-import { buildMonthDayChain } from './monthDayFns'
+import {  buildDurationChainFromTemporal } from './durationFns'
+import {  buildDateTimeChainFromTemporal } from './dateTimeFns'
+import {  buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
+import {  buildYearMonthChainFromTemporal } from './yearMonthFns'
+import {  buildMonthDayChainFromTemporal } from './monthDayFns'
 import format from '../format'
 
 export const dateFns: IDateFns = {
@@ -50,7 +50,7 @@ export const dateFns: IDateFns = {
   until: (date, other, options) => toIsoDuration(Temporal.PlainDate.from(date).until(other, options as any)),
   since: (date, other, options) => toIsoDuration(Temporal.PlainDate.from(date).since(other, options as any)),
   equals: (date, other) => Temporal.PlainDate.from(date).equals(other),
-  isEqual: (date, other) => Temporal.PlainDate.compare(date, other) === 0,
+  isEqual: (date, other) => Temporal.PlainDate.from(date).equals(other),
   isBefore: (date, other) => Temporal.PlainDate.compare(date, other) < 0,
   isAfter: (date, other) => Temporal.PlainDate.compare(date, other) > 0,
   isEqualOrBefore: (date, other) => Temporal.PlainDate.compare(date, other) <= 0,
@@ -67,12 +67,15 @@ export const dateFns: IDateFns = {
   getFields: (date) => slotsFromDate(Temporal.PlainDate.from(date)),
   from: (item, options) => toIsoDate(Temporal.PlainDate.from(item, options)),
   compare: (one, two) => Temporal.PlainDate.compare(one, two),
-  format: (date, formatString) => format(slotsFromDate(Temporal.PlainDate.from(date)), formatString),
+  format: (date, formatString, options) => format(Temporal.PlainDate.from(date), formatString, options),
   chain: buildDateChain
 }
 
-export function buildDateChain(input: Iso.Date | Temporal.PlainDate): IDateChain {
-  const pd = typeof input === 'string' ? Temporal.PlainDate.from(input) : input
+export function buildDateChain(input: Iso.Date): IDateChain {
+  return buildDateChainFromTemporal(Temporal.PlainDate.from(input))
+}
+
+export function buildDateChainFromTemporal(pd: Temporal.PlainDate): IDateChain {
   return {
     value: () => toIsoDate(pd),
     getYear: () => buildChain(pd.year),
@@ -84,23 +87,23 @@ export function buildDateChain(input: Iso.Date | Temporal.PlainDate): IDateChain
     getDaysInMonth: () => buildChain(pd.daysInMonth),
     getDaysInYear: () => buildChain(pd.daysInYear),
     inLeapYear: () => buildChain(pd.inLeapYear),
-    with: (dateLike, options) => buildDateChain(pd.with(dateLike, options)),
-    add: (durationLike, options) => buildDateChain(pd.add(durationLike as any, options)),
-    subtract: (durationLike, options) => buildDateChain(pd.subtract(durationLike as any, options)),
-    until: (other, options) => buildDurationChain(pd.until(other, options as any)),
-    since: (other, options) => buildDurationChain(pd.since(other, options as any)),
+    with: (dateLike, options) => buildDateChainFromTemporal(pd.with(dateLike, options)),
+    add: (durationLike, options) => buildDateChainFromTemporal(pd.add(durationLike as any, options)),
+    subtract: (durationLike, options) => buildDateChainFromTemporal(pd.subtract(durationLike as any, options)),
+    until: (other, options) => buildDurationChainFromTemporal(pd.until(other, options as any)),
+    since: (other, options) => buildDurationChainFromTemporal(pd.since(other, options as any)),
     equals: (other) => buildChain(pd.equals(other)),
-    isEqual: (other) => buildChain(Temporal.PlainDate.compare(pd, other) === 0),
+    isEqual: (other) => buildChain(pd.equals(other)),
     isBefore: (other) => buildChain(Temporal.PlainDate.compare(pd, other) < 0),
     isAfter: (other) => buildChain(Temporal.PlainDate.compare(pd, other) > 0),
     isEqualOrBefore: (other) => buildChain(Temporal.PlainDate.compare(pd, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.PlainDate.compare(pd, other) >= 0),
-    toDateTime: (time) => buildDateTimeChain(pd.toPlainDateTime(time)),
+    toDateTime: (time) => buildDateTimeChainFromTemporal(pd.toPlainDateTime(time)),
     toZonedDateTime: (item) =>
-      buildZonedDateTimeChain(pd.toZonedDateTime({ timeZone: item.timeZone, plainTime: item.time })),
-    toYearMonth: () => buildYearMonthChain(pd.toPlainYearMonth()),
-    toMonthDay: () => buildMonthDayChain(pd.toPlainMonthDay()),
+      buildZonedDateTimeChainFromTemporal(pd.toZonedDateTime({ timeZone: item.timeZone, plainTime: item.time })),
+    toYearMonth: () => buildYearMonthChainFromTemporal(pd.toPlainYearMonth()),
+    toMonthDay: () => buildMonthDayChainFromTemporal(pd.toPlainMonthDay()),
     getFields: () => buildChain(slotsFromDate(pd)),
-    format: (formatString) => buildChain(format(slotsFromDate(pd), formatString))
+    format: (formatString, options) => buildChain(format(pd, formatString, options))
   }
 }

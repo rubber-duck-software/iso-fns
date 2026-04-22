@@ -101,3 +101,13 @@ export interface FormatLong {
   time: FormatLongFn
   dateTime: FormatLongFn
 }
+
+export interface Locale {
+  code: string
+  localize: Localize
+  formatLong: FormatLong
+  options: {
+    weekStartsOn: number
+    firstWeekContainsDate: number
+  }
+}

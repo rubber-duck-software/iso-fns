@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
-import { monthDayFns } from './index'
+import { monthDayFns } from '../src/index'
 
 const { describe } = test
 const it = test

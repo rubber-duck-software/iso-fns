@@ -1,7 +1,7 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { DurationSlots } from '../slots'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type DurationSlots } from '../slots'
 
 export interface IDurationFns {
   fromNumbers(
@@ -97,7 +97,7 @@ export interface IDurationFns {
     }
   ): number
   getFields(duration: Iso.Duration): DurationSlots
-  from(item: any): Iso.Duration
+  from(item: string | Partial<DurationSlots>): Iso.Duration
   compare(
     one: Iso.Duration,
     two: Iso.Duration,

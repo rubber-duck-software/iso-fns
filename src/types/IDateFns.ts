@@ -1,12 +1,13 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { DateSlots } from '../slots'
-import { IDurationChain } from './IDurationFns'
-import { IDateTimeChain } from './IDateTimeFns'
-import { IZonedDateTimeChain } from './IZonedDateTimeFns'
-import { IYearMonthChain } from './IYearMonthFns'
-import { IMonthDayChain } from './IMonthDayFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type DateSlots } from '../slots'
+import { type FormatOptions } from '../format'
+import { type IDurationChain } from './IDurationFns'
+import { type IDateTimeChain } from './IDateTimeFns'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
+import { type IYearMonthChain } from './IYearMonthFns'
+import { type IMonthDayChain } from './IMonthDayFns'
 
 export interface IDateFns {
   /**
@@ -92,10 +93,6 @@ export interface IDateFns {
     }
   ): Iso.Duration
   equals(date: Iso.Date, other: Iso.Date): boolean
-  /**
-   * alias for {@link IDateFns.equals equals}
-   */
-  isEqual(date: Iso.Date, other: Iso.Date): boolean
   isBefore(date: Iso.Date, other: Iso.Date): boolean
   isAfter(date: Iso.Date, other: Iso.Date): boolean
   isEqualOrBefore(date: Iso.Date, other: Iso.Date): boolean
@@ -105,7 +102,7 @@ export interface IDateFns {
   toYearMonth(date: Iso.Date): Iso.YearMonth
   toMonthDay(date: Iso.Date): Iso.MonthDay
   getFields(date: Iso.Date): DateSlots
-  from(item: any, options?: { overflow: 'constrain' | 'reject' }): Iso.Date
+  from(item: string | Partial<DateSlots>, options?: { overflow: 'constrain' | 'reject' }): Iso.Date
   compare(one: Iso.Date, two: Iso.Date): number
   /**
    * @summary Format the ZonedDateTime.
@@ -233,7 +230,7 @@ export interface IDateFns {
    * ```
    *
    */
-  format(date: Iso.Date, format: string): string
+  format(date: Iso.Date, format: string, options?: FormatOptions): string
   chain(date: Iso.Date): IDateChain
 }
 
@@ -309,7 +306,6 @@ export interface IDateChain extends Chain<Iso.Date> {
     }
   ): IDurationChain
   equals(other: Iso.Date): Chain<boolean>
-  isEqual(other: Iso.Date): Chain<boolean>
   isBefore(other: Iso.Date): Chain<boolean>
   isAfter(other: Iso.Date): Chain<boolean>
   isEqualOrBefore(other: Iso.Date): Chain<boolean>
@@ -319,5 +315,5 @@ export interface IDateChain extends Chain<Iso.Date> {
   toYearMonth(): IYearMonthChain
   toMonthDay(): IMonthDayChain
   getFields(): Chain<DateSlots>
-  format(formatString: string): Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

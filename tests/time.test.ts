@@ -1,5 +1,5 @@
 import { test } from 'beartest-js'
-import { timeFns } from './fns'
+import { timeFns } from '../src/fns'
 import { strict as assert } from 'assert'
 
 const { describe } = test

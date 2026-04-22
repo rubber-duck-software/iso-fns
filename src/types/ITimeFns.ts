@@ -1,10 +1,11 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { TimeSlots } from '../slots'
-import { IDurationChain } from './IDurationFns'
-import { IZonedDateTimeChain } from './IZonedDateTimeFns'
-import { IDateTimeChain } from './IDateTimeFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type TimeSlots } from '../slots'
+import { type FormatOptions } from '../format'
+import { type IDurationChain } from './IDurationFns'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
+import { type IDateTimeChain } from './IDateTimeFns'
 
 export interface ITimeFns {
   /**
@@ -94,6 +95,7 @@ export interface ITimeFns {
     }
   ): Iso.Time
   equals(time: Iso.Time, other: Iso.Time): boolean
+  isEqual(time: Iso.Time, other: Iso.Time): boolean
   toDateTime(time: Iso.Time, date: Iso.Date): Iso.DateTime
   toZonedDateTime(
     time: Iso.Time,
@@ -103,7 +105,7 @@ export interface ITimeFns {
     }
   ): Iso.ZonedDateTime
   getFields(time: Iso.Time): TimeSlots
-  from(item: any, options?: { overflow: 'constrain' | 'reject' }): Iso.Time
+  from(item: string | Partial<TimeSlots>, options?: { overflow: 'constrain' | 'reject' }): Iso.Time
   compare(one: Iso.Time, two: Iso.Time): number
   /**
    * @summary Format the ZonedDateTime.
@@ -198,7 +200,7 @@ export interface ITimeFns {
    * //=> "3 o'clock"
    * ```
    */
-  format(time: Iso.Time, format: string): string
+  format(time: Iso.Time, format: string, options?: FormatOptions): string
   chain(time: Iso.Time): ITimeChain
 }
 
@@ -275,8 +277,9 @@ export interface ITimeChain extends Chain<Iso.Time> {
     roundingMode?: Temporal.RoundingMode
   }): ITimeChain
   equals(other: Iso.Time): Chain<boolean>
+  isEqual(other: Iso.Time): Chain<boolean>
   toDateTime(date: Iso.Date): IDateTimeChain
   toZonedDateTime(item: { date: Iso.Date; timeZone: string }): IZonedDateTimeChain
   getFields(): Chain<TimeSlots>
-  format(formatString: string): Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

@@ -10,9 +10,9 @@ import {
   toIsoTime,
   toIsoZonedDateTime
 } from '../temporal'
-import { buildDurationChain } from './durationFns'
-import { buildDateTimeChain } from './dateTimeFns'
-import { buildZonedDateTimeChain } from './zonedDateTimeFns'
+import { buildDurationChainFromTemporal } from './durationFns'
+import { buildDateTimeChainFromTemporal } from './dateTimeFns'
+import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
 import format from '../format'
 
 export const timeFns: ITimeFns = {
@@ -40,6 +40,7 @@ export const timeFns: ITimeFns = {
   since: (time, other, options) => toIsoDuration(Temporal.PlainTime.from(time).since(other, options as any)),
   round: (time, options) => toIsoTime(Temporal.PlainTime.from(time).round(options as any)),
   equals: (time, other) => Temporal.PlainTime.from(time).equals(other),
+  isEqual: (time, other) => Temporal.PlainTime.from(time).equals(other),
   toDateTime: (time, date) => toIsoDateTime(Temporal.PlainDate.from(date).toPlainDateTime(time)),
   toZonedDateTime: (time, item) => {
     if (typeof item !== 'object' || item === null) throw new TypeError('invalid argument')
@@ -52,31 +53,35 @@ export const timeFns: ITimeFns = {
   getFields: (time) => slotsFromTime(Temporal.PlainTime.from(time)),
   from: (item, options) => toIsoTime(Temporal.PlainTime.from(item, options)),
   compare: (one, two) => Temporal.PlainTime.compare(one, two),
-  format: (time, formatString) => format(slotsFromTime(Temporal.PlainTime.from(time)), formatString),
+  format: (time, formatString, options) => format(Temporal.PlainTime.from(time), formatString, options),
   chain: buildTimeChain
 }
 
-export function buildTimeChain(input: Iso.Time | Temporal.PlainTime): ITimeChain {
-  const pt = typeof input === 'string' ? Temporal.PlainTime.from(input) : input
+export function buildTimeChain(input: Iso.Time): ITimeChain {
+  return buildTimeChainFromTemporal(Temporal.PlainTime.from(input))
+}
+
+export function buildTimeChainFromTemporal(pt: Temporal.PlainTime): ITimeChain {
   return {
     value: () => toIsoTime(pt),
     getHour: () => buildChain(pt.hour),
     getMinute: () => buildChain(pt.minute),
     getSecond: () => buildChain(pt.second),
     getMillisecond: () => buildChain(pt.millisecond),
-    with: (timeLike, options) => buildTimeChain(pt.with(timeLike, options)),
-    add: (durationLike) => buildTimeChain(pt.add(Temporal.Duration.from(durationLike as any))),
-    subtract: (durationLike) => buildTimeChain(pt.subtract(Temporal.Duration.from(durationLike as any))),
-    until: (other, options) => buildDurationChain(pt.until(other, options as any)),
-    since: (other, options) => buildDurationChain(pt.since(other, options as any)),
-    round: (options) => buildTimeChain(pt.round(options as any)),
+    with: (timeLike, options) => buildTimeChainFromTemporal(pt.with(timeLike, options)),
+    add: (durationLike) => buildTimeChainFromTemporal(pt.add(Temporal.Duration.from(durationLike as any))),
+    subtract: (durationLike) => buildTimeChainFromTemporal(pt.subtract(Temporal.Duration.from(durationLike as any))),
+    until: (other, options) => buildDurationChainFromTemporal(pt.until(other, options as any)),
+    since: (other, options) => buildDurationChainFromTemporal(pt.since(other, options as any)),
+    round: (options) => buildTimeChainFromTemporal(pt.round(options as any)),
     equals: (other) => buildChain(pt.equals(other)),
-    toDateTime: (date) => buildDateTimeChain(Temporal.PlainDate.from(date).toPlainDateTime(pt)),
+    isEqual: (other) => buildChain(pt.equals(other)),
+    toDateTime: (date) => buildDateTimeChainFromTemporal(Temporal.PlainDate.from(date).toPlainDateTime(pt)),
     toZonedDateTime: (item) =>
-      buildZonedDateTimeChain(
+      buildZonedDateTimeChainFromTemporal(
         Temporal.PlainDate.from(item.date).toZonedDateTime({ timeZone: item.timeZone, plainTime: pt })
       ),
     getFields: () => buildChain(slotsFromTime(pt)),
-    format: (formatString) => buildChain(format(slotsFromTime(pt), formatString))
+    format: (formatString, options) => buildChain(format(pt, formatString, options))
   }
 }

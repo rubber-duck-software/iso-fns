@@ -14,13 +14,13 @@ import {
   toIsoYearMonth,
   toIsoZonedDateTime
 } from '../temporal'
-import { buildDurationChain } from './durationFns'
-import { buildInstantChain } from './instantFns'
-import { buildDateChain } from './dateFns'
-import { buildTimeChain } from './timeFns'
-import { buildDateTimeChain } from './dateTimeFns'
-import { buildYearMonthChain } from './yearMonthFns'
-import { buildMonthDayChain } from './monthDayFns'
+import { buildDurationChainFromTemporal } from './durationFns'
+import { buildInstantChainFromTemporal } from './instantFns'
+import { buildDateChainFromTemporal } from './dateFns'
+import { buildTimeChainFromTemporal } from './timeFns'
+import { buildDateTimeChainFromTemporal } from './dateTimeFns'
+import { buildYearMonthChainFromTemporal } from './yearMonthFns'
+import { buildMonthDayChainFromTemporal } from './monthDayFns'
 import format from '../format'
 
 function dateFromInput(date: Iso.Date | { year: number; month: number; day: number }): Temporal.PlainDate {
@@ -55,7 +55,7 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   getMinute: (zdt) => Temporal.ZonedDateTime.from(zdt).minute,
   getSecond: (zdt) => Temporal.ZonedDateTime.from(zdt).second,
   getMillisecond: (zdt) => Temporal.ZonedDateTime.from(zdt).millisecond,
-  getEpochSeconds: (zdt) => Math.floor(Temporal.ZonedDateTime.from(zdt).epochMilliseconds / 1000),
+  getEpochSeconds: (zdt) => Temporal.ZonedDateTime.from(zdt).epochMilliseconds / 1000,
   getEpochMilliseconds: (zdt) => Temporal.ZonedDateTime.from(zdt).epochMilliseconds,
   getDayOfWeek: (zdt) => Temporal.ZonedDateTime.from(zdt).dayOfWeek,
   getDayOfYear: (zdt) => Temporal.ZonedDateTime.from(zdt).dayOfYear,
@@ -81,6 +81,7 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   since: (zdt, other, options) => toIsoDuration(Temporal.ZonedDateTime.from(zdt).since(other, options as any)),
   round: (zdt, options) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).round(options as any)),
   equals: (zdt, other) => Temporal.ZonedDateTime.from(zdt).equals(other),
+  isEqual: (zdt, other) => Temporal.ZonedDateTime.from(zdt).equals(other),
   startOfDay: (zdt) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).startOfDay()),
   toInstant: (zdt) => toIsoInstant(Temporal.ZonedDateTime.from(zdt).toInstant()),
   toDate: (zdt) => toIsoDate(Temporal.ZonedDateTime.from(zdt).toPlainDate()),
@@ -91,12 +92,15 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   getFields: (zdt) => slotsFromZonedDateTime(Temporal.ZonedDateTime.from(zdt)),
   from: (item, options) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(item, options)),
   compare: (one, two) => Temporal.ZonedDateTime.compare(one, two),
-  format: (zdt, formatString) => format(slotsFromZonedDateTime(Temporal.ZonedDateTime.from(zdt)), formatString),
+  format: (zdt, formatString, options) => format(Temporal.ZonedDateTime.from(zdt), formatString, options),
   chain: buildZonedDateTimeChain
 }
 
-export function buildZonedDateTimeChain(input: Iso.ZonedDateTime | Temporal.ZonedDateTime): IZonedDateTimeChain {
-  const zdt = typeof input === 'string' ? Temporal.ZonedDateTime.from(input) : input
+export function buildZonedDateTimeChain(input: Iso.ZonedDateTime): IZonedDateTimeChain {
+  return buildZonedDateTimeChainFromTemporal(Temporal.ZonedDateTime.from(input))
+}
+
+export function buildZonedDateTimeChainFromTemporal(zdt: Temporal.ZonedDateTime): IZonedDateTimeChain {
   return {
     value: () => toIsoZonedDateTime(zdt),
     getTimeZone: () => buildChain(zdt.timeZoneId),
@@ -107,7 +111,7 @@ export function buildZonedDateTimeChain(input: Iso.ZonedDateTime | Temporal.Zone
     getMinute: () => buildChain(zdt.minute),
     getSecond: () => buildChain(zdt.second),
     getMillisecond: () => buildChain(zdt.millisecond),
-    getEpochSeconds: () => buildChain(Math.floor(zdt.epochMilliseconds / 1000)),
+    getEpochSeconds: () => buildChain(zdt.epochMilliseconds / 1000),
     getEpochMilliseconds: () => buildChain(zdt.epochMilliseconds),
     getDayOfWeek: () => buildChain(zdt.dayOfWeek),
     getDayOfYear: () => buildChain(zdt.dayOfYear),
@@ -118,27 +122,28 @@ export function buildZonedDateTimeChain(input: Iso.ZonedDateTime | Temporal.Zone
     inLeapYear: () => buildChain(zdt.inLeapYear),
     getOffset: () => buildChain(zdt.offset),
     getOffsetMilliseconds: () => buildChain(zdt.offsetNanoseconds / 1_000_000),
-    with: (zdtLike, options) => buildZonedDateTimeChain(zdt.with(zdtLike, options)),
+    with: (zdtLike, options) => buildZonedDateTimeChainFromTemporal(zdt.with(zdtLike, options)),
     withDate: (date) => {
       const pd = dateFromInput(date)
-      return buildZonedDateTimeChain(zdt.with({ year: pd.year, month: pd.month, day: pd.day }))
+      return buildZonedDateTimeChainFromTemporal(zdt.with({ year: pd.year, month: pd.month, day: pd.day }))
     },
-    withTime: (time) => buildZonedDateTimeChain(zdt.withPlainTime(time as any)),
-    withTimeZone: (timeZone) => buildZonedDateTimeChain(zdt.withTimeZone(timeZone)),
-    add: (durationLike, options) => buildZonedDateTimeChain(zdt.add(durationLike as any, options)),
-    subtract: (durationLike, options) => buildZonedDateTimeChain(zdt.subtract(durationLike as any, options)),
-    until: (other, options) => buildDurationChain(zdt.until(other, options as any)),
-    since: (other, options) => buildDurationChain(zdt.since(other, options as any)),
-    round: (options) => buildZonedDateTimeChain(zdt.round(options as any)),
+    withTime: (time) => buildZonedDateTimeChainFromTemporal(zdt.withPlainTime(time as any)),
+    withTimeZone: (timeZone) => buildZonedDateTimeChainFromTemporal(zdt.withTimeZone(timeZone)),
+    add: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.add(durationLike as any, options)),
+    subtract: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.subtract(durationLike as any, options)),
+    until: (other, options) => buildDurationChainFromTemporal(zdt.until(other, options as any)),
+    since: (other, options) => buildDurationChainFromTemporal(zdt.since(other, options as any)),
+    round: (options) => buildZonedDateTimeChainFromTemporal(zdt.round(options as any)),
     equals: (other) => buildChain(zdt.equals(other)),
-    startOfDay: () => buildZonedDateTimeChain(zdt.startOfDay()),
-    toInstant: () => buildInstantChain(zdt.toInstant()),
-    toDate: () => buildDateChain(zdt.toPlainDate()),
-    toTime: () => buildTimeChain(zdt.toPlainTime()),
-    toDateTime: () => buildDateTimeChain(zdt.toPlainDateTime()),
-    toYearMonth: () => buildYearMonthChain(zdt.toPlainDate().toPlainYearMonth()),
-    toMonthDay: () => buildMonthDayChain(zdt.toPlainDate().toPlainMonthDay()),
+    isEqual: (other) => buildChain(zdt.equals(other)),
+    startOfDay: () => buildZonedDateTimeChainFromTemporal(zdt.startOfDay()),
+    toInstant: () => buildInstantChainFromTemporal(zdt.toInstant()),
+    toDate: () => buildDateChainFromTemporal(zdt.toPlainDate()),
+    toTime: () => buildTimeChainFromTemporal(zdt.toPlainTime()),
+    toDateTime: () => buildDateTimeChainFromTemporal(zdt.toPlainDateTime()),
+    toYearMonth: () => buildYearMonthChainFromTemporal(zdt.toPlainDate().toPlainYearMonth()),
+    toMonthDay: () => buildMonthDayChainFromTemporal(zdt.toPlainDate().toPlainMonthDay()),
     getFields: () => buildChain(slotsFromZonedDateTime(zdt)),
-    format: (formatString) => buildChain(format(slotsFromZonedDateTime(zdt), formatString))
+    format: (formatString, options) => buildChain(format(zdt, formatString, options))
   }
 }

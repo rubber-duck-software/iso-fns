@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill'
-import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from './index'
-import { Iso } from 'iso-types'
+import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from '../src/index'
+import { Iso } from '../src/iso-types'
 
 type TemporalPluralUnit = Temporal.PluralUnit<Temporal.DateTimeUnit>
 type TemporalSingularUnit = Temporal.DateTimeUnit
@@ -232,6 +232,7 @@ describe('dateTimeFns', () => {
     })
     it('incorrectly-spelled properties are ignored', () => {
       assert.equal(
+        // @ts-expect-error - extraneous 'months' is intentional
         `${dateTimeFns.withDate(dt, dateFns.from({ year: 2000, month: 6, day: 1, months: 123 }))}`,
         '2000-06-01T03:24:30'
       )
@@ -1223,9 +1224,11 @@ describe('dateTimeFns', () => {
     })
     it('object must contain at least the required correctly-spelled properties', () => {
       assert.throws(() => dateTimeFns.from({}), TypeError)
+      // @ts-expect-error - typo in 'months' is intentional
       assert.throws(() => dateTimeFns.from({ year: 1976, months: 11, day: 18 }), TypeError)
     })
     it('incorrectly-spelled properties are ignored', () => {
+      // @ts-expect-error - extraneous 'hours' is intentional
       assert.equal(`${dateTimeFns.from({ year: 1976, month: 11, day: 18, hours: 12 })}`, '1976-11-18T00:00')
     })
   })

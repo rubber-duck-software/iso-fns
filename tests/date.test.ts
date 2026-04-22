@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
 import { strict as assert } from 'assert'
-import { dateFns, durationFns } from './index'
+import { dateFns, durationFns } from '../src/index'
 
 const { describe } = test
 const it = test
@@ -510,9 +510,11 @@ describe('Date', () => {
     it('Date.from({ month: 12 }) throws', () => assert.throws(() => dateFns.from({ month: 12 }), TypeError))
     it('object must contain at least the required correctly-spelled properties', () => {
       assert.throws(() => dateFns.from({}), TypeError)
+      // @ts-expect-error - typo in 'months' is intentional; expect runtime TypeError
       assert.throws(() => dateFns.from({ year: 1976, months: 11, day: 18 }), TypeError)
     })
     it('incorrectly-spelled properties are ignored', () => {
+      // @ts-expect-error - extraneous 'days' is intentional; should be ignored at runtime
       assert.equal(dateFns.from({ year: 1976, month: 11, day: 18, days: 15 }), '1976-11-18')
     })
     it('Date.from(required prop undefined) throws', () =>

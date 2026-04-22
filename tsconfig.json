@@ -6,11 +6,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true
   },
+  "include": ["src", "tests"],
   "exclude": ["src2", "dist", "docs"]
 }

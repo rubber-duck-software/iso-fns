@@ -1,8 +1,8 @@
-import { Iso } from '../iso-types'
-import { Temporal } from 'temporal-polyfill'
-import { Chain } from '../temporal'
-import { IDurationChain } from './IDurationFns'
-import { IZonedDateTimeChain } from './IZonedDateTimeFns'
+import { type Iso } from '../iso-types'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal'
+import { type IDurationChain } from './IDurationFns'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
 
 export interface IInstantFns {
   /**
@@ -81,10 +81,6 @@ export interface IInstantFns {
     }
   ): Iso.Instant
   equals(instant: Iso.Instant, other: Iso.Instant): boolean
-  /**
-   * alias for {@link IInstantFns.equals equals}
-   */
-  isEqual(instant: Iso.Instant, other: Iso.Instant): boolean
   isBefore(instant: Iso.Instant, other: Iso.Instant): boolean
   isAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   isEqualOrBefore(instant: Iso.Instant, other: Iso.Instant): boolean
@@ -93,7 +89,7 @@ export interface IInstantFns {
   formatISO9075(instant: Iso.Instant): string
   toJsDate(instant: Iso.Instant): Date
   fromEpochSeconds(epochSeconds: number): Iso.Instant
-  from(item: any): Iso.Instant
+  from(item: string): Iso.Instant
   compare(one: Iso.Instant, two: Iso.Instant): number
   chain(instant: Iso.Instant): IInstantChain
 }
@@ -156,7 +152,6 @@ export interface IInstantChain extends Chain<Iso.Instant> {
     roundingMode?: Temporal.RoundingMode
   }): IInstantChain
   equals(other: Iso.Instant): Chain<boolean>
-  isEqual(other: Iso.Instant): Chain<boolean>
   isBefore(other: Iso.Instant): Chain<boolean>
   isAfter(other: Iso.Instant): Chain<boolean>
   isEqualOrBefore(other: Iso.Instant): Chain<boolean>
