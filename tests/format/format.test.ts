@@ -272,7 +272,7 @@ describe('format', function () {
       })
 
       it('12 PM', function () {
-        assert(format(timeAt(12), 'h B') === '12 in the afternoon')
+        assert(format(timeAt(12), 'h B') === '12 noon')
       })
 
       it('5 PM', function () {
@@ -280,7 +280,7 @@ describe('format', function () {
       })
 
       it('12 AM', function () {
-        assert(format(timeAt(0), 'h B') === '12 at night')
+        assert(format(timeAt(0), 'h B') === '12 midnight')
       })
 
       it('4 AM', function () {

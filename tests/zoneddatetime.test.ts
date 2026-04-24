@@ -53,7 +53,7 @@ describe('ZonedDateTime', () => {
       assert.equal(zonedDateTimeFns.getYear(zdt), 1976)
       assert.equal(zonedDateTimeFns.getMonth(zdt), 11)
       assert.equal(zonedDateTimeFns.getDay(zdt), 18)
-      assert.equal(zonedDateTimeFns.getTimeZone(zdt), tz)
+      assert.equal(zonedDateTimeFns.getTimeZoneId(zdt), tz)
       assert.equal(zonedDateTimeFns.getMillisecond(zdt), 123)
     })
     it('exposes derived fields', () => {
@@ -179,7 +179,7 @@ describe('ZonedDateTime', () => {
     it('withTimeZone shifts clock time, preserves instant', () => {
       const utc = zonedDateTimeFns.withTimeZone(base, 'UTC')
       assert.equal(zonedDateTimeFns.chain(base).toInstant().value(), zonedDateTimeFns.chain(utc).toInstant().value())
-      assert.equal(zonedDateTimeFns.getTimeZone(utc), 'UTC')
+      assert.equal(zonedDateTimeFns.getTimeZoneId(utc), 'UTC')
     })
   })
 
@@ -377,7 +377,7 @@ describe('ZonedDateTime', () => {
     })
     it('exposes getters', () => {
       assert.equal(zonedDateTimeFns.chain(zdt).getYear().value(), 2020)
-      assert.equal(zonedDateTimeFns.chain(zdt).getTimeZone().value(), 'America/Los_Angeles')
+      assert.equal(zonedDateTimeFns.chain(zdt).getTimeZoneId().value(), 'America/Los_Angeles')
     })
     it('supports arithmetic', () => {
       assert.equal(zonedDateTimeFns.chain(zdt).add({ days: 1 }).value(), zonedDateTimeFns.add(zdt, { days: 1 }))

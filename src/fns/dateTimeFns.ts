@@ -49,7 +49,7 @@ export const dateTimeFns: IDateTimeFns = {
   getWeekOfYear: (dt) => Temporal.PlainDateTime.from(dt).weekOfYear as number,
   getDaysInYear: (dt) => Temporal.PlainDateTime.from(dt).daysInYear,
   getDaysInMonth: (dt) => Temporal.PlainDateTime.from(dt).daysInMonth,
-  getInLeapYear: (dt) => Temporal.PlainDateTime.from(dt).inLeapYear,
+  inLeapYear: (dt) => Temporal.PlainDateTime.from(dt).inLeapYear,
   with: (dt, dtLike, options) => toIsoDateTime(Temporal.PlainDateTime.from(dt).with(dtLike, options)),
   withTime: (dt, time) => toIsoDateTime(Temporal.PlainDateTime.from(dt).withPlainTime(time)),
   withDate: (dt, date) => {
@@ -100,7 +100,7 @@ export function buildDateTimeChainFromTemporal(pdt: Temporal.PlainDateTime): IDa
     getWeekOfYear: () => buildChain(pdt.weekOfYear as number),
     getDaysInYear: () => buildChain(pdt.daysInYear),
     getDaysInMonth: () => buildChain(pdt.daysInMonth),
-    getInLeapYear: () => buildChain(pdt.inLeapYear),
+    inLeapYear: () => buildChain(pdt.inLeapYear),
     with: (dtLike, options) => buildDateTimeChainFromTemporal(pdt.with(dtLike, options)),
     withTime: (time) => buildDateTimeChainFromTemporal(pdt.withPlainTime(time)),
     withDate: (date) => {

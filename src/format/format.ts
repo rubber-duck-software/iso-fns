@@ -412,7 +412,7 @@ const formattersTyped = {
   },
   // AM or PM
   a(date: { hour: number }, token: string, localize: Localize) {
-    const dayPeriodEnumValue: LocaleDayPeriod = date.hour / 12 >= 1 ? 'pm' : 'am'
+    const dayPeriodEnumValue: LocaleDayPeriod = date.hour >= 12 ? 'pm' : 'am'
 
     switch (token) {
       case 'a':
@@ -431,7 +431,7 @@ const formattersTyped = {
   b(date: { hour: number }, token: string, localize: Localize) {
     const hours = date.hour
     const dayPeriodEnumValue: LocaleDayPeriod =
-      hours === 12 ? 'noon' : hours === 0 ? 'midnight' : hours / 12 >= 1 ? 'pm' : 'am'
+      hours === 12 ? 'noon' : hours === 0 ? 'midnight' : hours >= 12 ? 'pm' : 'am'
 
     switch (token) {
       case 'b':
@@ -446,11 +446,15 @@ const formattersTyped = {
         return localize.dayPeriod(dayPeriodEnumValue, { width: 'wide', context: 'formatting' })
     }
   },
-  // in the morning, in the afternoon, in the evening, at night
+  // noon, midnight, in the morning, in the afternoon, in the evening, at night
   B(date: { hour: number }, token: string, localize: Localize) {
     const hours = date.hour
     let dayPeriodEnumValue: LocaleDayPeriod
-    if (hours >= 17) {
+    if (hours === 12) {
+      dayPeriodEnumValue = 'noon'
+    } else if (hours === 0) {
+      dayPeriodEnumValue = 'midnight'
+    } else if (hours >= 17) {
       dayPeriodEnumValue = 'evening'
     } else if (hours >= 12) {
       dayPeriodEnumValue = 'afternoon'
@@ -635,7 +639,7 @@ const lightFormatters = {
     return addLeadingZeros(date.day, token.length)
   },
   a(date: { hour: number }, token: string): string {
-    const dayPeriodEnumValue = date.hour / 12 >= 1 ? 'pm' : 'am'
+    const dayPeriodEnumValue = date.hour >= 12 ? 'pm' : 'am'
     switch (token) {
       case 'a':
       case 'aa':

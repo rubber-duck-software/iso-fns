@@ -32,12 +32,12 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   now(timeZone) {
     return toIsoZonedDateTime(Temporal.Now.zonedDateTimeISO(timeZone))
   },
-  currentTimeZone() {
+  currentTimeZoneId() {
     return Temporal.Now.timeZoneId()
   },
   fromEpochMilliseconds(epochMilliseconds, timeZone) {
-    if (arguments.length < 1) {
-      throw new TypeError('missing argument: epochMilliseconds is required')
+    if (arguments.length < 2) {
+      throw new TypeError('missing argument: epochMilliseconds and timeZone are required')
     }
     return toIsoZonedDateTime(Temporal.Instant.fromEpochMilliseconds(epochMilliseconds).toZonedDateTimeISO(timeZone))
   },
@@ -47,7 +47,7 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   assertIsValid(zdt): asserts zdt is Iso.ZonedDateTime {
     if (!isIsoZonedDateTime(zdt)) throw new TypeError('invalid receiver')
   },
-  getTimeZone: (zdt) => Temporal.ZonedDateTime.from(zdt).timeZoneId,
+  getTimeZoneId: (zdt) => Temporal.ZonedDateTime.from(zdt).timeZoneId,
   getYear: (zdt) => Temporal.ZonedDateTime.from(zdt).year,
   getMonth: (zdt) => Temporal.ZonedDateTime.from(zdt).month,
   getDay: (zdt) => Temporal.ZonedDateTime.from(zdt).day,
@@ -65,7 +65,7 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   getDaysInYear: (zdt) => Temporal.ZonedDateTime.from(zdt).daysInYear,
   inLeapYear: (zdt) => Temporal.ZonedDateTime.from(zdt).inLeapYear,
   getOffset: (zdt) => Temporal.ZonedDateTime.from(zdt).offset,
-  getOffsetMilliseconds: (zdt) => Temporal.ZonedDateTime.from(zdt).offsetNanoseconds / 1_000_000,
+  getOffsetMilliseconds: (zdt) => Math.trunc(Temporal.ZonedDateTime.from(zdt).offsetNanoseconds / 1_000_000),
   with: (zdt, zdtLike, options) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).with(zdtLike, options)),
   withDate: (zdt, date) => {
     const pd = dateFromInput(date)
@@ -106,7 +106,7 @@ export function buildZonedDateTimeChain(input: Iso.ZonedDateTime): IZonedDateTim
 export function buildZonedDateTimeChainFromTemporal(zdt: Temporal.ZonedDateTime): IZonedDateTimeChain {
   return {
     value: () => toIsoZonedDateTime(zdt),
-    getTimeZone: () => buildChain(zdt.timeZoneId),
+    getTimeZoneId: () => buildChain(zdt.timeZoneId),
     getYear: () => buildChain(zdt.year),
     getMonth: () => buildChain(zdt.month),
     getDay: () => buildChain(zdt.day),
@@ -124,7 +124,7 @@ export function buildZonedDateTimeChainFromTemporal(zdt: Temporal.ZonedDateTime)
     getDaysInYear: () => buildChain(zdt.daysInYear),
     inLeapYear: () => buildChain(zdt.inLeapYear),
     getOffset: () => buildChain(zdt.offset),
-    getOffsetMilliseconds: () => buildChain(zdt.offsetNanoseconds / 1_000_000),
+    getOffsetMilliseconds: () => buildChain(Math.trunc(zdt.offsetNanoseconds / 1_000_000)),
     with: (zdtLike, options) => buildZonedDateTimeChainFromTemporal(zdt.with(zdtLike, options)),
     withDate: (date) => {
       const pd = dateFromInput(date)

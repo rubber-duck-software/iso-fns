@@ -24,11 +24,11 @@ export interface IZonedDateTimeFns {
    *
    * @returns a string representing the time zone according to the current system settings.
    */
-  currentTimeZone(): string
+  currentTimeZoneId(): string
   fromEpochMilliseconds(epochMilliseconds: number, timeZone: string): Iso.ZonedDateTime
   isValid(zonedDateTime: unknown): zonedDateTime is Iso.ZonedDateTime
   assertIsValid(zonedDateTime: unknown): asserts zonedDateTime is Iso.ZonedDateTime
-  getTimeZone(zonedDateTime: Iso.ZonedDateTime): string
+  getTimeZoneId(zonedDateTime: Iso.ZonedDateTime): string
   getYear(zonedDateTime: Iso.ZonedDateTime): number
   getMonth(zonedDateTime: Iso.ZonedDateTime): number
   getDay(zonedDateTime: Iso.ZonedDateTime): number
@@ -349,7 +349,7 @@ export interface IZonedDateTimeFns {
  * @internal
  */
 export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
-  getTimeZone(): Chain<string>
+  getTimeZoneId(): Chain<string>
   getYear(): Chain<number>
   getMonth(): Chain<number>
   getDay(): Chain<number>

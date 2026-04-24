@@ -41,7 +41,7 @@ export interface IDateTimeFns {
   getWeekOfYear(dateTime: Iso.DateTime): number
   getDaysInYear(dateTime: Iso.DateTime): number
   getDaysInMonth(dateTime: Iso.DateTime): number
-  getInLeapYear(dateTime: Iso.DateTime): boolean
+  inLeapYear(dateTime: Iso.DateTime): boolean
   with(
     dateTime: Iso.DateTime,
     temporalDateTimeLike: {
@@ -332,7 +332,7 @@ export interface IDateTimeChain extends Chain<Iso.DateTime> {
   getWeekOfYear(): Chain<number>
   getDaysInYear(): Chain<number>
   getDaysInMonth(): Chain<number>
-  getInLeapYear(): Chain<boolean>
+  inLeapYear(): Chain<boolean>
   with(
     temporalDateTimeLike: {
       day?: number
