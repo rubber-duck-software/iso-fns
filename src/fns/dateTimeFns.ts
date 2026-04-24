@@ -57,12 +57,12 @@ export const dateTimeFns: IDateTimeFns = {
     const { hour, minute, second, millisecond } = Temporal.PlainDateTime.from(dt)
     return toIsoDateTime(pd.toPlainDateTime({ hour, minute, second, millisecond }))
   },
-  add: (dt, durationLike, options) => toIsoDateTime(Temporal.PlainDateTime.from(dt).add(durationLike as any, options)),
+  add: (dt, durationLike, options) => toIsoDateTime(Temporal.PlainDateTime.from(dt).add(durationLike, options)),
   subtract: (dt, durationLike, options) =>
-    toIsoDateTime(Temporal.PlainDateTime.from(dt).subtract(durationLike as any, options)),
-  until: (from, until, options) => toIsoDuration(Temporal.PlainDateTime.from(from).until(until, options as any)),
-  since: (dt, other, options) => toIsoDuration(Temporal.PlainDateTime.from(dt).since(other, options as any)),
-  round: (dt, options) => toIsoDateTime(Temporal.PlainDateTime.from(dt).round(options as any)),
+    toIsoDateTime(Temporal.PlainDateTime.from(dt).subtract(durationLike, options)),
+  until: (from, until, options) => toIsoDuration(Temporal.PlainDateTime.from(from).until(until, options)),
+  since: (dt, other, options) => toIsoDuration(Temporal.PlainDateTime.from(dt).since(other, options)),
+  round: (dt, options) => toIsoDateTime(Temporal.PlainDateTime.from(dt).round(options)),
   equals: (dt, other) => Temporal.PlainDateTime.from(dt).equals(other),
   isEqual: (dt, other) => Temporal.PlainDateTime.from(dt).equals(other),
   isBefore: (dt, other) => Temporal.PlainDateTime.compare(dt, other) < 0,
@@ -110,11 +110,11 @@ export function buildDateTimeChainFromTemporal(pdt: Temporal.PlainDateTime): IDa
         pd.toPlainDateTime({ hour: pdt.hour, minute: pdt.minute, second: pdt.second, millisecond: pdt.millisecond })
       )
     },
-    add: (durationLike, options) => buildDateTimeChainFromTemporal(pdt.add(durationLike as any, options)),
-    subtract: (durationLike, options) => buildDateTimeChainFromTemporal(pdt.subtract(durationLike as any, options)),
-    until: (other, options) => buildDurationChainFromTemporal(pdt.until(other, options as any)),
-    since: (other, options) => buildDurationChainFromTemporal(pdt.since(other, options as any)),
-    round: (options) => buildDateTimeChainFromTemporal(pdt.round(options as any)),
+    add: (durationLike, options) => buildDateTimeChainFromTemporal(pdt.add(durationLike, options)),
+    subtract: (durationLike, options) => buildDateTimeChainFromTemporal(pdt.subtract(durationLike, options)),
+    until: (other, options) => buildDurationChainFromTemporal(pdt.until(other, options)),
+    since: (other, options) => buildDurationChainFromTemporal(pdt.since(other, options)),
+    round: (options) => buildDateTimeChainFromTemporal(pdt.round(options)),
     equals: (other) => buildChain(pdt.equals(other)),
         isEqual: (other) => buildChain(pdt.equals(other)),
     isBefore: (other) => buildChain(Temporal.PlainDateTime.compare(pdt, other) < 0),

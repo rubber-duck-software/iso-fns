@@ -3,6 +3,8 @@ import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from '..
 import { Iso } from '../src/iso-types'
 
 type TemporalPluralUnit = Temporal.PluralUnit<Temporal.DateTimeUnit>
+type TemporalDateTimeRoundUnit = Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
+type TemporalPluralRoundUnit = Temporal.PluralUnit<TemporalDateTimeRoundUnit>
 type TemporalSingularUnit = Temporal.DateTimeUnit
 type TemporalRoundingMode = Temporal.RoundingMode
 type TemporalOverflow = 'constrain' | 'reject'
@@ -996,7 +998,7 @@ describe('dateTimeFns', () => {
       //@ts-expect-error
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'second', roundingMode: 'cile' }), RangeError)
     })
-    const incrementOneNearest: [TemporalPluralUnit, Iso.DateTime][] = [
+    const incrementOneNearest: [TemporalPluralRoundUnit, Iso.DateTime][] = [
       ['days', '1976-11-19T00:00'],
       ['hours', '1976-11-18T14:00'],
       ['minutes', '1976-11-18T14:24'],
@@ -1007,7 +1009,7 @@ describe('dateTimeFns', () => {
       it(`rounds to nearest ${smallestUnit}`, () =>
         assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'halfExpand' })}`, expected))
     })
-    const incrementOneCeil: [TemporalPluralUnit, Iso.DateTime][] = [
+    const incrementOneCeil: [TemporalPluralRoundUnit, Iso.DateTime][] = [
       ['days', '1976-11-19T00:00'],
       ['hours', '1976-11-18T15:00'],
       ['minutes', '1976-11-18T14:24'],
@@ -1017,7 +1019,7 @@ describe('dateTimeFns', () => {
       it(`rounds up to ${smallestUnit}`, () =>
         assert.equal(`${dateTimeFns.round(dt, { smallestUnit, roundingMode: 'ceil' })}`, expected))
     })
-    const incrementOneFloor: [TemporalPluralUnit, Iso.DateTime][] = [
+    const incrementOneFloor: [TemporalPluralRoundUnit, Iso.DateTime][] = [
       ['days', '1976-11-18T00:00'],
       ['hours', '1976-11-18T14:00'],
       ['minutes', '1976-11-18T14:23'],
@@ -1066,7 +1068,7 @@ describe('dateTimeFns', () => {
         dateTimeFns.assertIsValid(dateTimeFns.round(dt, { smallestUnit, roundingIncrement }))
       })
     })
-    const units: [TemporalPluralUnit, TemporalPluralUnit] = ['minutes', 'seconds']
+    const units: [TemporalPluralRoundUnit, TemporalPluralRoundUnit] = ['minutes', 'seconds']
     units.forEach((smallestUnit) => {
       it(`valid ${smallestUnit} increments divide into 60`, () => {
         ;[1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30].forEach((roundingIncrement) => {
@@ -1074,7 +1076,7 @@ describe('dateTimeFns', () => {
         })
       })
     })
-    const unit: [TemporalPluralUnit] = ['milliseconds']
+    const unit: [TemporalPluralRoundUnit] = ['milliseconds']
     unit.forEach((smallestUnit) => {
       it(`valid ${smallestUnit} increments divide into 1000`, () => {
         ;[1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200].forEach((roundingIncrement) => {
@@ -1096,7 +1098,7 @@ describe('dateTimeFns', () => {
       assert.throws(() => dateTimeFns.round(dt, { smallestUnit: 'millisecond', roundingIncrement: 1000 }), RangeError)
     })
     const bal = dateTimeFns.from('1976-11-18T23:59:59.999')
-    let smallestUnits: TemporalPluralUnit[] = ['days', 'hours', 'minutes', 'seconds']
+    let smallestUnits: TemporalPluralRoundUnit[] = ['days', 'hours', 'minutes', 'seconds']
     smallestUnits.forEach((smallestUnit) => {
       it(`balances to next ${smallestUnit}`, () => {
         assert.equal(`${dateTimeFns.round(bal, { smallestUnit })}`, '1976-11-19T00:00')
@@ -1370,7 +1372,7 @@ describe('dateTimeFns', () => {
         assert.throws(() => dateTimeFns.add(max, { milliseconds: 1 }, { overflow }), RangeError)
       })
     })
-    const units: TemporalPluralUnit[] = [
+    const units: TemporalPluralRoundUnit[] = [
       'days',
       'hours',
       'minutes',

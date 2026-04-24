@@ -112,21 +112,6 @@ declare const duration: Iso.Duration
 }
 
 // ---------------------------------------------------------------------------
-// isEqual has been removed; only equals remains
-// ---------------------------------------------------------------------------
-{
-  dateFns.equals(date, date)
-  // @ts-expect-error - isEqual removed from IDateFns
-  dateFns.isEqual(date, date)
-  // @ts-expect-error - isEqual removed from IDateTimeFns
-  dateTimeFns.isEqual(dateTime, dateTime)
-  // @ts-expect-error - isEqual removed from IInstantFns
-  instantFns.isEqual(instant, instant)
-  // @ts-expect-error - isEqual removed from IYearMonthFns
-  yearMonthFns.isEqual(yearMonth, yearMonth)
-}
-
-// ---------------------------------------------------------------------------
 // from() rejects primitive non-string inputs
 // ---------------------------------------------------------------------------
 {

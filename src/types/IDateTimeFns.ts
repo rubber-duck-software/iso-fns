@@ -114,12 +114,16 @@ export interface IDateTimeFns {
   round(
     dateTime: Iso.DateTime,
     options: {
-      smallestUnit: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      smallestUnit: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): Iso.DateTime
   equals(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
+  /**
+   * alias for {@link IDateTimeFns.equals equals}
+   */
+  isEqual(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isBefore(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isAfter(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
   isEqualOrBefore(dateTime: Iso.DateTime, other: Iso.DateTime): boolean
@@ -399,6 +403,7 @@ export interface IDateTimeChain extends Chain<Iso.DateTime> {
     roundingMode?: Temporal.RoundingMode
   }): IDateTimeChain
   equals(other: Iso.DateTime): Chain<boolean>
+  isEqual(other: Iso.DateTime): Chain<boolean>
   isBefore(other: Iso.DateTime): Chain<boolean>
   isAfter(other: Iso.DateTime): Chain<boolean>
   isEqualOrBefore(other: Iso.DateTime): Chain<boolean>

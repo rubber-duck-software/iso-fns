@@ -70,8 +70,8 @@ export interface ITimeFns {
     time: Iso.Time,
     other: Iso.Time,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -80,8 +80,8 @@ export interface ITimeFns {
     time: Iso.Time,
     other: Iso.Time,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -89,7 +89,7 @@ export interface ITimeFns {
   round(
     time: Iso.Time,
     options: {
-      smallestUnit: Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
+      smallestUnit: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -256,8 +256,8 @@ export interface ITimeChain extends Chain<Iso.Time> {
   until(
     other: Iso.Time,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -265,14 +265,14 @@ export interface ITimeChain extends Chain<Iso.Time> {
   since(
     other: Iso.Time,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   round(options: {
-    smallestUnit: Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
+    smallestUnit: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
     roundingIncrement?: number
     roundingMode?: Temporal.RoundingMode
   }): ITimeChain

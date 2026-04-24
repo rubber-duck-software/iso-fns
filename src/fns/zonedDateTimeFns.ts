@@ -71,15 +71,15 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
     const pd = dateFromInput(date)
     return toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).with({ year: pd.year, month: pd.month, day: pd.day }))
   },
-  withTime: (zdt, time) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).withPlainTime(time as any)),
+  withTime: (zdt, time) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).withPlainTime(time)),
   withTimeZone: (zdt, timeZone) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).withTimeZone(timeZone)),
   add: (zdt, durationLike, options) =>
-    toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).add(durationLike as any, options)),
+    toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).add(durationLike, options)),
   subtract: (zdt, durationLike, options) =>
-    toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).subtract(durationLike as any, options)),
-  until: (zdt, other, options) => toIsoDuration(Temporal.ZonedDateTime.from(zdt).until(other, options as any)),
-  since: (zdt, other, options) => toIsoDuration(Temporal.ZonedDateTime.from(zdt).since(other, options as any)),
-  round: (zdt, options) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).round(options as any)),
+    toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).subtract(durationLike, options)),
+  until: (zdt, other, options) => toIsoDuration(Temporal.ZonedDateTime.from(zdt).until(other, options)),
+  since: (zdt, other, options) => toIsoDuration(Temporal.ZonedDateTime.from(zdt).since(other, options)),
+  round: (zdt, options) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).round(options)),
   equals: (zdt, other) => Temporal.ZonedDateTime.from(zdt).equals(other),
   isEqual: (zdt, other) => Temporal.ZonedDateTime.from(zdt).equals(other),
   startOfDay: (zdt) => toIsoZonedDateTime(Temporal.ZonedDateTime.from(zdt).startOfDay()),
@@ -127,13 +127,13 @@ export function buildZonedDateTimeChainFromTemporal(zdt: Temporal.ZonedDateTime)
       const pd = dateFromInput(date)
       return buildZonedDateTimeChainFromTemporal(zdt.with({ year: pd.year, month: pd.month, day: pd.day }))
     },
-    withTime: (time) => buildZonedDateTimeChainFromTemporal(zdt.withPlainTime(time as any)),
+    withTime: (time) => buildZonedDateTimeChainFromTemporal(zdt.withPlainTime(time)),
     withTimeZone: (timeZone) => buildZonedDateTimeChainFromTemporal(zdt.withTimeZone(timeZone)),
-    add: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.add(durationLike as any, options)),
-    subtract: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.subtract(durationLike as any, options)),
-    until: (other, options) => buildDurationChainFromTemporal(zdt.until(other, options as any)),
-    since: (other, options) => buildDurationChainFromTemporal(zdt.since(other, options as any)),
-    round: (options) => buildZonedDateTimeChainFromTemporal(zdt.round(options as any)),
+    add: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.add(durationLike, options)),
+    subtract: (durationLike, options) => buildZonedDateTimeChainFromTemporal(zdt.subtract(durationLike, options)),
+    until: (other, options) => buildDurationChainFromTemporal(zdt.until(other, options)),
+    since: (other, options) => buildDurationChainFromTemporal(zdt.since(other, options)),
+    round: (options) => buildZonedDateTimeChainFromTemporal(zdt.round(options)),
     equals: (other) => buildChain(zdt.equals(other)),
     isEqual: (other) => buildChain(zdt.equals(other)),
     startOfDay: () => buildZonedDateTimeChainFromTemporal(zdt.startOfDay()),

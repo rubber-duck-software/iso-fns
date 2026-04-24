@@ -56,8 +56,8 @@ export interface IInstantFns {
     instant: Iso.Instant,
     other: Iso.Instant,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -66,8 +66,8 @@ export interface IInstantFns {
     instant: Iso.Instant,
     other: Iso.Instant,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -75,12 +75,16 @@ export interface IInstantFns {
   round(
     instant: Iso.Instant,
     options: {
-      smallestUnit?: Temporal.DateTimeUnit
+      smallestUnit: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Instant
   equals(instant: Iso.Instant, other: Iso.Instant): boolean
+  /**
+   * alias for {@link IInstantFns.equals equals}
+   */
+  isEqual(instant: Iso.Instant, other: Iso.Instant): boolean
   isBefore(instant: Iso.Instant, other: Iso.Instant): boolean
   isAfter(instant: Iso.Instant, other: Iso.Instant): boolean
   isEqualOrBefore(instant: Iso.Instant, other: Iso.Instant): boolean
@@ -131,8 +135,8 @@ export interface IInstantChain extends Chain<Iso.Instant> {
   until(
     other: Iso.Instant,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -140,18 +144,19 @@ export interface IInstantChain extends Chain<Iso.Instant> {
   since(
     other: Iso.Instant,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
+      smallestUnit?: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   round(options: {
-    smallestUnit?: Temporal.DateTimeUnit
+    smallestUnit: Temporal.SmallestUnit<Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week' | 'day'>>
     roundingIncrement?: number
     roundingMode?: Temporal.RoundingMode
   }): IInstantChain
   equals(other: Iso.Instant): Chain<boolean>
+  isEqual(other: Iso.Instant): Chain<boolean>
   isBefore(other: Iso.Instant): Chain<boolean>
   isAfter(other: Iso.Instant): Chain<boolean>
   isEqualOrBefore(other: Iso.Instant): Chain<boolean>

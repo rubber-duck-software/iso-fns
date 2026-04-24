@@ -56,8 +56,8 @@ export interface IYearMonthFns {
     yearMonth: Iso.YearMonth,
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -66,13 +66,17 @@ export interface IYearMonthFns {
     yearMonth: Iso.YearMonth,
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   equals(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
+  /**
+   * alias for {@link IYearMonthFns.equals equals}
+   */
+  isEqual(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isEqualOrBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
@@ -232,8 +236,8 @@ export interface IYearMonthChain extends Chain<Iso.YearMonth> {
   until(
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
@@ -241,13 +245,14 @@ export interface IYearMonthChain extends Chain<Iso.YearMonth> {
   since(
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
-      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
       roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   equals(other: Iso.YearMonth): Chain<boolean>
+  isEqual(other: Iso.YearMonth): Chain<boolean>
   isBefore(other: Iso.YearMonth): Chain<boolean>
   isAfter(other: Iso.YearMonth): Chain<boolean>
   isEqualOrBefore(other: Iso.YearMonth): Chain<boolean>
