@@ -10,7 +10,7 @@ export interface IDurationFns {
     weeks?: number,
     days?: number,
     hours?: number,
-    minute?: number,
+    minutes?: number,
     seconds?: number,
     milliseconds?: number
   ): Iso.Duration

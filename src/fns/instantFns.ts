@@ -5,6 +5,12 @@ import { buildChain, isIsoInstant, toIsoDuration, toIsoInstant, toIsoZonedDateTi
 import { buildDurationChainFromTemporal } from './durationFns'
 import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
 
+function formatInstantISO9075(inst: Temporal.Instant): string {
+  const zdt = inst.toZonedDateTimeISO('UTC')
+  const pad = (n: number, w = 2) => n.toString().padStart(w, '0')
+  return `${pad(zdt.year, 4)}-${pad(zdt.month)}-${pad(zdt.day)} ${pad(zdt.hour)}:${pad(zdt.minute)}:${pad(zdt.second)}`
+}
+
 export const instantFns: IInstantFns = {
   now() {
     return toIsoInstant(Temporal.Now.instant())
@@ -45,7 +51,7 @@ export const instantFns: IInstantFns = {
   toZonedDateTime: (instant, timeZone) => toIsoZonedDateTime(Temporal.Instant.from(instant).toZonedDateTimeISO(timeZone)),
   formatISO9075(instant) {
     if (!isIsoInstant(instant)) throw new TypeError('invalid receiver')
-    return instant.slice(0, -1).replace('T', ' ')
+    return formatInstantISO9075(Temporal.Instant.from(instant))
   },
   toJsDate: (instant) => new Date(Temporal.Instant.from(instant).epochMilliseconds),
   from: (item) => toIsoInstant(Temporal.Instant.from(item)),
@@ -74,6 +80,7 @@ export function buildInstantChainFromTemporal(inst: Temporal.Instant): IInstantC
     isEqualOrBefore: (other) => buildChain(Temporal.Instant.compare(inst, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.Instant.compare(inst, other) >= 0),
     toZonedDateTime: (timeZone) => buildZonedDateTimeChainFromTemporal(inst.toZonedDateTimeISO(timeZone)),
-    toJsDate: () => buildChain(new Date(inst.epochMilliseconds))
+    toJsDate: () => buildChain(new Date(inst.epochMilliseconds)),
+    formatISO9075: () => buildChain(formatInstantISO9075(inst))
   }
 }

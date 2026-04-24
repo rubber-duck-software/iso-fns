@@ -102,7 +102,7 @@ export interface IDateFns {
   isEqualOrBefore(date: Iso.Date, other: Iso.Date): boolean
   isEqualOrAfter(date: Iso.Date, other: Iso.Date): boolean
   toDateTime(date: Iso.Date, time?: Iso.Time): Iso.DateTime
-  toZonedDateTime(date: Iso.Date, item: { timeZone: string; time?: Iso.Time } | string): Iso.ZonedDateTime
+  toZonedDateTime(date: Iso.Date, item: { timeZone: string; time?: Iso.Time }): Iso.ZonedDateTime
   toYearMonth(date: Iso.Date): Iso.YearMonth
   toMonthDay(date: Iso.Date): Iso.MonthDay
   getFields(date: Iso.Date): DateSlots

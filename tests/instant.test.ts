@@ -35,6 +35,42 @@ describe('Instant', () => {
       assert.ok(!instantFns.isValid('test'))
     })
   })
+
+  describe('instant comparison methods', () => {
+    const earlier = instantFns.from('1976-11-18T15:23:30.123Z')
+    const later = instantFns.from('2019-10-29T10:46:38.271Z')
+    it('isBefore', () => {
+      assert.equal(instantFns.isBefore(earlier, later), true)
+      assert.equal(instantFns.isBefore(later, earlier), false)
+      assert.equal(instantFns.isBefore(earlier, earlier), false)
+    })
+    it('isAfter', () => {
+      assert.equal(instantFns.isAfter(later, earlier), true)
+      assert.equal(instantFns.isAfter(earlier, later), false)
+      assert.equal(instantFns.isAfter(earlier, earlier), false)
+    })
+    it('isEqualOrBefore', () => {
+      assert.equal(instantFns.isEqualOrBefore(earlier, earlier), true)
+      assert.equal(instantFns.isEqualOrBefore(earlier, later), true)
+      assert.equal(instantFns.isEqualOrBefore(later, earlier), false)
+    })
+    it('isEqualOrAfter', () => {
+      assert.equal(instantFns.isEqualOrAfter(earlier, earlier), true)
+      assert.equal(instantFns.isEqualOrAfter(later, earlier), true)
+      assert.equal(instantFns.isEqualOrAfter(earlier, later), false)
+    })
+  })
+
+  describe('formatISO9075', () => {
+    it('produces YYYY-MM-DD HH:MM:SS even for compact forms', () => {
+      assert.equal(instantFns.formatISO9075('2020-01-01T00:00Z'), '2020-01-01 00:00:00')
+      assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56Z'), '2020-01-01 12:34:56')
+      assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56.789Z'), '2020-01-01 12:34:56')
+    })
+    it('chain exposes formatISO9075', () => {
+      assert.equal(instantFns.chain('2020-01-01T00:00Z').formatISO9075().value(), '2020-01-01 00:00:00')
+    })
+  })
 })
 // #! /usr/bin/env -S node --experimental-modules
 

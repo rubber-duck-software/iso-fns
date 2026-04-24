@@ -253,6 +253,30 @@ describe('dateTimeFns', () => {
     it('equal', () => assert(dateTimeFns.equals(dt1, dt1)))
     it('unequal', () => assert(!dateTimeFns.equals(dt1, dt2)))
   })
+  describe('dateTime comparison methods', () => {
+    const earlier = dateTimeFns.from('1976-11-18T15:23:30.123')
+    const later = dateTimeFns.from('2019-10-29T10:46:38.271')
+    it('isBefore', () => {
+      assert.equal(dateTimeFns.isBefore(earlier, later), true)
+      assert.equal(dateTimeFns.isBefore(later, earlier), false)
+      assert.equal(dateTimeFns.isBefore(earlier, earlier), false)
+    })
+    it('isAfter', () => {
+      assert.equal(dateTimeFns.isAfter(later, earlier), true)
+      assert.equal(dateTimeFns.isAfter(earlier, later), false)
+      assert.equal(dateTimeFns.isAfter(earlier, earlier), false)
+    })
+    it('isEqualOrBefore', () => {
+      assert.equal(dateTimeFns.isEqualOrBefore(earlier, earlier), true)
+      assert.equal(dateTimeFns.isEqualOrBefore(earlier, later), true)
+      assert.equal(dateTimeFns.isEqualOrBefore(later, earlier), false)
+    })
+    it('isEqualOrAfter', () => {
+      assert.equal(dateTimeFns.isEqualOrAfter(earlier, earlier), true)
+      assert.equal(dateTimeFns.isEqualOrAfter(later, earlier), true)
+      assert.equal(dateTimeFns.isEqualOrAfter(earlier, later), false)
+    })
+  })
   describe('date/time maths', () => {
     const earlier = dateTimeFns.from('1976-11-18T15:23:30.123')
     const later = dateTimeFns.from('2019-10-29T10:46:38.271')

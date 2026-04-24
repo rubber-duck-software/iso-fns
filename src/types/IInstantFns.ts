@@ -163,4 +163,5 @@ export interface IInstantChain extends Chain<Iso.Instant> {
   isEqualOrAfter(other: Iso.Instant): Chain<boolean>
   toZonedDateTime(timeZone: string): IZonedDateTimeChain
   toJsDate(): Chain<Date>
+  formatISO9075(): Chain<string>
 }

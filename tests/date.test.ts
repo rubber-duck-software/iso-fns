@@ -604,6 +604,31 @@ describe('Date', () => {
       assert.throws(() => dateFns.equals(d2, { year: 1976 }), TypeError)
     })
   })
+  describe('Date comparison methods', () => {
+    const jan1 = dateFns.from('2020-01-01')
+    const jun1 = dateFns.from('2020-06-01')
+    const dec1 = dateFns.from('2020-12-01')
+    it('isBefore', () => {
+      assert.equal(dateFns.isBefore(jan1, jun1), true)
+      assert.equal(dateFns.isBefore(jun1, jan1), false)
+      assert.equal(dateFns.isBefore(jun1, jun1), false)
+    })
+    it('isAfter', () => {
+      assert.equal(dateFns.isAfter(dec1, jun1), true)
+      assert.equal(dateFns.isAfter(jun1, dec1), false)
+      assert.equal(dateFns.isAfter(jun1, jun1), false)
+    })
+    it('isEqualOrBefore', () => {
+      assert.equal(dateFns.isEqualOrBefore(jun1, jun1), true)
+      assert.equal(dateFns.isEqualOrBefore(jan1, jun1), true)
+      assert.equal(dateFns.isEqualOrBefore(dec1, jun1), false)
+    })
+    it('isEqualOrAfter', () => {
+      assert.equal(dateFns.isEqualOrAfter(jun1, jun1), true)
+      assert.equal(dateFns.isEqualOrAfter(dec1, jun1), true)
+      assert.equal(dateFns.isEqualOrAfter(jan1, jun1), false)
+    })
+  })
   describe('Min/max range', () => {
     it('constructing from numbers', () => {
       assert.throws(() => dateFns.fromNumbers(-271821, 4, 18), RangeError)

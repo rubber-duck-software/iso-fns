@@ -129,6 +129,10 @@ export interface IZonedDateTimeFns {
   ): Iso.ZonedDateTime
   equals(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
   isEqual(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isBefore(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isAfter(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqualOrBefore(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqualOrAfter(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
   startOfDay(zonedDateTime: Iso.ZonedDateTime): Iso.ZonedDateTime
   toInstant(zonedDateTime: Iso.ZonedDateTime): Iso.Instant
   toDate(zonedDateTime: Iso.ZonedDateTime): Iso.Date
@@ -438,6 +442,10 @@ export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
   }): IZonedDateTimeChain
   equals(other: Iso.ZonedDateTime): Chain<boolean>
   isEqual(other: Iso.ZonedDateTime): Chain<boolean>
+  isBefore(other: Iso.ZonedDateTime): Chain<boolean>
+  isAfter(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqualOrBefore(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqualOrAfter(other: Iso.ZonedDateTime): Chain<boolean>
   startOfDay(): IZonedDateTimeChain
   toInstant(): IInstantChain
   toDate(): IDateChain

@@ -2694,4 +2694,35 @@ describe('ZonedDateTime', () => {
   //     assert.equal(Temporal.PlainDateTime.compare(clockBefore.toPlainDateTime(), clockAfter.toPlainDateTime()), -1)
   //   })
   // })
+
+  describe('zonedDateTime comparison methods', () => {
+    const earlier = zonedDateTimeFns.from('2020-01-01T00:00-06:00[America/Chicago]')
+    const later = zonedDateTimeFns.from('2020-06-01T00:00-05:00[America/Chicago]')
+    it('isBefore', () => {
+      assert.equal(zonedDateTimeFns.isBefore(earlier, later), true)
+      assert.equal(zonedDateTimeFns.isBefore(later, earlier), false)
+      assert.equal(zonedDateTimeFns.isBefore(earlier, earlier), false)
+    })
+    it('isAfter', () => {
+      assert.equal(zonedDateTimeFns.isAfter(later, earlier), true)
+      assert.equal(zonedDateTimeFns.isAfter(earlier, later), false)
+      assert.equal(zonedDateTimeFns.isAfter(earlier, earlier), false)
+    })
+    it('isEqualOrBefore', () => {
+      assert.equal(zonedDateTimeFns.isEqualOrBefore(earlier, earlier), true)
+      assert.equal(zonedDateTimeFns.isEqualOrBefore(earlier, later), true)
+      assert.equal(zonedDateTimeFns.isEqualOrBefore(later, earlier), false)
+    })
+    it('isEqualOrAfter', () => {
+      assert.equal(zonedDateTimeFns.isEqualOrAfter(earlier, earlier), true)
+      assert.equal(zonedDateTimeFns.isEqualOrAfter(later, earlier), true)
+      assert.equal(zonedDateTimeFns.isEqualOrAfter(earlier, later), false)
+    })
+    it('chain exposes comparisons', () => {
+      assert.equal(zonedDateTimeFns.chain(earlier).isBefore(later).value(), true)
+      assert.equal(zonedDateTimeFns.chain(later).isAfter(earlier).value(), true)
+      assert.equal(zonedDateTimeFns.chain(earlier).isEqualOrBefore(earlier).value(), true)
+      assert.equal(zonedDateTimeFns.chain(earlier).isEqualOrAfter(earlier).value(), true)
+    })
+  })
 })

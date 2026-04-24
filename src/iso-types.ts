@@ -28,7 +28,9 @@ export module Iso {
   }
 
   /**
-   * An `Iso.Instant` is a single point in time (called "exact time"), with a precision in milliseconds. No time zone is present. As such `Iso.Instant` has no concept of days, months or even hours.
+   * An `Iso.Instant` is a single point in time (called "exact time"). No time zone is present. As such `Iso.Instant` has no concept of days, months or even hours.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * For convenience of interoperability, instants are represented as an ISO8601 string in Zulu time (UTC). The format looks like `1970-01-01T00:00:00.000Z`.
    *
@@ -70,14 +72,18 @@ export module Iso {
   export type Date = Format['YYYY-MM-DD'] & { readonly [__brand]?: 'Date' }
 
   /**
-   * An `Iso.Time` represents a wall-clock time, with a precision in milliseconds, and without any time zone. "Wall-clock time" refers to the concept of a time as expressed in everyday usage — the time that you read off the clock on the wall. For example, it could be used to represent an event that happens daily at a certain time, no matter what time zone.
+   * An `Iso.Time` represents a wall-clock time without any time zone. "Wall-clock time" refers to the concept of a time as expressed in everyday usage — the time that you read off the clock on the wall. For example, it could be used to represent an event that happens daily at a certain time, no matter what time zone.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * `Iso.Time` refers to a time with no associated calendar date; if you need to refer to a specific time on a specific day, use `Iso.DateTime`. A `Iso.Time` can be converted into a `Iso.ZonedDateTime` by combining it with a `Iso.Date` and `Iso.TimeZone` using the `toZonedDateTime()` function. It can also be combined with a `Iso.Date` to yield a "zoneless" `Iso.DateTime` using the `toDateTime()` function.
    */
   export type Time = Format['hh:mm:ss[.sss]'] & { readonly [__brand]?: 'Time' }
 
   /**
-   * An `Iso.DateTime` represents a calendar date and wall-clock time, with a precision in milliseconds, and without any time zone.
+   * An `Iso.DateTime` represents a calendar date and wall-clock time, without any time zone.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * For use cases that require a time zone, especially using arithmetic or other derived values, consider using `Iso.ZonedDateTime` instead because that type automatically adjusts for Daylight Saving Time. A `Iso.DateTime` can be converted to a `Iso.ZonedDateTime` using a `Iso.TimeZone`.
    *

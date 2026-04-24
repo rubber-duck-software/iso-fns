@@ -1,22 +1,22 @@
-import {  Temporal } from 'temporal-polyfill'
+import { Temporal } from 'temporal-polyfill'
 import { type IDateChain, type IDateFns } from '../types'
 import { type Iso } from '../iso-types'
 import {
-   buildChain,
-   isIsoDate,
-   slotsFromDate,
-   toIsoDate,
-   toIsoDateTime,
-   toIsoDuration,
-   toIsoMonthDay,
-   toIsoYearMonth,
-   toIsoZonedDateTime
+  buildChain,
+  isIsoDate,
+  slotsFromDate,
+  toIsoDate,
+  toIsoDateTime,
+  toIsoDuration,
+  toIsoMonthDay,
+  toIsoYearMonth,
+  toIsoZonedDateTime
 } from '../temporal'
-import {  buildDurationChainFromTemporal } from './durationFns'
-import {  buildDateTimeChainFromTemporal } from './dateTimeFns'
-import {  buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
-import {  buildYearMonthChainFromTemporal } from './yearMonthFns'
-import {  buildMonthDayChainFromTemporal } from './monthDayFns'
+import { buildDurationChainFromTemporal } from './durationFns'
+import { buildDateTimeChainFromTemporal } from './dateTimeFns'
+import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
+import { buildYearMonthChainFromTemporal } from './yearMonthFns'
+import { buildMonthDayChainFromTemporal } from './monthDayFns'
 import format from '../format'
 
 export const dateFns: IDateFns = {
