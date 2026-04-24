@@ -8,7 +8,9 @@ import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
 function formatInstantISO9075(inst: Temporal.Instant): string {
   const zdt = inst.toZonedDateTimeISO('UTC')
   const pad = (n: number, w = 2) => n.toString().padStart(w, '0')
-  return `${pad(zdt.year, 4)}-${pad(zdt.month)}-${pad(zdt.day)} ${pad(zdt.hour)}:${pad(zdt.minute)}:${pad(zdt.second)}`
+  // Signed years (BC) need the sign in front of zero padding: year -1 → "-0001".
+  const padYear = (y: number) => (y < 0 ? '-' + pad(-y, 4) : pad(y, 4))
+  return `${padYear(zdt.year)}-${pad(zdt.month)}-${pad(zdt.day)} ${pad(zdt.hour)}:${pad(zdt.minute)}:${pad(zdt.second)}`
 }
 
 export const instantFns: IInstantFns = {

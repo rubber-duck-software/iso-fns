@@ -181,6 +181,32 @@ describe('format', function () {
         assert.deepEqual(result, expected)
       })
     })
+
+    describe('localized day of week (E)', function () {
+      it('formats each width', function () {
+        // 1986-04-04 is a Friday.
+        var result = format(dateTime, 'E EE EEE EEEE EEEEE EEEEEE')
+        assert.equal(result, 'Fri Fri Fri Friday F Fr')
+      })
+
+      it('formats Sunday correctly', function () {
+        // 2024-01-07 is a Sunday.
+        const sun = Temporal.PlainDate.from('2024-01-07')
+        assert.equal(format(sun, 'EEEE'), 'Sunday')
+        assert.equal(format(sun, 'EEE'), 'Sun')
+        assert.equal(format(sun, 'EEEEE'), 'S')
+        assert.equal(format(sun, 'EEEEEE'), 'Su')
+      })
+
+      it('formats every day of the week', function () {
+        // 2024-01-07 … 2024-01-13 is Sun … Sat.
+        const names = []
+        for (let d = 7; d <= 13; d++) {
+          names.push(format(Temporal.PlainDate.from(`2024-01-${String(d).padStart(2, '0')}`), 'EEEE'))
+        }
+        assert.deepEqual(names, ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
+      })
+    })
   })
 
   describe('day period and hour', function () {

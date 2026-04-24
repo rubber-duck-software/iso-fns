@@ -222,6 +222,11 @@ describe('Instant', () => {
       assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56Z'), '2020-01-01 12:34:56')
       assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56.789Z'), '2020-01-01 12:34:56')
     })
+    it('pads BC years with the sign in front of zero padding', () => {
+      // Regression: previously rendered year -1 as "0-1" because padStart sees the minus sign.
+      assert.equal(instantFns.formatISO9075('-000001-06-15T00:00Z' as never), '-0001-06-15 00:00:00')
+      assert.equal(instantFns.formatISO9075('-000100-01-01T00:00Z' as never), '-0100-01-01 00:00:00')
+    })
     it('throws for invalid input', () => {
       assert.throws(() => instantFns.formatISO9075('not-an-instant' as never))
     })

@@ -9,7 +9,7 @@ import {
   slotsFromZonedDateTime
 } from '../temporal'
 import { getDefaultLocale, getLocale } from './locale'
-import type { Day, FormatLong, Locale, LocaleDayPeriod, Localize, Month, QuarterIndex } from './types'
+import type { Day, FormatLong, Locale, LocaleDayPeriod, Localize, Month, Quarter } from './types'
 
 export interface FormatOptions {
   locale?: Locale | string
@@ -133,12 +133,12 @@ function cleanEscapedString(input: string): string {
   return match[1].replace(doubleQuoteRegExp, "'")
 }
 
-// [yQMIdDihHKkms]o matches ordinal tokens (letter followed by `o`).
+// [yQMIdihHKkms]o matches ordinal tokens (letter followed by `o`).
 // (\w)\1* matches sequences of the same letter.
 // '' matches two quote characters in a row.
 // '(''|[^'])+('|$) matches text surrounded by single quotes (escaped literal).
 // . matches any remaining single character.
-const formattingTokensRegExp = /[yQMIdDihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g
+const formattingTokensRegExp = /[yQMIdihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g
 const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g
 
 const escapedStringRegExp = /^'([^]*?)'?$/
@@ -150,6 +150,7 @@ const formatterSlotRequirements: Record<string, readonly SlotKey[]> = {
   b: ['hour'],
   B: ['hour'],
   d: ['day'],
+  E: ['year', 'month', 'day'],
   G: ['year'],
   h: ['hour'],
   H: ['hour'],
@@ -320,7 +321,7 @@ const formattersTyped = {
   },
   // Quarter
   Q(date: { month: number }, token: string, localize: Localize) {
-    const quarter = Math.ceil(date.month / 3) as QuarterIndex
+    const quarter = Math.ceil(date.month / 3) as Quarter
     switch (token) {
       case 'Q':
         return String(quarter)
@@ -389,8 +390,7 @@ const formattersTyped = {
   },
   // ISO day of week
   i(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
-    const dayOfWeek = new Temporal.PlainDate(date.year, date.month, date.day).dayOfWeek as 1 | 2 | 3 | 4 | 5 | 6 | 7
-    const isoDayOfWeek = dayOfWeek === 7 ? 0 : dayOfWeek
+    const dayOfWeek = new Temporal.PlainDate(date.year, date.month, date.day).dayOfWeek as Day
 
     switch (token) {
       case 'i':
@@ -400,14 +400,14 @@ const formattersTyped = {
       case 'io':
         return localize.ordinalNumber(dayOfWeek, { unit: 'day' })
       case 'iii':
-        return localize.day(isoDayOfWeek, { width: 'abbreviated', context: 'formatting' })
+        return localize.day(dayOfWeek, { width: 'abbreviated', context: 'formatting' })
       case 'iiiii':
-        return localize.day(isoDayOfWeek, { width: 'narrow', context: 'formatting' })
+        return localize.day(dayOfWeek, { width: 'narrow', context: 'formatting' })
       case 'iiiiii':
-        return localize.day(isoDayOfWeek, { width: 'short', context: 'formatting' })
+        return localize.day(dayOfWeek, { width: 'short', context: 'formatting' })
       case 'iiii':
       default:
-        return localize.day(isoDayOfWeek, { width: 'wide', context: 'formatting' })
+        return localize.day(dayOfWeek, { width: 'wide', context: 'formatting' })
     }
   },
   // AM or PM

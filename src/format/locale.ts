@@ -1,4 +1,5 @@
 import type {
+  DayIndex,
   FormatLong,
   FormatLongFn,
   FormatLongWidth,
@@ -70,11 +71,13 @@ const MONTH_VALUES = {
   ] as const
 }
 
+// Monday-first, so `DAY_VALUES[width][dayOfWeek - 1]` resolves a Temporal
+// dayOfWeek (1 = Mon … 7 = Sun) to its localized name.
 const DAY_VALUES = {
-  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as const,
-  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as const,
-  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const,
-  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const
+  narrow: ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const,
+  short: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] as const,
+  abbreviated: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const,
+  wide: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const
 }
 
 const DAY_PERIOD_VALUES = {
@@ -168,7 +171,11 @@ const localize: Localize = {
     argumentCallback: (quarter) => (quarter - 1) as QuarterIndex
   }),
   month: buildLocalizeFn({ values: MONTH_VALUES, defaultWidth: 'wide' }),
-  day: buildLocalizeFn({ values: DAY_VALUES, defaultWidth: 'wide' }),
+  day: buildLocalizeFn({
+    values: DAY_VALUES,
+    defaultWidth: 'wide',
+    argumentCallback: (day) => (day - 1) as DayIndex
+  }),
   dayPeriod: buildLocalizeFn({
     values: DAY_PERIOD_VALUES,
     defaultWidth: 'wide',
@@ -209,7 +216,7 @@ export const enUS: Locale = {
   code: 'en-US',
   localize,
   options: {
-    weekStartsOn: 0 /* Sunday */,
+    weekStartsOn: 7 /* Sunday, in Temporal's Mon=1…Sun=7 numbering */,
     firstWeekContainsDate: 1
   }
 }

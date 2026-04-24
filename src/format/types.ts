@@ -1,8 +1,12 @@
 type Era = 0 | 1
 
-type Quarter = 1 | 2 | 3 | 4
+export type Quarter = 1 | 2 | 3 | 4
 
-export type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6
+// Day matches Temporal.PlainDate.dayOfWeek: 1 = Monday … 7 = Sunday.
+// DayIndex is the 0-based position into the Mon-first DAY_VALUES array.
+export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
 
@@ -14,11 +18,14 @@ export type LocaleDayPeriod = 'am' | 'pm' | 'midnight' | 'noon' | 'morning' | 'a
 
 export type LocaleUnit = Era | Quarter | Month | Day | LocaleDayPeriod
 
+// When no argumentCallback is configured, callers must pass the raw array
+// index (`LocalizeUnitIndex<Result>`). When one is configured, callers pass
+// the semantic value (`Result`) and the callback converts it to an index.
 export type LocalizeFn<
   Result extends LocaleUnit | number,
   ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
 > = (
-  value: ArgCallback extends undefined ? Result : LocalizeUnitIndex<Result>,
+  value: ArgCallback extends undefined ? LocalizeUnitIndex<Result> : Result,
   options?: {
     width?: LocalePatternWidth
     context?: 'formatting' | 'standalone'
@@ -55,7 +62,7 @@ export type LocalizeUnitValuesIndex<Values extends LocalizeUnitValues<any>> =
       : Values extends LocalizeQuarterValues
         ? QuarterIndex
         : Values extends LocalizeDayValues
-          ? Day
+          ? DayIndex
           : Values extends LocalizeMonthValues
             ? Month
             : never
@@ -85,7 +92,7 @@ export interface Localize {
   era: LocalizeFn<Era, undefined>
   quarter: LocalizeFn<Quarter, BuildLocalizeFnArgCallback<Quarter>>
   month: LocalizeFn<Month, undefined>
-  day: LocalizeFn<Day, undefined>
+  day: LocalizeFn<Day, BuildLocalizeFnArgCallback<Day>>
   dayPeriod: LocalizeFn<LocaleDayPeriod, undefined>
 }
 

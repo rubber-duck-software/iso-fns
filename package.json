@@ -14,7 +14,11 @@
   "license": "MIT",
   "homepage": "iso-fns.org",
   "files": [
-    "*"
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "CHANGELOG"
   ],
   "repository": {
     "type": "git",
