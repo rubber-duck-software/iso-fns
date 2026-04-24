@@ -35,6 +35,7 @@ export const instantFns: IInstantFns = {
   assertIsValid(instant): asserts instant is Iso.Instant {
     if (!isIsoInstant(instant)) throw new TypeError('invalid receiver')
   },
+  // Unix-time convention: a moment at epoch ms -500 belongs to second -1, not 0.
   getEpochSeconds: (instant) => Math.floor(Temporal.Instant.from(instant).epochMilliseconds / 1000),
   getEpochMilliseconds: (instant) => Temporal.Instant.from(instant).epochMilliseconds,
   add: (instant, durationLike) => toIsoInstant(Temporal.Instant.from(instant).add(Temporal.Duration.from(durationLike))),

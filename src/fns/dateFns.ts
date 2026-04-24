@@ -99,8 +99,10 @@ export function buildDateChainFromTemporal(pd: Temporal.PlainDate): IDateChain {
     isEqualOrBefore: (other) => buildChain(Temporal.PlainDate.compare(pd, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.PlainDate.compare(pd, other) >= 0),
     toDateTime: (time) => buildDateTimeChainFromTemporal(pd.toPlainDateTime(time)),
-    toZonedDateTime: (item) =>
-      buildZonedDateTimeChainFromTemporal(pd.toZonedDateTime({ timeZone: item.timeZone, plainTime: item.time })),
+    toZonedDateTime: (item) => {
+      if (typeof item !== 'object' || item === null) throw new TypeError('invalid argument')
+      return buildZonedDateTimeChainFromTemporal(pd.toZonedDateTime({ timeZone: item.timeZone, plainTime: item.time }))
+    },
     toYearMonth: () => buildYearMonthChainFromTemporal(pd.toPlainYearMonth()),
     toMonthDay: () => buildMonthDayChainFromTemporal(pd.toPlainMonthDay()),
     getFields: () => buildChain(slotsFromDate(pd)),

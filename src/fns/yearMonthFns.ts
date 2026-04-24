@@ -69,7 +69,10 @@ export function buildYearMonthChainFromTemporal(pym: Temporal.PlainYearMonth): I
     isAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) > 0),
     isEqualOrBefore: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) <= 0),
     isEqualOrAfter: (other) => buildChain(Temporal.PlainYearMonth.compare(pym, other) >= 0),
-    toDate: (day) => buildDateChainFromTemporal(pym.toPlainDate({ day })),
+    toDate: (day) => {
+      if (typeof day !== 'number') throw new TypeError('argument should be a number')
+      return buildDateChainFromTemporal(pym.toPlainDate({ day }))
+    },
     getFields: () => buildChain(slotsFromYearMonth(pym)),
     format: (formatString, options) => buildChain(format(pym, formatString, options))
   }

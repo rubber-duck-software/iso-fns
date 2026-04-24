@@ -76,10 +76,14 @@ export function buildTimeChainFromTemporal(pt: Temporal.PlainTime): ITimeChain {
     equals: (other) => buildChain(pt.equals(other)),
     isEqual: (other) => buildChain(pt.equals(other)),
     toDateTime: (date) => buildDateTimeChainFromTemporal(Temporal.PlainDate.from(date).toPlainDateTime(pt)),
-    toZonedDateTime: (item) =>
-      buildZonedDateTimeChainFromTemporal(
+    toZonedDateTime: (item) => {
+      if (typeof item !== 'object' || item === null) throw new TypeError('invalid argument')
+      if (item.date === undefined) throw new TypeError('missing date property')
+      if (item.timeZone === undefined) throw new TypeError('missing timeZone property')
+      return buildZonedDateTimeChainFromTemporal(
         Temporal.PlainDate.from(item.date).toZonedDateTime({ timeZone: item.timeZone, plainTime: pt })
-      ),
+      )
+    },
     getFields: () => buildChain(slotsFromTime(pt)),
     format: (formatString, options) => buildChain(format(pt, formatString, options))
   }

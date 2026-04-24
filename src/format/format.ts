@@ -2,7 +2,6 @@ import { Temporal } from 'temporal-polyfill'
 import {
   slotsFromDate,
   slotsFromDateTime,
-  slotsFromInstant,
   slotsFromMonthDay,
   slotsFromTime,
   slotsFromYearMonth,
@@ -11,16 +10,20 @@ import {
 import { getDefaultLocale, getLocale } from './locale'
 import type { Day, FormatLong, Locale, LocaleDayPeriod, Localize, Month, Quarter } from './types'
 
+type FormatContext = { localize: Localize; code: string }
+
 export interface FormatOptions {
   locale?: Locale | string
 }
 
+// Instant is intentionally excluded: it has no wall-clock or zone context, so
+// every token would need an implicit UTC assumption. Callers must convert to
+// a ZonedDateTime first.
 export type FormatInput =
   | Temporal.PlainDate
   | Temporal.PlainTime
   | Temporal.PlainDateTime
   | Temporal.ZonedDateTime
-  | Temporal.Instant
   | Temporal.PlainYearMonth
   | Temporal.PlainMonthDay
 
@@ -57,7 +60,7 @@ export default function format(input: FormatInput, formatStr: string, options?: 
         assertSlotsAvailable(firstCharacter, slots)
         const formatter = formatters[firstCharacter]
         if (formatter) {
-          return formatter(slots, substring, locale.localize)
+          return formatter(slots, substring, { localize: locale.localize, code: locale.code })
         }
       }
 
@@ -95,7 +98,7 @@ type Slots = {
   epochMilliseconds?: number
 }
 
-type Formatter = (slots: Slots, token: string, localize: Localize) => string
+type Formatter = (slots: Slots, token: string, ctx: FormatContext) => string
 type LongFormatter = (token: string, formatLong: FormatLong) => string
 
 // Dispatch on the concrete Temporal class. Each temporal type exposes a
@@ -106,9 +109,13 @@ function slotsFromTemporal(input: FormatInput): Slots {
   if (input instanceof Temporal.PlainTime) return slotsFromTime(input)
   if (input instanceof Temporal.PlainDateTime) return slotsFromDateTime(input)
   if (input instanceof Temporal.ZonedDateTime) return slotsFromZonedDateTime(input)
-  if (input instanceof Temporal.Instant) return slotsFromInstant(input)
   if (input instanceof Temporal.PlainYearMonth) return slotsFromYearMonth(input)
   if (input instanceof Temporal.PlainMonthDay) return slotsFromMonthDay(input)
+  // Runtime-only guard: `Instant` is excluded from `FormatInput` at the type
+  // level, but callers using `as any` or loose JS can still pass one in.
+  if ((input as unknown) instanceof Temporal.Instant) {
+    throw new TypeError('format cannot operate on an Instant; convert to a ZonedDateTime first')
+  }
   throw new TypeError('format requires a Temporal instance')
 }
 
@@ -280,7 +287,7 @@ const longFormattersTyped = {
  */
 const formattersTyped = {
   // Era
-  G(date: { year: number }, token: string, localize: Localize) {
+  G(date: { year: number }, token: string, { localize }: FormatContext) {
     const era = date.year > 0 ? 1 : 0
     switch (token) {
       // AD, BC
@@ -298,7 +305,7 @@ const formattersTyped = {
     }
   },
   // Year
-  y(date: { year: number }, token: string, localize: Localize) {
+  y(date: { year: number }, token: string, { localize }: FormatContext) {
     if (token === 'yo') {
       const signedYear = date.year
       // Returns 1 for 1 BC (which is year 0 in JavaScript)
@@ -320,7 +327,7 @@ const formattersTyped = {
     return addLeadingZeros(date.year, token.length)
   },
   // Quarter
-  Q(date: { month: number }, token: string, localize: Localize) {
+  Q(date: { month: number }, token: string, { localize }: FormatContext) {
     const quarter = Math.ceil(date.month / 3) as Quarter
     switch (token) {
       case 'Q':
@@ -339,7 +346,7 @@ const formattersTyped = {
     }
   },
   // Month
-  M(date: { month: number }, token: string, localize: Localize) {
+  M(date: { month: number }, token: string, { localize }: FormatContext) {
     const month = (date.month - 1) as Month
     switch (token) {
       case 'M':
@@ -357,7 +364,7 @@ const formattersTyped = {
     }
   },
   // ISO week of year
-  I(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
+  I(date: { year: number; month: number; day: number }, token: string, { localize }: FormatContext) {
     const isoWeek = new Temporal.PlainDate(date.year, date.month, date.day).weekOfYear as number
     if (token === 'Io') {
       return localize.ordinalNumber(isoWeek, { unit: 'week' })
@@ -365,14 +372,14 @@ const formattersTyped = {
     return addLeadingZeros(isoWeek, token.length)
   },
   // Day of the month
-  d(date: { day: number }, token: string, localize: Localize) {
+  d(date: { day: number }, token: string, { localize }: FormatContext) {
     if (token === 'do') {
       return localize.ordinalNumber(date.day, { unit: 'date' })
     }
     return lightFormatters.d(date, token)
   },
   // Day of week
-  E(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
+  E(date: { year: number; month: number; day: number }, token: string, { localize }: FormatContext) {
     const dayOfWeek = new Temporal.PlainDate(date.year, date.month, date.day).dayOfWeek as Day
     switch (token) {
       case 'E':
@@ -389,7 +396,7 @@ const formattersTyped = {
     }
   },
   // ISO day of week
-  i(date: { year: number; month: number; day: number }, token: string, localize: Localize) {
+  i(date: { year: number; month: number; day: number }, token: string, { localize }: FormatContext) {
     const dayOfWeek = new Temporal.PlainDate(date.year, date.month, date.day).dayOfWeek as Day
 
     switch (token) {
@@ -411,7 +418,7 @@ const formattersTyped = {
     }
   },
   // AM or PM
-  a(date: { hour: number }, token: string, localize: Localize) {
+  a(date: { hour: number }, token: string, { localize }: FormatContext) {
     const dayPeriodEnumValue: LocaleDayPeriod = date.hour >= 12 ? 'pm' : 'am'
 
     switch (token) {
@@ -428,7 +435,7 @@ const formattersTyped = {
     }
   },
   // AM, PM, midnight, noon
-  b(date: { hour: number }, token: string, localize: Localize) {
+  b(date: { hour: number }, token: string, { localize }: FormatContext) {
     const hours = date.hour
     const dayPeriodEnumValue: LocaleDayPeriod =
       hours === 12 ? 'noon' : hours === 0 ? 'midnight' : hours >= 12 ? 'pm' : 'am'
@@ -447,7 +454,7 @@ const formattersTyped = {
     }
   },
   // noon, midnight, in the morning, in the afternoon, in the evening, at night
-  B(date: { hour: number }, token: string, localize: Localize) {
+  B(date: { hour: number }, token: string, { localize }: FormatContext) {
     const hours = date.hour
     let dayPeriodEnumValue: LocaleDayPeriod
     if (hours === 12) {
@@ -477,7 +484,7 @@ const formattersTyped = {
     }
   },
   // Hour [1-12]
-  h(date: { hour: number }, token: string, localize: Localize) {
+  h(date: { hour: number }, token: string, { localize }: FormatContext) {
     if (token === 'ho') {
       let hours = date.hour % 12
       if (hours === 0) hours = 12
@@ -486,14 +493,14 @@ const formattersTyped = {
     return lightFormatters.h(date, token)
   },
   // Hour [0-23]
-  H(date: { hour: number }, token: string, localize: Localize) {
+  H(date: { hour: number }, token: string, { localize }: FormatContext) {
     if (token === 'Ho') {
       return localize.ordinalNumber(date.hour, { unit: 'hour' })
     }
     return lightFormatters.H(date, token)
   },
   // Hour [0-11]
-  K(date: { hour: number }, token: string, localize: Localize) {
+  K(date: { hour: number }, token: string, { localize }: FormatContext) {
     const hours = date.hour % 12
     if (token === 'Ko') {
       return localize.ordinalNumber(hours, { unit: 'hour' })
@@ -501,7 +508,7 @@ const formattersTyped = {
     return addLeadingZeros(hours, token.length)
   },
   // Hour [1-24]
-  k(date: { hour: number }, token: string, localize: Localize) {
+  k(date: { hour: number }, token: string, { localize }: FormatContext) {
     let hours = date.hour
     if (hours === 0) hours = 24
     if (token === 'ko') {
@@ -510,14 +517,14 @@ const formattersTyped = {
     return addLeadingZeros(hours, token.length)
   },
   // Minute
-  m(date: { minute: number }, token: string, localize: Localize) {
+  m(date: { minute: number }, token: string, { localize }: FormatContext) {
     if (token === 'mo') {
       return localize.ordinalNumber(date.minute, { unit: 'minute' })
     }
     return lightFormatters.m(date, token)
   },
   // Second
-  s(date: { second: number }, token: string, localize: Localize) {
+  s(date: { second: number }, token: string, { localize }: FormatContext) {
     if (token === 'so') {
       return localize.ordinalNumber(date.second, { unit: 'second' })
     }
@@ -587,15 +594,15 @@ const formattersTyped = {
     }
   },
   // Timezone (specific non-location)
-  z(date: { timeZone: string; epochMilliseconds: number }, token: string) {
+  z(date: { timeZone: string; epochMilliseconds: number }, token: string, { code }: FormatContext) {
     switch (token) {
       case 'z':
       case 'zz':
       case 'zzz':
-        return getTimeZoneName(date.timeZone, date.epochMilliseconds, 'short')
+        return getTimeZoneName(code, date.timeZone, date.epochMilliseconds, 'short')
       case 'zzzz':
       default:
-        return getTimeZoneName(date.timeZone, date.epochMilliseconds, 'long')
+        return getTimeZoneName(code, date.timeZone, date.epochMilliseconds, 'long')
     }
   }
 }
@@ -730,11 +737,16 @@ type DateTimeFormatWithParts = {
 // We cache the Intl.DateTimeFormat instance — which is the expensive part
 // to construct — and call formatToParts against each instant.
 const timeZoneFormatterCache = new Map<string, DateTimeFormatWithParts>()
-function getTimeZoneName(timeZone: string, epochMilliseconds: number, width: 'short' | 'long'): string {
-  const key = `${width}:${timeZone}`
+function getTimeZoneName(
+  localeCode: string,
+  timeZone: string,
+  epochMilliseconds: number,
+  width: 'short' | 'long'
+): string {
+  const key = `${localeCode}:${width}:${timeZone}`
   let formatter = timeZoneFormatterCache.get(key)
   if (formatter === undefined) {
-    formatter = new Intl.DateTimeFormat('en-us', {
+    formatter = new Intl.DateTimeFormat(localeCode, {
       timeZone,
       timeZoneName: width
     }) as unknown as DateTimeFormatWithParts

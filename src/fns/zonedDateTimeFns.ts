@@ -55,6 +55,9 @@ export const zonedDateTimeFns: IZonedDateTimeFns = {
   getMinute: (zdt) => Temporal.ZonedDateTime.from(zdt).minute,
   getSecond: (zdt) => Temporal.ZonedDateTime.from(zdt).second,
   getMillisecond: (zdt) => Temporal.ZonedDateTime.from(zdt).millisecond,
+  // Unix-time convention: a moment at epoch ms -500 belongs to second -1, not 0.
+  // `floor` preserves that semantics; `getOffsetMilliseconds` uses `trunc` because
+  // it measures a zone offset (a signed distance) rather than a timeline index.
   getEpochSeconds: (zdt) => Math.floor(Temporal.ZonedDateTime.from(zdt).epochMilliseconds / 1000),
   getEpochMilliseconds: (zdt) => Temporal.ZonedDateTime.from(zdt).epochMilliseconds,
   getDayOfWeek: (zdt) => Temporal.ZonedDateTime.from(zdt).dayOfWeek,
