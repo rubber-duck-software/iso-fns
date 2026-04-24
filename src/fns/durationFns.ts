@@ -39,18 +39,20 @@ export const durationFns: IDurationFns = {
     const d2 = Temporal.Duration.from(other)
     const rel = toRelativePoint(options?.relativeTo)
     if (rel) return toIsoDuration(rel.until(rel.add(d1).add(d2), { largestUnit: options?.largestUnit ?? 'year' }))
-    return toIsoDuration(d1.add(d2))
+    const sum = d1.add(d2)
+    if (options?.largestUnit) return toIsoDuration(sum.round({ largestUnit: options.largestUnit }))
+    return toIsoDuration(sum)
   },
   subtract: (duration, other, options) => {
     const d1 = Temporal.Duration.from(duration)
     const d2 = Temporal.Duration.from(other)
     const rel = toRelativePoint(options?.relativeTo)
-    if (rel)
-      return toIsoDuration(rel.until(rel.add(d1).subtract(d2), { largestUnit: options?.largestUnit ?? 'year' }))
-    return toIsoDuration(d1.subtract(d2))
+    if (rel) return toIsoDuration(rel.until(rel.add(d1).subtract(d2), { largestUnit: options?.largestUnit ?? 'year' }))
+    const diff = d1.subtract(d2)
+    if (options?.largestUnit) return toIsoDuration(diff.round({ largestUnit: options.largestUnit }))
+    return toIsoDuration(diff)
   },
-  round: (duration, options) =>
-    toIsoDuration(Temporal.Duration.from(duration).round(options as Temporal.DurationRoundTo)),
+  round: (duration, options) => toIsoDuration(Temporal.Duration.from(duration).round(options as Temporal.DurationRoundTo)),
   total: (duration, options) => Temporal.Duration.from(duration).total(options),
   getFields: (duration) => slotsFromDuration(Temporal.Duration.from(duration)),
   from: (item) => toIsoDuration(Temporal.Duration.from(item)),

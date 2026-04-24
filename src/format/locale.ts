@@ -53,20 +53,7 @@ const QUARTER_VALUES = {
 
 const MONTH_VALUES = {
   narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'] as const,
-  abbreviated: [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ] as const,
+  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const,
   wide: [
     'January',
     'February',
@@ -239,10 +226,7 @@ type LocalizePeriodValuesMap<Unit extends LocaleUnit> = {
 
 type BuildLocalizeFnArgCallback<Result extends LocaleUnit | number> = (value: Result) => LocalizeUnitIndex<Result>
 
-type BuildLocalizeFnArgs<
-  Result extends LocaleUnit,
-  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
-> = {
+type BuildLocalizeFnArgs<Result extends LocaleUnit, ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined> = {
   values: LocalizePeriodValuesMap<Result>
   defaultWidth: LocalePatternWidth
   formattingValues?: LocalizePeriodValuesMap<Result>
@@ -251,10 +235,9 @@ type BuildLocalizeFnArgs<
   ? { argumentCallback?: undefined }
   : { argumentCallback: BuildLocalizeFnArgCallback<Result> })
 
-function buildLocalizeFn<
-  Result extends LocaleUnit,
-  ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
->(args: BuildLocalizeFnArgs<Result, ArgCallback>): LocalizeFn<Result, ArgCallback> {
+function buildLocalizeFn<Result extends LocaleUnit, ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined>(
+  args: BuildLocalizeFnArgs<Result, ArgCallback>
+): LocalizeFn<Result, ArgCallback> {
   return (dirtyIndex, dirtyOptions) => {
     const options = dirtyOptions || {}
     const context = options.context ? String(options.context) : 'standalone'

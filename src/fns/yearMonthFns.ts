@@ -26,8 +26,7 @@ export const yearMonthFns: IYearMonthFns = {
   inLeapYear: (ym) => Temporal.PlainYearMonth.from(ym).inLeapYear,
   with: (ym, ymLike, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(ym).with(ymLike, options)),
   add: (ym, durationLike, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(ym).add(durationLike, options)),
-  subtract: (ym, durationLike, options) =>
-    toIsoYearMonth(Temporal.PlainYearMonth.from(ym).subtract(durationLike, options)),
+  subtract: (ym, durationLike, options) => toIsoYearMonth(Temporal.PlainYearMonth.from(ym).subtract(durationLike, options)),
   until: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).until(other, options)),
   since: (ym, other, options) => toIsoDuration(Temporal.PlainYearMonth.from(ym).since(other, options)),
   equals: (ym, other) => Temporal.PlainYearMonth.from(ym).equals(other),

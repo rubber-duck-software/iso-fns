@@ -150,6 +150,7 @@ export interface IZonedDateTimeFns {
     year: number
     offset: string
     timeZone: string
+    epochMilliseconds: number
   }
   from(
     item: string | Partial<DateTimeSlots & { timeZone: string; offset: string }>,
@@ -463,6 +464,7 @@ export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
     year: number
     offset: string
     timeZone: string
+    epochMilliseconds: number
   }>
   format(formatString: string, options?: FormatOptions): Chain<string>
 }

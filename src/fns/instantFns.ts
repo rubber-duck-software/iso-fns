@@ -33,10 +33,9 @@ export const instantFns: IInstantFns = {
   assertIsValid(instant): asserts instant is Iso.Instant {
     if (!isIsoInstant(instant)) throw new TypeError('invalid receiver')
   },
-  getEpochSeconds: (instant) => Temporal.Instant.from(instant).epochMilliseconds / 1000,
+  getEpochSeconds: (instant) => Math.floor(Temporal.Instant.from(instant).epochMilliseconds / 1000),
   getEpochMilliseconds: (instant) => Temporal.Instant.from(instant).epochMilliseconds,
-  add: (instant, durationLike) =>
-    toIsoInstant(Temporal.Instant.from(instant).add(Temporal.Duration.from(durationLike))),
+  add: (instant, durationLike) => toIsoInstant(Temporal.Instant.from(instant).add(Temporal.Duration.from(durationLike))),
   subtract: (instant, durationLike) =>
     toIsoInstant(Temporal.Instant.from(instant).subtract(Temporal.Duration.from(durationLike))),
   until: (instant, other, options) => toIsoDuration(Temporal.Instant.from(instant).until(other, options)),
@@ -66,7 +65,7 @@ export function buildInstantChain(input: Iso.Instant): IInstantChain {
 export function buildInstantChainFromTemporal(inst: Temporal.Instant): IInstantChain {
   return {
     value: () => toIsoInstant(inst),
-    getEpochSeconds: () => buildChain(inst.epochMilliseconds / 1000),
+    getEpochSeconds: () => buildChain(Math.floor(inst.epochMilliseconds / 1000)),
     getEpochMilliseconds: () => buildChain(inst.epochMilliseconds),
     add: (durationLike) => buildInstantChainFromTemporal(inst.add(Temporal.Duration.from(durationLike))),
     subtract: (durationLike) => buildInstantChainFromTemporal(inst.subtract(Temporal.Duration.from(durationLike))),

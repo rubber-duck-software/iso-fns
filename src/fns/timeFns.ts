@@ -34,8 +34,7 @@ export const timeFns: ITimeFns = {
   getMillisecond: (time) => Temporal.PlainTime.from(time).millisecond,
   with: (time, timeLike, options) => toIsoTime(Temporal.PlainTime.from(time).with(timeLike, options)),
   add: (time, durationLike) => toIsoTime(Temporal.PlainTime.from(time).add(Temporal.Duration.from(durationLike))),
-  subtract: (time, durationLike) =>
-    toIsoTime(Temporal.PlainTime.from(time).subtract(Temporal.Duration.from(durationLike))),
+  subtract: (time, durationLike) => toIsoTime(Temporal.PlainTime.from(time).subtract(Temporal.Duration.from(durationLike))),
   until: (time, other, options) => toIsoDuration(Temporal.PlainTime.from(time).until(other, options)),
   since: (time, other, options) => toIsoDuration(Temporal.PlainTime.from(time).since(other, options)),
   round: (time, options) => toIsoTime(Temporal.PlainTime.from(time).round(options)),

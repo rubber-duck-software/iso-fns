@@ -331,6 +331,12 @@ describe('durationFns', () => {
         assert.equal(durationFns.getHours(durationFns.add(duration, { hours: 1 }, options)), 1)
       )
     })
+    it('honors largestUnit without relativeTo for time-only durations (regression)', () => {
+      // Previously largestUnit was silently dropped unless relativeTo was also provided.
+      assert.equal(durationFns.add('PT50H', 'PT10H', { largestUnit: 'hour' }), 'PT60H')
+      assert.equal(durationFns.add('PT50H', 'PT10H', { largestUnit: 'day' }), 'P2DT12H')
+      assert.equal(durationFns.add('PT30M', 'PT30M', { largestUnit: 'hour' }), 'PT1H')
+    })
     it('object must contain at least one correctly-spelled property', () => {
       assert.throws(() => durationFns.add(duration, {}), TypeError)
       //@ts-expect-error
@@ -587,6 +593,11 @@ describe('durationFns', () => {
         //@ts-expect-error
         assert.equal(durationFns.getHours(durationFns.subtract(duration, { hours: 1 }, options)), 0)
       )
+    })
+    it('honors largestUnit without relativeTo for time-only durations (regression)', () => {
+      // Previously largestUnit was silently dropped unless relativeTo was also provided.
+      assert.equal(durationFns.subtract('PT50H', 'PT10H', { largestUnit: 'hour' }), 'PT40H')
+      assert.equal(durationFns.subtract('PT50H', 'PT10H', { largestUnit: 'day' }), 'P1DT16H')
     })
     it('object must contain at least one correctly-spelled property', () => {
       assert.throws(() => durationFns.subtract(duration, {}), TypeError)

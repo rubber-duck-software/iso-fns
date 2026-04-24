@@ -721,20 +721,23 @@ type DateTimeFormatWithParts = {
   formatToParts(date: Date): TimeZoneNamePart[]
 }
 
-const timeZoneNameCache = new Map<string, string>()
+// The zone's short/long name changes with DST (e.g. EST ↔ EDT in
+// America/New_York), so the resolved name cannot be cached by zone alone.
+// We cache the Intl.DateTimeFormat instance — which is the expensive part
+// to construct — and call formatToParts against each instant.
+const timeZoneFormatterCache = new Map<string, DateTimeFormatWithParts>()
 function getTimeZoneName(timeZone: string, epochMilliseconds: number, width: 'short' | 'long'): string {
   const key = `${width}:${timeZone}`
-  const existing = timeZoneNameCache.get(key)
-  if (existing !== undefined) return existing
-
-  const formatter = new Intl.DateTimeFormat('en-us', {
-    timeZone,
-    timeZoneName: width
-  }) as unknown as DateTimeFormatWithParts
+  let formatter = timeZoneFormatterCache.get(key)
+  if (formatter === undefined) {
+    formatter = new Intl.DateTimeFormat('en-us', {
+      timeZone,
+      timeZoneName: width
+    }) as unknown as DateTimeFormatWithParts
+    timeZoneFormatterCache.set(key, formatter)
+  }
   const parts = formatter.formatToParts(new Date(epochMilliseconds))
-  const resolved = parts.find((p) => p.type === 'timeZoneName')?.value ?? timeZone
-  timeZoneNameCache.set(key, resolved)
-  return resolved
+  return parts.find((p) => p.type === 'timeZoneName')?.value ?? timeZone
 }
 
 function addLeadingZeros(value: number, targetLength: number): string {
