@@ -1,126 +1,105 @@
-const { exec } = require('shelljs')
-const fs = require('fs')
+import shell from 'shelljs'
+import fs from 'node:fs'
 
-exec('rm -rf ./docs-site/docs/api')
-exec('rm -rf ./docs-site/src/resources')
+const { exec } = shell
 
-exec('pnpm run typedoc --sort source-order --excludeInternal --hideGenerator')
-exec('pnpm tsc --declaration --emitDeclarationOnly --declarationMap false --module amd --out docs-site/src/resources/out')
+const API_DIR = './docs-site/docs/api'
+const TYPE_ALIASES_DIR = `${API_DIR}/iso-fns/namespaces/Iso/type-aliases`
+const INTERFACES_DIR = `${API_DIR}/interfaces`
+const RESOURCES_DTS = './docs-site/src/resources/out.d.ts'
+const BUNDLED_DTS = './dist/index.d.mts'
 
-const rootFolder = './docs-site/docs/api'
+// The Iso types, in the order they appear in the docs sidebar. Each has a matching
+// `I<Type>Fns` interface (its functions) and an `Iso.<Type>` type alias (its description).
+const TYPES = ['Instant', 'ZonedDateTime', 'Date', 'Time', 'DateTime', 'YearMonth', 'MonthDay', 'Duration']
 
-const FileNames = {
-  Instant: 'Instant',
-  ZonedDateTime: 'ZonedDateTime',
-  Date: 'Date',
-  Time: 'Time',
-  DateTime: 'DateTime',
-  YearMonth: 'YearMonth',
-  MonthDay: 'MonthDay',
-  Duration: 'Duration'
+main()
+
+function main() {
+  generateApiDocs()
+  copyTypeDefinitions()
+  exec('cd docs-site; pnpm build;')
 }
 
-function GetFileName(fileName) {
-  if (fileName.toLowerCase().includes('instant')) {
-    return FileNames.Instant
-  } else if (fileName.toLowerCase().includes('zoneddatetime')) {
-    return FileNames.ZonedDateTime
-  } else if (fileName.toLowerCase().includes('datetime')) {
-    return FileNames.DateTime
-  } else if (fileName.toLowerCase().includes('date')) {
-    return FileNames.Date
-  } else if (fileName.toLowerCase().includes('time')) {
-    return FileNames.Time
-  } else if (fileName.toLowerCase().includes('yearmonth')) {
-    return FileNames.YearMonth
-  } else if (fileName.toLowerCase().includes('monthday')) {
-    return FileNames.MonthDay
-  } else if (fileName.toLowerCase().includes('duration')) {
-    return FileNames.Duration
-  } else {
-    throw new Error(`Unrecognized file name ${fileName}`)
-  }
+// Run typedoc, then fold each type's description and function reference into a single
+// Docusaurus page, and discard typedoc's intermediate output.
+function generateApiDocs() {
+  exec(`rm -rf ${API_DIR}`)
+  exec('pnpm exec typedoc')
+
+  TYPES.forEach((type, index) => writeTypePage(type, index))
+
+  exec(`rm -rf ${API_DIR}/iso-fns ${API_DIR}/interfaces ${API_DIR}/README.md`)
+  fs.writeFileSync(`${API_DIR}/_category_.json`, JSON.stringify({ position: 4, label: 'API' }))
 }
 
-function FixIsoTypes() {
-  const interfaces = fs.readdirSync(`${rootFolder}/interfaces`).filter((fileName) => fileName.includes('Fns'))
-
-  const path = `${rootFolder}/modules/Iso.md`
-
-  const intro = fs.readFileSync(path).toString()
-
-  const headings = Object.values(FileNames)
-  headings.forEach((h, i) => {
-    const start = intro.indexOf(`### ${h}`)
-    const end = intro.indexOf('___', start)
-    let newContent = intro.slice(start + 2, end)
-    const folder = GetFileName(h)
-    const myInterface = interfaces.find((fileName) => GetFileName(fileName) === folder)
-    const interfacePath = `${rootFolder}/interfaces/${myInterface}`
-    const startingFileContent = fs.readFileSync(interfacePath).toString()
-    let newBody = startingFileContent
-      .replace(/# .*\n/, '')
-      .replace(`\n## Methods\n`, '')
-      .replace(/\.\.\/README.md/g, '../BasicTypes.md')
-      .replace(/\n### /g, '\n## ')
-    newBody = repairReferences(newBody)
-
-    const frontMatter = `---
-title: ${folder}
-sidebar_position: ${i + 4}
-hide_title: true
----
-`
-    newContent = frontMatter + newContent + newBody
-    fs.writeFileSync(`${rootFolder}/${h}.md`, newContent)
-
-    fs.rmSync(interfacePath)
-  })
-
-  fs.writeFileSync(`${rootFolder}/_category_.json`, JSON.stringify({ position: 4, label: 'API' }))
-
-  fs.rmSync(path)
-  fs.rmdirSync(`${rootFolder}/modules`)
-  fs.rmdirSync(`${rootFolder}/interfaces`)
+// The docs site embeds the library's bundled declarations as raw text for its live
+// playground. tsdown already emits that bundle, so reuse it instead of a separate build.
+function copyTypeDefinitions() {
+  if (!fs.existsSync(BUNDLED_DTS)) exec('pnpm build')
+  fs.mkdirSync('./docs-site/src/resources', { recursive: true })
+  fs.copyFileSync(BUNDLED_DTS, RESOURCES_DTS)
 }
 
-FixIsoTypes()
-
-fs.rmSync(`${rootFolder}/README.md`)
-
-/**
- *
- * @param {string} reference
- */
-function getNewReference(reference) {
-  const splitHash = reference.split('#')
-  const hash = splitHash.length > 1 ? `#${splitHash[1].replace(')', '')}` : ''
-  const fileName = GetFileName(reference)
-  return `(./${fileName}.md${hash})`
+function writeTypePage(type, index) {
+  const description = extractDescription(`${TYPE_ALIASES_DIR}/${type}.md`)
+  const methods = extractMethods(`${INTERFACES_DIR}/I${type}Fns.md`)
+  const frontMatter = `---\ntitle: ${type}\nsidebar_position: ${index + 4}\nhide_title: true\n---\n`
+  fs.writeFileSync(`${API_DIR}/${type}.md`, `${frontMatter}\n${description}\n\n${methods}\n`)
 }
 
-/**
- *
- * @param {string} content
- */
+// The prose between the type-alias signature and its (internal) type declaration.
+function extractDescription(path) {
+  let content = fs.readFileSync(path, 'utf8')
+  const declarationIndex = content.indexOf('\n## Type Declaration')
+  if (declarationIndex !== -1) content = content.slice(0, declarationIndex)
+
+  const lines = content.split('\n').filter((line) => !/^# Type Alias:/.test(line))
+  // Skip the leading blank lines and the `> **Type** = ...` signature block.
+  let start = 0
+  while (start < lines.length && (lines[start].trim() === '' || lines[start].startsWith('>'))) start++
+  return lines.slice(start).join('\n').trim()
+}
+
+// The interface's methods, promoted one heading level and with cross-type links flattened.
+function extractMethods(path) {
+  const content = fs
+    .readFileSync(path, 'utf8')
+    .replace(/^# Interface:.*\n/m, '')
+    .replace(/^## Methods\s*\n/m, '')
+    .replace(/^(#{3,6}) /gm, (_, hashes) => '#'.repeat(hashes.length - 1) + ' ')
+    .replace(/\.\.\/README\.md/g, '../BasicTypes.md')
+  return repairReferences(content).trim()
+}
+
+// typedoc links each type to its own nested file; rewrite those to the flat sibling pages.
 function repairReferences(content) {
-  const matches = Array.from(content.matchAll(/\(.*?md.*?\)/g), (m) => m[0])
-  const references = [
-    ...new Set(
-      matches.map((m) => {
-        const start = m.lastIndexOf('(')
-        const end = m.lastIndexOf(')')
-        return m.slice(start, end + 1)
-      })
-    )
-  ]
-  references.forEach((r) => {
-    const newReference = getNewReference(r)
-    while (content.includes(r)) {
-      content = content.replace(r, newReference)
-    }
-  })
+  const references = new Set(Array.from(content.matchAll(/\(\.\.[^)]*?\.md[^)]*?\)/g), (m) => m[0]))
+  for (const reference of references) {
+    const replacement = getNewReference(reference)
+    if (replacement) content = content.split(reference).join(replacement)
+  }
   return content
 }
 
-exec('cd docs-site; pnpm build;')
+function getNewReference(reference) {
+  const [pathPart, anchor] = reference.split('#')
+  const type = getTypeForReference(pathPart)
+  if (!type) return null
+  const hash = anchor ? `#${anchor.replace(')', '')}` : ''
+  return `(./${type}.md${hash})`
+}
+
+// Map a reference path to its owning type page. Order matters: more specific names first.
+function getTypeForReference(reference) {
+  const name = reference.toLowerCase()
+  if (name.includes('instant')) return 'Instant'
+  if (name.includes('zoneddatetime')) return 'ZonedDateTime'
+  if (name.includes('datetime')) return 'DateTime'
+  if (name.includes('date')) return 'Date'
+  if (name.includes('time')) return 'Time'
+  if (name.includes('yearmonth')) return 'YearMonth'
+  if (name.includes('monthday')) return 'MonthDay'
+  if (name.includes('duration')) return 'Duration'
+  return null
+}

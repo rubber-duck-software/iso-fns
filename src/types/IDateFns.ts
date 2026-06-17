@@ -1,13 +1,13 @@
-import { type Iso } from '../iso-types'
+import { type Iso } from '../iso-types.ts'
 import { type Temporal } from 'temporal-polyfill'
-import { type Chain } from '../temporal'
-import { type DateSlots } from '../slots'
-import { type FormatOptions } from '../format'
-import { type IDurationChain } from './IDurationFns'
-import { type IDateTimeChain } from './IDateTimeFns'
-import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
-import { type IYearMonthChain } from './IYearMonthFns'
-import { type IMonthDayChain } from './IMonthDayFns'
+import { type Chain } from '../temporal.ts'
+import { type DateSlots } from '../slots.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDurationChain } from './IDurationFns.ts'
+import { type IDateTimeChain } from './IDateTimeFns.ts'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns.ts'
+import { type IYearMonthChain } from './IYearMonthFns.ts'
+import { type IMonthDayChain } from './IMonthDayFns.ts'
 
 export interface IDateFns {
   /**

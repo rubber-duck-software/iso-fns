@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill'
-import { Iso } from '../iso-types'
-import { IZonedDateTimeFns, IZonedDateTimeChain } from '../types'
+import { type Iso } from '../iso-types.ts'
+import type { IZonedDateTimeFns, IZonedDateTimeChain } from '../types/index.ts'
 import {
   buildChain,
   isIsoZonedDateTime,
@@ -13,15 +13,15 @@ import {
   toIsoTime,
   toIsoYearMonth,
   toIsoZonedDateTime
-} from '../temporal'
-import { buildDurationChainFromTemporal } from './durationFns'
-import { buildInstantChainFromTemporal } from './instantFns'
-import { buildDateChainFromTemporal } from './dateFns'
-import { buildTimeChainFromTemporal } from './timeFns'
-import { buildDateTimeChainFromTemporal } from './dateTimeFns'
-import { buildYearMonthChainFromTemporal } from './yearMonthFns'
-import { buildMonthDayChainFromTemporal } from './monthDayFns'
-import format from '../format'
+} from '../temporal.ts'
+import { buildDurationChainFromTemporal } from './durationFns.ts'
+import { buildInstantChainFromTemporal } from './instantFns.ts'
+import { buildDateChainFromTemporal } from './dateFns.ts'
+import { buildTimeChainFromTemporal } from './timeFns.ts'
+import { buildDateTimeChainFromTemporal } from './dateTimeFns.ts'
+import { buildYearMonthChainFromTemporal } from './yearMonthFns.ts'
+import { buildMonthDayChainFromTemporal } from './monthDayFns.ts'
+import { format } from '../format/index.ts'
 
 function dateFromInput(date: Iso.Date | { year: number; month: number; day: number }): Temporal.PlainDate {
   if (typeof date === 'string') return Temporal.PlainDate.from(date)

@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
-import { strict as assert } from 'assert'
-import { zonedDateTimeFns } from '../src/index'
+import { strict as assert } from 'node:assert'
+import { zonedDateTimeFns } from '../src/index.ts'
 
 const { describe } = test
 const it = test

@@ -1,9 +1,9 @@
 import { Temporal } from 'temporal-polyfill'
-import { IInstantChain, IInstantFns } from '../types'
-import { Iso } from '../iso-types'
-import { buildChain, isIsoInstant, toIsoDuration, toIsoInstant, toIsoZonedDateTime } from '../temporal'
-import { buildDurationChainFromTemporal } from './durationFns'
-import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns'
+import type { IInstantChain, IInstantFns } from '../types/index.ts'
+import { type Iso } from '../iso-types.ts'
+import { buildChain, isIsoInstant, toIsoDuration, toIsoInstant, toIsoZonedDateTime } from '../temporal.ts'
+import { buildDurationChainFromTemporal } from './durationFns.ts'
+import { buildZonedDateTimeChainFromTemporal } from './zonedDateTimeFns.ts'
 
 function formatInstantISO9075(inst: Temporal.Instant): string {
   const zdt = inst.toZonedDateTimeISO('UTC')

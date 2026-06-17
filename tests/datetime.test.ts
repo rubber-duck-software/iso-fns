@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill'
-import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from '../src/index'
-import { Iso } from '../src/iso-types'
+import { dateTimeFns, timeFns, dateFns, durationFns, zonedDateTimeFns } from '../src/index.ts'
+import { type Iso } from '../src/iso-types.ts'
 
 type TemporalPluralUnit = Temporal.PluralUnit<Temporal.DateTimeUnit>
 type TemporalDateTimeRoundUnit = Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
@@ -11,7 +11,7 @@ type TemporalOverflow = 'constrain' | 'reject'
 const AssertIsDuration: (x: unknown) => asserts x is Iso.Duration = durationFns.assertIsValid
 
 import { test } from 'beartest-js'
-import { strict as assert } from 'assert'
+import { strict as assert } from 'node:assert'
 
 const { describe } = test
 const it = test

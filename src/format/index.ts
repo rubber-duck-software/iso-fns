@@ -1,5 +1,5 @@
-import format from './format'
-export default format
-export type { Locale, FormatLong, Localize } from './types'
-export type { FormatOptions } from './format'
-export { registerLocale, getLocale, enUS } from './locale'
+import format from './format.ts'
+export { format }
+export type { Locale, FormatLong, Localize } from './types.ts'
+export type { FormatOptions } from './format.ts'
+export { registerLocale, getLocale, enUS } from './locale.ts'

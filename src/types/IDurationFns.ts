@@ -1,7 +1,7 @@
-import { type Iso } from '../iso-types'
+import { type Iso } from '../iso-types.ts'
 import { type Temporal } from 'temporal-polyfill'
-import { type Chain } from '../temporal'
-import { type DurationSlots } from '../slots'
+import { type Chain } from '../temporal.ts'
+import { type DurationSlots } from '../slots.ts'
 
 export interface IDurationFns {
   fromNumbers(

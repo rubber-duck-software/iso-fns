@@ -12,7 +12,7 @@ import type {
   LocalizeUnitValues,
   LocalizeUnitValuesIndex,
   QuarterIndex
-} from './types'
+} from './types.ts'
 
 const registry = new Map<string, Locale>()
 

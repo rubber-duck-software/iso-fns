@@ -1,6 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const beartest = require('beartest-js')
+import fs from 'node:fs'
+import path from 'node:path'
+import { pathToFileURL } from 'node:url'
+import beartest from 'beartest-js'
 
 /**
  *
@@ -43,8 +44,8 @@ async function runTests() {
     const files = await getFiles('./')
 
     for (const file of files) {
-      process.stdout.write(`[34m${path.parse(file).name} (${path.relative('./', file)})[39m\n`)
-      require(file)
+      process.stdout.write(`\x1b[34m${path.parse(file).name} (${path.relative('./', file)})\x1b[39m\n`)
+      await import(pathToFileURL(file).href)
       await beartest.runner.waitForTests()
     }
     process.exit(0)

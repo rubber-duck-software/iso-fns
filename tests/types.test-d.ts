@@ -8,7 +8,7 @@
  */
 
 import {
-  Iso,
+  type Iso,
   dateFns,
   dateTimeFns,
   durationFns,
@@ -17,7 +17,7 @@ import {
   timeFns,
   yearMonthFns,
   zonedDateTimeFns
-} from '../src/index'
+} from '../src/index.ts'
 
 declare const date: Iso.Date
 declare const dateTime: Iso.DateTime

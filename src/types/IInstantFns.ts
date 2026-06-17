@@ -1,8 +1,8 @@
-import { type Iso } from '../iso-types'
+import { type Iso } from '../iso-types.ts'
 import { type Temporal } from 'temporal-polyfill'
-import { type Chain } from '../temporal'
-import { type IDurationChain } from './IDurationFns'
-import { type IZonedDateTimeChain } from './IZonedDateTimeFns'
+import { type Chain } from '../temporal.ts'
+import { type IDurationChain } from './IDurationFns.ts'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns.ts'
 
 export interface IInstantFns {
   /**

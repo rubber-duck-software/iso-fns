@@ -1,10 +1,10 @@
 import { Temporal } from 'temporal-polyfill'
-import { IYearMonthFns, IYearMonthChain } from '../types'
-import { Iso } from '../iso-types'
-import { buildChain, isIsoYearMonth, slotsFromYearMonth, toIsoDate, toIsoDuration, toIsoYearMonth } from '../temporal'
-import { buildDurationChainFromTemporal } from './durationFns'
-import { buildDateChainFromTemporal } from './dateFns'
-import format from '../format'
+import type { IYearMonthFns, IYearMonthChain } from '../types/index.ts'
+import { type Iso } from '../iso-types.ts'
+import { buildChain, isIsoYearMonth, slotsFromYearMonth, toIsoDate, toIsoDuration, toIsoYearMonth } from '../temporal.ts'
+import { buildDurationChainFromTemporal } from './durationFns.ts'
+import { buildDateChainFromTemporal } from './dateFns.ts'
+import { format } from '../format/index.ts'
 
 export const yearMonthFns: IYearMonthFns = {
   fromNumbers(year, month) {

@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill'
-import { Iso } from './iso-types'
-import {
+import { type Iso } from './iso-types.ts'
+import type {
   DateSlots,
   DateTimeSlots,
   DurationSlots,
@@ -9,7 +9,7 @@ import {
   TimeSlots,
   YearMonthSlots,
   ZonedDateTimeSlots
-} from './slots'
+} from './slots.ts'
 
 export interface Chain<T> {
   value(): T

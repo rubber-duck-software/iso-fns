@@ -1,9 +1,9 @@
 import { Temporal } from 'temporal-polyfill'
-import { IMonthDayFns, IMonthDayChain } from '../types'
-import { Iso } from '../iso-types'
-import { buildChain, isIsoMonthDay, slotsFromMonthDay, toIsoDate, toIsoMonthDay } from '../temporal'
-import { buildDateChainFromTemporal } from './dateFns'
-import format from '../format'
+import type { IMonthDayFns, IMonthDayChain } from '../types/index.ts'
+import { type Iso } from '../iso-types.ts'
+import { buildChain, isIsoMonthDay, slotsFromMonthDay, toIsoDate, toIsoMonthDay } from '../temporal.ts'
+import { buildDateChainFromTemporal } from './dateFns.ts'
+import { format } from '../format/index.ts'
 
 export const monthDayFns: IMonthDayFns = {
   fromNumbers(month, day) {

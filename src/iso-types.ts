@@ -1,5 +1,6 @@
-export module Iso {
-  declare const __brand: unique symbol
+export declare namespace Iso {
+  /** @internal */
+  const __brand: unique symbol
 
   type Offset = `${'+' | '-'}${number}:${number}`
 

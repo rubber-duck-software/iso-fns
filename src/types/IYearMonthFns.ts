@@ -1,10 +1,10 @@
-import { type Iso } from '../iso-types'
+import { type Iso } from '../iso-types.ts'
 import { type Temporal } from 'temporal-polyfill'
-import { type Chain } from '../temporal'
-import { type YearMonthSlots } from '../slots'
-import { type FormatOptions } from '../format'
-import { type IDurationChain } from './IDurationFns'
-import { type IDateChain } from './IDateFns'
+import { type Chain } from '../temporal.ts'
+import { type YearMonthSlots } from '../slots.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDurationChain } from './IDurationFns.ts'
+import { type IDateChain } from './IDateFns.ts'
 
 export interface IYearMonthFns {
   fromNumbers(year: number, month: number): Iso.YearMonth

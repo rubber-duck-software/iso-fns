@@ -1,9 +1,9 @@
 // @flow
 /* eslint-env mocha */
 
-import { strict as assert } from 'assert'
+import { strict as assert } from 'node:assert'
 import { Temporal } from 'temporal-polyfill'
-import format from '../../src/format'
+import { format } from '../../src/format/index.ts'
 import { test } from 'beartest-js'
 const { describe } = test
 const it = test

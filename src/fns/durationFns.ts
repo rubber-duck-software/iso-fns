@@ -1,7 +1,7 @@
 import { Temporal } from 'temporal-polyfill'
-import { IDurationChain, IDurationFns } from '../types'
-import { Iso } from '../iso-types'
-import { buildChain, isIsoDuration, slotsFromDuration, toIsoDuration } from '../temporal'
+import type { IDurationChain, IDurationFns } from '../types/index.ts'
+import { type Iso } from '../iso-types.ts'
+import { buildChain, isIsoDuration, slotsFromDuration, toIsoDuration } from '../temporal.ts'
 
 type RelativeTo = Iso.Date | Iso.DateTime | Iso.ZonedDateTime | undefined
 

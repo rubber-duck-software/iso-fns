@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
-import { instantFns } from '../src/fns'
-import { strict as assert } from 'assert'
+import { instantFns } from '../src/fns/index.ts'
+import { strict as assert } from 'node:assert'
 
 const { describe } = test
 const it = test

@@ -1,7 +1,7 @@
-import { type Iso } from '../iso-types'
-import { type Chain } from '../temporal'
-import { type FormatOptions } from '../format'
-import { type IDateChain } from './IDateFns'
+import { type Iso } from '../iso-types.ts'
+import { type Chain } from '../temporal.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDateChain } from './IDateFns.ts'
 
 export interface IMonthDayFns {
   fromNumbers(month: number, day: number): Iso.MonthDay

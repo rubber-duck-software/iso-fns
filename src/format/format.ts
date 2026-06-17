@@ -6,9 +6,9 @@ import {
   slotsFromTime,
   slotsFromYearMonth,
   slotsFromZonedDateTime
-} from '../temporal'
-import { getDefaultLocale, getLocale } from './locale'
-import type { Day, FormatLong, Locale, LocaleDayPeriod, Localize, Month, Quarter } from './types'
+} from '../temporal.ts'
+import { getDefaultLocale, getLocale } from './locale.ts'
+import type { Day, FormatLong, Locale, LocaleDayPeriod, Localize, Month, Quarter } from './types.ts'
 
 type FormatContext = { localize: Localize; code: string }
 
@@ -437,8 +437,7 @@ const formattersTyped = {
   // AM, PM, midnight, noon
   b(date: { hour: number }, token: string, { localize }: FormatContext) {
     const hours = date.hour
-    const dayPeriodEnumValue: LocaleDayPeriod =
-      hours === 12 ? 'noon' : hours === 0 ? 'midnight' : hours >= 12 ? 'pm' : 'am'
+    const dayPeriodEnumValue: LocaleDayPeriod = hours === 12 ? 'noon' : hours === 0 ? 'midnight' : hours >= 12 ? 'pm' : 'am'
 
     switch (token) {
       case 'b':
@@ -736,13 +735,13 @@ type DateTimeFormatWithParts = {
 // America/New_York), so the resolved name cannot be cached by zone alone.
 // We cache the Intl.DateTimeFormat instance — which is the expensive part
 // to construct — and call formatToParts against each instant.
+// Bounded LRU: keys derive from caller-supplied locale + IANA zone, so an
+// unbounded Map would retain a heavy Intl.DateTimeFormat per unique tuple
+// for the lifetime of the process. Map preserves insertion order; re-inserting
+// on hit moves the entry to the tail, and when full we evict the head.
+const TIME_ZONE_FORMATTER_CACHE_MAX = 64
 const timeZoneFormatterCache = new Map<string, DateTimeFormatWithParts>()
-function getTimeZoneName(
-  localeCode: string,
-  timeZone: string,
-  epochMilliseconds: number,
-  width: 'short' | 'long'
-): string {
+function getTimeZoneName(localeCode: string, timeZone: string, epochMilliseconds: number, width: 'short' | 'long'): string {
   const key = `${localeCode}:${width}:${timeZone}`
   let formatter = timeZoneFormatterCache.get(key)
   if (formatter === undefined) {
@@ -750,6 +749,13 @@ function getTimeZoneName(
       timeZone,
       timeZoneName: width
     }) as unknown as DateTimeFormatWithParts
+    if (timeZoneFormatterCache.size >= TIME_ZONE_FORMATTER_CACHE_MAX) {
+      const oldest = timeZoneFormatterCache.keys().next().value
+      if (oldest !== undefined) timeZoneFormatterCache.delete(oldest)
+    }
+    timeZoneFormatterCache.set(key, formatter)
+  } else {
+    timeZoneFormatterCache.delete(key)
     timeZoneFormatterCache.set(key, formatter)
   }
   const parts = formatter.formatToParts(new Date(epochMilliseconds))

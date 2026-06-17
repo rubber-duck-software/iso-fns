@@ -1,7 +1,7 @@
 import { test } from 'beartest-js'
-import { strict as assert } from 'assert'
-import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from '../src/fns'
-import { Iso } from '../src/iso-types'
+import { strict as assert } from 'node:assert'
+import { dateFns, dateTimeFns, durationFns, zonedDateTimeFns } from '../src/fns/index.ts'
+import { type Iso } from '../src/iso-types.ts'
 import { Temporal } from 'temporal-polyfill'
 type TemporalPluralUnit = Temporal.PluralUnit<Temporal.DateTimeUnit>
 type TemporalSingularUnit = Temporal.DateTimeUnit
