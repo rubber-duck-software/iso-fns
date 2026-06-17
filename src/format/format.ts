@@ -644,21 +644,6 @@ const lightFormatters = {
   d(date: { day: number }, token: string): string {
     return addLeadingZeros(date.day, token.length)
   },
-  a(date: { hour: number }, token: string): string {
-    const dayPeriodEnumValue = date.hour >= 12 ? 'pm' : 'am'
-    switch (token) {
-      case 'a':
-      case 'aa':
-        return dayPeriodEnumValue.toUpperCase()
-      case 'aaa':
-        return dayPeriodEnumValue
-      case 'aaaaa':
-        return dayPeriodEnumValue[0]
-      case 'aaaa':
-      default:
-        return dayPeriodEnumValue === 'am' ? 'a.m.' : 'p.m.'
-    }
-  },
   h(date: { hour: number }, token: string): string {
     return addLeadingZeros(date.hour % 12 || 12, token.length)
   },
