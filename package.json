@@ -1,7 +1,7 @@
 {
   "name": "iso-fns",
   "description": "A string-based date-time library for Javascript.",
-  "version": "2.0.0-alpha.26",
+  "version": "2.0.0-beta.1",
   "type": "module",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -19,13 +19,13 @@
   },
   "types": "./index.d.cts",
   "license": "MIT",
-  "homepage": "iso-fns.org",
+  "homepage": "https://iso-fns.org",
   "files": [
     "index.cjs",
     "index.mjs",
     "index.d.cts",
     "index.d.mts",
-    "CHANGELOG"
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",
@@ -37,11 +37,11 @@
     "format": "oxfmt .",
     "build": "tsdown src/index.ts --format esm,cjs --dts --out-dir dist",
     "build-package": "./scripts/release.sh",
-    "test": "pnpm lint && c8 -r text node --disable-warning=ExperimentalWarning ./run-tests.js",
+    "test": "pnpm lint && pnpm typecheck && c8 -r text node --disable-warning=ExperimentalWarning ./run-tests.js",
     "cc": "c8 report -r lcovonly",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "docs": "node ./scripts/generate-docs.js",
-    "verify-build": "pnpm format && pnpm build && pnpm test && pnpm cc && pnpm docs"
+    "generate-docs": "node ./scripts/generate-docs.js",
+    "verify-build": "pnpm format && pnpm build && pnpm test && pnpm cc && pnpm generate-docs"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",

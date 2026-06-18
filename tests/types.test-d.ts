@@ -3,8 +3,11 @@
  * compile if the surrounding code does NOT produce a type error. No runtime
  * assertions — tsc --noEmit is the verification.
  *
- * Wire-up: included in the top-level tsconfig so `pnpm lint` / tsc will catch
- * regressions. There is no runtime test runner for this file.
+ * Wire-up: this file is covered by the top-level tsconfig and verified by
+ * `pnpm typecheck` (`tsc --noEmit`), which `pnpm test` runs (and therefore CI
+ * does too). A failing assertion here — i.e. code below that stops producing a
+ * type error — fails the type check. There is no runtime test runner for this
+ * file; `run-tests.js` skips it because the basename does not end in `.test`.
  */
 
 import {

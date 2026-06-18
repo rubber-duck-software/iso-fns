@@ -43,13 +43,13 @@ jobs:
       - run: 'npm --version'
 
       - name: Publish To NPM
-        run: npm publish ./package --tag alpha
+        run: npm publish ./package --tag beta
 
       - name: Install Doc Dependencies
         run: cd docs-site && pnpm install
 
       - name: Generate Documentation
-        run: rm -rf ./docs && pnpm docs
+        run: rm -rf ./docs && pnpm generate-docs
 
       - name: Deploy Documentation
         uses: peaceiris/actions-gh-pages@v3

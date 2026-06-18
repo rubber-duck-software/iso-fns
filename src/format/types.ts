@@ -115,7 +115,19 @@ export interface Locale {
   localize: Localize
   formatLong: FormatLong
   options: {
+    /**
+     * First day of the week, using Temporal's day numbering: `1` = Monday …
+     * `7` = Sunday (note: NOT date-fns's `0` = Sunday). The bundled `enUS`
+     * locale uses `7` (Sunday). Currently informational — the bundled
+     * formatters emit no locale-relative week/weekday token — but it is part
+     * of the public `Locale` shape for custom locales and future formatters.
+     */
     weekStartsOn: number
+    /**
+     * Day-of-month that the year's first calendar week must contain (e.g. `1`
+     * for the week containing Jan 1, `4` for ISO-8601's first-four-day week).
+     * Currently informational; see `weekStartsOn`.
+     */
     firstWeekContainsDate: number
   }
 }
