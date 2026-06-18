@@ -10,7 +10,10 @@ function formatInstantISO9075(inst: Temporal.Instant): string {
   const pad = (n: number, w = 2) => n.toString().padStart(w, '0')
   // Signed years (BC) need the sign in front of zero padding: year -1 → "-0001".
   const padYear = (y: number) => (y < 0 ? '-' + pad(-y, 4) : pad(y, 4))
-  return `${padYear(zdt.year)}-${pad(zdt.month)}-${pad(zdt.day)} ${pad(zdt.hour)}:${pad(zdt.minute)}:${pad(zdt.second)}`
+  // Always emit 3-digit milliseconds (v1 parity). v1 was Date-backed, so its
+  // ISO9075 output always carried a millisecond fractional part (".000" for a
+  // whole second). v2 dropped it, truncating DATETIME(6) round-trips.
+  return `${padYear(zdt.year)}-${pad(zdt.month)}-${pad(zdt.day)} ${pad(zdt.hour)}:${pad(zdt.minute)}:${pad(zdt.second)}.${pad(zdt.millisecond, 3)}`
 }
 
 export const instantFns: IInstantFns = {
