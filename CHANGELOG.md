@@ -27,6 +27,16 @@ engine underneath is completely different.
 
 ### Bug fixes
 
+- **`instantFns` instants render with fixed 3-digit milliseconds** (restores v1
+  / `Date.prototype.toISOString()` behavior; v2 trimmed trailing zeros). The
+  canonical `Iso.Instant` string now always carries seconds and a 3-digit
+  fractional-second field — e.g. `2026-06-18T21:53:20.260Z`, `…20.500Z`, and
+  `…20.000Z` for a whole second — instead of the trimmed `…20.26Z` / `…20.5Z` /
+  `…20Z` v2 emitted. The trimming made DB round-trips that compare against a
+  `Date.toISOString()`-derived value mismatch intermittently (only when the
+  millisecond ended in zero). `isValid` stays lenient, so previously-stored
+  trimmed instants still validate. Scoped to `Iso.Instant`; `Iso.DateTime` and
+  `Iso.ZonedDateTime` are unchanged.
 - **`instantFns.formatISO9075` now preserves milliseconds** (restores v1
   behavior; v2 truncated to whole seconds). The output always carries a 3-digit
   fractional-second field — e.g. `2026-06-18 20:19:11.598`, and `…11.000` for a

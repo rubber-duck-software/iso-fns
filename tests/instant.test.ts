@@ -39,31 +39,56 @@ describe('Instant', () => {
 
   describe('instantFns.from()', () => {
     it('parses with UTC designator', () => {
-      assert.equal(instantFns.from('1976-11-18T15:23Z'), '1976-11-18T15:23Z')
-      assert.equal(instantFns.from('1976-11-18T15:23:30Z'), '1976-11-18T15:23:30Z')
+      assert.equal(instantFns.from('1976-11-18T15:23Z'), '1976-11-18T15:23:00.000Z')
+      assert.equal(instantFns.from('1976-11-18T15:23:30Z'), '1976-11-18T15:23:30.000Z')
       assert.equal(instantFns.from('1976-11-18T15:23:30.123Z'), '1976-11-18T15:23:30.123Z')
     })
     it('parses with an offset and normalizes to UTC', () => {
-      assert.equal(instantFns.from('2020-02-12T11:42-08:00'), '2020-02-12T19:42Z')
-      assert.equal(instantFns.from('2020-02-12T11:42+01:00'), '2020-02-12T10:42Z')
+      assert.equal(instantFns.from('2020-02-12T11:42-08:00'), '2020-02-12T19:42:00.000Z')
+      assert.equal(instantFns.from('2020-02-12T11:42+01:00'), '2020-02-12T10:42:00.000Z')
     })
     it('parses with an offset in brackets', () => {
-      assert.equal(instantFns.from('2020-02-12T11:42-08:00[America/Vancouver]'), '2020-02-12T19:42Z')
+      assert.equal(instantFns.from('2020-02-12T11:42-08:00[America/Vancouver]'), '2020-02-12T19:42:00.000Z')
     })
     it('throws for garbage input', () => {
       assert.throws(() => instantFns.from('not a date'))
     })
   })
 
+  describe('instant representation', () => {
+    it('pads trailing-zero milliseconds to 3 digits', () => {
+      assert.equal(instantFns.from('2026-06-18T21:53:20.260Z'), '2026-06-18T21:53:20.260Z')
+      assert.equal(instantFns.from('2026-06-18T21:53:20.500Z'), '2026-06-18T21:53:20.500Z')
+    })
+    it('always includes seconds and 3 fractional digits at a whole second', () => {
+      assert.equal(instantFns.from('2026-06-18T21:53:20Z'), '2026-06-18T21:53:20.000Z')
+    })
+    it('matches Date.prototype.toISOString for the same instant', () => {
+      const iso = '2026-06-18T21:53:20.260Z'
+      assert.equal(instantFns.from(iso), new Date(iso).toISOString())
+    })
+    it('still accepts (validates) previously-trimmed instants', () => {
+      assert.ok(instantFns.isValid('2026-06-18T21:53:20.26Z'))
+      assert.ok(instantFns.isValid('2020-01-01T12:30Z'))
+    })
+    it('now() carries 3 fractional digits (regression guard)', () => {
+      assert.match(instantFns.now(), /T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)
+    })
+    it('every from() output ends with a dot and three digits (regression guard)', () => {
+      assert.match(instantFns.from('2026-06-18T21:53:20Z'), /\.\d{3}Z$/)
+      assert.match(instantFns.from('2026-06-18T21:53:20.5Z'), /\.\d{3}Z$/)
+    })
+  })
+
   describe('instantFns.fromEpochMilliseconds / fromEpochSeconds', () => {
     it('fromEpochMilliseconds', () => {
-      assert.equal(instantFns.fromEpochMilliseconds(0), '1970-01-01T00:00Z')
-      assert.equal(instantFns.fromEpochMilliseconds(1_000), '1970-01-01T00:00:01Z')
-      assert.equal(instantFns.fromEpochMilliseconds(1_577_836_800_000), '2020-01-01T00:00Z')
+      assert.equal(instantFns.fromEpochMilliseconds(0), '1970-01-01T00:00:00.000Z')
+      assert.equal(instantFns.fromEpochMilliseconds(1_000), '1970-01-01T00:00:01.000Z')
+      assert.equal(instantFns.fromEpochMilliseconds(1_577_836_800_000), '2020-01-01T00:00:00.000Z')
     })
     it('fromEpochSeconds', () => {
-      assert.equal(instantFns.fromEpochSeconds(0), '1970-01-01T00:00Z')
-      assert.equal(instantFns.fromEpochSeconds(1_577_836_800), '2020-01-01T00:00Z')
+      assert.equal(instantFns.fromEpochSeconds(0), '1970-01-01T00:00:00.000Z')
+      assert.equal(instantFns.fromEpochSeconds(1_577_836_800), '2020-01-01T00:00:00.000Z')
     })
     it('fromEpochSeconds rounds fractional seconds to the nearest millisecond', () => {
       assert.equal(instantFns.fromEpochSeconds(0.001), '1970-01-01T00:00:00.001Z')
@@ -146,13 +171,13 @@ describe('Instant', () => {
   describe('instantFns.round', () => {
     const inst = '1976-11-18T14:23:30.123Z'
     it('rounds to hour', () => {
-      assert.equal(instantFns.round(inst, { smallestUnit: 'hour' }), '1976-11-18T14:00Z')
+      assert.equal(instantFns.round(inst, { smallestUnit: 'hour' }), '1976-11-18T14:00:00.000Z')
     })
     it('rounds to minute', () => {
-      assert.equal(instantFns.round(inst, { smallestUnit: 'minute' }), '1976-11-18T14:24Z')
+      assert.equal(instantFns.round(inst, { smallestUnit: 'minute' }), '1976-11-18T14:24:00.000Z')
     })
     it('rounds down with roundingMode', () => {
-      assert.equal(instantFns.round(inst, { smallestUnit: 'minute', roundingMode: 'floor' }), '1976-11-18T14:23Z')
+      assert.equal(instantFns.round(inst, { smallestUnit: 'minute', roundingMode: 'floor' }), '1976-11-18T14:23:00.000Z')
     })
   })
 

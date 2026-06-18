@@ -56,7 +56,11 @@ export function toIsoZonedDateTime(zdt: Temporal.ZonedDateTime): Iso.ZonedDateTi
   return compactDateTimePortion(zdt.toString()) as Iso.ZonedDateTime
 }
 export function toIsoInstant(inst: Temporal.Instant): Iso.Instant {
-  return compactDateTimePortion(inst.toString()) as Iso.Instant
+  // Instants always render with fixed 3-digit milliseconds and seconds present,
+  // matching RFC 3339 / `Date.prototype.toISOString()` / iso-fns v1. (The default
+  // `toString()` trims trailing-zero fractional digits, which made DB round-trips
+  // that compare against `Date.toISOString()` output mismatch intermittently.)
+  return inst.toString({ fractionalSecondDigits: 3 }) as Iso.Instant
 }
 export function toIsoYearMonth(pym: Temporal.PlainYearMonth): Iso.YearMonth {
   return pym.toString() as Iso.YearMonth

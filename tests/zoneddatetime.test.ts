@@ -282,7 +282,7 @@ describe('ZonedDateTime', () => {
   describe('Conversions', () => {
     const zdt = zonedDateTimeFns.from('2020-01-15T12:30:45[America/Los_Angeles]')
     it('toInstant', () => {
-      assert.equal(zonedDateTimeFns.toInstant(zdt), '2020-01-15T20:30:45Z')
+      assert.equal(zonedDateTimeFns.toInstant(zdt), '2020-01-15T20:30:45.000Z')
     })
     it('toDate', () => {
       assert.equal(zonedDateTimeFns.toDate(zdt), '2020-01-15')
@@ -389,7 +389,7 @@ describe('ZonedDateTime', () => {
       assert.equal(zonedDateTimeFns.chain(zdt).toDateTime().value(), '2020-01-15T12:30:45')
       assert.equal(zonedDateTimeFns.chain(zdt).toYearMonth().value(), '2020-01')
       assert.equal(zonedDateTimeFns.chain(zdt).toMonthDay().value(), '--01-15')
-      assert.equal(zonedDateTimeFns.chain(zdt).toInstant().value(), '2020-01-15T20:30:45Z')
+      assert.equal(zonedDateTimeFns.chain(zdt).toInstant().value(), '2020-01-15T20:30:45.000Z')
     })
     it('supports withDate / withTime / withTimeZone', () => {
       assert.equal(
