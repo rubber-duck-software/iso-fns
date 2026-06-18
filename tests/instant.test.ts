@@ -217,21 +217,37 @@ describe('Instant', () => {
   })
 
   describe('formatISO9075', () => {
-    it('produces YYYY-MM-DD HH:MM:SS even for compact forms', () => {
-      assert.equal(instantFns.formatISO9075('2020-01-01T00:00Z'), '2020-01-01 00:00:00')
-      assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56Z'), '2020-01-01 12:34:56')
-      assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56.789Z'), '2020-01-01 12:34:56')
+    it('produces YYYY-MM-DD HH:MM:SS.SSS even for compact forms', () => {
+      assert.equal(instantFns.formatISO9075('2020-01-01T00:00Z'), '2020-01-01 00:00:00.000')
+      assert.equal(instantFns.formatISO9075('2020-01-01T12:34:56Z'), '2020-01-01 12:34:56.000')
+    })
+    it('preserves milliseconds', () => {
+      assert.equal(instantFns.formatISO9075('2026-06-18T20:19:11.598Z'), '2026-06-18 20:19:11.598')
+    })
+    it('keeps trailing-zero milliseconds (no trimming)', () => {
+      assert.equal(instantFns.formatISO9075('2026-06-18T20:19:11.500Z'), '2026-06-18 20:19:11.500')
+    })
+    it('emits .000 for a whole second', () => {
+      assert.equal(instantFns.formatISO9075('2026-06-18T20:19:11Z'), '2026-06-18 20:19:11.000')
+    })
+    it('always emits a dot and three trailing digits (regression guard)', () => {
+      assert.match(instantFns.formatISO9075('2026-06-18T20:19:11.598Z'), /\.\d{3}$/)
+      assert.match(instantFns.formatISO9075('2026-06-18T20:19:11Z'), /\.\d{3}$/)
     })
     it('pads BC years with the sign in front of zero padding', () => {
       // Regression: previously rendered year -1 as "0-1" because padStart sees the minus sign.
-      assert.equal(instantFns.formatISO9075('-000001-06-15T00:00Z' as never), '-0001-06-15 00:00:00')
-      assert.equal(instantFns.formatISO9075('-000100-01-01T00:00Z' as never), '-0100-01-01 00:00:00')
+      assert.equal(instantFns.formatISO9075('-000001-06-15T00:00Z' as never), '-0001-06-15 00:00:00.000')
+      assert.equal(instantFns.formatISO9075('-000100-01-01T00:00Z' as never), '-0100-01-01 00:00:00.000')
     })
     it('throws for invalid input', () => {
       assert.throws(() => instantFns.formatISO9075('not-an-instant' as never))
     })
     it('chain exposes formatISO9075', () => {
-      assert.equal(instantFns.chain('2020-01-01T00:00Z').formatISO9075().value(), '2020-01-01 00:00:00')
+      assert.equal(instantFns.chain('2020-01-01T00:00Z').formatISO9075().value(), '2020-01-01 00:00:00.000')
+      assert.equal(
+        instantFns.chain('2026-06-18T20:19:11.598Z').formatISO9075().value(),
+        '2026-06-18 20:19:11.598'
+      )
     })
   })
 

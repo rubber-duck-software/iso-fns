@@ -25,6 +25,14 @@ engine underneath is completely different.
   `1` = Monday … `7` = Sunday numbering (not date-fns's `0` = Sunday). The
   bundled `enUS` locale uses `7`.
 
+### Bug fixes
+
+- **`instantFns.formatISO9075` now preserves milliseconds** (restores v1
+  behavior; v2 truncated to whole seconds). The output always carries a 3-digit
+  fractional-second field — e.g. `2026-06-18 20:19:11.598`, and `…11.000` for a
+  whole second — which had silently dropped, truncating round-trips through
+  `DATETIME(6)` columns. The `.chain().formatISO9075()` builder is fixed too.
+
 ### Performance
 
 Accessors and predicates on the **non-chain** API (e.g. `dateFns.getYear(date)`,
