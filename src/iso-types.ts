@@ -1,4 +1,7 @@
-export module Iso {
+export declare namespace Iso {
+  /** @internal */
+  const __brand: unique symbol
+
   type Offset = `${'+' | '-'}${number}:${number}`
 
   type MinuteFormat = `${number}` | `${number}:${number}` | `${number}:${number}.${number}`
@@ -26,7 +29,9 @@ export module Iso {
   }
 
   /**
-   * An `Iso.Instant` is a single point in time (called "exact time"), with a precision in milliseconds. No time zone is present. As such `Iso.Instant` has no concept of days, months or even hours.
+   * An `Iso.Instant` is a single point in time (called "exact time"). No time zone is present. As such `Iso.Instant` has no concept of days, months or even hours.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * For convenience of interoperability, instants are represented as an ISO8601 string in Zulu time (UTC). The format looks like `1970-01-01T00:00:00.000Z`.
    *
@@ -36,7 +41,7 @@ export module Iso {
    *
    * Like Unix time, Instant ignores leap seconds.
    */
-  export type Instant = Format['YYYY-MM-DDThh:mm-ss[.sss]Z'] & string
+  export type Instant = Format['YYYY-MM-DDThh:mm-ss[.sss]Z'] & { readonly [__brand]?: 'Instant' }
 
   /**
    * An `Iso.ZonedDateTime` is a timezone-aware date/time type that represents a real event that has happened (or will happen) at a particular instant from the perspective of a particular region on Earth. As the broadest `Iso` type, `Iso.ZonedDateTime` can be considered a combination of a `Iso.TimeZone`, `Iso.Instant`, and `Iso.DateTime`.
@@ -54,7 +59,9 @@ export module Iso {
    *
    * The `Iso.ZonedDateTime` functions are a superset of `Iso.DateTime` functions, which makes it easy to port code back and forth between the two types as needed. Because `Iso.DateTime` is not aware of time zones, in use cases where the time zone is known it's recommended to use `Iso.ZonedDateTime` which will automatically adjust for DST and can convert easily to `Iso.Instant` without having to re-specify the time zone.
    */
-  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]'] & string
+  export type ZonedDateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]+00:00[TimeZoneName]'] & {
+    readonly [__brand]?: 'ZonedDateTime'
+  }
 
   /**
    * An `Iso.Date` represents a calendar date. "Calendar date" refers to the concept of a date as expressed in everyday usage, independent of any time zone. For example, it could be used to represent an event on a calendar which happens during the whole day no matter which time zone it's happening in.
@@ -63,17 +70,21 @@ export module Iso {
    *
    * `Iso.YearMonth` and `Iso.MonthDay` carry less information than `Iso.Date` and should be used when complete information is not required.
    */
-  export type Date = Format['YYYY-MM-DD'] & string
+  export type Date = Format['YYYY-MM-DD'] & { readonly [__brand]?: 'Date' }
 
   /**
-   * An `Iso.Time` represents a wall-clock time, with a precision in milliseconds, and without any time zone. "Wall-clock time" refers to the concept of a time as expressed in everyday usage — the time that you read off the clock on the wall. For example, it could be used to represent an event that happens daily at a certain time, no matter what time zone.
+   * An `Iso.Time` represents a wall-clock time without any time zone. "Wall-clock time" refers to the concept of a time as expressed in everyday usage — the time that you read off the clock on the wall. For example, it could be used to represent an event that happens daily at a certain time, no matter what time zone.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * `Iso.Time` refers to a time with no associated calendar date; if you need to refer to a specific time on a specific day, use `Iso.DateTime`. A `Iso.Time` can be converted into a `Iso.ZonedDateTime` by combining it with a `Iso.Date` and `Iso.TimeZone` using the `toZonedDateTime()` function. It can also be combined with a `Iso.Date` to yield a "zoneless" `Iso.DateTime` using the `toDateTime()` function.
    */
-  export type Time = Format['hh:mm:ss[.sss]'] & string
+  export type Time = Format['hh:mm:ss[.sss]'] & { readonly [__brand]?: 'Time' }
 
   /**
-   * An `Iso.DateTime` represents a calendar date and wall-clock time, with a precision in milliseconds, and without any time zone.
+   * An `Iso.DateTime` represents a calendar date and wall-clock time, without any time zone.
+   *
+   * Accessors and arithmetic operate at millisecond precision, but the string representation itself preserves whatever fractional-second precision was parsed (including sub-millisecond), matching the underlying Temporal behavior.
    *
    * For use cases that require a time zone, especially using arithmetic or other derived values, consider using `Iso.ZonedDateTime` instead because that type automatically adjusts for Daylight Saving Time. A `Iso.DateTime` can be converted to a `Iso.ZonedDateTime` using a `Iso.TimeZone`.
    *
@@ -94,21 +105,21 @@ export module Iso {
    * - Performing arithmetic that deliberately ignores DST. Example: in a day-planner UI, the visual height of a meeting may be the same even if DST skips or repeats an hour.
    * To learn more about time zones and DST best practices, visit [Time Zones and Resolving Ambiguity](https://iso-fns.org/docs/timezones-and-ambiguity).
    */
-  export type DateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]'] & string
+  export type DateTime = Format['YYYY-MM-DDThh:mm-ss[.sss]'] & { readonly [__brand]?: 'DateTime' }
 
   /**
    * A `Iso.YearMonth` represents a particular month on the calendar. For example, it could be used to represent a particular instance of a monthly recurring event, like "the June 2019 meeting".
    *
    * `Iso.YearMonth` refers to the whole of a specific month; if you need to refer to a calendar event on a certain day, use `Iso.Date` or even `Iso.DateTime`. A `Iso.YearMonth` can be converted into a `Iso.Date` by combining it with a day of the month, using the `toDate()` function.
    */
-  export type YearMonth = Format['YYYY-MM'] & string
+  export type YearMonth = Format['YYYY-MM'] & { readonly [__brand]?: 'YearMonth' }
 
   /**
    * A `Iso.MonthDay` represents a particular day on the calendar, but without a year. For example, it could be used to represent a yearly recurring event, like "Bastille Day is on the 14th of July."
    *
    * If you need to refer to a certain instance of a calendar event, in a particular year, use `Iso.Date` or even `Iso.DateTime`. A `Iso.MonthDay` can be converted into a `Iso.Date` by combining it with a year, using the `toDate()` method.
    */
-  export type MonthDay = Format['--MM-DD'] & string
+  export type MonthDay = Format['--MM-DD'] & { readonly [__brand]?: 'MonthDay' }
 
   /**
    * A `Iso.Duration` represents a duration of time which can be used in date/time arithmetic.
@@ -138,5 +149,5 @@ export module Iso {
    *
    * :::
    */
-  export type Duration = Format['P(n)Y(n)M(n)DT(n)H(n)M(n)S'] & string
+  export type Duration = Format['P(n)Y(n)M(n)DT(n)H(n)M(n)S'] & { readonly [__brand]?: 'Duration' }
 }

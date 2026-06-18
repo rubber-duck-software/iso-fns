@@ -1,7 +1,10 @@
-import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
-import { IDurationChain } from './IDurationFns'
-import { IDateChain } from './IDateFns'
+import { type Iso } from '../iso-types.ts'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal.ts'
+import { type YearMonthSlots } from '../slots.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDurationChain } from './IDurationFns.ts'
+import { type IDateChain } from './IDateFns.ts'
 
 export interface IYearMonthFns {
   fromNumbers(year: number, month: number): Iso.YearMonth
@@ -15,7 +18,7 @@ export interface IYearMonthFns {
   with(
     yearMonth: Iso.YearMonth,
     yearMonthLike: { year?: number; month?: number },
-    options?: { overflow: ES.TemporalOverflow }
+    options?: { overflow: 'constrain' | 'reject' }
   ): Iso.YearMonth
   add(
     yearMonth: Iso.YearMonth,
@@ -31,7 +34,7 @@ export interface IYearMonthFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.YearMonth
   subtract(
     yearMonth: Iso.YearMonth,
@@ -47,26 +50,26 @@ export interface IYearMonthFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.YearMonth
   until(
     yearMonth: Iso.YearMonth,
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   since(
     yearMonth: Iso.YearMonth,
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   equals(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
@@ -79,8 +82,8 @@ export interface IYearMonthFns {
   isEqualOrBefore(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   isEqualOrAfter(yearMonth: Iso.YearMonth, other: Iso.YearMonth): boolean
   toDate(yearMonth: Iso.YearMonth, day: number): Iso.Date
-  getFields(yearMonth: Iso.YearMonth): ES.YearMonthSlots
-  from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.YearMonth
+  getFields(yearMonth: Iso.YearMonth): YearMonthSlots
+  from(item: string | Partial<YearMonthSlots>, options?: { overflow: 'constrain' | 'reject' }): Iso.YearMonth
   compare(one: Iso.YearMonth, two: Iso.YearMonth): number
   /**
    * @summary Format the ZonedDateTime.
@@ -186,20 +189,20 @@ export interface IYearMonthFns {
    * //=> '02/2014'
    * ```
    */
-  format(yearMonth: Iso.YearMonth, format: string): string
+  format(yearMonth: Iso.YearMonth, format: string, options?: FormatOptions): string
   chain(yearMonth: Iso.YearMonth): IYearMonthChain
 }
 
 /**
  * @internal
  */
-export interface IYearMonthChain extends ES.Chain<Iso.YearMonth> {
-  getYear(): ES.Chain<number>
-  getMonth(): ES.Chain<number>
-  getDaysInMonth(): ES.Chain<number>
-  getDaysInYear(): ES.Chain<number>
-  inLeapYear(): ES.Chain<boolean>
-  with(yearMonthLike: { year?: number; month?: number }, options?: { overflow: ES.TemporalOverflow }): IYearMonthChain
+export interface IYearMonthChain extends Chain<Iso.YearMonth> {
+  getYear(): Chain<number>
+  getMonth(): Chain<number>
+  getDaysInMonth(): Chain<number>
+  getDaysInYear(): Chain<number>
+  inLeapYear(): Chain<boolean>
+  with(yearMonthLike: { year?: number; month?: number }, options?: { overflow: 'constrain' | 'reject' }): IYearMonthChain
   add(
     temporalDurationLike:
       | Iso.Duration
@@ -213,7 +216,7 @@ export interface IYearMonthChain extends ES.Chain<Iso.YearMonth> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IYearMonthChain
   subtract(
     temporalDurationLike:
@@ -228,33 +231,33 @@ export interface IYearMonthChain extends ES.Chain<Iso.YearMonth> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IYearMonthChain
   until(
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   since(
     other: Iso.YearMonth,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
-  equals(other: Iso.YearMonth): ES.Chain<boolean>
-  isEqual(other: Iso.YearMonth): ES.Chain<boolean>
-  isBefore(other: Iso.YearMonth): ES.Chain<boolean>
-  isAfter(other: Iso.YearMonth): ES.Chain<boolean>
-  isEqualOrBefore(other: Iso.YearMonth): ES.Chain<boolean>
-  isEqualOrAfter(other: Iso.YearMonth): ES.Chain<boolean>
+  equals(other: Iso.YearMonth): Chain<boolean>
+  isEqual(other: Iso.YearMonth): Chain<boolean>
+  isBefore(other: Iso.YearMonth): Chain<boolean>
+  isAfter(other: Iso.YearMonth): Chain<boolean>
+  isEqualOrBefore(other: Iso.YearMonth): Chain<boolean>
+  isEqualOrAfter(other: Iso.YearMonth): Chain<boolean>
   toDate(day: number): IDateChain
-  getFields(): ES.Chain<ES.YearMonthSlots>
-  format(formatString: string): ES.Chain<string>
+  getFields(): Chain<YearMonthSlots>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

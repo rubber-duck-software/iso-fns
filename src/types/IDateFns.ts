@@ -1,10 +1,13 @@
-import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
-import { IDurationChain } from './IDurationFns'
-import { IDateTimeChain } from './IDateTimeFns'
-import { IZonedDateTimeChain } from './IZonedDateTimeFns'
-import { IYearMonthChain } from './IYearMonthFns'
-import { IMonthDayChain } from './IMonthDayFns'
+import { type Iso } from '../iso-types.ts'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal.ts'
+import { type DateSlots } from '../slots.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDurationChain } from './IDurationFns.ts'
+import { type IDateTimeChain } from './IDateTimeFns.ts'
+import { type IZonedDateTimeChain } from './IZonedDateTimeFns.ts'
+import { type IYearMonthChain } from './IYearMonthFns.ts'
+import { type IMonthDayChain } from './IMonthDayFns.ts'
 
 export interface IDateFns {
   /**
@@ -34,7 +37,7 @@ export interface IDateFns {
       year?: number
     },
     options?: {
-      overflow?: ES.TemporalOverflow
+      overflow?: 'constrain' | 'reject'
     }
   ): Iso.Date
   add(
@@ -51,7 +54,7 @@ export interface IDateFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.Date
   subtract(
     date: Iso.Date,
@@ -67,26 +70,26 @@ export interface IDateFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.Date
   until(
     date: Iso.Date,
     other: Iso.Date,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month' | 'week' | 'day'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month' | 'week' | 'day'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   since(
     date: Iso.Date,
     other: Iso.Date,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month' | 'week' | 'day'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month' | 'week' | 'day'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   equals(date: Iso.Date, other: Iso.Date): boolean
@@ -99,11 +102,11 @@ export interface IDateFns {
   isEqualOrBefore(date: Iso.Date, other: Iso.Date): boolean
   isEqualOrAfter(date: Iso.Date, other: Iso.Date): boolean
   toDateTime(date: Iso.Date, time?: Iso.Time): Iso.DateTime
-  toZonedDateTime(date: Iso.Date, item: { timeZone: string; time?: Iso.Time } | string): Iso.ZonedDateTime
+  toZonedDateTime(date: Iso.Date, item: { timeZone: string; time?: Iso.Time }): Iso.ZonedDateTime
   toYearMonth(date: Iso.Date): Iso.YearMonth
   toMonthDay(date: Iso.Date): Iso.MonthDay
-  getFields(date: Iso.Date): ES.DateSlots
-  from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.Date
+  getFields(date: Iso.Date): DateSlots
+  from(item: string | Partial<DateSlots>, options?: { overflow: 'constrain' | 'reject' }): Iso.Date
   compare(one: Iso.Date, two: Iso.Date): number
   /**
    * @summary Format the ZonedDateTime.
@@ -231,23 +234,23 @@ export interface IDateFns {
    * ```
    *
    */
-  format(date: Iso.Date, format: string): string
+  format(date: Iso.Date, format: string, options?: FormatOptions): string
   chain(date: Iso.Date): IDateChain
 }
 
 /**
  * @internal
  */
-export interface IDateChain extends ES.Chain<Iso.Date> {
-  getYear(): ES.Chain<number>
-  getMonth(): ES.Chain<number>
-  getDay(): ES.Chain<number>
-  getDayOfWeek(): ES.Chain<number>
-  getDayOfYear(): ES.Chain<number>
-  getWeekOfYear(): ES.Chain<number>
-  getDaysInMonth(): ES.Chain<number>
-  getDaysInYear(): ES.Chain<number>
-  inLeapYear(): ES.Chain<boolean>
+export interface IDateChain extends Chain<Iso.Date> {
+  getYear(): Chain<number>
+  getMonth(): Chain<number>
+  getDay(): Chain<number>
+  getDayOfWeek(): Chain<number>
+  getDayOfYear(): Chain<number>
+  getWeekOfYear(): Chain<number>
+  getDaysInMonth(): Chain<number>
+  getDaysInYear(): Chain<number>
+  inLeapYear(): Chain<boolean>
   with(
     temporalDateLike: {
       day?: number
@@ -255,7 +258,7 @@ export interface IDateChain extends ES.Chain<Iso.Date> {
       year?: number
     },
     options?: {
-      overflow?: ES.TemporalOverflow
+      overflow?: 'constrain' | 'reject'
     }
   ): IDateChain
   add(
@@ -271,7 +274,7 @@ export interface IDateChain extends ES.Chain<Iso.Date> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IDateChain
   subtract(
     temporalDurationLike:
@@ -286,36 +289,36 @@ export interface IDateChain extends ES.Chain<Iso.Date> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IDateChain
   until(
     other: Iso.Date,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month' | 'week' | 'day'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month' | 'week' | 'day'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   since(
     other: Iso.Date,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<'year' | 'month' | 'week' | 'day'>
+      smallestUnit?: Temporal.SmallestUnit<'year' | 'month' | 'week' | 'day'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
-  equals(other: Iso.Date): ES.Chain<boolean>
-  isEqual(other: Iso.Date): ES.Chain<boolean>
-  isBefore(other: Iso.Date): ES.Chain<boolean>
-  isAfter(other: Iso.Date): ES.Chain<boolean>
-  isEqualOrBefore(other: Iso.Date): ES.Chain<boolean>
-  isEqualOrAfter(other: Iso.Date): ES.Chain<boolean>
+  equals(other: Iso.Date): Chain<boolean>
+  isEqual(other: Iso.Date): Chain<boolean>
+  isBefore(other: Iso.Date): Chain<boolean>
+  isAfter(other: Iso.Date): Chain<boolean>
+  isEqualOrBefore(other: Iso.Date): Chain<boolean>
+  isEqualOrAfter(other: Iso.Date): Chain<boolean>
   toDateTime(time?: Iso.Time): IDateTimeChain
   toZonedDateTime(item: { timeZone: string; time?: Iso.Time }): IZonedDateTimeChain
   toYearMonth(): IYearMonthChain
   toMonthDay(): IMonthDayChain
-  getFields(): ES.Chain<ES.DateSlots>
-  format(formatString: string): ES.Chain<string>
+  getFields(): Chain<DateSlots>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

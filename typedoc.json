@@ -1,0 +1,13 @@
+{
+  "tsconfig": "./tsconfig.typedoc.json",
+  "entryPoints": ["src/types", "src/iso-types.ts"],
+  "entryPointStrategy": "expand",
+  "readme": "none",
+  "out": "docs-site/docs/api",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
+  "sort": ["source-order"],
+  "excludeInternal": true,
+  "disableSources": true,
+  "hideBreadcrumbs": true,
+  "hidePageHeader": true
+}
