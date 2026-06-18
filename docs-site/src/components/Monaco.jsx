@@ -29,7 +29,7 @@ export default function TypescriptLoader() {
   }
 }
 
-const startingValue = `import { dateFns, timeFns, zonedDateTimeFns, dateTimeFns, instantFns, yearMonthFns, monthDayFns, durationFns, Iso } from 'https://cdn.skypack.dev/iso-fns@beta'
+const startingValue = `import { dateFns, timeFns, zonedDateTimeFns, dateTimeFns, instantFns, yearMonthFns, monthDayFns, durationFns, Iso } from 'https://esm.sh/iso-fns@beta'
 
 const result = dateFns.add("2000-01-01", {days:1})
 console.log(result)`
