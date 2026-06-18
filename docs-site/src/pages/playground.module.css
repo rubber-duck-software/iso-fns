@@ -1,0 +1,58 @@
+/**
+ * Playground page layout. Scoped CSS module.
+ */
+
+.main {
+  padding: 3rem 0 4.5rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.eyebrowMark {
+  width: 1.5rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ifm-color-primary);
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ifm-color-emphasis-700);
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 2rem 0 3rem;
+  }
+}

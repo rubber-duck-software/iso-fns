@@ -1,8 +1,12 @@
 type Era = 0 | 1
 
-type Quarter = 1 | 2 | 3 | 4
+export type Quarter = 1 | 2 | 3 | 4
 
-export type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6
+// Day matches Temporal.PlainDate.dayOfWeek: 1 = Monday … 7 = Sunday.
+// DayIndex is the 0-based position into the Mon-first DAY_VALUES array.
+export type Day = 1 | 2 | 3 | 4 | 5 | 6 | 7
+
+export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type Month = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
 
@@ -14,11 +18,14 @@ export type LocaleDayPeriod = 'am' | 'pm' | 'midnight' | 'noon' | 'morning' | 'a
 
 export type LocaleUnit = Era | Quarter | Month | Day | LocaleDayPeriod
 
+// When no argumentCallback is configured, callers must pass the raw array
+// index (`LocalizeUnitIndex<Result>`). When one is configured, callers pass
+// the semantic value (`Result`) and the callback converts it to an index.
 export type LocalizeFn<
   Result extends LocaleUnit | number,
   ArgCallback extends BuildLocalizeFnArgCallback<Result> | undefined
 > = (
-  value: ArgCallback extends undefined ? Result : LocalizeUnitIndex<Result>,
+  value: ArgCallback extends undefined ? LocalizeUnitIndex<Result> : Result,
   options?: {
     width?: LocalePatternWidth
     context?: 'formatting' | 'standalone'
@@ -47,29 +54,30 @@ type LocalizeMonthValues = readonly [
   string
 ]
 
-export type LocalizeUnitValuesIndex<Values extends LocalizeUnitValues<any>> = Values extends Record<LocaleDayPeriod, string>
-  ? string
-  : Values extends LocalizeEraValues
-  ? Era
-  : Values extends LocalizeQuarterValues
-  ? QuarterIndex
-  : Values extends LocalizeDayValues
-  ? Day
-  : Values extends LocalizeMonthValues
-  ? Month
-  : never
+export type LocalizeUnitValuesIndex<Values extends LocalizeUnitValues<any>> =
+  Values extends Record<LocaleDayPeriod, string>
+    ? string
+    : Values extends LocalizeEraValues
+      ? Era
+      : Values extends LocalizeQuarterValues
+        ? QuarterIndex
+        : Values extends LocalizeDayValues
+          ? DayIndex
+          : Values extends LocalizeMonthValues
+            ? Month
+            : never
 
 export type LocalizeUnitValues<Unit extends LocaleUnit> = Unit extends LocaleDayPeriod
   ? Record<LocaleDayPeriod, string>
   : Unit extends Era
-  ? LocalizeEraValues
-  : Unit extends Quarter
-  ? LocalizeQuarterValues
-  : Unit extends Day
-  ? LocalizeDayValues
-  : Unit extends Month
-  ? LocalizeMonthValues
-  : never
+    ? LocalizeEraValues
+    : Unit extends Quarter
+      ? LocalizeQuarterValues
+      : Unit extends Day
+        ? LocalizeDayValues
+        : Unit extends Month
+          ? LocalizeMonthValues
+          : never
 
 export type LocalizeUnitIndex<Unit extends LocaleUnit | number> = Unit extends LocaleUnit
   ? LocalizeUnitValuesIndex<LocalizeUnitValues<Unit>>
@@ -84,7 +92,7 @@ export interface Localize {
   era: LocalizeFn<Era, undefined>
   quarter: LocalizeFn<Quarter, BuildLocalizeFnArgCallback<Quarter>>
   month: LocalizeFn<Month, undefined>
-  day: LocalizeFn<Day, undefined>
+  day: LocalizeFn<Day, BuildLocalizeFnArgCallback<Day>>
   dayPeriod: LocalizeFn<LocaleDayPeriod, undefined>
 }
 
@@ -100,4 +108,26 @@ export interface FormatLong {
   date: FormatLongFn
   time: FormatLongFn
   dateTime: FormatLongFn
+}
+
+export interface Locale {
+  code: string
+  localize: Localize
+  formatLong: FormatLong
+  options: {
+    /**
+     * First day of the week, using Temporal's day numbering: `1` = Monday …
+     * `7` = Sunday (note: NOT date-fns's `0` = Sunday). The bundled `enUS`
+     * locale uses `7` (Sunday). Currently informational — the bundled
+     * formatters emit no locale-relative week/weekday token — but it is part
+     * of the public `Locale` shape for custom locales and future formatters.
+     */
+    weekStartsOn: number
+    /**
+     * Day-of-month that the year's first calendar week must contain (e.g. `1`
+     * for the week containing Jan 1, `4` for ISO-8601's first-four-day week).
+     * Currently informational; see `weekStartsOn`.
+     */
+    firstWeekContainsDate: number
+  }
 }

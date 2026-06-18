@@ -3,9 +3,7 @@
   "projectOwner": "rubber-duck-software",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "imageSize": 100,
   "commit": true,
   "commitConvention": "none",
@@ -15,29 +13,21 @@
       "name": "Grant Colestock",
       "avatar_url": "https://avatars.githubusercontent.com/u/25811049?v=4",
       "profile": "https://github.com/rubber-duck-software",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "kolton-musgrove",
       "name": "Kolton Musgrove",
       "avatar_url": "https://avatars.githubusercontent.com/u/78399413?v=4",
       "profile": "https://github.com/kolton-musgrove",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "Marcato-Partners",
       "name": "Marcato Partners",
       "avatar_url": "https://avatars.githubusercontent.com/u/84106192?s=200&v=4",
       "profile": "https://github.com/Marcato-Partners",
-      "contributions": [
-        "financial",
-        "mentoring",
-        "userTesting"
-      ]
+      "contributions": ["financial", "mentoring", "userTesting"]
     }
   ],
   "contributorsPerLine": 3

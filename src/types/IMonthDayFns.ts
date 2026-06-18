@@ -1,6 +1,7 @@
-import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
-import { IDateChain } from './IDateFns'
+import { type Iso } from '../iso-types.ts'
+import { type Chain } from '../temporal.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IDateChain } from './IDateFns.ts'
 
 export interface IMonthDayFns {
   fromNumbers(month: number, day: number): Iso.MonthDay
@@ -14,15 +15,19 @@ export interface IMonthDayFns {
       month: number
       day: number
     },
-    options?: { overflow: ES.TemporalOverflow }
+    options?: { overflow: 'constrain' | 'reject' }
   ): Iso.MonthDay
   equals(monthDay: Iso.MonthDay, other: Iso.MonthDay): boolean
+  isEqual(monthDay: Iso.MonthDay, other: Iso.MonthDay): boolean
   toDate(monthDay: Iso.MonthDay, year: number): Iso.Date
   getFields(monthDay: Iso.MonthDay): {
     month: number
     day: number
   }
-  from(item: any, options?: { overflow: ES.TemporalOverflow }): Iso.MonthDay
+  from(
+    item: string | Partial<{ month: number; day: number; year: number }>,
+    options?: { overflow: 'constrain' | 'reject' }
+  ): Iso.MonthDay
   compare(one: Iso.MonthDay, two: Iso.MonthDay): number
   /**
    * @summary Format the ZonedDateTime.
@@ -95,28 +100,29 @@ export interface IMonthDayFns {
    * //=> '02/11'
    * ```
    */
-  format(monthDay: Iso.MonthDay, format: string): string
+  format(monthDay: Iso.MonthDay, format: string, options?: FormatOptions): string
   chain(monthDay: Iso.MonthDay): IMonthDayChain
 }
 
 /**
  * @internal
  */
-export interface IMonthDayChain extends ES.Chain<Iso.MonthDay> {
-  getDay(): ES.Chain<number>
-  getMonth(): ES.Chain<number>
+export interface IMonthDayChain extends Chain<Iso.MonthDay> {
+  getDay(): Chain<number>
+  getMonth(): Chain<number>
   with(
     monthDayLike: {
       month: number
       day: number
     },
-    options?: { overflow: ES.TemporalOverflow }
+    options?: { overflow: 'constrain' | 'reject' }
   ): IMonthDayChain
-  equals(other: Iso.MonthDay): ES.Chain<boolean>
+  equals(other: Iso.MonthDay): Chain<boolean>
+  isEqual(other: Iso.MonthDay): Chain<boolean>
   toDate(year: number): IDateChain
-  getFields(): ES.Chain<{
+  getFields(): Chain<{
     month: number
     day: number
   }>
-  format(formatString: string): ES.Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

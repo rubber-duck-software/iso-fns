@@ -1,12 +1,15 @@
-import { Iso } from '../iso-types'
-import * as ES from '../ecmascript'
-import { IInstantChain } from './IInstantFns'
-import { IDateChain } from './IDateFns'
-import { ITimeChain } from './ITimeFns'
-import { IYearMonthChain } from './IYearMonthFns'
-import { IMonthDayChain } from './IMonthDayFns'
-import { IDateTimeChain } from './IDateTimeFns'
-import { IDurationChain } from './IDurationFns'
+import { type Iso } from '../iso-types.ts'
+import { type Temporal } from 'temporal-polyfill'
+import { type Chain } from '../temporal.ts'
+import { type DateSlots, type DateTimeSlots, type TimeSlots } from '../slots.ts'
+import { type FormatOptions } from '../format/index.ts'
+import { type IInstantChain } from './IInstantFns.ts'
+import { type IDateChain } from './IDateFns.ts'
+import { type ITimeChain } from './ITimeFns.ts'
+import { type IYearMonthChain } from './IYearMonthFns.ts'
+import { type IMonthDayChain } from './IMonthDayFns.ts'
+import { type IDateTimeChain } from './IDateTimeFns.ts'
+import { type IDurationChain } from './IDurationFns.ts'
 
 export interface IZonedDateTimeFns {
   /**
@@ -21,11 +24,11 @@ export interface IZonedDateTimeFns {
    *
    * @returns a string representing the time zone according to the current system settings.
    */
-  currentTimeZone(): string
+  currentTimeZoneId(): string
   fromEpochMilliseconds(epochMilliseconds: number, timeZone: string): Iso.ZonedDateTime
   isValid(zonedDateTime: unknown): zonedDateTime is Iso.ZonedDateTime
   assertIsValid(zonedDateTime: unknown): asserts zonedDateTime is Iso.ZonedDateTime
-  getTimeZone(zonedDateTime: Iso.ZonedDateTime): string
+  getTimeZoneId(zonedDateTime: Iso.ZonedDateTime): string
   getYear(zonedDateTime: Iso.ZonedDateTime): number
   getMonth(zonedDateTime: Iso.ZonedDateTime): number
   getDay(zonedDateTime: Iso.ZonedDateTime): number
@@ -56,13 +59,13 @@ export interface IZonedDateTimeFns {
       year?: number
     },
     options?: {
-      overflow?: ES.TemporalOverflow
-      disambiguation?: ES.TemporalDisambiguation
-      offset?: ES.TemporalOffset
+      overflow?: 'constrain' | 'reject'
+      disambiguation?: 'compatible' | 'earlier' | 'later' | 'reject'
+      offset?: 'use' | 'prefer' | 'ignore' | 'reject'
     }
   ): Iso.ZonedDateTime
-  withDate(zonedDateTime: Iso.ZonedDateTime, date: Iso.Date | ES.DateSlots): Iso.ZonedDateTime
-  withTime(zonedDateTime: Iso.ZonedDateTime, time: Iso.Time | Partial<ES.TimeSlots>): Iso.ZonedDateTime
+  withDate(zonedDateTime: Iso.ZonedDateTime, date: Iso.Date | DateSlots): Iso.ZonedDateTime
+  withTime(zonedDateTime: Iso.ZonedDateTime, time: Iso.Time | Partial<TimeSlots>): Iso.ZonedDateTime
   withTimeZone(zonedDateTime: Iso.ZonedDateTime, timeZone: string): Iso.ZonedDateTime
   add(
     zonedDateTime: Iso.ZonedDateTime,
@@ -78,7 +81,7 @@ export interface IZonedDateTimeFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.ZonedDateTime
   subtract(
     zonedDateTime: Iso.ZonedDateTime,
@@ -94,37 +97,42 @@ export interface IZonedDateTimeFns {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): Iso.ZonedDateTime
   until(
     zonedDateTime: Iso.ZonedDateTime,
     other: Iso.ZonedDateTime,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   since(
     zonedDateTime: Iso.ZonedDateTime,
     other: Iso.ZonedDateTime,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.Duration
   round(
     zonedDateTime: Iso.ZonedDateTime,
     options: {
-      smallestUnit: Exclude<ES.TemporalSingularUnit, 'year' | 'month' | 'week'>
+      smallestUnit: Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): Iso.ZonedDateTime
   equals(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqual(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isBefore(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isAfter(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqualOrBefore(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
+  isEqualOrAfter(zonedDateTime: Iso.ZonedDateTime, other: Iso.ZonedDateTime): boolean
   startOfDay(zonedDateTime: Iso.ZonedDateTime): Iso.ZonedDateTime
   toInstant(zonedDateTime: Iso.ZonedDateTime): Iso.Instant
   toDate(zonedDateTime: Iso.ZonedDateTime): Iso.Date
@@ -142,13 +150,14 @@ export interface IZonedDateTimeFns {
     year: number
     offset: string
     timeZone: string
+    epochMilliseconds: number
   }
   from(
-    item: any,
+    item: string | Partial<DateTimeSlots & { timeZone: string; offset: string }>,
     options?: {
-      overflow?: ES.TemporalOverflow
-      disambiguation?: ES.TemporalDisambiguation
-      offset?: ES.TemporalOffset
+      overflow?: 'constrain' | 'reject'
+      disambiguation?: 'compatible' | 'earlier' | 'later' | 'reject'
+      offset?: 'use' | 'prefer' | 'ignore' | 'reject'
     }
   ): Iso.ZonedDateTime
   compare(one: Iso.ZonedDateTime, two: Iso.ZonedDateTime): number
@@ -332,33 +341,33 @@ export interface IZonedDateTimeFns {
    * //=> '02/11/2014'
    * ```
    */
-  format(zonedDateTime: Iso.ZonedDateTime, format: string): string
+  format(zonedDateTime: Iso.ZonedDateTime, format: string, options?: FormatOptions): string
   chain(zonedDateTime: Iso.ZonedDateTime): IZonedDateTimeChain
 }
 
 /**
  * @internal
  */
-export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
-  getTimeZone(): ES.Chain<string>
-  getYear(): ES.Chain<number>
-  getMonth(): ES.Chain<number>
-  getDay(): ES.Chain<number>
-  getHour(): ES.Chain<number>
-  getMinute(): ES.Chain<number>
-  getSecond(): ES.Chain<number>
-  getMillisecond(): ES.Chain<number>
-  getEpochSeconds(): ES.Chain<number>
-  getEpochMilliseconds(): ES.Chain<number>
-  getDayOfWeek(): ES.Chain<number>
-  getDayOfYear(): ES.Chain<number>
-  getWeekOfYear(): ES.Chain<number>
-  getHoursInDay(): ES.Chain<number>
-  getDaysInMonth(): ES.Chain<number>
-  getDaysInYear(): ES.Chain<number>
-  inLeapYear(): ES.Chain<boolean>
-  getOffset(): ES.Chain<string>
-  getOffsetMilliseconds(): ES.Chain<number>
+export interface IZonedDateTimeChain extends Chain<Iso.ZonedDateTime> {
+  getTimeZoneId(): Chain<string>
+  getYear(): Chain<number>
+  getMonth(): Chain<number>
+  getDay(): Chain<number>
+  getHour(): Chain<number>
+  getMinute(): Chain<number>
+  getSecond(): Chain<number>
+  getMillisecond(): Chain<number>
+  getEpochSeconds(): Chain<number>
+  getEpochMilliseconds(): Chain<number>
+  getDayOfWeek(): Chain<number>
+  getDayOfYear(): Chain<number>
+  getWeekOfYear(): Chain<number>
+  getHoursInDay(): Chain<number>
+  getDaysInMonth(): Chain<number>
+  getDaysInYear(): Chain<number>
+  inLeapYear(): Chain<boolean>
+  getOffset(): Chain<string>
+  getOffsetMilliseconds(): Chain<number>
   with(
     zonedDateTimeLike: {
       day?: number
@@ -366,18 +375,18 @@ export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
       millisecond?: number
       minute?: number
       month?: number
-      monthCode?: number
+      monthCode?: string
       second?: number
       year?: number
     },
     options?: {
-      overflow?: ES.TemporalOverflow
-      disambiguation?: ES.TemporalDisambiguation
-      offset?: ES.TemporalOffset
+      overflow?: 'constrain' | 'reject'
+      disambiguation?: 'compatible' | 'earlier' | 'later' | 'reject'
+      offset?: 'use' | 'prefer' | 'ignore' | 'reject'
     }
   ): IZonedDateTimeChain
-  withDate(date: Iso.Date | ES.DateSlots): IZonedDateTimeChain
-  withTime(time: Iso.Time | Partial<ES.TimeSlots>): IZonedDateTimeChain
+  withDate(date: Iso.Date | DateSlots): IZonedDateTimeChain
+  withTime(time: Iso.Time | Partial<TimeSlots>): IZonedDateTimeChain
   withTimeZone(timeZone: string): IZonedDateTimeChain
   add(
     temporalDurationLike:
@@ -392,7 +401,7 @@ export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IZonedDateTimeChain
   subtract(
     temporalDurationLike:
@@ -407,32 +416,37 @@ export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
           seconds?: number
           milliseconds?: number
         },
-    options?: { overflow?: ES.TemporalOverflow }
+    options?: { overflow?: 'constrain' | 'reject' }
   ): IZonedDateTimeChain
   until(
     other: Iso.ZonedDateTime,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   since(
     other: Iso.ZonedDateTime,
     options?: {
-      largestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit | 'auto'
-      smallestUnit?: ES.TemporalSingularUnit | ES.TemporalPluralUnit
+      largestUnit?: Temporal.LargestUnit<Temporal.DateTimeUnit>
+      smallestUnit?: Temporal.SmallestUnit<Temporal.DateTimeUnit>
       roundingIncrement?: number
-      roundingMode?: ES.TemporalRoundingMode
+      roundingMode?: Temporal.RoundingMode
     }
   ): IDurationChain
   round(options: {
-    smallestUnit: Exclude<ES.TemporalSingularUnit, 'year' | 'month' | 'week'>
+    smallestUnit: Exclude<Temporal.DateTimeUnit, 'year' | 'month' | 'week'>
     roundingIncrement?: number
-    roundingMode?: ES.TemporalRoundingMode
+    roundingMode?: Temporal.RoundingMode
   }): IZonedDateTimeChain
-  equals(other: Iso.ZonedDateTime): ES.Chain<boolean>
+  equals(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqual(other: Iso.ZonedDateTime): Chain<boolean>
+  isBefore(other: Iso.ZonedDateTime): Chain<boolean>
+  isAfter(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqualOrBefore(other: Iso.ZonedDateTime): Chain<boolean>
+  isEqualOrAfter(other: Iso.ZonedDateTime): Chain<boolean>
   startOfDay(): IZonedDateTimeChain
   toInstant(): IInstantChain
   toDate(): IDateChain
@@ -440,7 +454,7 @@ export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
   toDateTime(): IDateTimeChain
   toYearMonth(): IYearMonthChain
   toMonthDay(): IMonthDayChain
-  getFields(): ES.Chain<{
+  getFields(): Chain<{
     day: number
     hour: number
     millisecond: number
@@ -450,6 +464,7 @@ export interface IZonedDateTimeChain extends ES.Chain<Iso.ZonedDateTime> {
     year: number
     offset: string
     timeZone: string
+    epochMilliseconds: number
   }>
-  format(formatString: string): ES.Chain<string>
+  format(formatString: string, options?: FormatOptions): Chain<string>
 }

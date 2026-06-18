@@ -1,131 +1,57 @@
-import { IMonthDayFns, IMonthDayChain } from '../types'
-import * as ES from '../ecmascript'
-import { Iso } from '../iso-types'
-import { buildDateChain } from './dateFns'
-import format from '../format'
+import { Temporal } from 'temporal-polyfill'
+import type { IMonthDayFns, IMonthDayChain } from '../types/index.ts'
+import { type Iso } from '../iso-types.ts'
+import { buildChain, isIsoMonthDay, slotsFromMonthDay, toIsoDate, toIsoMonthDay } from '../temporal.ts'
+import { buildDateChainFromTemporal } from './dateFns.ts'
+import { format } from '../format/index.ts'
 
 export const monthDayFns: IMonthDayFns = {
   fromNumbers(month, day) {
-    month = ES.ToIntegerThrowOnInfinity(month)
-    day = ES.ToIntegerThrowOnInfinity(day)
-
-    // Note: if the arguments are not passed,
-    //       ToIntegerThrowOnInfinity(undefined) will have returned 0, which will
-    //       be rejected by RejectISODate in CreateTemporalMonthDaySlots. This
-    //       check exists only to improve the error message.
     if (arguments.length < 2) {
       throw new RangeError('missing argument: isoMonth and isoDay are required')
     }
-
-    return ES.CreateTemporalMonthDay(month, day)
+    return toIsoMonthDay(new Temporal.PlainMonthDay(month, day))
   },
   isValid(monthDay): monthDay is Iso.MonthDay {
-    return ES.IsTemporalMonthDay(monthDay)
+    return isIsoMonthDay(monthDay)
   },
   assertIsValid(monthDay): asserts monthDay is Iso.MonthDay {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
+    if (!isIsoMonthDay(monthDay)) throw new TypeError('invalid receiver')
   },
-  getDay(monthDay) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    return ES.CalendarDay(monthDay)
+  getDay: (md) => Temporal.PlainMonthDay.from(md).day,
+  getMonth: (md) => slotsFromMonthDay(Temporal.PlainMonthDay.from(md)).month,
+  with: (md, mdLike, options) => toIsoMonthDay(Temporal.PlainMonthDay.from(md).with(mdLike, options)),
+  equals: (md, other) => Temporal.PlainMonthDay.from(md).equals(other),
+  isEqual: (md, other) => Temporal.PlainMonthDay.from(md).equals(other),
+  toDate: (md, year) => toIsoDate(Temporal.PlainMonthDay.from(md).toPlainDate({ year })),
+  getFields: (md) => slotsFromMonthDay(Temporal.PlainMonthDay.from(md)),
+  from: (item, options) => toIsoMonthDay(Temporal.PlainMonthDay.from(item, options)),
+  compare: (one, two) => {
+    const a = slotsFromMonthDay(Temporal.PlainMonthDay.from(one))
+    const b = slotsFromMonthDay(Temporal.PlainMonthDay.from(two))
+    if (a.month !== b.month) return a.month < b.month ? -1 : 1
+    if (a.day !== b.day) return a.day < b.day ? -1 : 1
+    return 0
   },
-  getMonth(monthDay) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    return ES.CalendarDay(monthDay)
-  },
-  with(monthDay, temporalMonthDayLike, options = undefined) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    if (typeof temporalMonthDayLike !== 'object') {
-      throw new TypeError('invalid argument')
-    }
-    if ((temporalMonthDayLike as any).timeZone !== undefined) {
-      throw new TypeError('with() does not support a timeZone property')
-    }
-
-    const props = ES.ToPartialRecord(temporalMonthDayLike, ['day', 'month', 'monthCode', 'year'])
-    if (!props) {
-      throw new TypeError('invalid month-day-like')
-    }
-    let fields = ES.ToTemporalMonthDayFields(ES.GetMonthDaySlots(monthDay))
-    fields = ES.CalendarMergeFields(fields, props) as any
-    fields = ES.ToTemporalMonthDayFields(fields)
-
-    options = ES.GetOptionsObject(options)
-    return ES.MonthDayFromFields(fields, options)
-  },
-  equals(monthDay, other) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    other = ES.ToTemporalMonthDay(other)
-    const slots1 = ES.GetMonthDaySlots(monthDay)
-    const slots2 = ES.GetMonthDaySlots(other)
-
-    for (const slot of ['month', 'day'] as const) {
-      const val1 = slots1[slot]
-      const val2 = slots2[slot]
-      if (val1 !== val2) return false
-    }
-    return true
-  },
-  toDate(monthDay, year) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    year = ES.ToIntegerThrowOnInfinity(year)
-    const { month, day } = ES.GetMonthDaySlots(monthDay)
-    ES.RegulateISODate(year, month, day, 'reject')
-    return ES.CreateTemporalDate(year, month, day)
-  },
-  getFields(monthDay) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    return ES.GetMonthDaySlots(monthDay)
-  },
-  from(item, options = undefined) {
-    options = ES.GetOptionsObject(options)
-    if (ES.IsTemporalMonthDay(item)) {
-      ES.ToTemporalOverflow(options) // validate and ignore
-      const slots = ES.GetMonthDaySlots(item)
-      return ES.CreateTemporalMonthDay(slots.month, slots.day)
-    }
-    return ES.ToTemporalMonthDay(item, options)
-  },
-  compare(one, two) {
-    if (!ES.IsTemporalMonthDay(one)) throw new TypeError('invalid receiver')
-    if (!ES.IsTemporalMonthDay(two)) throw new TypeError('invalid receiver')
-    const oneSlots = ES.GetMonthDaySlots(one)
-    const twoSlots = ES.GetMonthDaySlots(two)
-
-    return ES.CompareISODate(1972, oneSlots.month, oneSlots.day, 1972, twoSlots.month, twoSlots.day)
-  },
-  format(monthDay, formatString) {
-    if (!ES.IsTemporalMonthDay(monthDay)) throw new TypeError('invalid receiver')
-    return format(ES.GetMonthDaySlots(monthDay), formatString)
-  },
+  format: (md, formatString, options) => format(Temporal.PlainMonthDay.from(md), formatString, options),
   chain: buildMonthDayChain
 }
 
-export function buildMonthDayChain(monthDay: Iso.MonthDay): IMonthDayChain {
+export function buildMonthDayChain(input: Iso.MonthDay): IMonthDayChain {
+  return buildMonthDayChainFromTemporal(Temporal.PlainMonthDay.from(input))
+}
+
+export function buildMonthDayChainFromTemporal(pmd: Temporal.PlainMonthDay): IMonthDayChain {
+  const slots = slotsFromMonthDay(pmd)
   return {
-    value() {
-      return monthDay
-    },
-    getDay() {
-      return ES.buildChain(monthDayFns.getDay(monthDay))
-    },
-    getMonth() {
-      return ES.buildChain(monthDayFns.getMonth(monthDay))
-    },
-    with(monthDayLike, options) {
-      return buildMonthDayChain(monthDayFns.with(monthDay, monthDayLike, options))
-    },
-    equals(other) {
-      return ES.buildChain(monthDayFns.equals(monthDay, other))
-    },
-    toDate(year: number) {
-      return buildDateChain(monthDayFns.toDate(monthDay, year))
-    },
-    getFields() {
-      return ES.buildChain(monthDayFns.getFields(monthDay))
-    },
-    format(formatString) {
-      return ES.buildChain(monthDayFns.format(monthDay, formatString))
-    }
+    value: () => toIsoMonthDay(pmd),
+    getDay: () => buildChain(slots.day),
+    getMonth: () => buildChain(slots.month),
+    with: (mdLike, options) => buildMonthDayChainFromTemporal(pmd.with(mdLike, options)),
+    equals: (other) => buildChain(pmd.equals(other)),
+    isEqual: (other) => buildChain(pmd.equals(other)),
+    toDate: (year: number) => buildDateChainFromTemporal(pmd.toPlainDate({ year })),
+    getFields: () => buildChain(slots),
+    format: (formatString, options) => buildChain(format(pmd, formatString, options))
   }
 }

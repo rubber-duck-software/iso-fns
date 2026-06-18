@@ -1,6 +1,6 @@
 import { test } from 'beartest-js'
-import { strict as assert } from 'assert'
-import { dateFns, durationFns } from './index'
+import { strict as assert } from 'node:assert'
+import { dateFns, durationFns } from '../src/index.ts'
 
 const { describe } = test
 const it = test
@@ -510,14 +510,15 @@ describe('Date', () => {
     it('Date.from({ month: 12 }) throws', () => assert.throws(() => dateFns.from({ month: 12 }), TypeError))
     it('object must contain at least the required correctly-spelled properties', () => {
       assert.throws(() => dateFns.from({}), TypeError)
+      // @ts-expect-error - typo in 'months' is intentional; expect runtime TypeError
       assert.throws(() => dateFns.from({ year: 1976, months: 11, day: 18 }), TypeError)
     })
     it('incorrectly-spelled properties are ignored', () => {
+      // @ts-expect-error - extraneous 'days' is intentional; should be ignored at runtime
       assert.equal(dateFns.from({ year: 1976, month: 11, day: 18, days: 15 }), '1976-11-18')
     })
     it('Date.from(required prop undefined) throws', () =>
       assert.throws(() => dateFns.from({ year: undefined, month: 11, day: 18 }), TypeError))
-    it('Date.from(number) is converted to string', () => assert.equal(dateFns.from(19761118), dateFns.from('19761118')))
     it('basic format', () => {
       assert.equal(dateFns.from('19761118'), '1976-11-18')
       assert.equal(dateFns.from('+0019761118'), '1976-11-18')
@@ -603,6 +604,31 @@ describe('Date', () => {
       assert.throws(() => dateFns.equals(d2, { year: 1976 }), TypeError)
     })
   })
+  describe('Date comparison methods', () => {
+    const jan1 = dateFns.from('2020-01-01')
+    const jun1 = dateFns.from('2020-06-01')
+    const dec1 = dateFns.from('2020-12-01')
+    it('isBefore', () => {
+      assert.equal(dateFns.isBefore(jan1, jun1), true)
+      assert.equal(dateFns.isBefore(jun1, jan1), false)
+      assert.equal(dateFns.isBefore(jun1, jun1), false)
+    })
+    it('isAfter', () => {
+      assert.equal(dateFns.isAfter(dec1, jun1), true)
+      assert.equal(dateFns.isAfter(jun1, dec1), false)
+      assert.equal(dateFns.isAfter(jun1, jun1), false)
+    })
+    it('isEqualOrBefore', () => {
+      assert.equal(dateFns.isEqualOrBefore(jun1, jun1), true)
+      assert.equal(dateFns.isEqualOrBefore(jan1, jun1), true)
+      assert.equal(dateFns.isEqualOrBefore(dec1, jun1), false)
+    })
+    it('isEqualOrAfter', () => {
+      assert.equal(dateFns.isEqualOrAfter(jun1, jun1), true)
+      assert.equal(dateFns.isEqualOrAfter(dec1, jun1), true)
+      assert.equal(dateFns.isEqualOrAfter(jan1, jun1), false)
+    })
+  })
   describe('Min/max range', () => {
     it('constructing from numbers', () => {
       assert.throws(() => dateFns.fromNumbers(-271821, 4, 18), RangeError)
@@ -674,7 +700,7 @@ describe('Date', () => {
     it('convert to ZonedDateTime with a timezone alias', () => {
       const date1 = dateFns.from('2019-01-01')
       const zonedDateTime1 = dateFns.toZonedDateTime(date1, { timeZone: 'US/Central' })
-      assert.equal(zonedDateTime1, '2019-01-01T00:00-06:00[America/Chicago]')
+      assert.equal(zonedDateTime1, '2019-01-01T00:00-06:00[US/Central]')
     })
   })
 })
