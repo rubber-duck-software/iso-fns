@@ -120,11 +120,19 @@ export function isIsoMonthDay(item: unknown): item is Iso.MonthDay {
 }
 export function isIsoDuration(item: unknown): item is Iso.Duration {
   if (typeof item !== 'string') return false
-  try {
-    return Temporal.Duration.from(item).toString() === item
-  } catch {
-    return false
+  if (item === 'PT0S') return true
+  const match = DURATION_PATTERN.exec(item)
+  if (match === null) return false
+  let sawComponent = false
+  for (let i = 1; i <= 7; i++) {
+    const component = match[i]
+    if (component === undefined) continue
+    sawComponent = true
+    // Temporal serializes zero components away; a lone "0" survives only as the
+    // integer part of fractional seconds ("PT0.5S").
+    if (component === '0' && !(i === 7 && match[8] !== undefined)) return false
   }
+  return sawComponent
 }
 
 export function slotsFromDate(pd: Temporal.PlainDate): DateSlots {
@@ -184,8 +192,7 @@ export function slotsFromDuration(dur: Temporal.Duration): DurationSlots {
 // Grammar below mirrors what Temporal's toString() emits, so a string passes
 // only when it is already in iso-fns canonical form. Validating structurally
 // avoids a Temporal parse + re-serialize round-trip on every call. ZonedDateTime
-// and Duration still round-trip through Temporal: the former needs the time
-// zone database, the latter Temporal's own normalization rules.
+// still round-trips through Temporal because it needs the time zone database.
 const YEAR = '(\\d{4}|[+-]\\d{6})'
 const TWO_DIGITS = '(\\d{2})'
 const TIME = `${TWO_DIGITS}:${TWO_DIGITS}(?::${TWO_DIGITS}(?:\\.(\\d{1,9}))?)?`
@@ -197,6 +204,13 @@ const DATE_TIME_PATTERN = new RegExp(`^${DATE}T${TIME}$`)
 const INSTANT_PATTERN = new RegExp(`^${DATE}T${TIME}Z$`)
 const YEAR_MONTH_PATTERN = new RegExp(`^${YEAR}-${TWO_DIGITS}$`)
 const MONTH_DAY_PATTERN = new RegExp(`^--${TWO_DIGITS}-${TWO_DIGITS}$`)
+
+const CANONICAL_INTEGER = '(0|[1-9]\\d*)'
+const CANONICAL_FRACTION = '(\\d{0,8}[1-9])'
+const DURATION_PATTERN = new RegExp(
+  `^-?P(?:${CANONICAL_INTEGER}Y)?(?:${CANONICAL_INTEGER}M)?(?:${CANONICAL_INTEGER}W)?(?:${CANONICAL_INTEGER}D)?` +
+    `(?:T(?=\\d)(?:${CANONICAL_INTEGER}H)?(?:${CANONICAL_INTEGER}M)?(?:${CANONICAL_INTEGER}(?:\\.${CANONICAL_FRACTION})?S)?)?$`
+)
 
 const LEAP_REFERENCE_YEAR = 1972
 const TEMPORAL_MIN_YEAR = -271821
