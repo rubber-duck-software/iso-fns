@@ -77,27 +77,18 @@ export function toIsoDuration(dur: Temporal.Duration): Iso.Duration {
 
 export function isIsoDate(item: unknown): item is Iso.Date {
   if (typeof item !== 'string') return false
-  try {
-    return Temporal.PlainDate.from(item).toString() === item
-  } catch {
-    return false
-  }
+  const match = DATE_PATTERN.exec(item)
+  return match !== null && isCanonicalDate(match[1], match[2], match[3])
 }
 export function isIsoTime(item: unknown): item is Iso.Time {
   if (typeof item !== 'string') return false
-  try {
-    return compactTimeOnly(Temporal.PlainTime.from(item).toString()) === compactTimeOnly(item)
-  } catch {
-    return false
-  }
+  const match = TIME_PATTERN.exec(item)
+  return match !== null && isCanonicalTime(match[1], match[2], match[3])
 }
 export function isIsoDateTime(item: unknown): item is Iso.DateTime {
   if (typeof item !== 'string') return false
-  try {
-    return compactDateTimePortion(Temporal.PlainDateTime.from(item).toString()) === compactDateTimePortion(item)
-  } catch {
-    return false
-  }
+  const match = DATE_TIME_PATTERN.exec(item)
+  return match !== null && isCanonicalDateTime(match)
 }
 export function isIsoZonedDateTime(item: unknown): item is Iso.ZonedDateTime {
   if (typeof item !== 'string') return false
@@ -109,36 +100,39 @@ export function isIsoZonedDateTime(item: unknown): item is Iso.ZonedDateTime {
 }
 export function isIsoInstant(item: unknown): item is Iso.Instant {
   if (typeof item !== 'string') return false
-  try {
-    return compactDateTimePortion(Temporal.Instant.from(item).toString()) === compactDateTimePortion(item)
-  } catch {
-    return false
-  }
+  const match = INSTANT_PATTERN.exec(item)
+  return match !== null && isCanonicalDateTime(match) && !Number.isNaN(epochMillisecondsFromMatch(match))
 }
 export function isIsoYearMonth(item: unknown): item is Iso.YearMonth {
   if (typeof item !== 'string') return false
-  try {
-    return Temporal.PlainYearMonth.from(item).toString() === item
-  } catch {
-    return false
-  }
+  const match = YEAR_MONTH_PATTERN.exec(item)
+  return (
+    match !== null &&
+    isCanonicalYear(match[1]) &&
+    isValidMonth(match[2]) &&
+    isYearMonthWithinTemporalLimits(+match[1], match[2])
+  )
 }
 export function isIsoMonthDay(item: unknown): item is Iso.MonthDay {
   if (typeof item !== 'string') return false
-  if (!item.startsWith('--')) return false
-  try {
-    return toIsoMonthDay(Temporal.PlainMonthDay.from(item)) === item
-  } catch {
-    return false
-  }
+  const match = MONTH_DAY_PATTERN.exec(item)
+  return match !== null && isValidMonth(match[1]) && isValidDay(LEAP_REFERENCE_YEAR, +match[1], match[2])
 }
 export function isIsoDuration(item: unknown): item is Iso.Duration {
   if (typeof item !== 'string') return false
-  try {
-    return Temporal.Duration.from(item).toString() === item
-  } catch {
-    return false
+  if (item === 'PT0S') return true
+  const match = DURATION_PATTERN.exec(item)
+  if (match === null) return false
+  let sawComponent = false
+  for (let i = 1; i <= 7; i++) {
+    const component = match[i]
+    if (component === undefined) continue
+    sawComponent = true
+    // Temporal serializes zero components away; a lone "0" survives only as the
+    // integer part of fractional seconds ("PT0.5S").
+    if (component === '0' && !(i === 7 && match[8] !== undefined)) return false
   }
+  return sawComponent
 }
 
 export function slotsFromDate(pd: Temporal.PlainDate): DateSlots {
@@ -193,4 +187,91 @@ export function slotsFromDuration(dur: Temporal.Duration): DurationSlots {
     seconds: dur.seconds,
     milliseconds: dur.milliseconds
   }
+}
+
+// Grammar below mirrors what Temporal's toString() emits, so a string passes
+// only when it is already in iso-fns canonical form. Validating structurally
+// avoids a Temporal parse + re-serialize round-trip on every call. ZonedDateTime
+// still round-trips through Temporal because it needs the time zone database.
+const YEAR = '(\\d{4}|[+-]\\d{6})'
+const TWO_DIGITS = '(\\d{2})'
+const TIME = `${TWO_DIGITS}:${TWO_DIGITS}(?::${TWO_DIGITS}(?:\\.(\\d{1,9}))?)?`
+const DATE = `${YEAR}-${TWO_DIGITS}-${TWO_DIGITS}`
+
+const DATE_PATTERN = new RegExp(`^${DATE}$`)
+const TIME_PATTERN = new RegExp(`^${TIME}$`)
+const DATE_TIME_PATTERN = new RegExp(`^${DATE}T${TIME}$`)
+const INSTANT_PATTERN = new RegExp(`^${DATE}T${TIME}Z$`)
+const YEAR_MONTH_PATTERN = new RegExp(`^${YEAR}-${TWO_DIGITS}$`)
+const MONTH_DAY_PATTERN = new RegExp(`^--${TWO_DIGITS}-${TWO_DIGITS}$`)
+
+const CANONICAL_INTEGER = '(0|[1-9]\\d*)'
+const CANONICAL_FRACTION = '(\\d{0,8}[1-9])'
+const DURATION_PATTERN = new RegExp(
+  `^-?P(?:${CANONICAL_INTEGER}Y)?(?:${CANONICAL_INTEGER}M)?(?:${CANONICAL_INTEGER}W)?(?:${CANONICAL_INTEGER}D)?` +
+    `(?:T(?=\\d)(?:${CANONICAL_INTEGER}H)?(?:${CANONICAL_INTEGER}M)?(?:${CANONICAL_INTEGER}(?:\\.${CANONICAL_FRACTION})?S)?)?$`
+)
+
+const LEAP_REFERENCE_YEAR = 1972
+const TEMPORAL_MIN_YEAR = -271821
+const TEMPORAL_MAX_YEAR = 275760
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+function isCanonicalDateTime(match: RegExpExecArray): boolean {
+  return isCanonicalDate(match[1], match[2], match[3]) && isCanonicalTime(match[4], match[5], match[6])
+}
+
+function isCanonicalDate(year: string, month: string, day: string): boolean {
+  return (
+    isCanonicalYear(year) &&
+    isValidMonth(month) &&
+    isValidDay(+year, +month, day) &&
+    isDateWithinTemporalLimits(+year, `${month}-${day}`)
+  )
+}
+
+// Temporal writes years 0000-9999 as four digits and everything else as a
+// signed six-digit year, so a signed year inside that range is non-canonical.
+function isCanonicalYear(year: string): boolean {
+  if (year.length === 4) return true
+  const magnitude = +year.slice(1)
+  return year[0] === '-' ? magnitude > 0 : magnitude > 9999
+}
+
+// Temporal's representable range: -271821-04-19 through +275760-09-13.
+function isDateWithinTemporalLimits(year: number, monthDay: string): boolean {
+  if (year === TEMPORAL_MIN_YEAR) return monthDay >= '04-19'
+  if (year === TEMPORAL_MAX_YEAR) return monthDay <= '09-13'
+  return year > TEMPORAL_MIN_YEAR && year < TEMPORAL_MAX_YEAR
+}
+
+function isYearMonthWithinTemporalLimits(year: number, month: string): boolean {
+  if (year === TEMPORAL_MIN_YEAR) return month >= '04'
+  if (year === TEMPORAL_MAX_YEAR) return month <= '09'
+  return year > TEMPORAL_MIN_YEAR && year < TEMPORAL_MAX_YEAR
+}
+
+function isValidMonth(month: string): boolean {
+  return month >= '01' && month <= '12'
+}
+
+function isValidDay(year: number, month: number, day: string): boolean {
+  if (day < '01') return false
+  const daysInMonth = month === 2 && isLeapYear(year) ? 29 : DAYS_IN_MONTH[month - 1]
+  return +day <= daysInMonth
+}
+
+function isLeapYear(year: number): boolean {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+}
+
+function isCanonicalTime(hour: string, minute: string, second: string | undefined): boolean {
+  return hour <= '23' && minute <= '59' && (second === undefined || second <= '59')
+}
+
+function epochMillisecondsFromMatch(match: RegExpExecArray): number {
+  const date = new Date(0)
+  date.setUTCFullYear(+match[1], +match[2] - 1, +match[3])
+  date.setUTCHours(+match[4], +match[5], +(match[6] ?? 0), +(match[7] ?? '').padEnd(3, '0').slice(0, 3))
+  return date.getTime()
 }
